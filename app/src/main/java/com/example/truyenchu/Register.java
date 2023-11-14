@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -48,53 +47,49 @@ public class Register extends AppCompatActivity
         editTextEmail = findViewById(R.id.email_reg);
         editTextPassword = findViewById(R.id.password_reg);
         buttonReg = findViewById(R.id.bt_register);
+        Button buttonSwitch = findViewById(R.id.btSwitch);
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.loginNow);
-        textView.setOnClickListener(new View.OnClickListener()
+
+        buttonSwitch.setOnClickListener(v ->
         {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Login.class);
-                startActivity(intent);
-                finish();
-            }
+            Intent intent = new Intent(getApplicationContext(), Login.class);
+            startActivity(intent);
+            finish();
         });
 
-        buttonReg.setOnClickListener(new View.OnClickListener()
+        buttonReg.setOnClickListener(v ->
         {
-            @Override
-            public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
-                String email, password;
-                email = String.valueOf(editTextEmail.getText());
-                password = String.valueOf(editTextPassword.getText());
+            progressBar.setVisibility(View.VISIBLE);
+            String email, password;
+            email = String.valueOf(editTextEmail.getText());
+            password = String.valueOf(editTextPassword.getText());
 
-                //Check Empty
-                if (TextUtils.isEmpty(email)){
-                    Toast.makeText(Register.this, "Enter email", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (TextUtils.isEmpty(password)){
-                    Toast.makeText(Register.this, "Enter password", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    progressBar.setVisibility(View.GONE);
-                                    Toast.makeText(Register.this, "Tài khoản tạo thành công.",
-                                            Toast.LENGTH_SHORT).show();
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Toast.makeText(Register.this, "Đăng nhập thất bại.",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+            //Check Empty
+            if (TextUtils.isEmpty(email)){
+                Toast.makeText(Register.this, "Enter email", Toast.LENGTH_SHORT).show();
+                return;
             }
+
+            if (TextUtils.isEmpty(password)){
+                Toast.makeText(Register.this, "Enter password", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                progressBar.setVisibility(View.GONE);
+                                Toast.makeText(Register.this, "Tài khoản tạo thành công.",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Toast.makeText(Register.this, "Đăng nhập thất bại.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
         });
 
     }
