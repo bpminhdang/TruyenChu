@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">TruyenChu</string>
-    <string name="login">Login</string>
+    <string name="login">Đăng nhập</string>
     <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="register">Register</string>
-    <string name="click_to_login">Click to login</string>
-    <string name="click_to_register">Click to register</string>
+    <string name="password">Mật khẩu</string>
+    <string name="register">Đăng ký</string>
+    <string name="click_to_login">Đã có tài khoản? </string>
+    <string name="click_to_register">Chưa có tài khoản</string>
     <string name="log_out">Log out</string>
 </resources>

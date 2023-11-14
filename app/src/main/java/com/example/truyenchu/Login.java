@@ -45,58 +45,50 @@ public class Login extends AppCompatActivity
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-        editTextEmail = findViewById(R.id.email);
-        editTextPassword = findViewById(R.id.password);
-        buttonLogin = findViewById(R.id.bt_login);
+        editTextEmail = findViewById(R.id.email_lg);
+        editTextPassword = findViewById(R.id.password_lg);
+        buttonLogin = findViewById(R.id.bt_lg);
         progressBar = findViewById(R.id.progressBar);
-        textView = findViewById(R.id.registerNow);
-        textView.setOnClickListener(new View.OnClickListener()
+        Button btSwitch = findViewById(R.id.btSwitchlg);
+        btSwitch.setOnClickListener(v ->
         {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Register.class);
-                startActivity(intent);
-                finish();
-            }
+            Intent intent = new Intent(getApplicationContext(), Register.class);
+            startActivity(intent);
+            finish();
         });
 
-        buttonLogin.setOnClickListener(new View.OnClickListener()
+        buttonLogin.setOnClickListener(v ->
         {
-            @Override
-            public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
-                String email, password;
-                email = String.valueOf(editTextEmail.getText());
-                password = String.valueOf(editTextPassword.getText());
+            progressBar.setVisibility(View.VISIBLE);
+            String email, password;
+            email = String.valueOf(editTextEmail.getText());
+            password = String.valueOf(editTextPassword.getText());
 
-                //Check Empty
-                if (TextUtils.isEmpty(email)){
-                    Toast.makeText(Login.this, "Enter email", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (TextUtils.isEmpty(password)){
-                    Toast.makeText(Login.this, "Enter password", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                progressBar.setVisibility(View.GONE);
-                                if (task.isSuccessful()) {
-                                   Toast.makeText(getApplicationContext(),"Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                                   Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                   startActivity(intent);
-                                   finish();
-                                } else {
-                                    Toast.makeText(Login.this, "Sai email/Sai mật khẩu",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+            //Check Empty
+            if (TextUtils.isEmpty(email)){
+                Toast.makeText(Login.this, "Enter email", Toast.LENGTH_SHORT).show();
+                return;
             }
+
+            if (TextUtils.isEmpty(password)){
+                Toast.makeText(Login.this, "Enter password", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(task ->
+                    {
+                        progressBar.setVisibility(View.GONE);
+                        if (task.isSuccessful()) {
+                           Toast.makeText(getApplicationContext(),"Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                           Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                           startActivity(intent);
+                           finish();
+                        } else {
+                            Toast.makeText(Login.this, "Sai email/Sai mật khẩu",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
         });
     }
 }
