@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "460310941270",
+    "project_id": "truyenchu-89dd1",
+    "storage_bucket": "truyenchu-89dd1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:460310941270:android:e16639b2529951d5fd75f7",
+        "android_client_info": {
+          "package_name": "com.example.truyenchu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnXyvcbC8jOAUb0j-lhLxwhTdnJH8dWBk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
