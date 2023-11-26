@@ -76,6 +76,12 @@ public class Story
 
     private int id;
     private String name;
+
+    public void setTime(String time)
+    {
+        this.time = time;
+    }
+
     private String time;
     private String author;
     private String status;
@@ -84,12 +90,13 @@ public class Story
     private ArrayList<Chapter> chapters; // ArrayList để lưu danh sách các chương
     private String[] genres;
     // Constructor
-    public Story(int id, String name, String author, String status, int numberOfChapter, String[] genres)
+    public Story(int id, String name, String author, String status, String time, int numberOfChapter, String[] genres)
     {
         this.id = id;
         this.name = name;
         this.author = author;
         this.status = status;
+        this.time = time;
         this.numberOfChapter = numberOfChapter;
         this.chapters = new ArrayList<>();
         this.genres = genres;

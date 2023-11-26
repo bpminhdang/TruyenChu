@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.vertical_content);
 
         ArrayList<Story> Stories = new ArrayList<>();
-        Story story_1 = new Story(1,"Khi hơi thở hóa thinh không", "Paul Kat", "Full", 2, new String[]{"Self Help"});
+        Story story_1 = new Story(1,"Khi hơi thở hóa thinh không", "Paul Kat", "Full","20 giờ trước",  2, new String[]{"Self Help"});
         String chapter_1 = "Trong một thung lũng xa xôi, nơi tình khúc hòa với tiếng gió, có một lão già tên là Oren. Ông là người duy nhất trong làng biết về bí mật của \"Hơi Thở Hóa Thinh Không\".\n" +
                 "Lão Oren từng nói rằng mỗi sinh linh đều có khả năng biến hơi thở của mình thành một sức mạnh vô hình, tạo nên những điều kỳ diệu. Người ta cười chê và coi ông như một người mơ mộng.\n" +
                 "Trong một buổi chiều trời rực rỡ, Dara - một cô bé tinh nghịch, đầy tò mò đã đến thăm lão Oren. Cô bé vừa học được về bí mật này và muốn hiểu rõ hơn.\n" +
