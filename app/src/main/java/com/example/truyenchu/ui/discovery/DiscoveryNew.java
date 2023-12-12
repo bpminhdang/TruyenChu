@@ -1,10 +1,15 @@
-package com.example.truyenchu;
+package com.example.truyenchu.ui.discovery;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.truyenchu.Chapter;
+import com.example.truyenchu.R;
+import com.example.truyenchu.Story;
+import com.example.truyenchu.VerticalContentAdapter;
 
 import java.util.ArrayList;
 

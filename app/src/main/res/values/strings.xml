@@ -7,4 +7,9 @@
     <string name="click_to_login">Đã có tài khoản? </string>
     <string name="click_to_register">Chưa có tài khoản</string>
     <string name="log_out">Log out</string>
+    <string name="search">Search</string>
+    <string name="discovery">Discovery</string>
+    <string name="home">Home</string>
+    <string name="download">Download</string>
+    <string name="profile">Profile</string>
 </resources>
