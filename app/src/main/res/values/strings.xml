@@ -7,4 +7,17 @@
     <string name="click_to_login">Đã có tài khoản? </string>
     <string name="click_to_register">Chưa có tài khoản</string>
     <string name="log_out">Log out</string>
+    <string name="search">Search</string>
+    <string name="discovery">Discovery</string>
+    <string name="home">Home</string>
+    <string name="download">Download</string>
+    <string name="profile">Profile</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="none" />
+    <string name="chapter">chương</string>
+    <string name="recent_chapter">Đang đọc: </string>
+    <string name="author">Tác giả:</string>
+    <string name="number_of_chapter">Số chương:</string>
+    <string name="status">Tình trạng:</string>
+    <string name="views">Lượt xem:</string>
 </resources>

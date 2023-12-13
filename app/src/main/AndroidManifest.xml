@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,27 +15,26 @@
         android:theme="@style/Theme.Material3.Light"
         tools:targetApi="31">
         <activity
-            android:name=".Register"
-            android:theme="@style/Theme.Material3.Light.NoActionBar"
-            android:exported="false" />
-        <activity
-            android:name=".Login"
-            android:theme="@style/Theme.Material3.Light.NoActionBar"
-            android:exported="true">
-        </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-        </activity>
-
-        <activity
-            android:name=".DiscoveryNew"
-            android:exported="true">
+            android:name=".HomeActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Material3.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Register"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+        <activity
+            android:name=".Login"
+            android:exported="true"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
 
     </application>
 

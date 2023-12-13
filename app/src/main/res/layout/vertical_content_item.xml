@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -15,18 +16,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/item_vertical_content_storyImage"
+        <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/round_border"
-            android:src="@drawable/cover"
-            app:shapeAppearanceOverlay="@style/ImageViewShape"/>
+            android:layout_margin="10dp"
+            app:cardCornerRadius="20dp"> <!-- Điều chỉnh giá trị để bo tròn góc -->
 
-
+            <ImageView
+                android:id="@+id/item_vertical_content_storyImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/book_1" />
+        </androidx.cardview.widget.CardView>
 
 
         <LinearLayout
@@ -34,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingStart="20dp">
+            android:paddingStart="15dp">
 
             <TextView
                 android:id="@+id/item_vertical_content_tvName"
@@ -43,29 +45,35 @@
                 android:layout_marginTop="15dp"
                 android:maxLines="@android:integer/config_mediumAnimTime"
                 android:text="Khi hơi thở hóa thinh không"
-                android:textSize="25dp" />
+                android:textSize="@dimen/title_text_size" />
 
             <TextView
                 android:id="@+id/item_vertical_content_tvTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="16 giờ trước" />
+                android:text="16 giờ trước"
+                android:textSize="@dimen/small_text_size" />
+
             <TextView
                 android:id="@+id/item_vertical_content_tvAuthor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Paul Kalanithi" />
+                android:text="Paul Kalanithi"
+                android:textSize="@dimen/small_text_size" />
+
             <TextView
                 android:id="@+id/item_vertical_content_tvChapter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10 chương" />
+                android:text="10 chương"
+                android:textSize="@dimen/small_text_size" />
 
             <TextView
                 android:id="@+id/item_vertical_content_tvGenre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Self help" />
+                android:text="Self help"
+                android:textSize="@dimen/small_text_size" />
         </LinearLayout>
 
     </LinearLayout>
