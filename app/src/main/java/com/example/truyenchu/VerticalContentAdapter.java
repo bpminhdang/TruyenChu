@@ -16,14 +16,14 @@ import java.util.ArrayList;
 public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContentAdapter.ViewHolder>
 {
 
-    static ArrayList<Story> arr;
+    static ArrayList<StoryClass> arr;
 
-    public VerticalContentAdapter(ArrayList<Story> dataSet)
+    public VerticalContentAdapter(ArrayList<StoryClass> dataSet)
     {
         arr = dataSet;
     }
 
-    public static void updateData(Story e)
+    public static void updateData(StoryClass e)
     {
         arr.add(e);
     }
@@ -111,43 +111,15 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        Story story = arr.get(position);
+        StoryClass storyClass = arr.get(position);
         //viewHolder.getStoryImage().setImageDrawable(story.getImage());
-        viewHolder.getTvName().setText(story.getName());
-        viewHolder.getTvTime().setText(story.getTime());
-        viewHolder.getTvAuthor().setText(story.getAuthor());
+        viewHolder.getTvName().setText(storyClass.getName());
+        viewHolder.getTvTime().setText(storyClass.getTime());
+        viewHolder.getTvAuthor().setText(storyClass.getAuthor());
         viewHolder.getStoryImage();
-        viewHolder.getTvGenre().setText(story.getGenres()[0]);
+        viewHolder.getTvGenre().setText(storyClass.getGenres()[0]);
 
 
-//        viewHolder.getTextViewRole().setText(employee.getRole());
-//        viewHolder.getImageView().setImageResource(R.drawable.ic_manager);
-//
-//        if (employee.getName()!=null) {
-//            viewHolder.getTextViewName().setText(employee.getName());
-//        }
-//        else viewHolder.getTextViewName().setText("");
-//        // If this is a manager -> show icon manager. Otherwise, show Staff in tvPosition
-//        if (employee.isManager())
-//        {
-//            viewHolder.getImageView().setVisibility(View.VISIBLE);
-//            viewHolder.getTextViewRole().setVisibility(View.GONE);
-//        }
-//        else
-//        {
-//            viewHolder.getImageView().setVisibility(View.GONE);
-//            viewHolder.getTextViewRole().setVisibility(View.VISIBLE);
-//            viewHolder.getTextViewRole().setText("staff");
-//        }
-//
-//        if (position%2==0)
-//        {
-//            viewHolder.getLinearLayoutParent().setBackgroundResource(R.color.white);
-//        }
-//        else
-//        {
-//            viewHolder.linearLayout.setBackgroundResource(R.color.light_blue);
-//        }
 
 
         Log.i("ABC", "onBindViewHolder: " + position);

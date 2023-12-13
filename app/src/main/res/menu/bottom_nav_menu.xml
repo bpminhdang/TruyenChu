@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_search"
-        android:icon="@drawable/nav_search_selector"
+        android:icon="@drawable/nav_search"
         android:title="@string/search" />
     <item
         android:id="@+id/navigation_discovery"
-        android:icon="@drawable/nav_discovery_selector"
+        android:icon="@drawable/nav_discovery"
         android:title="@string/discovery" />
     <item
         android:id="@+id/navigation_home"
@@ -16,7 +16,7 @@
         android:id="@+id/navigation_download"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/nav_download_selector"
+        android:icon="@drawable/nav_download"
         android:title="@string/download" />
     <item
         android:id="@+id/navigation_profile"

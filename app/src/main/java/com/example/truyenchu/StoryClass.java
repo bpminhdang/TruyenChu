@@ -1,11 +1,9 @@
 package com.example.truyenchu;
 
-import android.media.Image;
-
 import java.util.ArrayList;
 
 // Lớp Truyen (Truyện)
-public class Story
+public class StoryClass
 {
 
     public int getId()
@@ -59,9 +57,9 @@ public class Story
     }
 
     // Todo: Thêm dữ liệu Image
-    public void setChapters(ArrayList<Chapter> chapters)
+    public void setChapters(ArrayList<ChapterClass> chapterClasses)
     {
-        this.chapters = chapters;
+        this.chapterClasses = chapterClasses;
     }
 
     public String[] getGenres()
@@ -87,10 +85,10 @@ public class Story
     private String status;
     private int numberOfChapter;
     //private Image image;
-    private ArrayList<Chapter> chapters; // ArrayList để lưu danh sách các chương
+    private ArrayList<ChapterClass> chapterClasses; // ArrayList để lưu danh sách các chương
     private String[] genres;
     // Constructor
-    public Story(int id, String name, String author, String status, String time, int numberOfChapter, String[] genres)
+    public StoryClass(int id, String name, String author, String status, String time, int numberOfChapter, String[] genres)
     {
         this.id = id;
         this.name = name;
@@ -98,19 +96,19 @@ public class Story
         this.status = status;
         this.time = time;
         this.numberOfChapter = numberOfChapter;
-        this.chapters = new ArrayList<>();
+        this.chapterClasses = new ArrayList<>();
         this.genres = genres;
     }
 
     // Thêm chương vào danh sách của truyện
-    public void addChapter(Chapter chapter)
+    public void addChapter(ChapterClass chapterClass)
     {
-        chapters.add(chapter);
+        chapterClasses.add(chapterClass);
     }
 
-    public ArrayList<Chapter> getChapters()
+    public ArrayList<ChapterClass> getChapters()
     {
-        return chapters;
+        return chapterClasses;
     }
 
     public String getTime()
