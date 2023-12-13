@@ -1,14 +1,16 @@
-package com.example.truyenchu;
+package com.example.truyenchu.adapter;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.truyenchu.R;
+import com.example.truyenchu.StoryClass;
 
 import java.util.ArrayList;
 
@@ -35,12 +37,13 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
     public static class ViewHolder extends RecyclerView.ViewHolder
     {
 
-        private LinearLayout storyInfo;
+        //private LinearLayout storyInfo;
         private ImageView storyImage;
-        private LinearLayout info;
+       // private LinearLayout info;
         private TextView tvName;
         private TextView tvTime;
         private TextView tvAuthor;
+        private TextView tvChapter;
         private TextView tvGenre;
 
         public ViewHolder(View view)
@@ -48,12 +51,13 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
             super(view);
             // Define click listener for the ViewHolder's View
 
-            storyInfo = view.findViewById(R.id.item_vertical_content_storyInfo);
+            //storyInfo = view.findViewById(R.id.item_vertical_content_storyInfo);
             storyImage = view.findViewById(R.id.item_vertical_content_storyImage);
-            info = view.findViewById(R.id.item_vertical_content_info);
+            //info = view.findViewById(R.id.item_vertical_content_info);
             tvName = view.findViewById(R.id.item_vertical_content_tvName);
             tvTime = view.findViewById(R.id.item_vertical_content_tvTime);
             tvAuthor = view.findViewById(R.id.item_vertical_content_tvAuthor);
+            tvChapter = view.findViewById(R.id.item_vertical_content_tvChapter);
             tvGenre = view.findViewById(R.id.item_vertical_content_tvGenre);
         }
 
@@ -78,6 +82,11 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
         public TextView getTvAuthor()
         {
             return tvAuthor;
+        }
+
+        public TextView getTvChapter()
+        {
+            return tvChapter;
         }
 
         public TextView getTvGenre()
@@ -111,16 +120,17 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        StoryClass storyClass = arr.get(position);
+        StoryClass story = arr.get(position);
+
+        //Todo: Image
         //viewHolder.getStoryImage().setImageDrawable(story.getImage());
-        viewHolder.getTvName().setText(storyClass.getName());
-        viewHolder.getTvTime().setText(storyClass.getTime());
-        viewHolder.getTvAuthor().setText(storyClass.getAuthor());
+
         viewHolder.getStoryImage();
-        viewHolder.getTvGenre().setText(storyClass.getGenres()[0]);
-
-
-
+        viewHolder.getTvName().setText(story.getName());
+        viewHolder.getTvTime().setText(story.getTime());
+        viewHolder.getTvAuthor().setText(story.getAuthor());
+        viewHolder.getTvChapter().setText(String.valueOf(story.getNumberOfChapter()));
+        viewHolder.getTvGenre().setText(story.getGenres()[0]);
 
         Log.i("ABC", "onBindViewHolder: " + position);
     }

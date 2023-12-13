@@ -5,10 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.HomeFragment">
-
+<!-- TODO: Update fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/home_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF" />
+        android:background="#FFFFFF"
+        android:orientation="horizontal" />
 </FrameLayout>

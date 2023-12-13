@@ -5,6 +5,30 @@ import java.util.ArrayList;
 // Lớp Truyen (Truyện)
 public class StoryClass
 {
+    private int id;
+    private String name;
+    private String time;
+    private String author;
+    private String status;
+    private int numberOfChapter;
+    //private Image image;
+    private ArrayList<ChapterClass> chapterClasses; // ArrayList để lưu danh sách các chương
+    private String[] genres;
+    private int views;
+
+    // Constructor
+    public StoryClass(int id, String name, String author, String status, String time, int numberOfChapter, String[] genres, int views)
+    {
+        this.id = id;
+        this.name = name;
+        this.author = author;
+        this.status = status;
+        this.time = time;
+        this.numberOfChapter = numberOfChapter;
+        this.views = views;
+        this.chapterClasses = new ArrayList<>();
+        this.genres = genres;
+    }
 
     public int getId()
     {
@@ -21,19 +45,23 @@ public class StoryClass
         return name;
     }
 
-    public void setName(String name)
+    public String getName(int cutOffWhenMoreThan)
     {
-        this.name = name;
+        if (name.length() > cutOffWhenMoreThan)
+        {
+            int lastIndex = name.lastIndexOf(' ', cutOffWhenMoreThan);
+            if (lastIndex != -1)
+            {
+                return name.substring(0, lastIndex) + "...";
+            }
+        }
+        return name;
     }
+
 
     public String getAuthor()
     {
         return author;
-    }
-
-    public void setAuthor(String author)
-    {
-        this.author = author;
     }
 
     public String getStatus()
@@ -41,63 +69,26 @@ public class StoryClass
         return status;
     }
 
-    public void setStatus(String status)
-    {
-        this.status = status;
-    }
-
     public int getNumberOfChapter()
     {
         return numberOfChapter;
     }
 
-    public void setNumberOfChapter(int numberOfChapter)
-    {
-        this.numberOfChapter = numberOfChapter;
-    }
-
-    // Todo: Thêm dữ liệu Image
-    public void setChapters(ArrayList<ChapterClass> chapterClasses)
-    {
-        this.chapterClasses = chapterClasses;
-    }
+    // Todo: Thêm get dữ liệu Image
 
     public String[] getGenres()
     {
         return genres;
     }
 
-    public void setGenres(String[] genres)
+    public ArrayList<ChapterClass> getChapterClasses()
     {
-        this.genres = genres;
+        return chapterClasses;
     }
 
-    private int id;
-    private String name;
-
-    public void setTime(String time)
+    public int getViews()
     {
-        this.time = time;
-    }
-
-    private String time;
-    private String author;
-    private String status;
-    private int numberOfChapter;
-    //private Image image;
-    private ArrayList<ChapterClass> chapterClasses; // ArrayList để lưu danh sách các chương
-    private String[] genres;
-    // Constructor
-    public StoryClass(int id, String name, String author, String status, String time, int numberOfChapter, String[] genres)
-    {
-        this.id = id;
-        this.name = name;
-        this.author = author;
-        this.status = status;
-        this.time = time;
-        this.numberOfChapter = numberOfChapter;
-        this.chapterClasses = new ArrayList<>();
-        this.genres = genres;
+        return views;
     }
 
     // Thêm chương vào danh sách của truyện

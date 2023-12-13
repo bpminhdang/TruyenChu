@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import com.example.truyenchu.ChapterClass;
 import com.example.truyenchu.R;
 import com.example.truyenchu.StoryClass;
-import com.example.truyenchu.VerticalContentAdapter;
+import com.example.truyenchu.adapter.HorizontalContentAdapter;
+import com.example.truyenchu.adapter.HorizontalImageAdapter;
+import com.example.truyenchu.adapter.HorizontalSmallImageAdapter;
 
 import java.util.ArrayList;
 
@@ -76,9 +78,11 @@ public class HomeFragment extends Fragment
                              Bundle savedInstanceState)
     {
 
+        //TODO: Thay vì tự tạo Story, lấy dữ liệu từ Firebase và đưa nó vào nhiều object, sau đó đưa vào recyclerView
+
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ArrayList<StoryClass> Stories = new ArrayList<>();
-        StoryClass story_Class_1 = new StoryClass(1,"Khi hơi thở hóa thinh không", "Paul Kat", "Full","20 giờ trước",  2, new String[]{"Self Help"});
+        StoryClass story_Class_1 = new StoryClass(2,"Khi hơi thở hóa thinh không", "Paul Katy", "Full","19 giờ trước",  10, new String[]{"Helpless"}, 103);
         String chapter_1 = "Trong một thung lũng xa xôi, nơi tình khúc hòa với tiếng gió, có một lão già tên là Oren. Ông là người duy nhất trong làng biết về bí mật của \"Hơi Thở Hóa Thinh Không\".\n" +
                 "Lão Oren từng nói rằng mỗi sinh linh đều có khả năng biến hơi thở của mình thành một sức mạnh vô hình, tạo nên những điều kỳ diệu. Người ta cười chê và coi ông như một người mơ mộng.\n" +
                 "Trong một buổi chiều trời rực rỡ, Dara - một cô bé tinh nghịch, đầy tò mò đã đến thăm lão Oren. Cô bé vừa học được về bí mật này và muốn hiểu rõ hơn.\n" +
@@ -98,9 +102,9 @@ public class HomeFragment extends Fragment
         Stories.add(story_Class_1);
 
         RecyclerView recyclerView = view.findViewById(R.id.home_recycler_view);
-        VerticalContentAdapter adapter = new VerticalContentAdapter(Stories);
+        HorizontalSmallImageAdapter adapter = new HorizontalSmallImageAdapter(getActivity(), Stories);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         // Inflate the layout for this fragment
         return view;
 
