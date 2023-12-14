@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TruyenChu</string>
+    <string name="app_name">Ăn truyện</string>
     <string name="login">Đăng nhập</string>
     <string name="email">Email</string>
     <string name="password">Mật khẩu</string>
@@ -20,4 +20,5 @@
     <string name="number_of_chapter">Số chương:</string>
     <string name="status">Tình trạng:</string>
     <string name="views">Lượt xem:</string>
+
 </resources>
