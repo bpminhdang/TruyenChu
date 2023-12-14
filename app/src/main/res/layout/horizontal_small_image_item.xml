@@ -17,7 +17,7 @@
 
         <ImageView
             android:id="@+id/item_horizontal_small_image_storyImage"
-            android:layout_width="98dp"
+            android:layout_width="85dp"
             android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:src="@drawable/book_2" />
