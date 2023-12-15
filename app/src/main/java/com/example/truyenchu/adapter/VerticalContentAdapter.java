@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.truyenchu.R;
@@ -20,7 +21,7 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
 
     static ArrayList<StoryClass> arr;
 
-    public VerticalContentAdapter(ArrayList<StoryClass> dataSet)
+    public VerticalContentAdapter(FragmentActivity activity, ArrayList<StoryClass> dataSet)
     {
         arr = dataSet;
     }
