@@ -109,9 +109,14 @@ public class HomeFragment extends Fragment
         // Inflate the layout for this fragment
 
         RecyclerView recyclerView1=view.findViewById(R.id.home_recycler_view_2);
-       HorizontalContentAdapter adapter1 = new HorizontalContentAdapter(getActivity(),Stories);
+        HorizontalContentAdapter adapter1 = new HorizontalContentAdapter(getActivity(),Stories);
         recyclerView1.setAdapter(adapter1);
         recyclerView1.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
+        RecyclerView recyclerView2=view.findViewById(R.id.home_recycler_view_3);
+        HorizontalImageAdapter adapter2 = new HorizontalImageAdapter(getActivity(),Stories);
+        recyclerView2.setAdapter(adapter2);
+        recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
         return view;
 
