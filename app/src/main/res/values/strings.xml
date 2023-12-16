@@ -20,8 +20,10 @@
     <string name="number_of_chapter">Số chương:</string>
     <string name="status">Tình trạng:</string>
     <string name="views">Lượt xem:</string>
-    <string name="welcome_back">Welcome back</string>
-    <string name="username">Ariana Grinder</string>
+    <string name="welcomeback">WELCOME BACK!</string>
+    <string name="user_name">Ariana Grinder</string>
+    <string name="none_login">Đăng nhập/ Đăng kí</string>
+    <string name="welcome">CHÀO MỪNG ĐẾN VỚI ĂN TRUYỆN</string>
     <string name="bo_loc">Bộ lọc</string>
 
 </resources>

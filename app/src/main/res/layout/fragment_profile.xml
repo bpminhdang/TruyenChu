@@ -1,14 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout5"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.ProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="3" />
+        android:id="@+id/lin">
 
-</FrameLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteY="1dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="35dp"> <!-- Đặt giá trị radius bằng một nửa của kích thước chiều rộng hoặc chiều cao -->
+
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/_4c794a30247c154fd3afa0ff7f61b57" />
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingStart="15dp"
+                android:paddingTop="20dp">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome back"
+                    android:textAllCaps="true"
+                    android:textColor="#86787878"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-thin"
+                    android:text="Ariana Grinder"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/lichsu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="sans-serif-light"
+            android:paddingLeft="10dp"
+            android:text="LỊCH SỬ TRÊN TÀI KHOẢN"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+        <TextView
+            android:id="@+id/xem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="228dp"
+            android:text="Truyện đã xem"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lichsu" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="26dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/pr_history"
+            app:layout_constraintEnd_toStartOf="@+id/xem"
+            app:layout_constraintHorizontal_bias="0.707"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lichsu" />
+
+        <TextView
+            android:id="@+id/csbm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Chính sách bảo mật"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="624dp" />
+
+        <TextView
+            android:id="@+id/share"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Chia sẻ"
+            tools:layout_editor_absoluteY="579dp" />
+
+        <TextView
+            android:id="@+id/guimail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Góp ý - Liên hệ"
+            tools:layout_editor_absoluteY="543dp" />
+
+        <TextView
+            android:id="@+id/gopy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Đánh giá ứng dụng"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="499dp" />
+
+        <TextView
+            android:id="@+id/thongtin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text="THÔNG TIN"
+            android:textSize="16sp"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="446dp" />
+
+        <TextView
+            android:id="@+id/mau"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Màu yêu thích"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="405dp" />
+
+        <TextView
+            android:id="@+id/giaodien"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Giao diện đọc truyện"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="381dp" />
+
+        <TextView
+            android:id="@+id/setting"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text="CÀI ĐẶT"
+            android:textSize="16sp"
+            tools:layout_editor_absoluteY="345dp" />
+
+        <TextView
+            android:id="@+id/bstt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Bộ sưu tập yêu thích"
+            tools:layout_editor_absoluteX="2dp"
+            tools:layout_editor_absoluteY="317dp" />
+
+        <TextView
+            android:id="@+id/bst"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Bộ sưu tập của tôi"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="272dp" />
+
+        <TextView
+            android:id="@+id/dstruyen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text="DANH SÁCH TRUYỆN"
+            android:textSize="16sp"
+            tools:layout_editor_absoluteY="237dp" />
+
+        <TextView
+            android:id="@+id/theodoi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Truyện đã theo dõi"
+            tools:layout_editor_absoluteY="203dp" />
+
+        <TextView
+            android:id="@+id/tai"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Truyện đã tải"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="180dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="409dp"
+        android:layout_height="638dp"
+        android:baselineAligned="false"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="92dp">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

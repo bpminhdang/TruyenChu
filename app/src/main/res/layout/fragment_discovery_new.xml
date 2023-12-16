@@ -52,7 +52,7 @@
                     android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/welcome_back"
+                    android:text="@string/welcomeback"
                     android:textColor="#86BCB9B9"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -62,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-thin"
-                    android:text="@string/username"
+                    android:text="@string/user_name"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
