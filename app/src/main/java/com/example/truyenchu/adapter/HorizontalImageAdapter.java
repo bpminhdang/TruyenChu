@@ -103,7 +103,9 @@ public class HorizontalImageAdapter extends RecyclerView.Adapter<HorizontalImage
         //Todo: Image
         //viewHolder.getStoryImage().setImageDrawable(story.getImage());
 
-        viewHolder.getTvName().setText(story.getName());
+        //viewHolder.getTvName().setText(story.getName());
+        viewHolder.getTvName().setText("");
+
         temp = context.getString(R.string.recent_chapter) + "   " + context.getString(R.string.chapter) + " " + story.getNumberOfChapter();
         viewHolder.getTvChapter2().setText(temp);
         Log.i("ABC", "onBindViewHolder: " + " " + position);
