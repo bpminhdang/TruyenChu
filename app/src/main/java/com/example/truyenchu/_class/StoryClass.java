@@ -1,4 +1,4 @@
-package com.example.truyenchu;
+package com.example.truyenchu._class;
 
 import java.util.ArrayList;
 
@@ -27,6 +27,20 @@ public class StoryClass
         this.numberOfChapter = numberOfChapter;
         this.views = views;
         this.chapterClasses = new ArrayList<>();
+        this.genres = genres;
+    }
+
+    public StoryClass(int id, String name, String author, String status, String time, int numberOfChapter,ArrayList<ChapterClass> chapterClasses, String[] genres, int views)
+    {
+        this.id = id;
+        this.name = name;
+        this.author = author;
+        this.status = status;
+        this.time = time;
+        this.numberOfChapter = numberOfChapter;
+        this.views = views;
+        this.chapterClasses = new ArrayList<>();
+        this.chapterClasses.addAll(chapterClasses);
         this.genres = genres;
     }
 

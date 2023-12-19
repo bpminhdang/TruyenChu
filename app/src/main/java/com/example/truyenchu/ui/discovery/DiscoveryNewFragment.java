@@ -10,11 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.truyenchu.ChapterClass;
+import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu.R;
-import com.example.truyenchu.StoryClass;
-import com.example.truyenchu.adapter.HorizontalContentAdapter;
-import com.example.truyenchu.adapter.HorizontalSmallImageAdapter;
+import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.adapter.VerticalContentAdapter;
 
 import java.util.ArrayList;

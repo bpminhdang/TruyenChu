@@ -1,24 +1,29 @@
 package com.example.truyenchu.ui;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.example.truyenchu.ChapterClass;
+import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu.R;
-import com.example.truyenchu.StoryClass;
+import com.example.truyenchu._class.StoryClass;
+import com.example.truyenchu._class.UserClass;
 import com.example.truyenchu.adapter.HorizontalContentAdapter;
 import com.example.truyenchu.adapter.HorizontalImageAdapter;
 import com.example.truyenchu.adapter.HorizontalSmallImageAdapter;
-import com.example.truyenchu.adapter.VerticalContentAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -91,7 +96,48 @@ public class HomeFragment extends Fragment
                 "Dara đã quyết định thử sức. Cô bé đóng một quả bóng và nhả hơi thở của mình vào đó. Rồi, kì diệu đã xảy ra. Quả bóng bắt đầu nhấp nhổm, bay lên và sáng rực như ngọn đèn lồng.\n" +
                 "Với sức mạnh của hơi thở, Dara tạo ra những hình ảnh phong phú: một con rồng nhỏ bay quanh, một bông hoa màu sắc lấp lánh, và thậm chí là một cánh buồm trắng nhẹ nhàng trên mặt nước.\n" +
                 "Từ ngày đó, tin đồn về \"Hơi Thở Hóa Thinh Không\" lan tỏa khắp làng. Mọi người hiểu rõ hơn về sức mạnh tiềm ẩn trong từng hơi thở. Họ đã học cách tin vào điều không tưởng và thấy rằng, trong mỗi chúng ta, đều có khả năng tạo ra kỳ diệu từ những điều tưởng chừng nhỏ nhất.";
+
         story_Class_1.addChapter(new ChapterClass(1, chapter_1));
+
+        DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
+
+        // Thêm dữ liệu cho users
+        DatabaseReference usersRef = database.child("users");
+        Map<String, Object> users = new HashMap<>();
+        users.put("userId1", new UserClass("user1", "User One", "user1@example.com", "hashedpassword1", "Arial", 12, "#FFFFFF"));
+        users.put("userId2", new UserClass("user2", "User Two", "user2@example.com", "hashedpassword2", "Times New Roman", 14, "#F0F0F0"));
+        usersRef.setValue(users, (databaseError, databaseReference) -> {
+            if (databaseError != null) {
+                System.out.println("Data could not be saved " + databaseError.getMessage());
+            } else {
+                System.out.println("Users data saved successfully.");
+            }
+        });
+
+        // Thêm dữ liệu cho stories
+        DatabaseReference storiesRef = database.child("stories");
+        Map<String, Object> stories = new HashMap<>();
+
+        ArrayList<ChapterClass> chapters1 = new ArrayList<>();
+        chapters1.add(new ChapterClass(1, "Chapter 1 content..."));
+        chapters1.add(new ChapterClass(2, "Chapter 2 content..."));
+
+        ArrayList<ChapterClass> chapters2 = new ArrayList<>();
+        chapters2.add(new ChapterClass(1, "Chapter 1 content..."));
+
+        stories.put("storyId1", new StoryClass(1, "Story One", "2023-12-19 15:30:00", "userId1", "ongoing", 5, chapters1, new String[]{"Fantasy", "Adventure"}, 1000));
+        stories.put("storyId2", new StoryClass(2, "Story Two", "2023-12-18 12:00:00", "userId2", "completed", 10, chapters2, new String[]{"Mystery", "Thriller"}, 500));
+
+        storiesRef.setValue(stories, (databaseError, databaseReference) -> {
+            if (databaseError != null) {
+                Log.i("DB","Data could not be saved " + databaseError.getMessage());
+            } else {
+                Log.i("DB","Stories data saved successfully.");
+            }
+        });
+
+
+
         Stories.add(story_Class_1);
         Stories.add(story_Class_1);
         Stories.add(story_Class_1);

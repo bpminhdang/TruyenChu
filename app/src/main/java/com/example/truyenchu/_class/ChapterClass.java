@@ -1,4 +1,4 @@
-package com.example.truyenchu;
+package com.example.truyenchu._class;
 public class ChapterClass
 {
     private int chapterId;

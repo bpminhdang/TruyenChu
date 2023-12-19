@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.truyenchu.R;
-import com.example.truyenchu.StoryClass;
+import com.example.truyenchu._class.StoryClass;
 
 import java.util.ArrayList;
 
