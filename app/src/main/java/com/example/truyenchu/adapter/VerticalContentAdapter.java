@@ -131,7 +131,7 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
         viewHolder.getTvTime().setText(story.getTime());
         viewHolder.getTvAuthor().setText(story.getAuthor());
         viewHolder.getTvChapter().setText(String.valueOf(story.getNumberOfChapter()));
-        viewHolder.getTvGenre().setText(story.getGenres()[0]);
+        viewHolder.getTvGenre().setText(story.getGenres().get(0));
 
         Log.i("ABC", "onBindViewHolder: " + position);
     }

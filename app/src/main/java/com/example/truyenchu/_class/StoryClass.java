@@ -1,23 +1,24 @@
 package com.example.truyenchu._class;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // Lớp Truyen (Truyện)
 public class StoryClass
 {
-    private int id;
+    private final int id;
     private String name;
     private String time;
     private String author;
     private String status;
     private int numberOfChapter;
     //private Image image;
-    private ArrayList<ChapterClass> chapterClasses; // ArrayList để lưu danh sách các chương
-    private String[] genres;
+    private List<ChapterClass> chapters = new ArrayList<>(); // List để lưu danh sách các chương
+    private List<String> genres;
     private int views;
 
     // Constructor
-    public StoryClass(int id, String name, String author, String status, String time, int numberOfChapter, String[] genres, int views)
+    public StoryClass(int id, String name, String author, String status, String time, int numberOfChapter, List<String> genres, int views)
     {
         this.id = id;
         this.name = name;
@@ -26,32 +27,12 @@ public class StoryClass
         this.time = time;
         this.numberOfChapter = numberOfChapter;
         this.views = views;
-        this.chapterClasses = new ArrayList<>();
-        this.genres = genres;
-    }
-
-    public StoryClass(int id, String name, String author, String status, String time, int numberOfChapter,ArrayList<ChapterClass> chapterClasses, String[] genres, int views)
-    {
-        this.id = id;
-        this.name = name;
-        this.author = author;
-        this.status = status;
-        this.time = time;
-        this.numberOfChapter = numberOfChapter;
-        this.views = views;
-        this.chapterClasses = new ArrayList<>();
-        this.chapterClasses.addAll(chapterClasses);
         this.genres = genres;
     }
 
     public int getId()
     {
         return id;
-    }
-
-    public void setId(int id)
-    {
-        this.id = id;
     }
 
     public String getName()
@@ -90,14 +71,14 @@ public class StoryClass
 
     // Todo: Thêm get dữ liệu Image
 
-    public String[] getGenres()
+    public List<String> getGenres()
     {
         return genres;
     }
 
-    public ArrayList<ChapterClass> getChapterClasses()
+    public List<ChapterClass> getChapters()
     {
-        return chapterClasses;
+        return chapters;
     }
 
     public int getViews()
@@ -108,13 +89,9 @@ public class StoryClass
     // Thêm chương vào danh sách của truyện
     public void addChapter(ChapterClass chapterClass)
     {
-        chapterClasses.add(chapterClass);
+        chapters.add(chapterClass);
     }
 
-    public ArrayList<ChapterClass> getChapters()
-    {
-        return chapterClasses;
-    }
 
     public String getTime()
     {
