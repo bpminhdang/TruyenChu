@@ -91,47 +91,25 @@ public class HomeFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
 
-        DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
-        DatabaseReference usersRef = database.child("users");
-        Map<String, Object> users = new HashMap<>();
-        users.put("userId1", new UserClass("user1", "User One", "user1@example.com", "hashedpassword1", "Arial", 12, "#FFFFFF"));
-        users.put("userId2", new UserClass("user2", "User Two", "user2@example.com", "hashedpassword2", "Times New Roman", 14, "#F0F0F0"));
-        usersRef.setValue(users, (databaseError, databaseReference) ->
-        {
-            if (databaseError != null)
-            {
-                System.out.println("Data could not be saved " + databaseError.getMessage());
-            } else
-            {
-                System.out.println("Users data saved successfully.");
-            }
-        });
+//        DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
+//        DatabaseReference usersRef = database.child("users");
+//        Map<String, Object> users = new HashMap<>();
+//        users.put("userId1", new UserClass("user1", "User One", "user1@example.com", "hashedpassword1", "Arial", 12, "#FFFFFF"));
+//        users.put("userId2", new UserClass("user2", "User Two", "user2@example.com", "hashedpassword2", "Times New Roman", 14, "#F0F0F0"));
+//        usersRef.setValue(users, (databaseError, databaseReference) ->
+//        {
+//            if (databaseError != null)
+//            {
+//                System.out.println("Data could not be saved " + databaseError.getMessage());
+//            } else
+//            {
+//                System.out.println("Users data saved successfully.");
+//            }
+//        });
 
-        // Thêm dữ liệu cho stories
-        DatabaseReference storiesRef = database.child("stories");
-        //ArrayList<StoryClass> Stories = new ArrayList<>();
-        StoryClass story_Class_1 = new StoryClass(2,"Khi hơi thở hóa thinh không", "Paul Katy", "Full","19 giờ trước",  10, Arrays.asList("First String", "Second String"), 103);
 
-        String chapter_1ct = "Trong một thung lũng xa xôi, nơi tình khúc hòa với tiếng gió, có một lão già tên là Oren. Ông là người duy nhất trong làng biết về bí mật của \"Hơi Thở Hóa Thinh Không\".\n" +
-                "Lão Oren từng nói rằng mỗi sinh linh đều có khả năng biến hơi thở của mình thành một sức mạnh vô hình, tạo nên những điều kỳ diệu. Người ta cười chê và coi ông như một người mơ mộng.\n" +
-                "Trong một buổi chiều trời rực rỡ, Dara - một cô bé tinh nghịch, đầy tò mò đã đến thăm lão Oren. Cô bé vừa học được về bí mật này và muốn hiểu rõ hơn.\n" +
-                "\"Mỗi hơi thở là một phép màu, Dara,\" ông Oren nói. \"Nếu ta biết cách tập trung, ta có thể làm bất cứ điều gì.\"\n" +
-                "Dara đã quyết định thử sức. Cô bé đóng một quả bóng và nhả hơi thở của mình vào đó. Rồi, kì diệu đã xảy ra. Quả bóng bắt đầu nhấp nhổm, bay lên và sáng rực như ngọn đèn lồng.\n" +
-                "Với sức mạnh của hơi thở, Dara tạo ra những hình ảnh phong phú: một con rồng nhỏ bay quanh, một bông hoa màu sắc lấp lánh, và thậm chí là một cánh buồm trắng nhẹ nhàng trên mặt nước.\n" +
-                "Từ ngày đó, tin đồn về \"Hơi Thở Hóa Thinh Không\" lan tỏa khắp làng. Mọi người hiểu rõ hơn về sức mạnh tiềm ẩn trong từng hơi thở. Họ đã học cách tin vào điều không tưởng và thấy rằng, trong mỗi chúng ta, đều có khả năng tạo ra kỳ diệu từ những điều tưởng chừng nhỏ nhất.";
 
-        story_Class_1.addChapter(new ChapterClass(1, chapter_1ct));
-        storiesRef.child("storyId1").setValue(story_Class_1, (databaseError, databaseReference) -> {
-            if (databaseError != null) {
-                Log.i("DB", "Data could not be saved " + databaseError.getMessage());
-            } else {
-                Log.i("DB", "Story data saved successfully.");
-                Gson gson = new Gson();
-                String storyJson = gson.toJson(story_Class_1); // Convert the object to JSON
 
-                Log.i("DB", "Data pushed: " + storyJson);
-            }
-        });
 
 
 

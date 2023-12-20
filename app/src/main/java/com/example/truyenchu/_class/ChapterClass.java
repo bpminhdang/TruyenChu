@@ -1,21 +1,21 @@
 package com.example.truyenchu._class;
 public class ChapterClass
 {
-    private int chapterId;
+    private String chapterId;
     private String content;
 
-    public ChapterClass(int chapterId, String content)
+    public ChapterClass(String chapterId, String content)
     {
         this.chapterId = chapterId;
         this.content = content;
     }
 
-    public int getChapterId()
+    public String getChapterId()
     {
         return chapterId;
     }
 
-    public void setChapterId(int chapterId)
+    public void setChapterId(String chapterId)
     {
         this.chapterId = chapterId;
     }

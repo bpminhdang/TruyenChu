@@ -1,5 +1,7 @@
 package com.example.truyenchu._class;
 
+import android.net.Uri;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,23 +13,30 @@ public class StoryClass
     private String time;
     private String author;
     private String status;
+    private String description;
+
     private int numberOfChapter;
     //private Image image;
     private List<ChapterClass> chapters = new ArrayList<>(); // List để lưu danh sách các chương
     private List<String> genres;
     private int views;
 
+    private String uri; // Retrive data from Firebase
+
+
+
     // Constructor
-    public StoryClass(int id, String name, String author, String status, String time, int numberOfChapter, List<String> genres, int views)
+    public StoryClass(int id, String name, String time, String author, String status, String description, int numberOfChapter, List<String> genres, int views)
     {
         this.id = id;
         this.name = name;
+        this.time = time;
         this.author = author;
         this.status = status;
-        this.time = time;
+        this.description = description;
         this.numberOfChapter = numberOfChapter;
-        this.views = views;
         this.genres = genres;
+        this.views = views;
     }
 
     public int getId()
@@ -69,8 +78,6 @@ public class StoryClass
         return numberOfChapter;
     }
 
-    // Todo: Thêm get dữ liệu Image
-
     public List<String> getGenres()
     {
         return genres;
@@ -96,5 +103,15 @@ public class StoryClass
     public String getTime()
     {
         return time;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public String getUri()
+    {
+        return uri;
     }
 }

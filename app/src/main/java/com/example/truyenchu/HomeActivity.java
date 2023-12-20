@@ -3,10 +3,13 @@ package com.example.truyenchu;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 
 import com.example.truyenchu.R;
+import com.example.truyenchu.features.UploadStoryFragment;
 import com.example.truyenchu.ui.DownloadFragment;
 import com.example.truyenchu.ui.HomeFragment;
 import com.example.truyenchu.ui.ProfileFragment;
@@ -22,6 +25,15 @@ public class HomeActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            View decor = getWindow().getDecorView();
+            // Set the status bar icon color to dark
+            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            // Change the status bar color to your desired color
+            getWindow().setStatusBarColor(getColor(android.R.color.transparent));
+        }
+
+
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
 
         if (savedInstanceState == null)
@@ -52,7 +64,7 @@ public class HomeActivity extends AppCompatActivity
                 selectedFragment = new ProfileFragment();
             } else if (item.getItemId() == R.id.navigation_search)
             {
-                selectedFragment = new SearchFragment();
+                selectedFragment = new UploadStoryFragment();
             }
 
             if (selectedFragment != null)

@@ -27,5 +27,8 @@
     <string name="bo_loc">Bộ lọc</string>
     <string name="genres_quote">Thể loại (Cách nhau bằng dấu phẩy)</string>
     <string name="choose_cover_image">Chọn ảnh bìa</string>
+    <string name="save_draft">Lưu bản nháp</string>
+    <string name="exit">Thoát</string>
+    <string name="upload">Tải lên</string>
 
 </resources>

@@ -28,7 +28,7 @@
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingStart="15dp"
-                android:paddingTop="40dp"
+                android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:weightSum="7">
 
@@ -48,6 +48,7 @@
                     android:paddingStart="10dp"
                     android:text="Tạo truyện mới"
                     android:textSize="26sp" />
+
             </LinearLayout>
 
             <TextView
@@ -78,7 +79,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/chapter_content_upload"
+                    android:id="@+id/genres_upload"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/common_padding"
@@ -93,34 +94,33 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/common_padding"
                 android:layout_weight="1"
-                app:layout_constraintEnd_toStartOf="@+id/imageView7"
-                app:layout_constraintStart_toStartOf="@+id/imageView7">
+                app:layout_constraintEnd_toStartOf="@+id/iv_cover"
+                app:layout_constraintStart_toStartOf="@+id/iv_cover">
 
-                <Switch
-                    android:id="@+id/switch1"
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switch_final"
+                    style="@style/Widget.Material3.CompoundButton.MaterialSwitch"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="7dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
                     android:layout_marginEnd="21dp"
-                    android:layout_marginRight="21dp"
-                    android:text="Final chapter"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView7"
+                    android:text="Chương cuối"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_cover"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/imageView7" />
+                    app:layout_constraintTop_toTopOf="@+id/iv_cover" />
 
                 <ImageView
-                    android:id="@+id/imageView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/iv_cover1"
+                    android:layout_width="120dp"
+                    android:layout_height="200dp"
                     android:layout_marginEnd="20dp"
-                    android:src="@tools:sample/avatars"
+                    android:src="@drawable/book_2"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/switch1" />
+                    app:layout_constraintStart_toEndOf="@+id/switch_final" />
 
                 <Button
-                    android:id="@+id/button4"
+                    android:id="@+id/bt_chooseImage_upload"
                     style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -128,13 +128,44 @@
                     android:layout_marginEnd="20dp"
                     android:text="@string/choose_cover_image"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView7"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_cover"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/switch1"
+                    app:layout_constraintTop_toBottomOf="@+id/switch_final"
                     app:layout_constraintVertical_bias="1.0" />
 
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="@dimen/common_padding"
+                    android:layout_marginEnd="@dimen/common_padding"
+                    android:layout_weight="1"
+                    android:text="Bật nó lên nếu như đây là chương cuối cùng của truyện, có nghĩa là truyện của bạn đã hoàn thành."
+                    android:textColor="#6F000000"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@+id/bt_chooseImage_upload"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_cover"
+                    app:layout_constraintHorizontal_bias="0.492"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/switch_final"
+                    app:layout_constraintVertical_bias="0.158" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/common_padding"
+                android:layout_marginEnd="@dimen/common_padding"
+                android:layout_weight="1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Mô tả" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -154,36 +185,36 @@
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btDraft_upload"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Button" />
+            android:layout_marginEnd="5dp"
+            android:text="@string/save_draft"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btUpload_upload"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btUpload_upload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
-            android:layout_weight="1"
-            android:text="Button" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Button" />
-    </LinearLayout>
+            android:layout_marginEnd="20dp"
+            android:text="@string/upload"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
