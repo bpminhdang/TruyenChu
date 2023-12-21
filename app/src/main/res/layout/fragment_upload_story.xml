@@ -104,10 +104,10 @@
                     android:layout_height="7dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="21dp"
-                    android:text="Chương cuối"
-                    app:layout_constraintEnd_toStartOf="@+id/iv_cover"
+                    android:text="@string/final_chapter"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_cover1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/iv_cover" />
+                    app:layout_constraintTop_toTopOf="@+id/iv_cover1" />
 
                 <ImageView
                     android:id="@+id/iv_cover1"
@@ -128,7 +128,7 @@
                     android:layout_marginEnd="20dp"
                     android:text="@string/choose_cover_image"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/iv_cover"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_cover1"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/switch_final"
@@ -139,14 +139,12 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="@dimen/common_padding"
-                    android:layout_marginEnd="@dimen/common_padding"
                     android:layout_weight="1"
                     android:text="Bật nó lên nếu như đây là chương cuối cùng của truyện, có nghĩa là truyện của bạn đã hoàn thành."
                     android:textColor="#6F000000"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toTopOf="@+id/bt_chooseImage_upload"
-                    app:layout_constraintEnd_toStartOf="@+id/iv_cover"
-                    app:layout_constraintHorizontal_bias="0.492"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_cover1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/switch_final"
                     app:layout_constraintVertical_bias="0.158" />
