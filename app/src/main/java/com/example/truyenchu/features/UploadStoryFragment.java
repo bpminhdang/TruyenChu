@@ -120,39 +120,41 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
         Button bt_Draft = view.findViewById(R.id.btDraft_upload);
         imageView = view.findViewById(R.id.iv_cover1);
 
+        // Get database
+        DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
+        DatabaseReference storyRef = database.child("stories");
+
+        // Upload local storyCount variable when start this fragment and everytime a story uploaded successfully.
+        storyRef.child("storyCount").addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                Integer value = dataSnapshot.getValue(Integer.class);
+                if (value == null)
+                {
+                    storyRef.child("storyCount").setValue(0);
+                    onStoryCountReceived(0);
+                } else
+                    onStoryCountReceived(value);
+                Log.d("DB", "Number of existing stories: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error)
+            {
+                // Failed to read value
+                Log.w("DB", "Failed to read value.", error.toException());
+            }
+        });
+
         bt_chooseImage.setOnClickListener(v ->
                 openFileChooser());
 
         bt_Upload.setOnClickListener(v ->
         {
-            DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
-            DatabaseReference storyRef = database.child("stories");
-            // Read from the database
-            storyRef.child("storyCount").addValueEventListener(new ValueEventListener()
-            {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot)
-                {
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
-                    Integer value = dataSnapshot.getValue(Integer.class);
-                    if (value == null)
-                    {
-                        storyRef.child("storyCount").setValue(0);
-                        onStoryCountReceived(0);
-                    } else
-                        onStoryCountReceived(value);
-                    Log.d("DB", "Number of existing stories: " + value);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError error)
-                {
-                    // Failed to read value
-                    Log.w("DB", "Failed to read value.", error.toException());
-                }
-            });
-
             int id;
             String name;
             String author;
