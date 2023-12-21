@@ -10,6 +10,10 @@ public class ChapterClass
         this.content = content;
     }
 
+    public ChapterClass()
+    {
+    }
+
     public String getChapterId()
     {
         return chapterId;

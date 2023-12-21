@@ -14,7 +14,6 @@ public class StoryClass
     private String author;
     private String status;
     private String description;
-
     private int numberOfChapter;
     //private Image image;
     private List<ChapterClass> chapters = new ArrayList<>(); // List để lưu danh sách các chương
@@ -37,6 +36,11 @@ public class StoryClass
         this.numberOfChapter = numberOfChapter;
         this.genres = genres;
         this.views = views;
+    }
+
+    public StoryClass(int id)
+    {
+        this.id = id;
     }
 
     public int getId()
@@ -113,5 +117,80 @@ public class StoryClass
     public String getUri()
     {
         return uri;
+    }
+
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public void setTime(String time)
+    {
+        this.time = time;
+    }
+
+    public void setAuthor(String author)
+    {
+        this.author = author;
+    }
+
+    public void setStatus(String status)
+    {
+        this.status = status;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
+    public void setNumberOfChapter(int numberOfChapter)
+    {
+        this.numberOfChapter = numberOfChapter;
+    }
+
+    public void setChapters(List<ChapterClass> chapters)
+    {
+        this.chapters = chapters;
+    }
+
+    public void setGenres(List<String> genres)
+    {
+        this.genres = genres;
+    }
+
+    public void setViews(int views)
+    {
+        this.views = views;
+    }
+
+    public void setUri(String uri)
+    {
+        this.uri = uri;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("ID: ").append(id).append("\n");
+        stringBuilder.append("Name: ").append(name).append("\n");
+        stringBuilder.append("Time: ").append(time).append("\n");
+        stringBuilder.append("Author: ").append(author).append("\n");
+        stringBuilder.append("Status: ").append(status).append("\n");
+        stringBuilder.append("Description: ").append(description).append("\n");
+        stringBuilder.append("Number of Chapters: ").append(numberOfChapter).append("\n");
+        stringBuilder.append("Genres: ").append(genres).append("\n");
+        stringBuilder.append("Views: ").append(views).append("\n");
+        stringBuilder.append("URI: ").append(uri).append("\n");
+
+        // Append chapters information
+        stringBuilder.append("Chapters: \n");
+        for (ChapterClass chapter : chapters) {
+            stringBuilder.append("\tChapter ID: ").append(chapter.getChapterId()).append(", Content: ").append(chapter.getContent()).append("\n");
+        }
+
+        return stringBuilder.toString();
     }
 }
