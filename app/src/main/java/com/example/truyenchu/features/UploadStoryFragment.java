@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.ChapterClass;
+import com.example.truyenchu._class.NetworkUtil;
 import com.example.truyenchu._class.StoryClass;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
@@ -300,6 +301,12 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
 
         bt_Upload.setOnClickListener(v ->
         {
+            if(!NetworkUtil.isNetworkConnected(getContext()))
+            {
+                Toast.makeText(getContext(), "Not connected to the internet. Check your connection and try again!", Toast.LENGTH_LONG).show();
+                return;
+            }
+
             int id;
             String name;
             String author;

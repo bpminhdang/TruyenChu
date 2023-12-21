@@ -1,5 +1,6 @@
 package com.example.truyenchu.ui;
 
+import android.health.connect.datatypes.units.Length;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,6 +47,7 @@ public class HomeFragment extends Fragment
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private ArrayList<StoryClass> storyList = new ArrayList<>();
 
     public HomeFragment()
     {
@@ -80,8 +82,6 @@ public class HomeFragment extends Fragment
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
     }
 
     @Override
@@ -93,42 +93,34 @@ public class HomeFragment extends Fragment
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        //FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").setPersistenceEnabled(true);
         DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
         DatabaseReference storiesRef = database.child("stories");
 
-        // Lấy dữ liệu từ Firebase
-        ArrayList<StoryClass> storyList = new ArrayList<>();
+        RecyclerView recyclerView = view.findViewById(R.id.home_recycler_view);
+        HorizontalSmallImageAdapter adapter = new HorizontalSmallImageAdapter(getActivity(), storyList);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        // Inflate the layout for this fragment
+
+        RecyclerView recyclerView1 = view.findViewById(R.id.home_recycler_view_2);
+        HorizontalContentAdapter adapter1 = new HorizontalContentAdapter(getActivity(), storyList);
+        recyclerView1.setAdapter(adapter1);
+        recyclerView1.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
+        RecyclerView recyclerView2 = view.findViewById(R.id.home_recycler_view_3);
+        HorizontalImageAdapter adapter2 = new HorizontalImageAdapter(getActivity(), storyList);
+        recyclerView2.setAdapter(adapter2);
+        recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
 
         storiesRef.addListenerForSingleValueEvent(new ValueEventListener()
         {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot)
-//            {
-//                // Tạo ArrayList để lưu trữ các đối tượng Story
-//
-////                // Duyệt qua từng node truyện và lưu vào ArrayList
-////                for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
-////                {
-////                    Map<String, Object> dataMap = (Map<String, Object>) dataSnapshot.getValue();
-////
-////                   StoryClass story = createStoryFromMap(dataMap);
-//////                    storyList.add(story);
-////                }
-//
-//
-//                // Khi đã lấy được dữ liệu, bạn có thể làm gì đó với storyList ở đây
-//                // Ví dụ: in thông tin của mỗi truyện trong storyList
-//                for (StoryClass story : storyList)
-//                {
-//                    Log.i("DB", "Tên truyện: " + story.getName());
-//                    // In các thông tin khác của truyện tương ứng
-//                }
-//            }
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
-                ArrayList<StoryClass> storyList = new ArrayList<>();
+                //storyList = new ArrayList<>();
 
                 if (dataSnapshot.exists())
                 {
@@ -173,12 +165,13 @@ public class HomeFragment extends Fragment
                             Log.i("DBValue", story.toString());
                             // Thêm story vào danh sách storyList
                             storyList.add(story);
+                            adapter.notifyDataSetChanged();
+                            adapter1.notifyDataSetChanged();
+                            adapter2.notifyDataSetChanged();
+
                         }
                     }
                 }
-
-                // Ở đây, storyList chứa tất cả các StoryClass đã được lấy từ Firebase
-                // Bạn có thể sử dụng storyList trong ứng dụng của mình
             }
 
             @Override
@@ -188,21 +181,7 @@ public class HomeFragment extends Fragment
             }
         });
 
-//        RecyclerView recyclerView = view.findViewById(R.id.home_recycler_view);
-//        HorizontalSmallImageAdapter adapter = new HorizontalSmallImageAdapter(getActivity(), storyList);
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-//        // Inflate the layout for this fragment
-//
-//        RecyclerView recyclerView1 = view.findViewById(R.id.home_recycler_view_2);
-//        HorizontalContentAdapter adapter1 = new HorizontalContentAdapter(getActivity(), storyList);
-//        recyclerView1.setAdapter(adapter1);
-//        recyclerView1.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-//
-//        RecyclerView recyclerView2 = view.findViewById(R.id.home_recycler_view_3);
-//        HorizontalImageAdapter adapter2 = new HorizontalImageAdapter(getActivity(), storyList);
-//        recyclerView2.setAdapter(adapter2);
-//        recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
 
 //        DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
 //        DatabaseReference usersRef = database.child("users");
@@ -219,19 +198,6 @@ public class HomeFragment extends Fragment
 //                System.out.println("Users data saved successfully.");
 //            }
 //        });
-
-
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//
-
 
         return view;
 
