@@ -2,12 +2,22 @@ package com.example.truyenchu.features;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -33,11 +43,18 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 
 /**
@@ -53,6 +70,8 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final int PICK_IMAGE_REQUEST = 1;
+    private static final int REQUEST_READ_EXTERNAL_STORAGE = 100;
+    private static final int REQUEST_WRITE_EXTERNAL_STORAGE = 101;
     private Uri imageUri;
 
     // TODO: Rename and change types of parameters
@@ -114,10 +133,12 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
         TextInputEditText et_genres_upload = view.findViewById(R.id.genres_upload);
         SwitchMaterial sw_final = view.findViewById(R.id.switch_final);
         Button bt_chooseImage = view.findViewById(R.id.bt_chooseImage_upload);
-        TextInputEditText et_description = view.findViewById(R.id.et_description);
-        TextInputEditText et_chapter_content = view.findViewById(R.id.chapter_content_upload);
+        TextInputEditText et_description_upload = view.findViewById(R.id.et_description);
+        TextInputEditText et_chapter_content_upload = view.findViewById(R.id.chapter_content_upload);
         Button bt_Upload = view.findViewById(R.id.btUpload_upload);
         Button bt_Draft = view.findViewById(R.id.btDraft_upload);
+        Button bt_Reload = view.findViewById(R.id.btReload_upload);
+        ImageView bt_Back = view.findViewById(R.id.ivBack_upload);
         imageView = view.findViewById(R.id.iv_cover1);
 
         // Get database
@@ -150,8 +171,132 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
             }
         });
 
+        bt_Back.setOnClickListener(v->
+        {
+            requireActivity().onBackPressed();
+        });
         bt_chooseImage.setOnClickListener(v ->
                 openFileChooser());
+
+        bt_Draft.setOnClickListener(v ->
+        {
+            String name = et_name_upload.getText().toString();
+            String genres = et_genres_upload.getText().toString();
+            String description = et_description_upload.getText().toString();
+            String content = et_chapter_content_upload.getText().toString();
+
+            // Saving other details to SharedPreferences
+            SharedPreferences sharedPreferences = requireContext().getSharedPreferences("StoryDraft", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("name", name);
+            editor.putString("genres", genres);
+            editor.putString("description", description);
+            editor.putString("imageUri", imageUri.toString());
+            editor.apply();
+
+            // Save story content to a text file
+            try
+            {
+                FileOutputStream fileOutputStream = requireContext().openFileOutput("story.txt", Context.MODE_PRIVATE);
+                fileOutputStream.write(content.getBytes());
+                fileOutputStream.close();
+
+                Drawable drawable = imageView.getDrawable();
+                Bitmap bitmap;
+
+                if (drawable instanceof BitmapDrawable)
+                {
+                    bitmap = ((BitmapDrawable) drawable).getBitmap();
+
+                    String fileName = "story.jpg";
+                    FileOutputStream imageOutputStream = null;
+
+                    try
+                    {
+                        imageOutputStream = requireContext().openFileOutput(fileName, Context.MODE_PRIVATE);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, imageOutputStream); // Compress and save the bitmap
+                    } catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    } finally
+                    {
+                        try
+                        {
+                            if (imageOutputStream != null)
+                            {
+                                imageOutputStream.close(); // Close the file output stream
+                            }
+                        } catch (IOException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                Toast.makeText(getContext(), "Saved successfully", Toast.LENGTH_SHORT).show();
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        });
+        bt_Reload.setOnClickListener(v ->
+        {
+
+            SharedPreferences sharedPreferences = requireContext().getSharedPreferences("StoryDraft", Context.MODE_PRIVATE);
+            String savedName = sharedPreferences.getString("name", "");
+            String savedGenres = sharedPreferences.getString("genres", "");
+            String savedDescription = sharedPreferences.getString("description", "");
+            String imageUriString = sharedPreferences.getString("imageUri", "");
+            String fileName = "story.jpg";
+            Bitmap loadedBitmap = null;
+
+            if (!imageUriString.isEmpty())
+            {
+                imageUri = Uri.parse(imageUriString);
+                imageView.setImageURI(imageUri); // Set the selected image to the ImageView
+            }
+
+            try
+            {
+                FileInputStream fileInputStream = requireContext().openFileInput(fileName);
+                loadedBitmap = BitmapFactory.decodeStream(fileInputStream); // Decode the stored file into a Bitmap
+                fileInputStream.close(); // Close the file input stream
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            // 'loadedBitmap' contains the retrieved image, set it to ImageView
+            if (loadedBitmap != null)
+            {
+                imageView.setImageBitmap(loadedBitmap);
+            }
+
+            et_name_upload.setText(savedName);
+            et_genres_upload.setText(savedGenres);
+            et_description_upload.setText(savedDescription);
+
+            // Load story content from the text file
+            try
+            {
+                FileInputStream fileInputStream = requireContext().openFileInput("story.txt");
+                InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                StringBuilder contentBuilder = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null)
+                {
+                    contentBuilder.append(line).append("\n");
+                }
+                bufferedReader.close();
+                et_chapter_content_upload.setText(contentBuilder.toString());
+                Toast.makeText(getContext(), "Loaded successfully", Toast.LENGTH_SHORT).show();
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        });
+
 
         bt_Upload.setOnClickListener(v ->
         {
@@ -179,8 +324,8 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
             String[] splittedStrings = Objects.requireNonNull(et_genres_upload.getText()).toString().split(",\\s*");
             genres = new ArrayList<>(Arrays.asList(splittedStrings));
             views = 0;
-            description = et_description.getText().toString();
-            content = et_chapter_content.getText().toString();
+            description = et_description_upload.getText().toString();
+            content = et_chapter_content_upload.getText().toString();
 
             StoryClass story = new StoryClass(id, name, time, author, status, description, numberOfChapter, genres, views);
             storyRef.child("story_" + id).setValue(story, (databaseError, databaseReference) ->
@@ -189,9 +334,8 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
                 storyRef.child("story_" + id).child("chapters").child("chapter_" + id + "_" + numberOfChapter).setValue(new ChapterClass(id + "_" + numberOfChapter, content));
                 //Handle upload Story
                 uploadImageToFirebase("story_" + id, imageUriStringFB ->
-                {
-                    storyRef.child("story_" + id).child("uri").setValue(imageUriStringFB);
-                });
+                        storyRef.child("story_" + id).child("uri").setValue(imageUriStringFB));
+
                 if (databaseError != null)
                 {
                     Log.i("DB", "Data could not be saved " + databaseError.getMessage());
@@ -250,10 +394,12 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
             uploadTask.addOnSuccessListener(taskSnapshot ->
             {
                 Log.i("DB", "uploadImageToFirebase: Success");
-                imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                imageRef.getDownloadUrl().addOnSuccessListener(uri ->
+                {
                     String imageUriStringFB = uri.toString();
                     Log.i("DB", "Image URL: " + imageUriStringFB);
-                    if (callback != null) {
+                    if (callback != null)
+                    {
                         callback.onImageUploaded(imageUriStringFB);
                     }
                 });

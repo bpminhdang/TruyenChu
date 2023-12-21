@@ -31,5 +31,6 @@
     <string name="exit">Thoát</string>
     <string name="upload">Tải lên</string>
     <string name="final_chapter">Chương cuối</string>
+    <string name="reload">Tải lại</string>
 
 </resources>
