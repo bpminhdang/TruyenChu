@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
 
@@ -125,10 +126,9 @@ public class HorizontalContentAdapter extends RecyclerView.Adapter<HorizontalCon
         StoryClass story = arr.get(position);
         String temp;
 
-        //Todo: Image
-        //viewHolder.getStoryImage().setImageDrawable(story.getImage());
-
-        viewHolder.getStoryImage();
+        Glide.with(viewHolder.itemView.getContext())
+                .load(story.getUri())
+                .into(viewHolder.getStoryImage());
         viewHolder.getTvName().setText(story.getName());
 
         temp = context.getString(R.string.author) + " " + story.getAuthor();

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
 
@@ -93,8 +94,9 @@ public class HorizontalSmallImageAdapter extends RecyclerView.Adapter<Horizontal
         StoryClass story = arr.get(position);
         String temp;
 
-        //Todo: Image
-        //viewHolder.getStoryImage().setImageDrawable(story.getImage());
+        Glide.with(viewHolder.itemView.getContext())
+                .load(story.getUri())
+                .into(viewHolder.getStoryImage());
         viewHolder.getTvName().setText(story.getName(13));
         Log.i("ABC", "onBindViewHolder: " + " " + position);
     }

@@ -251,27 +251,6 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
             String fileName = "story.jpg";
             Bitmap loadedBitmap = null;
 
-            if (!imageUriString.isEmpty())
-            {
-                imageUri = Uri.parse(imageUriString);
-                imageView.setImageURI(imageUri); // Set the selected image to the ImageView
-            }
-
-            try
-            {
-                FileInputStream fileInputStream = requireContext().openFileInput(fileName);
-                loadedBitmap = BitmapFactory.decodeStream(fileInputStream); // Decode the stored file into a Bitmap
-                fileInputStream.close(); // Close the file input stream
-            } catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-
-            // 'loadedBitmap' contains the retrieved image, set it to ImageView
-            if (loadedBitmap != null)
-            {
-                imageView.setImageBitmap(loadedBitmap);
-            }
 
             et_name_upload.setText(savedName);
             et_genres_upload.setText(savedGenres);
@@ -294,6 +273,24 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
                 Toast.makeText(getContext(), "Loaded successfully", Toast.LENGTH_SHORT).show();
             } catch (IOException e)
             {
+                Toast.makeText(getContext(), "Error loading content!", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+
+            try
+            {
+                if (!imageUriString.isEmpty())
+                {
+                    imageUri = Uri.parse(imageUriString);
+                    imageView.setImageURI(imageUri); // Set the selected image to the ImageView
+                }
+                FileInputStream fileInputStream = requireContext().openFileInput(fileName);
+                loadedBitmap = BitmapFactory.decodeStream(fileInputStream); // Decode the stored file into a Bitmap
+                fileInputStream.close(); // Close the file input stream
+                imageView.setImageBitmap(loadedBitmap);
+            } catch (Exception e)
+            {
+                Toast.makeText(getContext(), "Can't retrieve image, please choose it manually!", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         });
@@ -301,6 +298,12 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
 
         bt_Upload.setOnClickListener(v ->
         {
+            if (imageUri == null)
+            {
+                Toast.makeText(getContext(), "Please choose cover image for story", Toast.LENGTH_LONG).show();
+                return;
+            }
+
             if(!NetworkUtil.isNetworkConnected(getContext()))
             {
                 Toast.makeText(getContext(), "Not connected to the internet. Check your connection and try again!", Toast.LENGTH_LONG).show();
@@ -319,9 +322,10 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
             int views;
 
 
-            id = storyCount + 1;
+            id = storyCount + 1;                        // IDs are automatically generated
             name = et_name_upload.getText().toString();
-            author = getString(R.string.user_name);
+            // Todo: Change username
+            author = getString(R.string.user_name);                  // Get username
             if (sw_final.isChecked())
                 status = "Full";
             else
@@ -352,7 +356,7 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
                     storyRef.child("storyCount").setValue(storyCount + 1);
                     Log.i("DB", "Upload story success!");
                     Gson gson = new Gson();
-                    String storyJson = gson.toJson(story); // Convert the object to JSON
+                    String storyJson = gson.toJson(story); // Convert the object to to log it
                     Log.i("DB", "Data pushed: " + storyJson);
                     Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
 

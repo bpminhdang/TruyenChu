@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
 
@@ -123,10 +124,9 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
         // contents of the view with that element
         StoryClass story = arr.get(position);
 
-        //Todo: Image
-        //viewHolder.getStoryImage().setImageDrawable(story.getImage());
-
-        viewHolder.getStoryImage();
+        Glide.with(viewHolder.itemView.getContext())
+                .load(story.getUri())
+                .into(viewHolder.getStoryImage());
         viewHolder.getTvName().setText(story.getName());
         viewHolder.getTvTime().setText(story.getTime());
         viewHolder.getTvAuthor().setText(story.getAuthor());
