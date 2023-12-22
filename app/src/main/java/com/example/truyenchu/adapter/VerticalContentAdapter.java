@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
+import com.example.truyenchu.features.RecyclerViewItemClickListener;
 
 import java.util.ArrayList;
 
@@ -21,10 +22,12 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
 {
 
     static ArrayList<StoryClass> arr;
+    private final RecyclerViewItemClickListener listener;
 
-    public VerticalContentAdapter(FragmentActivity activity, ArrayList<StoryClass> dataSet)
+    public VerticalContentAdapter(FragmentActivity activity, ArrayList<StoryClass> dataSet, RecyclerViewItemClickListener listener)
     {
         arr = dataSet;
+        this.listener = listener;
     }
 
     public static void updateData(StoryClass e)
@@ -95,6 +98,11 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
         {
             return tvGenre;
         }
+
+        public void bind(StoryClass story, RecyclerViewItemClickListener listener)
+        {
+            itemView.setOnClickListener(v-> listener.onItemClick(story));
+        }
     }
 
     /**
@@ -122,6 +130,7 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
+        viewHolder.bind(arr.get(position), listener);
         StoryClass story = arr.get(position);
 
         Glide.with(viewHolder.itemView.getContext())

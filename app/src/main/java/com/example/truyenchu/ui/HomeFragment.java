@@ -1,11 +1,11 @@
 package com.example.truyenchu.ui;
 
-import android.health.connect.datatypes.units.Length;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
-import com.example.truyenchu._class.UserClass;
 import com.example.truyenchu.adapter.HorizontalContentAdapter;
 import com.example.truyenchu.adapter.HorizontalImageAdapter;
 import com.example.truyenchu.adapter.HorizontalSmallImageAdapter;
@@ -23,11 +22,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +32,7 @@ import java.util.Map;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment
+public class HomeFragment extends Fragment// implements RecyclerViewItemClickListener
 {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -95,18 +91,28 @@ public class HomeFragment extends Fragment
         DatabaseReference storiesRef = database.child("stories");
 
         RecyclerView recyclerView = view.findViewById(R.id.home_recycler_view);
-        HorizontalSmallImageAdapter adapter = new HorizontalSmallImageAdapter(getActivity(), storyList);
+        HorizontalSmallImageAdapter adapter = new HorizontalSmallImageAdapter(getActivity(), storyList, story ->
+        {
+            Toast.makeText(getContext(), story.getName(), Toast.LENGTH_SHORT).show();
+        });
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        // Inflate the layout for this fragment
+        //recyclerView.setOnItemClick
 
         RecyclerView recyclerView1 = view.findViewById(R.id.home_recycler_view_2);
-        HorizontalContentAdapter adapter1 = new HorizontalContentAdapter(getActivity(), storyList);
+        HorizontalContentAdapter adapter1 = new HorizontalContentAdapter(getActivity(), storyList, story ->
+        {
+            Toast.makeText(getContext(), story.getName(), Toast.LENGTH_SHORT).show();
+        });
+
         recyclerView1.setAdapter(adapter1);
         recyclerView1.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
         RecyclerView recyclerView2 = view.findViewById(R.id.home_recycler_view_3);
-        HorizontalImageAdapter adapter2 = new HorizontalImageAdapter(getActivity(), storyList);
+        HorizontalImageAdapter adapter2 = new HorizontalImageAdapter(getActivity(), storyList, story ->
+        {
+            Toast.makeText(getContext(), story.getName(), Toast.LENGTH_SHORT).show();
+        });
         recyclerView2.setAdapter(adapter2);
         recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
@@ -117,8 +123,6 @@ public class HomeFragment extends Fragment
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
-                //storyList = new ArrayList<>();
-
                 if (dataSnapshot.exists())
                 {
                     for (DataSnapshot storySnapshot : dataSnapshot.getChildren())

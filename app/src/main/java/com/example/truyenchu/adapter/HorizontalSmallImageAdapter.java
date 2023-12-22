@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
+import com.example.truyenchu.features.RecyclerViewItemClickListener;
 
 import java.util.ArrayList;
 
@@ -21,11 +22,12 @@ public class HorizontalSmallImageAdapter extends RecyclerView.Adapter<Horizontal
 {
     private Context context;
     static ArrayList<StoryClass> arr;
-
-    public HorizontalSmallImageAdapter(Context context, ArrayList<StoryClass> dataSet)
+    private final RecyclerViewItemClickListener listener;
+    public HorizontalSmallImageAdapter(Context context, ArrayList<StoryClass> dataSet, RecyclerViewItemClickListener listener)
     {
         this.context = context;
         arr = dataSet;
+        this.listener = listener;
     }
 
     public static void updateData(StoryClass e)
@@ -62,6 +64,11 @@ public class HorizontalSmallImageAdapter extends RecyclerView.Adapter<Horizontal
             return tvName;
         }
 
+        public void bind(StoryClass story, RecyclerViewItemClickListener listener)
+        {
+            itemView.setOnClickListener(v ->
+                    listener.onItemClick(story));
+        }
     }
 
     /**
@@ -90,7 +97,7 @@ public class HorizontalSmallImageAdapter extends RecyclerView.Adapter<Horizontal
         // Get element from your dataset at this position and replace the
         // images of the view with that element
 
-
+        viewHolder.bind(arr.get(position), listener);
         StoryClass story = arr.get(position);
         String temp;
 

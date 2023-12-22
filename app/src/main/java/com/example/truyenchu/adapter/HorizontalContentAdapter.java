@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
+import com.example.truyenchu.features.RecyclerViewItemClickListener;
 
 import java.util.ArrayList;
 
@@ -21,17 +22,85 @@ public class HorizontalContentAdapter extends RecyclerView.Adapter<HorizontalCon
 {
     private Context context;
     static ArrayList<StoryClass> arr;
+    private final RecyclerViewItemClickListener listener;
 
-    public HorizontalContentAdapter(Context context, ArrayList<StoryClass> dataSet)
+    public HorizontalContentAdapter(Context context, ArrayList<StoryClass> dataSet, RecyclerViewItemClickListener listener)
     {
         this.context = context;
         arr = dataSet;
+        this.listener = listener;
     }
 
     public static void updateData(StoryClass e)
     {
         arr.add(e);
     }
+
+    public void updateList(ArrayList<StoryClass> newList)
+    {
+        this.arr = newList;
+        notifyDataSetChanged();
+    }
+
+    /**
+     * Initialize the dataset of the Adapter.
+     * <p>
+     * param dataSet String[] containing the data to populate views to be used
+     * by RecyclerView.
+     */
+
+    // Create new views (invoked by the layout manager)
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType)
+    {
+        // Create a new view, which defines the UI of the list item
+        View view = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.horizontal_content_item, viewGroup, false);
+
+        return new ViewHolder(view);
+    }
+
+    // Replace the contents of a view (invoked by the layout manager)
+    @Override
+    public void onBindViewHolder(ViewHolder viewHolder, final int position)
+    {
+
+        // Get element from your dataset at this position and replace the
+        // contents of the view with that element
+        viewHolder.bind(arr.get(position), listener);
+        StoryClass story = arr.get(position);
+        String temp;
+
+        Glide.with(viewHolder.itemView.getContext())
+                .load(story.getUri())
+                .into(viewHolder.getStoryImage());
+        viewHolder.getTvName().setText(story.getName());
+
+        temp = context.getString(R.string.author) + " " + story.getAuthor();
+        viewHolder.getTvAuthor().setText(temp);
+
+        temp = context.getString(R.string.number_of_chapter) + " " + story.getNumberOfChapter();
+        viewHolder.getTvChapter().setText(temp);
+
+        temp = context.getString(R.string.status) + " " + story.getStatus();
+        viewHolder.getTvStatus().setText(temp);
+
+        temp = context.getString(R.string.views) + " " + story.getViews();
+        viewHolder.getTvView().setText(temp);
+
+        temp = story.getNumberOfChapter() + " " + context.getString(R.string.chapter);
+        viewHolder.getTvChapter2().setText(temp);
+
+        Log.i("ABC", "onBindViewHolder: " + " " + position);
+    }
+
+    // Return the size of your dataset (invoked by the layout manager)
+    @Override
+    public int getItemCount()
+    {
+        return arr.size();
+    }
+
 
     /**
      * Provide a reference to the type of views that you are using
@@ -96,63 +165,14 @@ public class HorizontalContentAdapter extends RecyclerView.Adapter<HorizontalCon
         {
             return tvView;
         }
-    }
 
-    /**
-     * Initialize the dataset of the Adapter.
-     * <p>
-     * param dataSet String[] containing the data to populate views to be used
-     * by RecyclerView.
-     */
-
-    // Create new views (invoked by the layout manager)
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType)
-    {
-        // Create a new view, which defines the UI of the list item
-        View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.horizontal_content_item, viewGroup, false);
-
-        return new ViewHolder(view);
-    }
-
-    // Replace the contents of a view (invoked by the layout manager)
-    @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position)
-    {
-
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-        StoryClass story = arr.get(position);
-        String temp;
-
-        Glide.with(viewHolder.itemView.getContext())
-                .load(story.getUri())
-                .into(viewHolder.getStoryImage());
-        viewHolder.getTvName().setText(story.getName());
-
-        temp = context.getString(R.string.author) + " " + story.getAuthor();
-        viewHolder.getTvAuthor().setText(temp);
-
-        temp = context.getString(R.string.number_of_chapter) + " " + story.getNumberOfChapter();
-        viewHolder.getTvChapter().setText(temp);
-
-        temp = context.getString(R.string.status) + " " + story.getStatus();
-        viewHolder.getTvStatus().setText(temp);
-
-        temp = context.getString(R.string.views) + " " + story.getViews();
-        viewHolder.getTvView().setText(temp);
-
-        temp = story.getNumberOfChapter() + " " + context.getString(R.string.chapter);
-        viewHolder.getTvChapter2().setText(temp);
-
-        Log.i("ABC", "onBindViewHolder: " + " " + position);
-    }
-
-    // Return the size of your dataset (invoked by the layout manager)
-    @Override
-    public int getItemCount()
-    {
-        return arr.size();
+        public void bind(StoryClass storyClass, RecyclerViewItemClickListener listener)
+        {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    listener.onItemClick(storyClass);
+                }
+            });
+        }
     }
 }
