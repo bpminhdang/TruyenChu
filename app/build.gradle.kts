@@ -34,6 +34,7 @@ android {
 }
 
 dependencies {
+    implementation ("com.facebook.android:facebook-android-sdk:latest.release")
     implementation ("com.github.bumptech.glide:glide:4.12.0")
     implementation("androidx.preference:preference:1.2.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
