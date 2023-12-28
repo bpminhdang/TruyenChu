@@ -53,6 +53,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/montserrat_medium"
                         android:shadowColor="@android:color/black"
                         android:shadowDx="0"
                         android:shadowDy="0"
@@ -71,6 +72,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="30dp"
+                    android:fontFamily="@font/montserrat_semibold"
                     android:shadowColor="@android:color/black"
                     android:shadowDx="0"
                     android:shadowDy="0"
@@ -97,14 +99,16 @@
                 android:layout_width="128dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:fontFamily="@font/montserrat_semibold"
                 android:maxLines="@android:integer/config_mediumAnimTime"
                 android:text="@string/author"
-                android:textSize="25sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/item_horizontal_content_tvChapter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
                 android:text="@string/number_of_chapter"
                 android:textSize="@dimen/small_text_size" />
 
@@ -112,6 +116,7 @@
                 android:id="@+id/item_horizontal_content_tvStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
                 android:text="@string/status"
                 android:textSize="@dimen/small_text_size" />
 
@@ -119,7 +124,8 @@
                 android:id="@+id/item_horizontal_content_tvView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/montserrat_regular"
                 android:text="@string/views"
                 android:textSize="@dimen/small_text_size" />
 

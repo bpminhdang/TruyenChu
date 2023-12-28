@@ -5,6 +5,7 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/accent_1_0"
     tools:context=".features.UploadStoryFragment">
 
     <ScrollView
@@ -37,6 +38,7 @@
                     android:layout_width="18dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"
+                    android:background="@color/accent_1_0"
                     android:scaleType="centerInside"
                     android:src="@drawable/back" />
 
@@ -62,7 +64,8 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/accent_1_700">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/name_upload"
@@ -76,7 +79,8 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/accent_1_700">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/genres_upload"
@@ -127,6 +131,8 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:text="@string/choose_cover_image"
+                    android:textColor="@color/accent_1_700"
+                    app:iconTint="@color/accent_1_700"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/iv_cover1"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -199,6 +205,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="2dp"
             android:text="@string/save_draft"
+            android:textColor="@color/accent_1_700"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btUpload_upload"
             app:layout_constraintTop_toTopOf="parent"
@@ -209,6 +216,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/accent_1_700"
             android:text="@string/upload"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -216,16 +224,18 @@
 
         <Button
             android:id="@+id/btReload_upload"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/reload"
+            android:textColor="@color/accent_1_700"
+            app:iconTint="@color/accent_1_700"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btDraft_upload"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            style="@style/Widget.Material3.Button.TextButton"/>
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

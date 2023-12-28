@@ -4,12 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#00FFFFFF">
+    android:background="#00FFFFFF"
+    android:paddingStart="5dp"
+    android:paddingEnd="5dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         app:cardCornerRadius="20dp"> <!-- Điều chỉnh giá trị để bo tròn góc -->
 
         <FrameLayout
@@ -43,6 +46,7 @@
                     android:layout_width="104dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/montserrat_medium"
                     android:paddingStart="5dp"
                     android:shadowColor="@android:color/black"
                     android:shadowDx="0"
@@ -62,6 +66,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="50dp"
+                android:fontFamily="@font/montserrat_semibold"
                 android:shadowColor="@android:color/black"
                 android:shadowDx="0"
                 android:shadowDy="0"

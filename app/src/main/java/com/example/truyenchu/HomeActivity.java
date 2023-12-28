@@ -27,7 +27,7 @@ public class HomeActivity extends AppCompatActivity
         decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         // Change the status bar color to your desired color
-        getWindow().setStatusBarColor(getColor(android.R.color.transparent));
+        getWindow().setStatusBarColor(getColor(R.color.accent_1_0));
 
         getWindow().setNavigationBarColor(Color.WHITE);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
