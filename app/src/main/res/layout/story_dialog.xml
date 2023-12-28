@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/item_vertical_content_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="221dp"
+            tools:layout_editor_absoluteY="93dp">
+
+            <TextView
+                android:id="@+id/item_vertical_content_tvName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:maxLines="@android:integer/config_mediumAnimTime"
+                android:text="Khi hơi thở hóa thinh không"
+                android:textAlignment="center"
+                android:textSize="@dimen/title_text_size" />
+
+            <TextView
+                android:id="@+id/item_vertical_content_tvTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="16 giờ trước"
+                android:textSize="@dimen/small_text_size" />
+
+            <TextView
+                android:id="@+id/item_vertical_content_tvChapter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10 chương"
+                android:textSize="@dimen/small_text_size" />
+
+            <TextView
+                android:id="@+id/item_vertical_content_tvGenre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Self help"
+                android:textSize="@dimen/small_text_size" />
+
+            <TextView
+                android:id="@+id/item_vertical_content_tvAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Paul Kalanithi"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="142dp"
+            android:layout_height="231dp"
+            app:srcCompat="@drawable/book_2"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="24dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

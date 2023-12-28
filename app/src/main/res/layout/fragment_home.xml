@@ -120,11 +120,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-
                         android:background="@android:color/transparent"
                         android:fontFamily="sans-serif-medium"
                         android:text="Xem thêm"
-                        android:textColor="#FF6666"
+                        android:textColor="@color/accent_1_700"
                         android:textSize="13dp" />
 
                     <ImageView
@@ -157,7 +156,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginRight="5dp"
-                            app:cardBackgroundColor="#FF6666"
+                            app:cardBackgroundColor="@color/accent_1_200"
                             app:cardCornerRadius="10dp">
 
                             <Button
@@ -167,6 +166,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="Ngôn tình"
+                                android:textColor="@color/accent_1_700"
                                 android:textAllCaps="false" />
 
                         </androidx.cardview.widget.CardView>
@@ -177,8 +177,8 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginRight="5dp"
-                            app:cardBackgroundColor="#FF6666"
-                            app:cardCornerRadius="10dp">
+                            app:cardBackgroundColor="@color/accent_1_200"
+                            app:cardCornerRadius="@dimen/buttonCornerRadius">
 
                             <Button
                                 android:id="@+id/button10"
@@ -187,6 +187,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="Sủng"
+                                android:textColor="@color/accent_1_700"
                                 android:textAllCaps="false" />
                         </androidx.cardview.widget.CardView>
 
@@ -196,7 +197,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginRight="5dp"
-                            app:cardBackgroundColor="#FF6666"
+                            app:cardBackgroundColor="@color/accent_1_200"
                             app:cardCornerRadius="10dp">
 
                             <Button
@@ -205,6 +206,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textColor="@color/accent_1_700"
                                 android:text="Ngược"
                                 android:textAllCaps="false" />
                         </androidx.cardview.widget.CardView>
@@ -222,7 +224,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginRight="5dp"
-                            app:cardBackgroundColor="#FF6666"
+                            app:cardBackgroundColor="@color/accent_1_200"
                             app:cardCornerRadius="10dp">
 
                             <Button
@@ -231,6 +233,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textColor="@color/accent_1_700"
                                 android:text="Tiên hiệp"
                                 android:textAllCaps="false" />
                         </androidx.cardview.widget.CardView>
@@ -242,7 +245,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginRight="5dp"
-                            app:cardBackgroundColor="#FF6666"
+                            app:cardBackgroundColor="@color/accent_1_200"
                             app:cardCornerRadius="10dp">
 
                             <Button
@@ -251,6 +254,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textColor="@color/accent_1_700"
                                 android:text="Trọng sinh"
                                 android:textAllCaps="false" />
                         </androidx.cardview.widget.CardView>
@@ -261,7 +265,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginRight="5dp"
-                            app:cardBackgroundColor="#FF6666"
+                            app:cardBackgroundColor="@color/accent_1_200"
                             app:cardCornerRadius="10dp">
 
                             <Button
@@ -270,6 +274,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textColor="@color/accent_1_700"
                                 android:text="Xuyên không"
                                 android:textAllCaps="false" />
                         </androidx.cardview.widget.CardView>
@@ -321,7 +326,7 @@
                         android:background="@android:color/transparent"
                         android:fontFamily="sans-serif-medium"
                         android:text="Xem thêm"
-                        android:textColor="#FF6666"
+                        android:textColor="@color/accent_1_700"
                         android:textSize="13dp" />
 
                     <ImageView
@@ -391,7 +396,7 @@
                         android:background="@android:color/transparent"
                         android:fontFamily="sans-serif-medium"
                         android:text="Xem thêm"
-                        android:textColor="#FF6666"
+                        android:textColor="@color/accent_1_700"
                         android:textSize="13dp" />
 
                     <ImageView
@@ -461,7 +466,7 @@
                         android:background="@android:color/transparent"
                         android:fontFamily="sans-serif-medium"
                         android:text="Xem thêm"
-                        android:textColor="#FF6666"
+                        android:textColor="@color/accent_1_700"
                         android:textSize="13dp" />
 
                     <ImageView

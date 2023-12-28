@@ -6,6 +6,13 @@
         <item name="cornerSize">50%</item>
     </style>
 
+
+    <style name="CustomBottomNavIndicator" parent="@style/Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">@color/white</item>
+        <!-- Các thuộc tính khác của chỉ báo khi được chọn nếu cần -->
+    </style>
+
+
     <style name="favorite">
         .material-symbols-outlined {
         font-variation-settings:
@@ -13,6 +20,10 @@
         'wght' 400,
         'GRAD' 0,
         'opsz' 24
-        }
+        }</style>
+
+    <style name="Widget.Theme.Material3.Light.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 </resources>

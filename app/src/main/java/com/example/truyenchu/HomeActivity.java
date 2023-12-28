@@ -1,19 +1,16 @@
 package com.example.truyenchu;
 
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.os.Build;
-import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
-
-import com.example.truyenchu.R;
 import com.example.truyenchu.features.UploadStoryFragment;
 import com.example.truyenchu.ui.DownloadFragment;
 import com.example.truyenchu.ui.HomeFragment;
 import com.example.truyenchu.ui.ProfileFragment;
-import com.example.truyenchu.ui.SearchFragment;
 import com.example.truyenchu.ui.discovery.DiscoveryNewFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -25,15 +22,14 @@ public class HomeActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            View decor = getWindow().getDecorView();
-            // Set the status bar icon color to dark
-            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            // Change the status bar color to your desired color
-            getWindow().setStatusBarColor(getColor(android.R.color.transparent));
-        }
+        View decor = getWindow().getDecorView();
+        // Set the status bar icon color to dark
+        decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
+        // Change the status bar color to your desired color
+        getWindow().setStatusBarColor(getColor(android.R.color.transparent));
 
+        getWindow().setNavigationBarColor(Color.WHITE);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
 
         if (savedInstanceState == null)
@@ -46,7 +42,6 @@ public class HomeActivity extends AppCompatActivity
                     .commit();
         }
         bottomNav.setSelectedItemId(R.id.navigation_home);
-
         bottomNav.setOnItemSelectedListener(item ->
         {
             Fragment selectedFragment = null;

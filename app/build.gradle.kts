@@ -28,10 +28,14 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
     implementation ("com.github.bumptech.glide:glide:4.12.0")
+    implementation("androidx.preference:preference:1.2.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
     implementation ("com.google.code.gson:gson:2.8.8") // Hoặc phiên bản mới nhất của Gson
     implementation("androidx.appcompat:appcompat:1.6.1")

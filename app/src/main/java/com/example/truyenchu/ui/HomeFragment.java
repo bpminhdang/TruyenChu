@@ -90,31 +90,27 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
         DatabaseReference storiesRef = database.child("stories");
 
-        RecyclerView recyclerView = view.findViewById(R.id.home_recycler_view);
+        RecyclerView rcViewNew = view.findViewById(R.id.home_recycler_view);
         HorizontalSmallImageAdapter adapter = new HorizontalSmallImageAdapter(getActivity(), storyList, story ->
         {
             Toast.makeText(getContext(), story.getName(), Toast.LENGTH_SHORT).show();
         });
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        //recyclerView.setOnItemClick
+        rcViewNew.setAdapter(adapter);
+        rcViewNew.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        //rcViewNew.setOnItemClick
 
-        RecyclerView recyclerView1 = view.findViewById(R.id.home_recycler_view_2);
+        RecyclerView rcViewUpdate = view.findViewById(R.id.home_recycler_view_2);
         HorizontalContentAdapter adapter1 = new HorizontalContentAdapter(getActivity(), storyList, story ->
-        {
-            Toast.makeText(getContext(), story.getName(), Toast.LENGTH_SHORT).show();
-        });
+                Toast.makeText(getContext(), story.getName(), Toast.LENGTH_SHORT).show());
 
-        recyclerView1.setAdapter(adapter1);
-        recyclerView1.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        rcViewUpdate.setAdapter(adapter1);
+        rcViewUpdate.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
-        RecyclerView recyclerView2 = view.findViewById(R.id.home_recycler_view_3);
+        RecyclerView rcViewRecent = view.findViewById(R.id.home_recycler_view_3);
         HorizontalImageAdapter adapter2 = new HorizontalImageAdapter(getActivity(), storyList, story ->
-        {
-            Toast.makeText(getContext(), story.getName(), Toast.LENGTH_SHORT).show();
-        });
-        recyclerView2.setAdapter(adapter2);
-        recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+                Toast.makeText(getContext(), story.getName(), Toast.LENGTH_SHORT).show());
+        rcViewRecent.setAdapter(adapter2);
+        rcViewRecent.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
 
         storiesRef.addListenerForSingleValueEvent(new ValueEventListener()

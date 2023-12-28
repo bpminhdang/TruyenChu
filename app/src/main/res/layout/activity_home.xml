@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@drawable/rounded_top_background"
-            app:itemActiveIndicatorStyle="@android:color/transparent"
+            app:itemActiveIndicatorStyle="@style/CustomBottomNavIndicator"
             app:itemIconTint="@null"
             app:menu="@menu/bottom_nav_menu" />
     </FrameLayout>
