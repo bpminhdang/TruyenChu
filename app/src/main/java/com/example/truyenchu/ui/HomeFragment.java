@@ -6,12 +6,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.truyenchu.StoryActivity;
 import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu.R;
@@ -19,6 +22,9 @@ import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.adapter.Horizontal_3_ContentAdapter;
 import com.example.truyenchu.adapter.Horizontal_2_ImageAdapter;
 import com.example.truyenchu.adapter.Horizontal_1_SmallImageAdapter;
+import com.google.firebase.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,6 +52,10 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
     private String mParam1;
     private String mParam2;
     private ArrayList<StoryClass> storyList = new ArrayList<>();
+
+    ImageButton profilePic;
+    TextView profileName;
+    FirebaseAuth mAuth;
 
     public HomeFragment()
     {
@@ -80,6 +90,7 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -87,6 +98,7 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
                              Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
 
         //FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").setPersistenceEnabled(true);
         DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
@@ -184,9 +196,21 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
                 Log.i("DB", "Lỗi: " + databaseError.getMessage());
             }
         });
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = mAuth.getCurrentUser();
+
+        profilePic = view.findViewById(R.id.profile_image);
+        profileName = view.findViewById(R.id.profile_name);
+
+        if (mUser != null)
+        {
+            String name = mUser.getDisplayName();
+            String photoURL = mUser.getPhotoUrl().toString();
 
 
-
+            Glide.with(this).load(photoURL).into(profilePic);
+            profileName.setText(name);
+        }
 //        DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
 //        DatabaseReference usersRef = database.child("users");
 //        Map<String, Object> users = new HashMap<>();
