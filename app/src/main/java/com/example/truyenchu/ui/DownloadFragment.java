@@ -3,19 +3,12 @@ package com.example.truyenchu.ui;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu.R;
-import com.example.truyenchu._class.StoryClass;
-import com.example.truyenchu.adapter.HorizontalImageAdapter;
-
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.

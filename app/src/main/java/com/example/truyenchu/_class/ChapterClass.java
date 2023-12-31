@@ -1,5 +1,8 @@
 package com.example.truyenchu._class;
-public class ChapterClass
+
+import java.io.Serializable;
+
+public class ChapterClass implements Serializable
 {
     private String chapterId;
     private String content;

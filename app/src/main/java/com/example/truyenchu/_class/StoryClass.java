@@ -2,11 +2,12 @@ package com.example.truyenchu._class;
 
 import android.net.Uri;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 // Lớp Truyen (Truyện)
-public class StoryClass
+public class StoryClass implements Serializable
 {
     private final int id;
     private String name;

@@ -18,13 +18,13 @@ import com.example.truyenchu.features.RecyclerViewItemClickListener;
 import java.util.ArrayList;
 
 
-public class HorizontalContentAdapter extends RecyclerView.Adapter<HorizontalContentAdapter.ViewHolder>
+public class Horizontal_3_ContentAdapter extends RecyclerView.Adapter<Horizontal_3_ContentAdapter.ViewHolder>
 {
     private Context context;
     static ArrayList<StoryClass> arr;
     private final RecyclerViewItemClickListener listener;
 
-    public HorizontalContentAdapter(Context context, ArrayList<StoryClass> dataSet, RecyclerViewItemClickListener listener)
+    public Horizontal_3_ContentAdapter(Context context, ArrayList<StoryClass> dataSet, RecyclerViewItemClickListener listener)
     {
         this.context = context;
         arr = dataSet;
@@ -55,7 +55,7 @@ public class HorizontalContentAdapter extends RecyclerView.Adapter<HorizontalCon
     {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.horizontal_content_item, viewGroup, false);
+                .inflate(R.layout.horizontal_3_content_item, viewGroup, false);
 
         return new ViewHolder(view);
     }
@@ -74,7 +74,7 @@ public class HorizontalContentAdapter extends RecyclerView.Adapter<HorizontalCon
         Glide.with(viewHolder.itemView.getContext())
                 .load(story.getUri())
                 .into(viewHolder.getStoryImage());
-        viewHolder.getTvName().setText(story.getName());
+        viewHolder.getTvName().setText(story.getName(20));
 
         temp = context.getString(R.string.author) + " " + story.getAuthor();
         viewHolder.getTvAuthor().setText(temp);

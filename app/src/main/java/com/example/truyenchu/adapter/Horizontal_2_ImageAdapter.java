@@ -18,13 +18,13 @@ import com.example.truyenchu.features.RecyclerViewItemClickListener;
 import java.util.ArrayList;
 
 
-public class HorizontalImageAdapter extends RecyclerView.Adapter<HorizontalImageAdapter.ViewHolder>
+public class Horizontal_2_ImageAdapter extends RecyclerView.Adapter<Horizontal_2_ImageAdapter.ViewHolder>
 {
     private Context context;
     static ArrayList<StoryClass> arr;
     public final RecyclerViewItemClickListener listener;
 
-    public HorizontalImageAdapter(Context context, ArrayList<StoryClass> dataSet, RecyclerViewItemClickListener listener)
+    public Horizontal_2_ImageAdapter(Context context, ArrayList<StoryClass> dataSet, RecyclerViewItemClickListener listener)
     {
         this.context = context;
         arr = dataSet;
@@ -56,7 +56,7 @@ public class HorizontalImageAdapter extends RecyclerView.Adapter<HorizontalImage
     {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.horizontal_image_item, viewGroup, false);
+                .inflate(R.layout.horizontal_2_image_item, viewGroup, false);
 
         return new ViewHolder(view);
     }

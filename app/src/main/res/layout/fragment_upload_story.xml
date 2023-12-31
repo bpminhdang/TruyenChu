@@ -5,6 +5,7 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/accent_1_10"
     tools:context=".features.UploadStoryFragment">
 
     <ScrollView
@@ -37,6 +38,7 @@
                     android:layout_width="18dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"
+                    android:background="@color/accent_1_10"
                     android:scaleType="centerInside"
                     android:src="@drawable/back" />
 
@@ -216,6 +218,7 @@
 
         <Button
             android:id="@+id/btReload_upload"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/reload"
@@ -224,8 +227,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            style="@style/Widget.Material3.Button.TextButton"/>
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

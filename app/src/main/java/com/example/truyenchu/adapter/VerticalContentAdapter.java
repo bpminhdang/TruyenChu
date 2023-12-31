@@ -118,7 +118,7 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
     {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.vertical_content_item, viewGroup, false);
+                .inflate(R.layout.vertical_0_content_item, viewGroup, false);
 
         return new ViewHolder(view);
     }
