@@ -6,6 +6,11 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="AppTheme" parent="Theme.Material3.DynamicColors.DayNight">
+        <!-- Other attributes -->
+    </style>
+
+
 
     <style name="CustomBottomNavIndicator" parent="@style/Widget.MaterialComponents.BottomNavigationView">
         <item name="android:background">@color/white</item>

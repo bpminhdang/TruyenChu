@@ -1,5 +1,6 @@
 package com.example.truyenchu.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,12 +12,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.truyenchu.StoryActivity;
 import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
-import com.example.truyenchu.adapter.HorizontalContentAdapter;
-import com.example.truyenchu.adapter.HorizontalImageAdapter;
-import com.example.truyenchu.adapter.HorizontalSmallImageAdapter;
+import com.example.truyenchu.adapter.Horizontal_3_ContentAdapter;
+import com.example.truyenchu.adapter.Horizontal_2_ImageAdapter;
+import com.example.truyenchu.adapter.Horizontal_1_SmallImageAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -91,7 +93,7 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         DatabaseReference storiesRef = database.child("stories");
 
         RecyclerView rcViewNew = view.findViewById(R.id.home_recycler_view);
-        HorizontalSmallImageAdapter adapter = new HorizontalSmallImageAdapter(getActivity(), storyList, story ->
+        Horizontal_1_SmallImageAdapter adapter = new Horizontal_1_SmallImageAdapter(getActivity(), storyList, story ->
         {
             Toast.makeText(getContext(), story.getName(), Toast.LENGTH_SHORT).show();
         });
@@ -100,14 +102,19 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         //rcViewNew.setOnItemClick
 
         RecyclerView rcViewUpdate = view.findViewById(R.id.home_recycler_view_2);
-        HorizontalContentAdapter adapter1 = new HorizontalContentAdapter(getActivity(), storyList, story ->
-                Toast.makeText(getContext(), story.getName(), Toast.LENGTH_SHORT).show());
+        Horizontal_3_ContentAdapter adapter1 = new Horizontal_3_ContentAdapter(getActivity(), storyList, story ->
+        {
+            Intent intent = new Intent(getActivity(), StoryActivity.class);
+            intent.putExtra("storyData", story);
+            startActivity(intent);
+            Toast.makeText(getContext(), "sent " + story.getName(), Toast.LENGTH_SHORT).show();
+        });
 
         rcViewUpdate.setAdapter(adapter1);
         rcViewUpdate.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
         RecyclerView rcViewRecent = view.findViewById(R.id.home_recycler_view_3);
-        HorizontalImageAdapter adapter2 = new HorizontalImageAdapter(getActivity(), storyList, story ->
+        Horizontal_2_ImageAdapter adapter2 = new Horizontal_2_ImageAdapter(getActivity(), storyList, story ->
                 Toast.makeText(getContext(), story.getName(), Toast.LENGTH_SHORT).show());
         rcViewRecent.setAdapter(adapter2);
         rcViewRecent.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));

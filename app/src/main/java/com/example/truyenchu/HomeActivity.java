@@ -14,6 +14,8 @@ import com.example.truyenchu.ui.ProfileFragment;
 import com.example.truyenchu.ui.discovery.DiscoveryNewFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Objects;
+
 public class HomeActivity extends AppCompatActivity
 {
 
@@ -22,14 +24,16 @@ public class HomeActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        View decor = getWindow().getDecorView();
-        // Set the status bar icon color to dark
-        decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
-        // Change the status bar color to your desired color
-        getWindow().setStatusBarColor(getColor(R.color.accent_1_0));
-
+        // Hide action bar
+        Objects.requireNonNull(getSupportActionBar()).hide();
+        // Status bar icon: Black
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        // Status bar: accent 1_0
+        getWindow().setStatusBarColor(getColor(R.color.accent_1_10));
+        // Navigation pill: White
         getWindow().setNavigationBarColor(Color.WHITE);
+
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
 
         if (savedInstanceState == null)
