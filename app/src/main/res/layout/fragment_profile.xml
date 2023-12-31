@@ -13,6 +13,64 @@
         android:layout_height="wrap_content"
         android:id="@+id/lin">
 
+        <LinearLayout
+            android:id="@+id/linn"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="35dp"> <!-- Đặt giá trị radius bằng một nửa của kích thước chiều rộng hoặc chiều cao -->
+
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/_4c794a30247c154fd3afa0ff7f61b57" />
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingStart="15dp"
+                android:paddingTop="20dp">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome back"
+                    android:textAllCaps="true"
+                    android:textColor="#86787878"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-thin"
+                    android:text="Ariana Grinder"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
@@ -28,7 +86,7 @@
                 android:fontFamily="sans-serif-light"
                 android:paddingLeft="10dp"
                 android:text="LỊCH SỬ TRÊN TÀI KHOẢN"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="2dp" />
 
@@ -38,7 +96,7 @@
                 android:orientation="vertical"
                 android:paddingLeft="30dp"
                 android:paddingTop="10dp"
-                android:paddingRight="10dp"
+                android:paddingRight="30dp"
                 android:paddingBottom="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -98,159 +156,145 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/album1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/album_button_selector"
-            android:drawableEnd="@drawable/vector_button_selector"
-            android:drawablePadding="10dp"
-            android:text="Bộ sưu tập của tôi"
-            android:textSize="16sp"
-            tools:layout_editor_absoluteX="46dp"
-            tools:layout_editor_absoluteY="330dp" />
-
-        <TextView
-            android:id="@+id/album2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/album_button_selector"
-            android:drawableEnd="@drawable/vector_button_selector"
-            android:drawablePadding="10dp"
-            android:text="Bộ sưu tập yêu thích"
-            android:textSize="16sp"
-            tools:layout_editor_absoluteX="46dp"
-            tools:layout_editor_absoluteY="354dp" />
-
-        <TextView
-            android:id="@+id/giaodien"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/edit_button_selector"
-            android:drawableEnd="@drawable/vector_button_selector"
-            android:drawablePadding="10dp"
-            android:text="Cài đặt giao diện đọc"
-            android:textSize="16sp"
-            tools:layout_editor_absoluteX="46dp"
-            tools:layout_editor_absoluteY="420dp" />
-
-        <LinearLayout
-            android:id="@+id/linn"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout1"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                app:cardCornerRadius="35dp"> <!-- Đặt giá trị radius bằng một nửa của kích thước chiều rộng hoặc chiều cao -->
-
-                <ImageButton
-                    android:id="@+id/imageButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/_4c794a30247c154fd3afa0ff7f61b57" />
-
-            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/dstruyen"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="DANH SÁCH TRUYỆN"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="0dp" />
 
             <LinearLayout
-                android:id="@+id/line"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingStart="15dp"
-                android:paddingTop="20dp">
+                android:paddingLeft="30dp"
+                android:paddingTop="10dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dstruyen">
 
                 <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/album1"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Welcome back"
-                    android:textAllCaps="true"
-                    android:textColor="#86787878"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:drawableStart="@drawable/album_button_selector"
+                    android:drawableEnd="@drawable/vector_button_selector"
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:paddingBottom="10dp"
+                    android:text="Bộ sưu tập của tôi"
+                    android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/album2"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-thin"
-                    android:text="Ariana Grinder"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:drawableStart="@drawable/album_button_selector"
+                    android:drawableEnd="@drawable/vector_button_selector"
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:paddingBottom="10dp"
+                    android:text="Bộ sưu tập yêu thích"
+                    android:textSize="16sp" />
 
             </LinearLayout>
-
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/mau"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/color_button_selector"
-            android:drawableEnd="@drawable/vector_button_selector"
-            android:drawablePadding="10dp"
-            android:text="Chọn màu yêu thích"
-            android:textSize="16sp"
-            tools:layout_editor_absoluteX="46dp"
-            tools:layout_editor_absoluteY="454dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/danhgia"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/danhgia_button_selector"
-            android:drawableEnd="@drawable/vector_button_selector"
-            android:drawablePadding="10dp"
-            android:text="Đánh giá ứng dụng"
-            android:textSize="16sp"
-            tools:layout_editor_absoluteX="46dp"
-            tools:layout_editor_absoluteY="534dp" />
+    <TextView
+        android:id="@+id/giaodien"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/edit_button_selector"
+        android:drawableEnd="@drawable/vector_button_selector"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="Cài đặt giao diện đọc"
+        android:textSize="16sp"
+        tools:layout_editor_absoluteX="46dp"
+        tools:layout_editor_absoluteY="420dp" />
 
-        <TextView
-            android:id="@+id/danhgia2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/gopy_button_selector"
-            android:drawableEnd="@drawable/vector_button_selector"
-            android:drawablePadding="10dp"
-            android:text="Góp ý qua mail"
-            android:textSize="16sp"
-            tools:layout_editor_absoluteX="44dp"
-            tools:layout_editor_absoluteY="565dp" />
+    <TextView
+        android:id="@+id/mau"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/color_button_selector"
+        android:drawableEnd="@drawable/vector_button_selector"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="Chọn màu yêu thích"
+        android:textSize="16sp"
+        tools:layout_editor_absoluteX="46dp"
+        tools:layout_editor_absoluteY="454dp" />
 
-        <TextView
-            android:id="@+id/share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/share_button_selector"
-            android:drawableEnd="@drawable/vector_button_selector"
-            android:drawablePadding="10dp"
-            android:text="Chia sẻ ứng dụng"
-            android:textSize="16sp"
-            tools:layout_editor_absoluteX="44dp"
-            tools:layout_editor_absoluteY="600dp" />
+    <TextView
+        android:id="@+id/danhgia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/danhgia_button_selector"
+        android:drawableEnd="@drawable/vector_button_selector"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="Đánh giá ứng dụng"
+        android:textSize="16sp"
+        tools:layout_editor_absoluteX="46dp"
+        tools:layout_editor_absoluteY="534dp" />
 
-        <TextView
-            android:id="@+id/csbm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/csbm_button_selector"
-            android:drawableEnd="@drawable/vector_button_selector"
-            android:drawablePadding="10dp"
-            android:text="Chính sách bảo mật"
-            android:textSize="16sp"
-            tools:layout_editor_absoluteX="44dp"
-            tools:layout_editor_absoluteY="634dp" />
+    <TextView
+        android:id="@+id/danhgia2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/gopy_button_selector"
+        android:drawableEnd="@drawable/vector_button_selector"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="Góp ý qua mail"
+        android:textSize="16sp"
+        tools:layout_editor_absoluteX="44dp"
+        tools:layout_editor_absoluteY="565dp" />
+
+    <TextView
+        android:id="@+id/share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/share_button_selector"
+        android:drawableEnd="@drawable/vector_button_selector"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="Chia sẻ ứng dụng"
+        android:textSize="16sp"
+        tools:layout_editor_absoluteX="44dp"
+        tools:layout_editor_absoluteY="600dp" />
+
+    <TextView
+        android:id="@+id/csbm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/csbm_button_selector"
+        android:drawableEnd="@drawable/vector_button_selector"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="Chính sách bảo mật"
+        android:textSize="16sp"
+        tools:layout_editor_absoluteX="44dp"
+        tools:layout_editor_absoluteY="634dp" />
 
         <TextView
             android:id="@+id/thongtin"
@@ -271,16 +315,6 @@
             android:textSize="16sp"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="391dp" />
-
-        <TextView
-            android:id="@+id/dstruyen"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
-            android:text="DANH SÁCH TRUYỆN"
-            android:textSize="16sp"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="292dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
