@@ -17,12 +17,12 @@
 
     <TextView
         android:id="@+id/tvName_des"
-        android:layout_width="335dp"
-        android:layout_height="59dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:layout_weight="6"
         android:fontFamily="@font/montserrat_semibold"
-        android:paddingStart="10dp"
+        android:paddingEnd="30dp"
         android:text="Truyện lạ trong thang máy lúc nửa đêm"
         android:textAlignment="center"
         android:textSize="20sp"
@@ -33,15 +33,13 @@
 
     <ImageView
         android:id="@+id/imageView10"
-        android:layout_width="42dp"
-        android:layout_height="63dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_weight="6"
+        android:padding="7dp"
         android:src="@drawable/des_back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.018"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/tvName_des"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"
@@ -56,7 +54,7 @@
         <ImageView
             android:id="@+id/imageView7"
             android:layout_width="124dp"
-            android:layout_height="123dp"
+            android:layout_height="180dp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/book_2"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -68,12 +66,12 @@
             android:id="@+id/tacgia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
             android:drawableLeft="@drawable/des_author"
             android:drawablePadding="5dp"
             android:fontFamily="@font/montserrat_regular"
             android:text="Hanks Chi"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.076"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -96,7 +94,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
-            android:drawableLeft="@drawable/hamburger_2"
+
+            android:drawableStart="@drawable/hamburger_2"
             android:drawablePadding="5dp"
             android:fontFamily="@font/montserrat_regular"
             android:text="47"
@@ -109,7 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
-            android:drawableLeft="@drawable/heart_like"
+            android:drawableStart="@drawable/des_heart"
             android:drawablePadding="5dp"
             android:fontFamily="@font/montserrat_regular"
             android:text="123"
@@ -122,7 +121,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="8dp"
-            android:drawableLeft="@drawable/read"
+            android:drawableLeft="@drawable/des_circle"
             android:drawablePadding="5dp"
             android:fontFamily="@font/montserrat_regular"
             android:text="1.5K"
@@ -147,9 +146,9 @@
             android:layout_height="31dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
-            android:src="@drawable/hwc"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/luotthich" />
+            app:layout_constraintTop_toBottomOf="@+id/luotthich"
+            app:srcCompat="@drawable/des_heart_w_circle" />
 
         <ImageView
             android:id="@+id/imageView5"
@@ -159,7 +158,8 @@
             android:layout_marginTop="16dp"
             android:src="@drawable/comment"
             app:layout_constraintStart_toEndOf="@+id/imageView3"
-            app:layout_constraintTop_toBottomOf="@+id/luotthich" />
+            app:layout_constraintTop_toBottomOf="@+id/luotthich"
+            app:srcCompat="@drawable/des_comment" />
 
         <ImageView
             android:id="@+id/imageView8"
@@ -167,9 +167,9 @@
             android:layout_height="31dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="16dp"
-            android:src="@drawable/share_w_c"
             app:layout_constraintStart_toEndOf="@+id/imageView5"
-            app:layout_constraintTop_toBottomOf="@+id/luotthich" />
+            app:layout_constraintTop_toBottomOf="@+id/luotthich"
+            app:srcCompat="@drawable/des_share" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
