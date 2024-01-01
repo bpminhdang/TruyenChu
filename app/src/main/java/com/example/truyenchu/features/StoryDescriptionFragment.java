@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
 
@@ -29,7 +30,6 @@ public class StoryDescriptionFragment extends Fragment
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private StoryClass story;
     public StoryDescriptionFragment()
     {
         // Required empty public constructor
@@ -72,15 +72,37 @@ public class StoryDescriptionFragment extends Fragment
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_story_description, container, false);
 
+        TextView tvNameDes = view.findViewById(R.id.tvName_des);
+        ImageView ivBack = view.findViewById(R.id.des_ivback);
+        ImageView ivPicture = view.findViewById(R.id.des_iv_picture);
+        TextView tvAuthor = view.findViewById(R.id.des_tv_author);
+        TextView tvStatus = view.findViewById(R.id.des_tv_status);
+        TextView tvNumChapter = view.findViewById(R.id.des_tv_num_chapter);
+        TextView tvLiked = view.findViewById(R.id.des_tv_liked);
+        TextView tvView = view.findViewById(R.id.des_tv_view);
+        TextView tvWatching = view.findViewById(R.id.des_tv_watching);
+        ImageView ivLike = view.findViewById(R.id.des_iv_like);
+        ImageView ivComment = view.findViewById(R.id.des_iv_comment);
+        ImageView ivShare = view.findViewById(R.id.des_iv_share);
+        TextView tvDescription = view.findViewById(R.id.des_tv_description);
+
+
         Bundle bundle = getArguments();
         if (bundle != null)
         {
             StoryClass receivedStory = (StoryClass) bundle.getSerializable("receivedStory");
-            TextView tvName = view.findViewById(R.id.tvName_des);
-            tvName.setText(receivedStory.getName());
-        }
+            StoryClass.SetText(tvNameDes, receivedStory.getName());
+            StoryClass.SetImage(requireContext(), receivedStory.getUri(), ivPicture);
+            StoryClass.SetText(tvAuthor, receivedStory.getAuthor());
+            StoryClass.SetText(tvStatus, receivedStory.getStatus() + " - " + receivedStory.getTime());
+            StoryClass.SetText(tvNumChapter, String.valueOf(receivedStory.getNumberOfChapter()));
+            StoryClass.SetText(tvWatching, "Đang xem: " + "40");
+            StoryClass.SetText(tvLiked, "100");
+            // Todo: tvWatching tvLiked
+            StoryClass.SetText(tvView, String.valueOf(receivedStory.getViews()));
+            StoryClass.SetText(tvDescription, receivedStory.getDescription());
 
-        ImageView ivBack = view.findViewById(R.id.imageView10);
+        }
         ivBack.setOnClickListener(v-> requireActivity().onBackPressed());
 
         return view;

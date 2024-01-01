@@ -1,6 +1,9 @@
 package com.example.truyenchu.ui;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,7 +58,6 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
 
     ImageButton profilePic;
     TextView profileName;
-    FirebaseAuth mAuth;
 
     public HomeFragment()
     {
@@ -99,6 +101,17 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
     {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        profilePic = view.findViewById(R.id.profile_image);
+        profileName = view.findViewById(R.id.profile_name);
+
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("users_prefs", MODE_PRIVATE);
+        String username = sharedPreferences.getString("username", "Guest");
+        profileName.setText(username);
+
+        String profilePictureString = sharedPreferences.getString("profilePicture", "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/images%2Fprofile_picture.jpg?alt=media&token=bc33064a-23aa-4236-aa3a-b3e3b43eccbc");
+        Glide.with(this).load(profilePictureString).into(profilePic);
+
+
 
         //FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").setPersistenceEnabled(true);
         DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
@@ -107,7 +120,9 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         RecyclerView rcViewNew = view.findViewById(R.id.home_recycler_view);
         Horizontal_1_SmallImageAdapter adapter = new Horizontal_1_SmallImageAdapter(getActivity(), storyList, story ->
         {
-            Toast.makeText(getContext(), story.getName(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), StoryActivity.class);
+            intent.putExtra("storyData", story);
+            startActivity(intent);
         });
         rcViewNew.setAdapter(adapter);
         rcViewNew.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -119,7 +134,6 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
             Intent intent = new Intent(getActivity(), StoryActivity.class);
             intent.putExtra("storyData", story);
             startActivity(intent);
-            Toast.makeText(getContext(), "sent " + story.getName(), Toast.LENGTH_SHORT).show();
         });
 
         rcViewUpdate.setAdapter(adapter1);
@@ -127,7 +141,11 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
 
         RecyclerView rcViewRecent = view.findViewById(R.id.home_recycler_view_3);
         Horizontal_2_ImageAdapter adapter2 = new Horizontal_2_ImageAdapter(getActivity(), storyList, story ->
-                Toast.makeText(getContext(), story.getName(), Toast.LENGTH_SHORT).show());
+        {
+            Intent intent = new Intent(getActivity(), StoryActivity.class);
+            intent.putExtra("storyData", story);
+            startActivity(intent);
+        });
         rcViewRecent.setAdapter(adapter2);
         rcViewRecent.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
@@ -196,21 +214,10 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
                 Log.i("DB", "Lỗi: " + databaseError.getMessage());
             }
         });
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser mUser = mAuth.getCurrentUser();
-
-        profilePic = view.findViewById(R.id.profile_image);
-        profileName = view.findViewById(R.id.profile_name);
-
-        if (mUser != null)
-        {
-            String name = mUser.getDisplayName();
-            String photoURL = mUser.getPhotoUrl().toString();
 
 
-            Glide.with(this).load(photoURL).into(profilePic);
-            profileName.setText(name);
-        }
+
+
 //        DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
 //        DatabaseReference usersRef = database.child("users");
 //        Map<String, Object> users = new HashMap<>();

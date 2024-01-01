@@ -1,6 +1,11 @@
 package com.example.truyenchu._class;
 
+import android.content.Context;
 import android.net.Uri;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -193,5 +198,17 @@ public class StoryClass implements Serializable
         }
 
         return stringBuilder.toString();
+    }
+
+    public static void SetText(TextView textView, String text)
+    {
+        textView.setText(text);
+    }
+
+    public static void SetImage(Context context, String uri, ImageView imageView)
+    {
+        Glide.with(context)
+                .load(uri)
+                .into(imageView);
     }
 }

@@ -30,7 +30,7 @@
                 android:adjustViewBounds="true"
                 android:background="?android:attr/selectableItemBackground"
                 android:scaleType="fitCenter"
-                android:src="@drawable/_4c794a30247c154fd3afa0ff7f61b57" />
+                android:src="@drawable/guest_profile" />
 
         </androidx.cardview.widget.CardView>
 
