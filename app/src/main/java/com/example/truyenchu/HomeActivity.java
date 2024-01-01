@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.truyenchu.features.ProfilePanelFragment;
 import com.example.truyenchu.features.UploadStoryFragment;
 import com.example.truyenchu.ui.DownloadFragment;
 import com.example.truyenchu.ui.HomeFragment;
@@ -57,7 +58,6 @@ public class HomeActivity extends AppCompatActivity
             editor.putString("isLoggedIn", "true");
             isLoggedIn = true;
             editor.apply();
-
         }
         else
         {
@@ -66,7 +66,6 @@ public class HomeActivity extends AppCompatActivity
             editor.putString("username", "Guest");
             editor.putString("profilePicture", "R.drawable.guest_profile");
             editor.putString("isLoggedIn", "false");
-
             editor.apply();
         }
 
@@ -92,6 +91,7 @@ public class HomeActivity extends AppCompatActivity
                     .beginTransaction()
                     .add(R.id.fragment_container, fragment, "YOUR_FRAGMENT_TAG")
                     .commit();
+
         }
         bottomNav.setSelectedItemId(R.id.navigation_home);
         bottomNav.setOnItemSelectedListener(item ->

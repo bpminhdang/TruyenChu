@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout5"
@@ -9,370 +9,333 @@
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/lin"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent" >
 
-        <LinearLayout
-            android:id="@+id/linn"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lin"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                app:cardCornerRadius="35dp"> <!-- Đặt giá trị radius bằng một nửa của kích thước chiều rộng hoặc chiều cao -->
-
-                <ImageButton
-                    android:id="@+id/imageButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/guest_profile" />
-
-            </androidx.cardview.widget.CardView>
-
-            <LinearLayout
-                android:id="@+id/line"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingStart="15dp"
-                android:paddingTop="20dp">
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Welcome back"
-                    android:textAllCaps="true"
-                    android:textColor="#86787878"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-thin"
-                    android:text="Ariana Grinder"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="25dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linn">
-
-            <TextView
-                android:id="@+id/lichsu"
+            <Button
+                android:id="@+id/btSignOut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:paddingLeft="20dp"
-                android:text="LỊCH SỬ TRÊN TÀI KHOẢN"
-                android:textSize="20sp"
+                android:text="Đăng xuất"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/fragmentProfileContainerView_profile" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingLeft="30dp"
-                android:paddingTop="10dp"
-                android:paddingRight="30dp"
-                android:paddingBottom="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lichsu">
-
-                <TextView
-                    android:id="@+id/xem"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/history_button_selector"
-                    android:drawableEnd="@drawable/vector_button_selector"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:paddingBottom="10dp"
-                    android:text="Truyện đã xem"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/thich"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/heart_button_selector"
-                    android:drawableEnd="@drawable/vector_button_selector"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:paddingBottom="10dp"
-                    android:text="Truyện đã thích"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tai"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/dw_button_selector"
-                    android:drawableEnd="@drawable/vector_button_selector"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:paddingBottom="10dp"
-                    android:text="Truyện đã tải"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/theodoi"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/fl_button_selector"
-                    android:drawableEnd="@drawable/vector_button_selector"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:paddingBottom="10dp"
-                    android:text="Truyện đã theo dõi"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:paddingTop="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
-
-            <TextView
-                android:id="@+id/dstruyen"
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentProfileContainerView_profile"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:paddingLeft="20dp"
-                android:text="DANH SÁCH TRUYỆN"
-                android:textSize="20sp"
+                android:layout_height="90dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingLeft="30dp"
-                android:paddingTop="10dp"
-                android:paddingRight="30dp"
-                android:paddingBottom="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dstruyen">
-
-                <TextView
-                    android:id="@+id/album1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/album_button_selector"
-                    android:drawableEnd="@drawable/vector_button_selector"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:paddingBottom="10dp"
-                    android:text="Bộ sưu tập của tôi"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/album2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/album_button_selector"
-                    android:drawableEnd="@drawable/vector_button_selector"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:paddingBottom="10dp"
-                    android:text="Bộ sưu tập yêu thích"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:paddingTop="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout1">
-
-            <TextView
-                android:id="@+id/setting"
-                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:paddingLeft="20dp"
-                android:text="CÀI ĐẶT"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingLeft="30dp"
-                android:paddingTop="10dp"
-                android:paddingRight="30dp"
-                android:paddingBottom="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:paddingTop="25dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setting">
+                app:layout_constraintTop_toBottomOf="@+id/btSignOut">
 
                 <TextView
-                    android:id="@+id/giaodien"
-                    android:layout_width="match_parent"
+                    android:id="@+id/lichsu"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/edit_button_selector"
-                    android:drawableEnd="@drawable/vector_button_selector"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:paddingBottom="10dp"
-                    android:text="Cài đặt giao diện đọc"
-                    android:textSize="16sp" />
+                    android:fontFamily="sans-serif-light"
+                    android:paddingLeft="20dp"
+                    android:text="LỊCH SỬ TRÊN TÀI KHOẢN"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/mau"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/color_button_selector"
-                    android:drawableEnd="@drawable/vector_button_selector"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:paddingBottom="10dp"
-                    android:text="Chọn màu yêu thích"
-                    android:textSize="16sp" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="30dp"
+                    android:paddingBottom="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lichsu">
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/xem"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/history_button_selector"
+                        android:drawableEnd="@drawable/vector_button_selector"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:paddingBottom="10dp"
+                        android:text="Truyện đã xem"
+                        android:textSize="16sp" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/thich"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/heart_button_selector"
+                        android:drawableEnd="@drawable/vector_button_selector"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:paddingBottom="10dp"
+                        android:text="Truyện đã thích"
+                        android:textSize="16sp" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:paddingTop="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+                    <TextView
+                        android:id="@+id/tai"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/dw_button_selector"
+                        android:drawableEnd="@drawable/vector_button_selector"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:paddingBottom="10dp"
+                        android:text="Truyện đã tải"
+                        android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/thongtin"
-                android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/theodoi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/fl_button_selector"
+                        android:drawableEnd="@drawable/vector_button_selector"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:paddingBottom="10dp"
+                        android:text="Truyện đã theo dõi"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:paddingLeft="20dp"
-                android:text="THÔNG TIN"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingLeft="30dp"
-                android:paddingTop="10dp"
-                android:paddingRight="30dp"
-                android:paddingBottom="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="4dp"
+                android:paddingTop="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/thongtin">
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
                 <TextView
-                    android:id="@+id/danhgia"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/dstruyen"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/danhgia_button_selector"
-                    android:drawableEnd="@drawable/vector_button_selector"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:paddingBottom="10dp"
-                    android:text="Đánh giá ứng dụng"
-                    android:textSize="16sp" />
+                    android:fontFamily="sans-serif-light"
+                    android:paddingLeft="20dp"
+                    android:text="DANH SÁCH TRUYỆN"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="30dp"
+                    android:paddingBottom="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dstruyen">
+
+                    <TextView
+                        android:id="@+id/album1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/album_button_selector"
+                        android:drawableEnd="@drawable/vector_button_selector"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:paddingBottom="10dp"
+                        android:text="Bộ sưu tập của tôi"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/album2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/album_button_selector"
+                        android:drawableEnd="@drawable/vector_button_selector"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:paddingBottom="10dp"
+                        android:text="Bộ sưu tập yêu thích"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:paddingTop="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout1">
 
                 <TextView
-                    android:id="@+id/gopy"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/setting"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/gopy_button_selector"
-                    android:drawableEnd="@drawable/vector_button_selector"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:paddingBottom="10dp"
-                    android:text="Góp ý qua mail"
-                    android:textSize="16sp" />
+                    android:fontFamily="sans-serif-light"
+                    android:paddingLeft="20dp"
+                    android:text="CÀI ĐẶT"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="30dp"
+                    android:paddingBottom="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/setting">
+
+                    <TextView
+                        android:id="@+id/giaodien"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/edit_button_selector"
+                        android:drawableEnd="@drawable/vector_button_selector"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:paddingBottom="10dp"
+                        android:text="Cài đặt giao diện đọc"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/mau"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/color_button_selector"
+                        android:drawableEnd="@drawable/vector_button_selector"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:paddingBottom="10dp"
+                        android:text="Chọn màu yêu thích"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:paddingTop="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
                 <TextView
-                    android:id="@+id/share"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/thongtin"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/share_button_selector"
-                    android:drawableEnd="@drawable/vector_button_selector"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:paddingBottom="10dp"
-                    android:text="Chia sẻ ứng dụng"
-                    android:textSize="16sp" />
+                    android:fontFamily="sans-serif-light"
+                    android:paddingLeft="20dp"
+                    android:text="THÔNG TIN"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/csbm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/csbm_button_selector"
-                    android:drawableEnd="@drawable/vector_button_selector"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:paddingBottom="10dp"
-                    android:text="Chính sách bảo mật"
-                    android:textSize="16sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="30dp"
+                    android:paddingBottom="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/thongtin">
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/danhgia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/danhgia_button_selector"
+                        android:drawableEnd="@drawable/vector_button_selector"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:paddingBottom="10dp"
+                        android:text="Đánh giá ứng dụng"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/gopy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/gopy_button_selector"
+                        android:drawableEnd="@drawable/vector_button_selector"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:paddingBottom="10dp"
+                        android:text="Góp ý qua mail"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/share"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/share_button_selector"
+                        android:drawableEnd="@drawable/vector_button_selector"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:paddingBottom="10dp"
+                        android:text="Chia sẻ ứng dụng"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/csbm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/csbm_button_selector"
+                        android:drawableEnd="@drawable/vector_button_selector"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:paddingBottom="10dp"
+                        android:text="Chính sách bảo mật"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

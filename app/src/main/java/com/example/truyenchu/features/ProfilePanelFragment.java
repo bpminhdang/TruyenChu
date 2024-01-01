@@ -1,5 +1,8 @@
 package com.example.truyenchu.features;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,7 +10,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.truyenchu.R;
 
 /**
@@ -67,6 +73,25 @@ public class ProfilePanelFragment extends Fragment
                              Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_panel, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile_panel, container, false);
+
+        ImageView profilePic = view.findViewById(R.id.profile_image);
+        TextView profileName = view.findViewById(R.id.profiile_panel_name);
+        TextView wellcome = view.findViewById(R.id.profiile_panel_tvWellCome);
+
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("users_prefs", MODE_PRIVATE);
+        String username = sharedPreferences.getString("username", "Guest");
+        profileName.setText(username);
+
+        if (username.equals("Guest"))
+            wellcome.setText("WELLCOME");
+        else
+            wellcome.setText("WELLCOME BACK!");
+
+        String profilePictureString = sharedPreferences.getString("profilePicture", "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/images%2Fprofile_picture.jpg?alt=media&token=bc33064a-23aa-4236-aa3a-b3e3b43eccbc");
+        Glide.with(this).load(profilePictureString).into(profilePic);
+
+
+        return view;
     }
 }

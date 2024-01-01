@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -28,6 +29,8 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.facebook.FacebookSdk;
+
+import java.util.Objects;
 
 
 public class Login extends AppCompatActivity
@@ -58,6 +61,16 @@ public class Login extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Hide action bar
+        Objects.requireNonNull(getSupportActionBar()).hide();
+        // Status bar icon: Black
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        // Status bar: accent 1_0
+        getWindow().setStatusBarColor(getColor(R.color.accent_1_10));
+        // Navigation pill: White
+        getWindow().setNavigationBarColor(Color.WHITE);
+
+
         //Initialise Facebook SDK
         FacebookSdk.sdkInitialize(Login.this);
 
@@ -72,6 +85,12 @@ public class Login extends AppCompatActivity
             Intent intent = new Intent(getApplicationContext(), Register.class);
             startActivity(intent);
             finish();
+        });
+
+        findViewById(R.id.iv_Back).setOnClickListener(v->
+        {
+            Intent intent = new Intent(Login.this, HomeActivity.class);
+            startActivity(intent);
         });
 
         buttonLogin.setOnClickListener(v ->

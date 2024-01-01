@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6"
+        app:layout_constraintTop_toBottomOf="@+id/iv_Back"
         app:srcCompat="@drawable/icon" />
 
     <TextView
@@ -145,7 +145,7 @@
         app:layout_constraintTop_toBottomOf="@+id/loginNowlg" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/iv_Back"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="16dp"

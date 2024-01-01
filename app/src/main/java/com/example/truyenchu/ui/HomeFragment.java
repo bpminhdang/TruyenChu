@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +27,7 @@ import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.adapter.Horizontal_3_ContentAdapter;
 import com.example.truyenchu.adapter.Horizontal_2_ImageAdapter;
 import com.example.truyenchu.adapter.Horizontal_1_SmallImageAdapter;
+import com.example.truyenchu.features.ProfilePanelFragment;
 import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -101,16 +104,13 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
     {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        profilePic = view.findViewById(R.id.profile_image);
-        profileName = view.findViewById(R.id.profile_name);
+        // Khoảng mã lệnh trong Fragment cha để thêm Fragment con
+        FragmentManager childFragmentManager = getChildFragmentManager();
+        FragmentTransaction transaction = childFragmentManager.beginTransaction();
 
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("users_prefs", MODE_PRIVATE);
-        String username = sharedPreferences.getString("username", "Guest");
-        profileName.setText(username);
-
-        String profilePictureString = sharedPreferences.getString("profilePicture", "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/images%2Fprofile_picture.jpg?alt=media&token=bc33064a-23aa-4236-aa3a-b3e3b43eccbc");
-        Glide.with(this).load(profilePictureString).into(profilePic);
-
+        ProfilePanelFragment fragment = new ProfilePanelFragment();
+        transaction.replace(R.id.fragmentProfilePanel_Home, fragment); // R.id.container là id của viewgroup trong Fragment cha
+        transaction.commit();
 
 
         //FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").setPersistenceEnabled(true);
