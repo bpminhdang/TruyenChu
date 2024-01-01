@@ -16,8 +16,8 @@ import com.example.truyenchu._class.StoryClass;
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link StoryDescriptionFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * create an instance of this fragment.*/
+
 public class StoryDescriptionFragment extends Fragment
 {
 
@@ -41,8 +41,8 @@ public class StoryDescriptionFragment extends Fragment
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment StoryDescriptionFragment.
-     */
+     * @return A new instance of fragment StoryDescriptionFragment.*/
+
     // TODO: Rename and change types and number of parameters
     public static StoryDescriptionFragment newInstance(String param1, String param2)
     {
@@ -80,7 +80,7 @@ public class StoryDescriptionFragment extends Fragment
             tvName.setText(receivedStory.getName());
         }
 
-        ImageView ivBack = view.findViewById(R.id.ivBack_des);
+        ImageView ivBack = view.findViewById(R.id.imageView10);
         ivBack.setOnClickListener(v-> requireActivity().onBackPressed());
 
         return view;

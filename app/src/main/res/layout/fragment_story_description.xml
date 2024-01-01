@@ -27,7 +27,7 @@
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageView10"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,11 +57,12 @@
             android:id="@+id/imageView7"
             android:layout_width="124dp"
             android:layout_height="123dp"
+            android:layout_marginEnd="16dp"
             android:src="@drawable/book_2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.454" />
+            app:layout_constraintVertical_bias="0.521" />
 
         <TextView
             android:id="@+id/tacgia"
@@ -72,7 +73,7 @@
             android:fontFamily="@font/montserrat_regular"
             android:text="Hanks Chi"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintHorizontal_bias="0.076"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -80,7 +81,7 @@
             android:id="@+id/trangthai"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:drawableLeft="@drawable/des_upload"
             android:drawablePadding="5dp"
@@ -93,7 +94,7 @@
             android:id="@+id/sochuong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:drawableLeft="@drawable/hamburger_2"
             android:drawablePadding="5dp"
@@ -106,7 +107,7 @@
             android:id="@+id/luotthich"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:drawableLeft="@drawable/heart_like"
             android:drawablePadding="5dp"
@@ -144,7 +145,7 @@
             android:id="@+id/imageView3"
             android:layout_width="31dp"
             android:layout_height="31dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:src="@drawable/hwc"
             app:layout_constraintStart_toStartOf="parent"
@@ -178,9 +179,10 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_regular"
         android:paddingLeft="30dp"
-        android:paddingTop="15dp"
+        android:paddingTop="20dp"
         android:paddingRight="30dp"
-        android:text="Văn án:\n\nMục Tế Vân – phó giáo sư đại học Nam Đại, học vấn uyên bác, chính trực nghiêm túc.\n\nSở Chiêu Chiêu – học bá của học bá, tài đức vẹn toàn, khiêm tốn lễ phép.\n\nTối nọ, tại quán bar Giang Thành. Sở Chiêu Chiêu trang điểm đậm đi làm thì bắt gặp Mục Tế Vân ở đó, ngón tay anh kẹp điếu thuốc đang đỏ lửa, áo sơ-mi phẳng phiu đã mở ba cúc đầu, cả người dựa lên sofa, dáng vẻ phong lưu phóng đãng.\n\nTừ đó về sau, Sở Chiêu Chiêu dường như đã bị ghim rồi.\n\nMôn bắt buộc là anh, môn tự chọn là anh, đến cả luận văn tốt nghiệp cũng là anh.\n\nPhó giáo sư đại học trong ngoài bất nhất x Nữ học bá hai mặt."
+        android:text="Văn án:\n\nMục Tế Vân – phó giáo sư đại học Nam Đại, học vấn uyên bác, chính trực nghiêm túc.\n\nSở Chiêu Chiêu – học bá của học bá, tài đức vẹn toàn, khiêm tốn lễ phép.\n\nTối nọ, tại quán bar Giang Thành. Sở Chiêu Chiêu trang điểm đậm đi làm thì bắt gặp Mục Tế Vân ở đó, ngón tay anh kẹp điếu thuốc đang đỏ lửa, áo sơ-mi phẳng phiu đã mở ba cúc đầu, cả người dựa lên sofa, dáng vẻ phong lưu phóng đãng.\n\nTừ đó về sau, Sở Chiêu Chiêu dường như đã bị ghim rồi.\n\nMôn bắt buộc là anh, môn tự chọn là anh, đến cả luận văn tốt nghiệp cũng là anh.\n\nPhó giáo sư đại học trong ngoài bất nhất x Nữ học bá hai mặt. wiejkoqiwejo\n\niqrjeiqojeoqjoiejiojekioqjeiqejiqoejkoijewoiejqoiejqwe\n\nqwejqoweioqwejqoeoqwi"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -189,3 +191,4 @@
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
