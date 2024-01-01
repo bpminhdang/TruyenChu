@@ -1,0 +1,6 @@
+<!-- res/drawable/my_selector.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/cirle_i_c"
+        android:width="19dp"
+        android:height="19dp"/>
+</layer-list>
