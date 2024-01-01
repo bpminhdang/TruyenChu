@@ -14,14 +14,13 @@
 
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/linearLayout0"
             android:layout_width="0dp"
             android:layout_height="90dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteY="1dp">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="60dp"
@@ -70,47 +69,227 @@
 
         </LinearLayout>
 
-        <!-- Bo loc -->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout0">
+
             <LinearLayout
+                android:id="@+id/mot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="10dp">
 
-                <Button
-                    android:id="@+id/Buttonmore"
+                <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="@string/bo_loc"
-                    android:textColor="#FF6666"
-                    android:textSize="20dp" />
-                <ImageView
-                    android:id="@+id/imageView4"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    app:cardBackgroundColor="@color/accent_1_100"
+                    app:cardCornerRadius="10dp">
+
+                    <Button
+                        android:id="@+id/ngontinh"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Ngôn tình"
+                        android:textAllCaps="false"
+                        android:textColor="@color/accent_1_800" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="16dp"
-                    android:src="@drawable/more" />
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    app:cardBackgroundColor="@color/accent_1_100"
+                    app:cardCornerRadius="@dimen/buttonCornerRadius">
+
+                    <Button
+                        android:id="@+id/sung"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Sủng"
+                        android:textAllCaps="false"
+                        android:textColor="@color/accent_1_800" />
+                </androidx.cardview.widget.CardView>
+
             </LinearLayout>
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:id="@+id/discovery_recycler_view"
+            <LinearLayout
+                android:id="@+id/hai"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false">
+                android:orientation="horizontal"
+                android:paddingBottom="10dp">
 
-            </androidx.recyclerview.widget.RecyclerView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    app:cardBackgroundColor="@color/accent_1_100"
+                    app:cardCornerRadius="@dimen/buttonCornerRadius">
+
+                    <Button
+                        android:id="@+id/nguoc"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Ngược"
+                        android:textAllCaps="false"
+                        android:textColor="@color/accent_1_800" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    app:cardBackgroundColor="@color/accent_1_100"
+                    app:cardCornerRadius="10dp">
+
+                    <Button
+                        android:id="@+id/dammy"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Đam Mỹ"
+                        android:textAllCaps="false"
+                        android:textColor="@color/accent_1_800" />
+
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ba"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingRight="5dp"
+                android:paddingBottom="10dp">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    app:cardBackgroundColor="@color/accent_1_100"
+                    app:cardCornerRadius="10dp">
+
+                    <Button
+                        android:id="@+id/haihuoc"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Hài Hước"
+                        android:textAllCaps="false"
+                        android:textColor="@color/accent_1_800" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    app:cardBackgroundColor="@color/accent_1_100"
+                    app:cardCornerRadius="@dimen/buttonCornerRadius">
+
+                    <Button
+                        android:id="@+id/xuyenkhong"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Xuyên Không"
+                        android:textAllCaps="false"
+                        android:textColor="@color/accent_1_800" />
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/bon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingRight="5dp"
+                android:paddingBottom="10dp">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    app:cardBackgroundColor="@color/accent_1_100"
+                    app:cardCornerRadius="@dimen/buttonCornerRadius">
+
+                    <Button
+                        android:id="@+id/button10"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Kiếm Hiệp"
+                        android:textAllCaps="false"
+                        android:textColor="@color/accent_1_800" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    app:cardBackgroundColor="@color/accent_1_100"
+                    app:cardCornerRadius="10dp">
+
+                    <Button
+                        android:id="@+id/tienhiep"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Tiên Hiệp"
+                        android:textAllCaps="false"
+                        android:textColor="@color/accent_1_800" />
+
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
         </LinearLayout>
 
+        <!-- Bo loc -->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
