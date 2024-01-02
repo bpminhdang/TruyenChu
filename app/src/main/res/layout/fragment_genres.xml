@@ -14,6 +14,21 @@
         <!-- TODO: Update fragment layout -->
 
 
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:fontFamily="@font/montserrat_semibold"
+            android:gravity="center_vertical"
+            android:paddingEnd="20dp"
+            android:text="Các thể loại"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dis_profile_panel_container" />
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/dis_profile_panel_container"
             android:layout_width="0dp"
@@ -28,11 +43,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dis_profile_panel_container">
+            app:layout_constraintTop_toBottomOf="@+id/textView7">
 
 
             <Button
@@ -371,7 +386,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:paddingTop="5dp"
-            app:layout_constraintBottom_toTopOf="@+id/dis_recycler_view"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -401,15 +416,6 @@
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/dis_recycler_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <!-- Bo loc -->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
