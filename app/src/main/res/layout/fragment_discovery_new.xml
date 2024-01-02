@@ -9,6 +9,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/dis_profile_panel_container"
+        style="material3 button"
         android:layout_width="0dp"
         android:layout_height="90dp"
         android:background="@color/accent_1_10"
@@ -36,7 +37,7 @@
             <Button
                 android:id="@+id/dis_bt_new"
                 style="@style/Widget.Material3.Button"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/common_padding"
                 android:layout_marginEnd="5dp"
@@ -47,7 +48,7 @@
             <Button
                 android:id="@+id/dis_bt_update"
                 style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
@@ -58,7 +59,7 @@
             <Button
                 android:id="@+id/dis_bt_full"
                 style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
@@ -69,7 +70,7 @@
             <Button
                 android:id="@+id/dis_bt_rating"
                 style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
@@ -80,7 +81,7 @@
             <Button
                 android:id="@+id/dis_bt_view"
                 style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
@@ -91,7 +92,7 @@
             <Button
                 android:id="@+id/dis_bt_favorite"
                 style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"

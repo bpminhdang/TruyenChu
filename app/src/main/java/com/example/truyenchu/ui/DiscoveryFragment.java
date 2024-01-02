@@ -1,4 +1,4 @@
-package com.example.truyenchu.ui.discovery;
+package com.example.truyenchu.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,8 +21,6 @@ import com.example.truyenchu.StoryActivity;
 import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
-import com.example.truyenchu.adapter.Horizontal_1_SmallImageAdapter;
-import com.example.truyenchu.adapter.Horizontal_2_ImageAdapter;
 import com.example.truyenchu.adapter.VerticalContentAdapter;
 import com.example.truyenchu.features.ProfilePanelFragment;
 import com.google.firebase.database.DataSnapshot;
@@ -31,16 +29,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link DiscoveryNewFragment#newInstance} factory method to
+ * Use the {@link DiscoveryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DiscoveryNewFragment extends Fragment
+public class DiscoveryFragment extends Fragment
 {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -53,7 +52,7 @@ public class DiscoveryNewFragment extends Fragment
     private String mParam2;
     ArrayList<StoryClass> storyList = new ArrayList<>();
 
-    public DiscoveryNewFragment()
+    public DiscoveryFragment()
     {
         // Required empty public constructor
     }
@@ -67,9 +66,9 @@ public class DiscoveryNewFragment extends Fragment
      * @return A new instance of fragment DiscoveryNewFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DiscoveryNewFragment newInstance(String param1, String param2)
+    public static DiscoveryFragment newInstance(String param1, String param2)
     {
-        DiscoveryNewFragment fragment = new DiscoveryNewFragment();
+        DiscoveryFragment fragment = new DiscoveryFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -150,7 +149,7 @@ public class DiscoveryNewFragment extends Fragment
         VerticalContentAdapter adapter = new VerticalContentAdapter(getActivity(), storyList, story ->
         {
             Intent intent = new Intent(getActivity(), StoryActivity.class);
-            intent.putExtra("storyData", story);
+            intent.putExtra("storyData",(Serializable) story);
             startActivity(intent);
         });
         recyclerView.setAdapter(adapter);

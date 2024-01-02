@@ -1,34 +1,47 @@
 package com.example.truyenchu;
 
-import static java.security.AccessController.getContext;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
-import com.example.truyenchu.features.ProfilePanelFragment;
+import com.example.truyenchu._class.ChapterClass;
+import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.features.UploadStoryFragment;
 import com.example.truyenchu.ui.DownloadFragment;
 import com.example.truyenchu.ui.HomeFragment;
 import com.example.truyenchu.ui.ProfileFragment;
-import com.example.truyenchu.ui.discovery.DiscoveryNewFragment;
+import com.example.truyenchu.ui.DiscoveryFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity
 {
     FirebaseAuth mAuth;
     boolean isLoggedIn = false;
+    ArrayList<StoryClass> storyList = new ArrayList<>();
+    ArrayList<StoryClass> storyList1 = new ArrayList<>();
+    ArrayList<StoryClass> storyList2 = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -48,8 +61,7 @@ public class HomeActivity extends AppCompatActivity
             try
             {
                 photoURL = mUser.getPhotoUrl().toString();
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 photoURL = null; // Todo: Image mac dinh
                 Toast.makeText(this, "Cant retrive profile image", Toast.LENGTH_SHORT).show();
@@ -58,8 +70,7 @@ public class HomeActivity extends AppCompatActivity
             editor.putString("isLoggedIn", "true");
             isLoggedIn = true;
             editor.apply();
-        }
-        else
+        } else
         {
             SharedPreferences sharedPreferences = getSharedPreferences("users_prefs", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -68,8 +79,6 @@ public class HomeActivity extends AppCompatActivity
             editor.putString("isLoggedIn", "false");
             editor.apply();
         }
-
-
 
 
         // Hide action bar
@@ -81,59 +90,136 @@ public class HomeActivity extends AppCompatActivity
         // Navigation pill: White
         getWindow().setNavigationBarColor(Color.WHITE);
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        //FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").setPersistenceEnabled(true);
+        DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
+        DatabaseReference storiesRef = database.child("stories");
 
-        if (savedInstanceState == null)
+        storiesRef.addListenerForSingleValueEvent(new ValueEventListener()
         {
-            // Nếu không có fragment đã được thêm, thêm vào
-            HomeFragment fragment = new HomeFragment();
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.fragment_container, fragment, "YOUR_FRAGMENT_TAG")
-                    .commit();
 
-        }
-        bottomNav.setSelectedItemId(R.id.navigation_home);
-        bottomNav.setOnItemSelectedListener(item ->
-        {
-            Fragment selectedFragment = null;
-            if (item.getItemId() == R.id.navigation_discovery)
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
             {
-                selectedFragment = new DiscoveryNewFragment();
-            } else if (item.getItemId() == R.id.navigation_download)
-            {
-                selectedFragment = new DownloadFragment();
-            } else if (item.getItemId() == R.id.navigation_home)
-            {
-                selectedFragment = new HomeFragment();
-            } else if (item.getItemId() == R.id.navigation_profile)
-            {
-                if (!isLoggedIn)
+                if (dataSnapshot.exists())
                 {
-                    Intent intent = new Intent(getApplicationContext(), Login.class);
-                    startActivity(intent);
-                    finish();
-                    return false;
+                    for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
+                    {
+                        if (storySnapshot.getKey().startsWith("story_"))
+                        {
+                            // Lấy dữ liệu của từng story từ dataSnapshot
+                            Map<String, Object> storyData = (Map<String, Object>) storySnapshot.getValue();
+
+                            // Tạo đối tượng StoryClass từ dữ liệu của mỗi story
+                            StoryClass story = new StoryClass((int) (long) storyData.get("id"));
+                            story.setName((String) storyData.get("name"));
+                            story.setTime((String) storyData.get("time"));
+                            story.setAuthor((String) storyData.get("author"));
+                            story.setStatus((String) storyData.get("status"));
+                            story.setDescription((String) storyData.get("description"));
+                            story.setNumberOfChapter((int) (long) storyData.get("numberOfChapter"));
+                            story.setViews((int) (long) storyData.get("views"));
+                            story.setUri((String) storyData.get("uri"));
+
+                            // Lấy danh sách genres
+                            List<String> genres = (List<String>) storyData.get("genres");
+                            if (genres != null)
+                            {
+                                story.setGenres(genres);
+                            }
+
+                            // Lấy danh sách các chương
+                            Map<String, Map<String, Object>> chaptersMap = (Map<String, Map<String, Object>>) storyData.get("chapters");
+                            if (chaptersMap != null)
+                            {
+                                for (Map.Entry<String, Map<String, Object>> entry : chaptersMap.entrySet())
+                                {
+                                    ChapterClass chapter = new ChapterClass();
+                                    Map<String, Object> chapterData = entry.getValue();
+                                    chapter.setChapterId((String) chapterData.get("chapterId"));
+                                    chapter.setContent((String) chapterData.get("content"));
+                                    story.getChapters().add(chapter);
+                                }
+                            }
+                            Log.i("DBValue", story.toString());
+                            // Thêm story vào danh sách storyList
+                            storyList.add(story);
+                        }
+                    }
+                    sortStoryListByTime();
+//                    adapter.notifyDataSetChanged();
+//                    adapter1.notifyDataSetChanged();
+//                    adapter2.notifyDataSetChanged();
+
                 }
-                else
-                    selectedFragment = new ProfileFragment();
-            } else if (item.getItemId() == R.id.navigation_search)
-            {
-                selectedFragment = new UploadStoryFragment();
+
+                BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+
+                if (savedInstanceState == null)
+                {
+                    // Nếu không có fragment đã được thêm, thêm vào
+                    HomeFragment fragment = HomeFragment.newInstance(storyList);
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .add(R.id.fragment_container, fragment, "YOUR_FRAGMENT_TAG")
+                            .commit();
+
+                }
+                bottomNav.setSelectedItemId(R.id.navigation_home);
+                bottomNav.setOnItemSelectedListener(item ->
+                {
+                    Fragment selectedFragment = null;
+                    if (item.getItemId() == R.id.navigation_discovery)
+                    {
+                        selectedFragment = new DiscoveryFragment();
+                    } else if (item.getItemId() == R.id.navigation_download)
+                    {
+                        selectedFragment = new DownloadFragment();
+                    } else if (item.getItemId() == R.id.navigation_home)
+                    {
+                        selectedFragment = HomeFragment.newInstance(storyList);
+                    } else if (item.getItemId() == R.id.navigation_profile)
+                    {
+                        if (!isLoggedIn)
+                        {
+                            Intent intent = new Intent(getApplicationContext(), Login.class);
+                            startActivity(intent);
+                            finish();
+                            return false;
+                        } else
+                            selectedFragment = new ProfileFragment();
+                    } else if (item.getItemId() == R.id.navigation_search)
+                    {
+                        selectedFragment = new UploadStoryFragment();
+                    }
+
+                    if (selectedFragment != null)
+                    {
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, selectedFragment)
+                                .addToBackStack(null) // Để thêm Fragment vào Backstack
+                                .commit();
+                        return true;
+                    }
+
+                    return false;
+                });
             }
 
-            if (selectedFragment != null)
+            @Override
+            public void onCancelled(DatabaseError databaseError)
             {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, selectedFragment)
-                        .addToBackStack(null) // Để thêm Fragment vào Backstack
-                        .commit();
-                return true;
+                Log.i("DB", "Lỗi: " + databaseError.getMessage());
             }
-
-            return false;
         });
 
 
+
+
+
+    }
+
+    private void sortStoryListByTime()
+    {
+        Collections.sort(storyList, (s1, s2) -> s2.getTime().compareTo(s1.getTime()));
     }
 }
