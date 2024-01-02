@@ -17,7 +17,7 @@
 
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentProfilePanel_Home"
+            android:id="@+id/home_profile_panel_container"
             android:layout_width="0dp"
             android:layout_height="90dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragmentProfilePanel_Home">
+            app:layout_constraintTop_toBottomOf="@+id/home_profile_panel_container">
 
             <TextView
                 android:id="@+id/textView"
@@ -55,20 +55,22 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:background="@android:color/transparent"
-                android:drawableEnd="@drawable/see_more"
-                android:drawableTint="@color/accent_1_700"
+                android:drawableEnd="@drawable/more_svg"
+                android:drawableTint="@color/accent_3_400"
                 android:fontFamily="@font/montserrat_semibold"
                 android:paddingLeft="0dp"
                 android:paddingEnd="10dp"
                 android:paddingRight="0dp"
                 android:text="Xem thêm"
-                android:textColor="@color/accent_1_700"
+                android:textColor="@color/accent_3_500"
                 android:textSize="13dp"
-                app:iconPadding="0dp"
+                app:iconPadding="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
+                android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -261,16 +263,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:background="@android:color/transparent"
-                android:drawableEnd="@drawable/see_more"
-                android:drawableTint="@color/accent_1_700"
+                android:drawableEnd="@drawable/more_svg"
+                android:drawableTint="@color/accent_3_400"
                 android:fontFamily="@font/montserrat_semibold"
                 android:paddingLeft="0dp"
                 android:paddingEnd="10dp"
                 android:paddingRight="0dp"
                 android:text="Xem thêm"
-                android:textColor="@color/accent_1_700"
+                android:textAlignment="viewStart"
+                android:textColor="@color/accent_3_500"
                 android:textSize="13dp"
-                app:iconPadding="0dp"
+                app:iconPadding="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -320,16 +323,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:background="@android:color/transparent"
-                android:drawableEnd="@drawable/see_more"
-                android:drawableTint="@color/accent_1_700"
+                android:drawableEnd="@drawable/more_svg"
+                android:drawableTint="@color/accent_3_400"
                 android:fontFamily="@font/montserrat_semibold"
                 android:paddingLeft="0dp"
                 android:paddingEnd="10dp"
                 android:paddingRight="0dp"
                 android:text="Xem thêm"
-                android:textColor="@color/accent_1_700"
                 android:textSize="13dp"
-                app:iconPadding="0dp"
+                android:textColor="@color/accent_3_500"
+                app:iconPadding="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -379,16 +382,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:background="@android:color/transparent"
-                android:drawableEnd="@drawable/see_more"
-                android:drawableTint="@color/accent_1_700"
+                android:drawableEnd="@drawable/more_svg"
+                android:drawableTint="@color/accent_3_400"
                 android:fontFamily="@font/montserrat_semibold"
                 android:paddingLeft="0dp"
                 android:paddingEnd="10dp"
                 android:paddingRight="0dp"
                 android:text="Xem thêm"
-                android:textColor="@color/accent_1_700"
+                android:textColor="@color/accent_3_500"
+                app:iconPadding="10dp"
                 android:textSize="13dp"
-                app:iconPadding="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

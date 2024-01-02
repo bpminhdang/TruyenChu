@@ -1,9 +1,6 @@
 package com.example.truyenchu.ui;
 
-import static android.content.Context.MODE_PRIVATE;
-
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -19,7 +15,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.truyenchu.StoryActivity;
 import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu.R;
@@ -28,9 +23,6 @@ import com.example.truyenchu.adapter.Horizontal_3_ContentAdapter;
 import com.example.truyenchu.adapter.Horizontal_2_ImageAdapter;
 import com.example.truyenchu.adapter.Horizontal_1_SmallImageAdapter;
 import com.example.truyenchu.features.ProfilePanelFragment;
-import com.google.firebase.Firebase;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -109,7 +101,7 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         FragmentTransaction transaction = childFragmentManager.beginTransaction();
 
         ProfilePanelFragment fragment = new ProfilePanelFragment();
-        transaction.replace(R.id.fragmentProfilePanel_Home, fragment); // R.id.container là id của viewgroup trong Fragment cha
+        transaction.replace(R.id.home_profile_panel_container, fragment); // R.id.container là id của viewgroup trong Fragment cha
         transaction.commit();
 
 

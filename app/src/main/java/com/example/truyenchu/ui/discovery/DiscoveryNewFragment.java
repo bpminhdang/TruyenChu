@@ -1,21 +1,32 @@
 package com.example.truyenchu.ui.discovery;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.truyenchu.StoryActivity;
 import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.adapter.VerticalContentAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +44,7 @@ public class DiscoveryNewFragment extends Fragment
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    ArrayList<StoryClass> storyList = new ArrayList<>();
 
     public DiscoveryNewFragment()
     {
@@ -76,31 +88,80 @@ public class DiscoveryNewFragment extends Fragment
         //TODO: Thay vì tự tạo Story, lấy dữ liệu từ Firebase và đưa nó vào nhiều object, sau đó đưa vào recyclerView
 
         View view = inflater.inflate(R.layout.fragment_discovery_new, container, false);
-//        ArrayList<StoryClass> Stories = new ArrayList<>();
-//        StoryClass story_Class_1 = new StoryClass(2,"Khi hơi thở hóa thinh không", "Paul Katy", "Full","19 giờ trước",  10, new String[]{"Helpless"}, 103);
-//        String chapter_1 = "Trong một thung lũng xa xôi, nơi tình khúc hòa với tiếng gió, có một lão già tên là Oren. Ông là người duy nhất trong làng biết về bí mật của \"Hơi Thở Hóa Thinh Không\".\n" +
-//                "Lão Oren từng nói rằng mỗi sinh linh đều có khả năng biến hơi thở của mình thành một sức mạnh vô hình, tạo nên những điều kỳ diệu. Người ta cười chê và coi ông như một người mơ mộng.\n" +
-//                "Trong một buổi chiều trời rực rỡ, Dara - một cô bé tinh nghịch, đầy tò mò đã đến thăm lão Oren. Cô bé vừa học được về bí mật này và muốn hiểu rõ hơn.\n" +
-//                "\"Mỗi hơi thở là một phép màu, Dara,\" ông Oren nói. \"Nếu ta biết cách tập trung, ta có thể làm bất cứ điều gì.\"\n" +
-//                "Dara đã quyết định thử sức. Cô bé đóng một quả bóng và nhả hơi thở của mình vào đó. Rồi, kì diệu đã xảy ra. Quả bóng bắt đầu nhấp nhổm, bay lên và sáng rực như ngọn đèn lồng.\n" +
-//                "Với sức mạnh của hơi thở, Dara tạo ra những hình ảnh phong phú: một con rồng nhỏ bay quanh, một bông hoa màu sắc lấp lánh, và thậm chí là một cánh buồm trắng nhẹ nhàng trên mặt nước.\n" +
-//                "Từ ngày đó, tin đồn về \"Hơi Thở Hóa Thinh Không\" lan tỏa khắp làng. Mọi người hiểu rõ hơn về sức mạnh tiềm ẩn trong từng hơi thở. Họ đã học cách tin vào điều không tưởng và thấy rằng, trong mỗi chúng ta, đều có khả năng tạo ra kỳ diệu từ những điều tưởng chừng nhỏ nhất.";
-//        story_Class_1.addChapter(new ChapterClass(1, chapter_1));
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//
-//        RecyclerView recyclerView = view.findViewById(R.id.discovery_recycler_view);
-//        VerticalContentAdapter adapter = new VerticalContentAdapter(getActivity(), Stories);
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-//        // Inflate the layout for this fragment
+        DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
+        DatabaseReference storiesRef = database.child("stories");
+
+        RecyclerView recyclerView = view.findViewById(R.id.dis_recycler_view);
+        VerticalContentAdapter adapter = new VerticalContentAdapter(getActivity(), storyList, story ->
+        {
+            Intent intent = new Intent(getActivity(), StoryActivity.class);
+            intent.putExtra("storyData", story);
+            startActivity(intent);
+        });
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        storiesRef.addListenerForSingleValueEvent(new ValueEventListener()
+        {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                if (dataSnapshot.exists())
+                {
+                    for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
+                    {
+                        if (storySnapshot.getKey().startsWith("story_"))
+                        {
+                            // Lấy dữ liệu của từng story từ dataSnapshot
+                            Map<String, Object> storyData = (Map<String, Object>) storySnapshot.getValue();
+
+                            // Tạo đối tượng StoryClass từ dữ liệu của mỗi story
+                            StoryClass story = new StoryClass((int) (long) storyData.get("id"));
+                            story.setName((String) storyData.get("name"));
+                            story.setTime((String) storyData.get("time"));
+                            story.setAuthor((String) storyData.get("author"));
+                            story.setStatus((String) storyData.get("status"));
+                            story.setDescription((String) storyData.get("description"));
+                            story.setNumberOfChapter((int) (long) storyData.get("numberOfChapter"));
+                            story.setViews((int) (long) storyData.get("views"));
+                            story.setUri((String) storyData.get("uri"));
+
+                            // Lấy danh sách genres
+                            List<String> genres = (List<String>) storyData.get("genres");
+                            if (genres != null)
+                            {
+                                story.setGenres(genres);
+                            }
+
+                            // Lấy danh sách các chương
+                            Map<String, Map<String, Object>> chaptersMap = (Map<String, Map<String, Object>>) storyData.get("chapters");
+                            if (chaptersMap != null)
+                            {
+                                for (Map.Entry<String, Map<String, Object>> entry : chaptersMap.entrySet())
+                                {
+                                    ChapterClass chapter = new ChapterClass();
+                                    Map<String, Object> chapterData = entry.getValue();
+                                    chapter.setChapterId((String) chapterData.get("chapterId"));
+                                    chapter.setContent((String) chapterData.get("content"));
+                                    story.getChapters().add(chapter);
+                                }
+                            }
+                            Log.i("DBValue", story.toString());
+                            // Thêm story vào danh sách storyList
+                            storyList.add(story);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error)
+            {
+
+            }
+
+        });
 
 
         return view;
