@@ -16,6 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/avenirnextltpro_regular"
+            android:lineSpacingExtra="8sp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text="@string/c1_test"

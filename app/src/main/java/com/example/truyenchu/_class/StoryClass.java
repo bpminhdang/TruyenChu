@@ -2,6 +2,8 @@ package com.example.truyenchu._class;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Lớp Truyen (Truyện)
-public class StoryClass implements Serializable
+public class StoryClass implements Serializable, Parcelable
 {
     private final int id;
     private String name;
@@ -220,5 +222,52 @@ public class StoryClass implements Serializable
         Glide.with(context)
                 .load(uri)
                 .into(imageView);
+    }
+
+
+    protected StoryClass(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        time = in.readString();
+        author = in.readString();
+        status = in.readString();
+        description = in.readString();
+        numberOfChapter = in.readInt();
+        in.readList(chapters, ChapterClass.class.getClassLoader());
+        genres = in.createStringArrayList();
+        views = in.readInt();
+        uri = in.readString();
+    }
+
+    public static final Parcelable.Creator<StoryClass> CREATOR = new Parcelable.Creator<StoryClass>() {
+        @Override
+        public StoryClass createFromParcel(Parcel in) {
+            return new StoryClass(in);
+        }
+
+        @Override
+        public StoryClass[] newArray(int size) {
+            return new StoryClass[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(time);
+        dest.writeString(author);
+        dest.writeString(status);
+        dest.writeString(description);
+        dest.writeInt(numberOfChapter);
+        dest.writeList(chapters);
+        dest.writeStringList(genres);
+        dest.writeInt(views);
+        dest.writeString(uri);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 }
