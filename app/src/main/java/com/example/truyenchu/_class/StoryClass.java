@@ -61,15 +61,7 @@ public class StoryClass implements Serializable
 
     public String getName(int cutOffWhenMoreThan)
     {
-        if (name.length() > cutOffWhenMoreThan)
-        {
-            int lastIndex = name.lastIndexOf(' ', cutOffWhenMoreThan);
-            if (lastIndex != -1)
-            {
-                return name.substring(0, lastIndex) + "...";
-            }
-        }
-        return name;
+        return cutOff(name, cutOffWhenMoreThan);
     }
 
 
@@ -88,9 +80,14 @@ public class StoryClass implements Serializable
         return numberOfChapter;
     }
 
-    public List<String> getGenres()
+    public List<String> getGenresList()
     {
         return genres;
+    }
+
+    public String getGenres(int cutOffWhenMoreThan)
+    {
+        return cutOff(String.join(", ", genres), cutOffWhenMoreThan);
     }
 
     public List<ChapterClass> getChapters()
@@ -174,6 +171,19 @@ public class StoryClass implements Serializable
     public void setUri(String uri)
     {
         this.uri = uri;
+    }
+
+    public static String cutOff(String text,int maxLenght)
+    {
+        if (text.length() > maxLenght)
+        {
+            int lastIndex = text.lastIndexOf(' ', maxLenght);
+            if (lastIndex != -1)
+            {
+                return text.substring(0, lastIndex) + "...";
+            }
+        }
+        return text;
     }
 
     @Override

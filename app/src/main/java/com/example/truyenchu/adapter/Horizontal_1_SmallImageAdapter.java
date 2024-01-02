@@ -105,7 +105,6 @@ public class Horizontal_1_SmallImageAdapter extends RecyclerView.Adapter<Horizon
                 .load(story.getUri())
                 .into(viewHolder.getStoryImage());
         viewHolder.getTvName().setText(story.getName(13));
-        Log.i("ABC", "onBindViewHolder: " + " " + position);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

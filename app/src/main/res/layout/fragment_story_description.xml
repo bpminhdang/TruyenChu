@@ -182,13 +182,14 @@
 
     <TextView
         android:id="@+id/des_tv_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:fontFamily="@font/montserrat_regular"
         android:paddingLeft="30dp"
         android:paddingTop="20dp"
         android:paddingRight="30dp"
         android:text="Văn án:\n\nMục Tế Vân – phó giáo sư đại học Nam Đại, học vấn uyên bác, chính trực nghiêm túc.\n\nSở Chiêu Chiêu – học bá của học bá, tài đức vẹn toàn, khiêm tốn lễ phép.\n\nTối nọ, tại quán bar Giang Thành. Sở Chiêu Chiêu trang điểm đậm đi làm thì bắt gặp Mục Tế Vân ở đó, ngón tay anh kẹp điếu thuốc đang đỏ lửa, áo sơ-mi phẳng phiu đã mở ba cúc đầu, cả người dựa lên sofa, dáng vẻ phong lưu phóng đãng.\n\nTừ đó về sau, Sở Chiêu Chiêu dường như đã bị ghim rồi.\n\nMôn bắt buộc là anh, môn tự chọn là anh, đến cả luận văn tốt nghiệp cũng là anh.\n\nPhó giáo sư đại học trong ngoài bất nhất x Nữ học bá hai mặt. wiejkoqiwejo\n\niqrjeiqojeoqjoiejiojekioqjeiqejiqoejkoijewoiejqoiejqwe\n\nqwejqoweioqwejqoeoqwi"
+        android:textAlignment="viewStart"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

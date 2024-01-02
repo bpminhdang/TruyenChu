@@ -1,5 +1,6 @@
 package com.example.truyenchu.adapter;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +17,18 @@ import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.features.RecyclerViewItemClickListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContentAdapter.ViewHolder>
 {
-
+    private Context context;
     static ArrayList<StoryClass> arr;
     private final RecyclerViewItemClickListener listener;
 
-    public VerticalContentAdapter(FragmentActivity activity, ArrayList<StoryClass> dataSet, RecyclerViewItemClickListener listener)
+    public VerticalContentAdapter(Context context, ArrayList<StoryClass> dataSet, RecyclerViewItemClickListener listener)
     {
+        this.context = context;
         arr = dataSet;
         this.listener = listener;
     }
@@ -130,19 +133,20 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.bind(arr.get(position), listener);
+       viewHolder.bind(arr.get(position), listener);
         StoryClass story = arr.get(position);
+
 
         Glide.with(viewHolder.itemView.getContext())
                 .load(story.getUri())
                 .into(viewHolder.getStoryImage());
-        viewHolder.getTvName().setText(story.getName());
+        viewHolder.getTvName().setText(story.getName(40));
         viewHolder.getTvTime().setText(story.getTime());
-        viewHolder.getTvAuthor().setText(story.getAuthor());
-        viewHolder.getTvChapter().setText(String.valueOf(story.getNumberOfChapter()));
-        viewHolder.getTvGenre().setText(story.getGenres().get(0));
+        viewHolder.getTvAuthor().setText("Tác giả: " + story.getAuthor());
+        viewHolder.getTvChapter().setText("Số chương: " + String.valueOf(story.getNumberOfChapter()));
+        viewHolder.getTvGenre().setText(story.getGenres(40));
 
-        Log.i("ABC", "onBindViewHolder: " + position);
+        Log.i("Vertical", story.getUri());
     }
 
     // Return the size of your dataset (invoked by the layout manager)

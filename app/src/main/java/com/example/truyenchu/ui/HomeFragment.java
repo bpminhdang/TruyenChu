@@ -30,6 +30,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -191,12 +193,14 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
                             Log.i("DBValue", story.toString());
                             // Thêm story vào danh sách storyList
                             storyList.add(story);
-                            adapter.notifyDataSetChanged();
-                            adapter1.notifyDataSetChanged();
-                            adapter2.notifyDataSetChanged();
 
                         }
                     }
+                    sortStoryListByTime();
+                    adapter.notifyDataSetChanged();
+                    adapter1.notifyDataSetChanged();
+                    adapter2.notifyDataSetChanged();
+
                 }
             }
 
@@ -228,6 +232,12 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
 
         return view;
 
+
+    }
+
+    private void sortStoryListByTime()
+    {
+        Collections.sort(storyList, (s1, s2) -> s2.getTime().compareTo(s1.getTime()));
 
     }
 }

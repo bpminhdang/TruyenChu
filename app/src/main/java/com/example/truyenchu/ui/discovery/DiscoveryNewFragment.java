@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,12 +15,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.truyenchu.StoryActivity;
 import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
+import com.example.truyenchu.adapter.Horizontal_1_SmallImageAdapter;
+import com.example.truyenchu.adapter.Horizontal_2_ImageAdapter;
 import com.example.truyenchu.adapter.VerticalContentAdapter;
+import com.example.truyenchu.features.ProfilePanelFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -80,18 +87,66 @@ public class DiscoveryNewFragment extends Fragment
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    public void ResetColorAndSet(ArrayList<Button> btList, int position)
+    {
+        for (Button button : btList)
+        {
+            button.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(), R.color.accent_1_10));
+            button.setTextColor(getResources().getColor(R.color.accent_1_700));
+        }
+        btList.get(position).setBackgroundTintList(ContextCompat.getColorStateList(getActivity(), R.color.accent_1_600));
+        btList.get(position).setTextColor(getResources().getColor(R.color.accent_1_10));
 
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        //TODO: Thay vì tự tạo Story, lấy dữ liệu từ Firebase và đưa nó vào nhiều object, sau đó đưa vào recyclerView
-
         View view = inflater.inflate(R.layout.fragment_discovery_new, container, false);
+
+
+
+        FragmentManager childFragmentManager = getChildFragmentManager();
+        FragmentTransaction transaction = childFragmentManager.beginTransaction();
+
+        ProfilePanelFragment fragment = new ProfilePanelFragment();
+        transaction.replace(R.id.dis_profile_panel_container, fragment);
+        transaction.commit();
+
         DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
         DatabaseReference storiesRef = database.child("stories");
 
         RecyclerView recyclerView = view.findViewById(R.id.dis_recycler_view);
+        Button btnNew = view.findViewById(R.id.dis_bt_new);
+        Button btnUpdate = view.findViewById(R.id.dis_bt_update);
+        Button btnFull = view.findViewById(R.id.dis_bt_full);
+        Button btnRating = view.findViewById(R.id.dis_bt_rating);
+        Button btnView = view.findViewById(R.id.dis_bt_view);
+        Button btnFavorite = view.findViewById(R.id.dis_bt_favorite);
+        ArrayList<Button> btList = new ArrayList<>();
+        btList.add(btnNew);
+        btList.add(btnUpdate);
+        btList.add(btnFull);
+        btList.add(btnRating);
+        btList.add(btnView);
+        btList.add(btnFavorite);
+        Button btnFilter = view.findViewById(R.id.dis_fillter_button);
+
+
+        btnNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ResetColorAndSet(btList, 0);
+            }
+        });
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ResetColorAndSet(btList, 1);
+            }
+        });
+
         VerticalContentAdapter adapter = new VerticalContentAdapter(getActivity(), storyList, story ->
         {
             Intent intent = new Intent(getActivity(), StoryActivity.class);
@@ -100,6 +155,7 @@ public class DiscoveryNewFragment extends Fragment
         });
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+
         storiesRef.addListenerForSingleValueEvent(new ValueEventListener()
         {
 
