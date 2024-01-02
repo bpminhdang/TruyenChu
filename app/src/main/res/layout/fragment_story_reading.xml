@@ -15,12 +15,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
             android:fontFamily="@font/avenirnextltpro_regular"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text="@string/c1_test"
-            android:textAlignment="gravity"
+            android:textAlignment="textStart"
             android:textSize="16sp" />
     </androidx.core.widget.NestedScrollView>
 </FrameLayout>
