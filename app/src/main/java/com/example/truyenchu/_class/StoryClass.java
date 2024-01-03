@@ -27,7 +27,7 @@ public class StoryClass implements Serializable, Parcelable
     private int numberOfChapter;
     //private Image image;
     private List<ChapterClass> chapters = new ArrayList<>(); // List để lưu danh sách các chương
-    private List<String> genres;
+    private List<String> genres = new ArrayList<>();
     private int views;
 
     private String uri; // Retrive data from Firebase
@@ -91,15 +91,20 @@ public class StoryClass implements Serializable, Parcelable
 
     public String getGenres(int cutOffWhenMoreThan)
     {
-        String s = String.join(", ", genres);
-        try
+        String s;
+        if (genres.size() > 1)
         {
-            s = cutOff(s, cutOffWhenMoreThan);
+            s = String.join(", ", genres);
+            try
+            {
+                s = cutOff(s, cutOffWhenMoreThan);
+            } catch (Exception e)
+            {
+                Log.i("Story Error", e.toString());
+            }
         }
-        catch (Exception e)
-        {
-            Log.i("Story Error", e.toString());
-        }
+        else
+            s = genres.get(0);
         return s;
     }
 

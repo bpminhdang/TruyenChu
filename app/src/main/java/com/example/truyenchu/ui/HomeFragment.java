@@ -101,41 +101,32 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         // Khoảng mã lệnh trong Fragment cha để thêm Fragment con
         FragmentManager childFragmentManager = getChildFragmentManager();
         FragmentTransaction transaction = childFragmentManager.beginTransaction();
-
         ProfilePanelFragment fragment = new ProfilePanelFragment();
         transaction.replace(R.id.home_profile_panel_container, fragment); // R.id.container là id của viewgroup trong Fragment cha
         transaction.commit();
 
         RecyclerView rcViewNew = view.findViewById(R.id.home_recycler_view);
-        Horizontal_1_SmallImageAdapter adapter = new Horizontal_1_SmallImageAdapter(getActivity(), mStoryList, story ->
-        {
-            Intent intent = new Intent(getActivity(), StoryActivity.class);
-            intent.putExtra("storyData", (Serializable) story);
-            startActivity(intent);
-        });
-        rcViewNew.setAdapter(adapter);
-        rcViewNew.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-
         RecyclerView rcViewUpdate = view.findViewById(R.id.home_recycler_view_2);
-        Horizontal_3_ContentAdapter adapter1 = new Horizontal_3_ContentAdapter(getActivity(), mStoryList, story ->
-        {
-            Intent intent = new Intent(getActivity(), StoryActivity.class);
-            intent.putExtra("storyData",(Serializable) story);
-            startActivity(intent);
-        });
-
-        rcViewUpdate.setAdapter(adapter1);
-        rcViewUpdate.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-
         RecyclerView rcViewRecent = view.findViewById(R.id.home_recycler_view_3);
-        Horizontal_2_ImageAdapter adapter2 = new Horizontal_2_ImageAdapter(getActivity(), mStoryList, story ->
-        {
-            Intent intent = new Intent(getActivity(), StoryActivity.class);
-            intent.putExtra("storyData", (Serializable) story);
-            startActivity(intent);
-        });
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager3 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        // Reverse lại vì dữ liệu được lấy về bị sắp xếp ngược
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        layoutManager2.setReverseLayout(true);
+        layoutManager2.setStackFromEnd(true);
+
+        Horizontal_1_SmallImageAdapter adapter = new Horizontal_1_SmallImageAdapter(getActivity(), mStoryList, this::StartStoryDescriptionActivity);
+        Horizontal_3_ContentAdapter adapter1 = new Horizontal_3_ContentAdapter(getActivity(), mStoryList, this::StartStoryDescriptionActivity);
+        Horizontal_2_ImageAdapter adapter2 = new Horizontal_2_ImageAdapter(getActivity(), mStoryList, this::StartStoryDescriptionActivity);
+
+        rcViewNew.setAdapter(adapter);
+        rcViewNew.setLayoutManager(layoutManager);
+        rcViewUpdate.setAdapter(adapter1);
+        rcViewUpdate.setLayoutManager(layoutManager2);
         rcViewRecent.setAdapter(adapter2);
-        rcViewRecent.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        rcViewRecent.setLayoutManager(layoutManager3);
 
 
 
@@ -161,6 +152,13 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         return view;
 
 
+    }
+
+    private void StartStoryDescriptionActivity(StoryClass story)
+    {
+        Intent intent = new Intent(getActivity(), StoryActivity.class);
+        intent.putExtra("storyData", (Serializable) story);
+        startActivity(intent);
     }
 
     public void updateStories(ArrayList<StoryClass> updatedStories)

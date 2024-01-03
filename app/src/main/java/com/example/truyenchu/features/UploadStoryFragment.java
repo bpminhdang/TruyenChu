@@ -147,7 +147,7 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
         DatabaseReference storyRef = database.child("stories");
 
         // Upload local storyCount variable when start this fragment and everytime a story uploaded successfully.
-        storyRef.child("storyCount").addValueEventListener(new ValueEventListener()
+       database.child("storyCount").addValueEventListener(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
@@ -157,7 +157,7 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
                 Integer value = dataSnapshot.getValue(Integer.class);
                 if (value == null)
                 {
-                    storyRef.child("storyCount").setValue(0);
+                   database.child("storyCount").setValue(0);
                     onStoryCountReceived(0);
                 } else
                     onStoryCountReceived(value);
@@ -341,9 +341,14 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
             StoryClass story = new StoryClass(id, name, time, author, status, description, numberOfChapter, genres, views);
             storyRef.child("story_" + id).setValue(story, (databaseError, databaseReference) ->
             {
-                //Upload chapter
+                // Upload chapter
                 storyRef.child("story_" + id).child("chapters").child("chapter_" + id + "_" + numberOfChapter).setValue(new ChapterClass(id + "_" + numberOfChapter, content));
-                //Handle upload Story
+
+                // Change genresList key to genres
+                storyRef.child("story_" + id).child("genres").setValue(genres);
+                storyRef.child("story_" + id).child("genresList").removeValue();
+
+                // Handle upload Story
                 uploadImageToFirebase("story_" + id, imageUriStringFB ->
                         storyRef.child("story_" + id).child("uri").setValue(imageUriStringFB));
 
@@ -353,7 +358,7 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
                     Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                 } else
                 {
-                    storyRef.child("storyCount").setValue(storyCount + 1);
+                   database.child("storyCount").setValue(storyCount + 1);
                     Log.i("DB", "Upload story success!");
                     Gson gson = new Gson();
                     String storyJson = gson.toJson(story); // Convert the object to to log it

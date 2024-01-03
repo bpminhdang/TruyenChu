@@ -111,7 +111,7 @@ public class HomeActivity extends AppCompatActivity
         DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
         DatabaseReference storiesRef = database.child("stories");
 
-        storiesRef.addListenerForSingleValueEvent(new ValueEventListener()
+        storiesRef.orderByChild("time").limitToLast(6).addListenerForSingleValueEvent(new ValueEventListener()
         {
 
             @Override
@@ -138,7 +138,7 @@ public class HomeActivity extends AppCompatActivity
                             story.setUri((String) storyData.get("uri"));
 
                             // Lấy danh sách genres
-                            List<String> genres = (List<String>) storyData.get("genres");
+                            List<String> genres = (List<String>) storyData.get("genresList");
                             if (genres != null)
                             {
                                 story.setGenres(genres);
