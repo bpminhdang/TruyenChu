@@ -2,11 +2,9 @@ package com.example.truyenchu.features;
 
 import static android.app.Activity.RESULT_OK;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -15,9 +13,6 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -52,10 +47,8 @@ import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 
 /**
@@ -338,7 +331,7 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
             description = et_description_upload.getText().toString();
             content = et_chapter_content_upload.getText().toString();
 
-            StoryClass story = new StoryClass(id, name, time, author, status, description, numberOfChapter, genres, views);
+            StoryClass story = new StoryClass(id, name, time, time, author, status, description, numberOfChapter, genres, views);
             storyRef.child("story_" + id).setValue(story, (databaseError, databaseReference) ->
             {
                 // Upload chapter

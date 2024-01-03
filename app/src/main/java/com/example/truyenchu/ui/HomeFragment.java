@@ -37,12 +37,15 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static final String ARG_STORY_LIST = "storyList";
+    private static final String ARG_STORY_LIST_NEW = "storyListNewPartial";
+    private static final String ARG_STORY_LIST_UPDATE = "storyListUpdatePartial";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private static ArrayList<StoryClass> mStoryList = new ArrayList<>();
+    private static ArrayList<StoryClass> mStoryListNew = new ArrayList<>();
+    private static ArrayList<StoryClass> mStoryListUpdate = new ArrayList<>();
+
 
     ImageButton profilePic;
     TextView profileName;
@@ -64,15 +67,16 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     * @storyList A list of story
+     * @storyListNewPartial A list of story
      * @return A new instance of fragment HomeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(ArrayList<StoryClass> storyList)
+    public static HomeFragment newInstance(ArrayList<StoryClass> storyListNewPartial, ArrayList<StoryClass> storyListUpdatePartial)
     {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
-        args.putParcelableArrayList(ARG_STORY_LIST, storyList);
+        args.putParcelableArrayList(ARG_STORY_LIST_NEW, storyListNewPartial);
+        args.putParcelableArrayList(ARG_STORY_LIST_UPDATE, storyListUpdatePartial);
         fragment.setArguments(args);
         return fragment;
     }
@@ -96,7 +100,10 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
     {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         if (getArguments() != null)
-            mStoryList = getArguments().getParcelableArrayList(ARG_STORY_LIST);
+        {
+            mStoryListNew = getArguments().getParcelableArrayList(ARG_STORY_LIST_NEW);
+            mStoryListUpdate = getArguments().getParcelableArrayList(ARG_STORY_LIST_UPDATE);
+        }
 
         // Khoảng mã lệnh trong Fragment cha để thêm Fragment con
         FragmentManager childFragmentManager = getChildFragmentManager();
@@ -117,10 +124,10 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         layoutManager2.setReverseLayout(true);
         layoutManager2.setStackFromEnd(true);
 
-        Horizontal_1_SmallImageAdapter adapter = new Horizontal_1_SmallImageAdapter(getActivity(), mStoryList, this::StartStoryDescriptionActivity);
-        Horizontal_3_ContentAdapter adapter1 = new Horizontal_3_ContentAdapter(getActivity(), mStoryList, this::StartStoryDescriptionActivity);
-        Horizontal_2_ImageAdapter adapter2 = new Horizontal_2_ImageAdapter(getActivity(), mStoryList, this::StartStoryDescriptionActivity);
-
+        Horizontal_1_SmallImageAdapter adapter = new Horizontal_1_SmallImageAdapter(getActivity(), mStoryListNew, this::StartStoryDescriptionActivity);
+        Horizontal_3_ContentAdapter adapter1 = new Horizontal_3_ContentAdapter(getActivity(), mStoryListUpdate, this::StartStoryDescriptionActivity);
+        Horizontal_2_ImageAdapter adapter2 = new Horizontal_2_ImageAdapter(getActivity(), mStoryListUpdate, this::StartStoryDescriptionActivity);
+        // Todo: thêm recent
         rcViewNew.setAdapter(adapter);
         rcViewNew.setLayoutManager(layoutManager);
         rcViewUpdate.setAdapter(adapter1);
@@ -159,11 +166,6 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         Intent intent = new Intent(getActivity(), StoryActivity.class);
         intent.putExtra("storyData", (Serializable) story);
         startActivity(intent);
-    }
-
-    public void updateStories(ArrayList<StoryClass> updatedStories)
-    {
-        mStoryList = updatedStories;
     }
 
 
