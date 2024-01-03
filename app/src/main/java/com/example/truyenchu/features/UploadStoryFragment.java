@@ -344,10 +344,6 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
                 // Upload chapter
                 storyRef.child("story_" + id).child("chapters").child("chapter_" + id + "_" + numberOfChapter).setValue(new ChapterClass(id + "_" + numberOfChapter, content));
 
-                // Change genresList key to genres
-                storyRef.child("story_" + id).child("genres").setValue(genres);
-                storyRef.child("story_" + id).child("genresList").removeValue();
-
                 // Handle upload Story
                 uploadImageToFirebase("story_" + id, imageUriStringFB ->
                         storyRef.child("story_" + id).child("uri").setValue(imageUriStringFB));

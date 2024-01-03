@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.PropertyName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class StoryClass implements Serializable, Parcelable
     private String author;
     private String status;
     private String description;
+    @PropertyName("oaisdj")
     private int numberOfChapter;
     //private Image image;
     private List<ChapterClass> chapters = new ArrayList<>(); // List để lưu danh sách các chương

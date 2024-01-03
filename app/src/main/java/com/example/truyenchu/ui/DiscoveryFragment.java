@@ -182,7 +182,7 @@ public class DiscoveryFragment extends Fragment
                             story.setUri((String) storyData.get("uri"));
 
                             // Lấy danh sách genres
-                            List<String> genres = (List<String>) storyData.get("genres");
+                            List<String> genres = (List<String>) storyData.get("genresList");
                             if (genres != null)
                             {
                                 story.setGenres(genres);
