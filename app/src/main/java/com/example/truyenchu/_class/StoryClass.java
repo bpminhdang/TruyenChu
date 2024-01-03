@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 // Lớp Truyen (Truyện)
 public class StoryClass implements Serializable, Parcelable
@@ -89,7 +91,16 @@ public class StoryClass implements Serializable, Parcelable
 
     public String getGenres(int cutOffWhenMoreThan)
     {
-        return cutOff(String.join(", ", genres), cutOffWhenMoreThan);
+        String s = String.join(", ", genres);
+        try
+        {
+            s = cutOff(s, cutOffWhenMoreThan);
+        }
+        catch (Exception e)
+        {
+            Log.i("Story Error", e.toString());
+        }
+        return s;
     }
 
     public List<ChapterClass> getChapters()

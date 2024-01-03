@@ -7,13 +7,17 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu._class.StoryClass;
+import com.example.truyenchu.adapter.Horizontal_1_SmallImageAdapter;
+import com.example.truyenchu.features.HomeLoadingFragment;
 import com.example.truyenchu.features.UploadStoryFragment;
 import com.example.truyenchu.ui.DownloadFragment;
 import com.example.truyenchu.ui.HomeFragment;
@@ -41,6 +45,7 @@ public class HomeActivity extends AppCompatActivity
     ArrayList<StoryClass> storyList = new ArrayList<>();
     ArrayList<StoryClass> storyList1 = new ArrayList<>();
     ArrayList<StoryClass> storyList2 = new ArrayList<>();
+    private HomeFragment homeFragment;
 
 
     @Override
@@ -48,6 +53,18 @@ public class HomeActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+//        // Display an empty page while preparing to retrieve the story
+//        HomeLoadingFragment fragment0 = new HomeLoadingFragment();
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .add(R.id.fragment_container, fragment0, "YOUR_FRAGMENT_TAG")
+//                .commit();
+
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setSelectedItemId(R.id.navigation_home);
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser mUser = mAuth.getCurrentUser();
 
@@ -104,7 +121,7 @@ public class HomeActivity extends AppCompatActivity
                 {
                     for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
                     {
-                        if (storySnapshot.getKey().startsWith("story_"))
+                        if (!storySnapshot.getKey().startsWith("storyCount"))
                         {
                             // Lấy dữ liệu của từng story từ dataSnapshot
                             Map<String, Object> storyData = (Map<String, Object>) storySnapshot.getValue();
@@ -145,64 +162,20 @@ public class HomeActivity extends AppCompatActivity
                             storyList.add(story);
                         }
                     }
-                    sortStoryListByTime();
+                    homeFragment = HomeFragment.newInstance(storyList);
+                    getSupportFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                            .add(R.id.fragment_container, homeFragment, "YOUR_FRAGMENT_TAG")
+                            .commit();
+                    //sortStoryListByTime();
 //                    adapter.notifyDataSetChanged();
 //                    adapter1.notifyDataSetChanged();
 //                    adapter2.notifyDataSetChanged();
 
                 }
 
-                BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
 
-                if (savedInstanceState == null)
-                {
-                    // Nếu không có fragment đã được thêm, thêm vào
-                    HomeFragment fragment = HomeFragment.newInstance(storyList);
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .add(R.id.fragment_container, fragment, "YOUR_FRAGMENT_TAG")
-                            .commit();
 
-                }
-                bottomNav.setSelectedItemId(R.id.navigation_home);
-                bottomNav.setOnItemSelectedListener(item ->
-                {
-                    Fragment selectedFragment = null;
-                    if (item.getItemId() == R.id.navigation_discovery)
-                    {
-                        selectedFragment = new DiscoveryFragment();
-                    } else if (item.getItemId() == R.id.navigation_download)
-                    {
-                        selectedFragment = new DownloadFragment();
-                    } else if (item.getItemId() == R.id.navigation_home)
-                    {
-                        selectedFragment = HomeFragment.newInstance(storyList);
-                    } else if (item.getItemId() == R.id.navigation_profile)
-                    {
-                        if (!isLoggedIn)
-                        {
-                            Intent intent = new Intent(getApplicationContext(), Login.class);
-                            startActivity(intent);
-                            finish();
-                            return false;
-                        } else
-                            selectedFragment = new ProfileFragment();
-                    } else if (item.getItemId() == R.id.navigation_search)
-                    {
-                        selectedFragment = new UploadStoryFragment();
-                    }
-
-                    if (selectedFragment != null)
-                    {
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, selectedFragment)
-                                .addToBackStack(null) // Để thêm Fragment vào Backstack
-                                .commit();
-                        return true;
-                    }
-
-                    return false;
-                });
             }
 
             @Override
@@ -210,16 +183,74 @@ public class HomeActivity extends AppCompatActivity
             {
                 Log.i("DB", "Lỗi: " + databaseError.getMessage());
             }
+
         });
 
 
+        if (savedInstanceState == null)
+        {
+            // Nếu không có fragment đã được thêm, thêm vào
+            homeFragment = HomeFragment.newInstance(storyList);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                    .add(R.id.fragment_container, homeFragment, "YOUR_FRAGMENT_TAG")
+                    .commit();
+
+        }
+        bottomNav.setOnItemSelectedListener(item ->
+        {
+            Fragment selectedFragment = null;
+            if (item.getItemId() == R.id.navigation_discovery)
+            {
+                selectedFragment = new DiscoveryFragment();
+            } else if (item.getItemId() == R.id.navigation_download)
+            {
+                selectedFragment = new DownloadFragment();
+            } else if (item.getItemId() == R.id.navigation_home)
+            {
+                selectedFragment = HomeFragment.newInstance(storyList);
+            } else if (item.getItemId() == R.id.navigation_profile)
+            {
+                if (!isLoggedIn)
+                {
+                    Intent intent = new Intent(getApplicationContext(), Login.class);
+                    startActivity(intent);
+                    finish();
+                    return false;
+                } else
+                    selectedFragment = new ProfileFragment();
+            } else if (item.getItemId() == R.id.navigation_search)
+            {
+                selectedFragment = new UploadStoryFragment();
+            }
+
+            if (selectedFragment != null)
+            {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, selectedFragment)
+                        .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                        .addToBackStack(null) // Để thêm Fragment vào Backstack
+                        .commit();
+                return true;
+            }
+
+            return false;
+        });
 
 
 
     }
 
-    private void sortStoryListByTime()
+    public static void sortStoryListByTime(ArrayList<StoryClass> storyList)
     {
         Collections.sort(storyList, (s1, s2) -> s2.getTime().compareTo(s1.getTime()));
+    }
+
+    public void updateData(Horizontal_1_SmallImageAdapter adapter, ArrayList<StoryClass> newDataList) {
+        // Update data trong adapter hoặc RecyclerView của bạn với newDataList
+        // Ví dụ:
+        adapter.setData(newDataList);
+        adapter.notifyDataSetChanged(); // Sau khi thiết lập dữ liệu mới, thông báo cho adapter cập nhật giao diện
     }
 }

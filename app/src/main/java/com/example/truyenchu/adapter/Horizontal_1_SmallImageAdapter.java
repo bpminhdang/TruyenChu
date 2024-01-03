@@ -11,9 +11,11 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.truyenchu.HomeActivity;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.features.RecyclerViewItemClickListener;
+import com.example.truyenchu.ui.HomeFragment;
 
 import java.util.ArrayList;
 
@@ -33,6 +35,12 @@ public class Horizontal_1_SmallImageAdapter extends RecyclerView.Adapter<Horizon
     public static void updateData(StoryClass e)
     {
         arr.add(e);
+    }
+
+    public void setData(ArrayList<StoryClass> newDataList)
+    {
+        this.arr = newDataList;
+        notifyDataSetChanged();
     }
 
     /**
@@ -85,6 +93,7 @@ public class Horizontal_1_SmallImageAdapter extends RecyclerView.Adapter<Horizon
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.horizontal_1_small_image_item, viewGroup, false);
+        //HomeActivity.sortStoryListByTime(arr);
 
         return new ViewHolder(view);
     }
