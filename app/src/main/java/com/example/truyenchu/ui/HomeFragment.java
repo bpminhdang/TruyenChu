@@ -2,7 +2,6 @@ package com.example.truyenchu.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +21,11 @@ import com.example.truyenchu.adapter.Horizontal_3_ContentAdapter;
 import com.example.truyenchu.adapter.Horizontal_2_ImageAdapter;
 import com.example.truyenchu.adapter.Horizontal_1_SmallImageAdapter;
 import com.example.truyenchu.features.ProfilePanelFragment;
+import com.google.gson.Gson;
 
-import java.io.Serializable;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -38,12 +40,16 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static final String ARG_STORY_LIST = "storyList";
+    // private static final String ARG_STORY_LIST = "storyList";
+    private static final String ARG_LIST_STORY_LIST = "listStoryList";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private static ArrayList<StoryClass> mStoryList = new ArrayList<>();
+    //private static ArrayList<StoryClass> mStoryList = new ArrayList<>();
+    private ArrayList<ArrayList<String>> mListStoryList = new ArrayList<>();
+    private ArrayList<StoryClass> mListStoryNew = new ArrayList<>();
+    private ArrayList<StoryClass> mListStoryUpdate = new ArrayList<>();
 
     ImageButton profilePic;
     TextView profileName;
@@ -52,28 +58,19 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
     {
     }
 
-
-//    public static HomeFragment newInstance(String param1, String param2)
-//    {
-//        HomeFragment fragment = new HomeFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     * @storyList A list of story
+     *
      * @return A new instance of fragment HomeFragment.
+     * @storyList A list of story
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(ArrayList<StoryClass> storyList)
+    public static HomeFragment newInstance(ArrayList<ArrayList<String>> listOfStoryLists)
     {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
-        args.putParcelableArrayList(ARG_STORY_LIST, storyList);
+        args.putSerializable(ARG_LIST_STORY_LIST, listOfStoryLists);
         fragment.setArguments(args);
         return fragment;
     }
@@ -97,8 +94,15 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
     {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         if (getArguments() != null)
-            mStoryList = getArguments().getParcelableArrayList(ARG_STORY_LIST);
-
+            mListStoryList = (ArrayList<ArrayList<String>>) getArguments().getSerializable(ARG_LIST_STORY_LIST);
+        for (String storyID : mListStoryList.get(1))
+        {
+            mListStoryNew.add(loadStoryFromFile(storyID));
+        }
+        for (String storyID : mListStoryList.get(2))
+        {
+            mListStoryUpdate.add(loadStoryFromFile(storyID));
+        }
 
         // Khoảng mã lệnh trong Fragment cha để thêm Fragment con
         FragmentManager childFragmentManager = getChildFragmentManager();
@@ -119,20 +123,16 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         layoutManager2.setReverseLayout(true);
         layoutManager2.setStackFromEnd(true);
 
-        Horizontal_1_SmallImageAdapter adapter = new Horizontal_1_SmallImageAdapter(getActivity(), mStoryList, this::StartStoryDescriptionActivity);
-        Horizontal_3_ContentAdapter adapter1 = new Horizontal_3_ContentAdapter(getActivity(), mStoryList, this::StartStoryDescriptionActivity);
-        Horizontal_2_ImageAdapter adapter2 = new Horizontal_2_ImageAdapter(getActivity(), mStoryList, this::StartStoryDescriptionActivity);
-
+        Horizontal_1_SmallImageAdapter adapter = new Horizontal_1_SmallImageAdapter(getActivity(),mListStoryNew, this::StartStoryDescriptionActivity);
+        Horizontal_3_ContentAdapter adapter1 = new Horizontal_3_ContentAdapter(getActivity(), mListStoryUpdate, this::StartStoryDescriptionActivity);
+        Horizontal_2_ImageAdapter adapter2 = new Horizontal_2_ImageAdapter(getActivity(), mListStoryNew, this::StartStoryDescriptionActivity);
+        // Todo: recent
         rcViewNew.setAdapter(adapter);
         rcViewNew.setLayoutManager(layoutManager);
         rcViewUpdate.setAdapter(adapter1);
         rcViewUpdate.setLayoutManager(layoutManager2);
         rcViewRecent.setAdapter(adapter2);
         rcViewRecent.setLayoutManager(layoutManager3);
-
-
-
-
 
 
 //        DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
@@ -156,16 +156,43 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
 
     }
 
-    private void StartStoryDescriptionActivity(StoryClass story)
+    public StoryClass loadStoryFromFile(String storyId)
     {
-        Intent intent = new Intent(getActivity(), StoryActivity.class);
-        intent.putExtra("storyData", (Serializable) story);
-        startActivity(intent);
+        StoryClass loadedStory = null;
+        String fileName = storyId + ".json"; // Tên file là ID của truyện + ".json"
+
+        // Lấy đường dẫn đến thư mục "stories" trong internal storage
+        File directory = new File(getActivity().getFilesDir() + "/stories");
+        File file = new File(directory, fileName);
+
+        if (file.exists())
+        {
+            try (FileInputStream fis = new FileInputStream(file))
+            {
+                int size = fis.available();
+                byte[] buffer = new byte[size];
+                fis.read(buffer);
+                fis.close();
+                String storyJson = new String(buffer);
+
+                // Chuyển đổi chuỗi JSON thành đối tượng StoryClass
+                Gson gson = new Gson();
+                loadedStory = gson.fromJson(storyJson, StoryClass.class);
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return loadedStory;
     }
 
-    public void updateStories(ArrayList<StoryClass> updatedStories)
+    private void StartStoryDescriptionActivity(StoryClass story)
     {
-        mStoryList = updatedStories;
+
+        Intent intent = new Intent(getActivity(), StoryActivity.class);
+        intent.putExtra("storyData", story);
+        startActivity(intent);
+
     }
 
 

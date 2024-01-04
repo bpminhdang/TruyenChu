@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Lớp Truyen (Truyện)
-public class StoryClass implements Serializable, Parcelable
+public class StoryClass implements Serializable
 {
     private final int id;
     private String name;
@@ -270,26 +270,6 @@ public class StoryClass implements Serializable, Parcelable
         }
     };
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(name);
-        dest.writeString(time);
-        dest.writeString(updateTime);
-        dest.writeString(author);
-        dest.writeString(status);
-        dest.writeString(description);
-        dest.writeInt(numberOfChapter);
-        dest.writeList(chapters);
-        dest.writeStringList(genres);
-        dest.writeInt(views);
-        dest.writeString(uri);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
     public String getUpdateTime()
     {
