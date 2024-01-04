@@ -15,17 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Lớp Truyen (Truyện)
-public class StoryClass implements Serializable, Parcelable
+public class StoryClass implements Serializable
 {
     private final int id;
     private String name;
     private String time;
     private String updateTime;
-
     private String author;
     private String status;
     private String description;
-    @PropertyName("oaisdj")
     private int numberOfChapter;
     //private Image image;
     private List<ChapterClass> chapters = new ArrayList<>(); // List để lưu danh sách các chương
@@ -37,12 +35,12 @@ public class StoryClass implements Serializable, Parcelable
 
 
     // Constructor
-    public StoryClass(int id, String name, String time, String updateTime, String author, String status, String description, int numberOfChapter, List<String> genres, int views)
+    public StoryClass(int id, String name, String time, String uploadTime, String author, String status, String description, int numberOfChapter, List<String> genres, int views)
     {
         this.id = id;
         this.name = name;
         this.time = time;
-        this.updateTime = updateTime;
+        this.updateTime = uploadTime;
         this.author = author;
         this.status = status;
         this.description = description;
@@ -109,16 +107,6 @@ public class StoryClass implements Serializable, Parcelable
         else
             s = genres.get(0);
         return s;
-    }
-
-    public String getUpdateTime()
-    {
-        return updateTime;
-    }
-
-    public void setUpdateTime(String updateTime)
-    {
-        this.updateTime = updateTime;
     }
 
     public List<ChapterClass> getChapters()
@@ -224,7 +212,7 @@ public class StoryClass implements Serializable, Parcelable
         stringBuilder.append("ID: ").append(id).append("\n");
         stringBuilder.append("Name: ").append(name).append("\n");
         stringBuilder.append("Time: ").append(time).append("\n");
-        stringBuilder.append("Update time: ").append(updateTime).append("\n");
+        stringBuilder.append("Time update: ").append(updateTime).append("\n");
         stringBuilder.append("Author: ").append(author).append("\n");
         stringBuilder.append("Status: ").append(status).append("\n");
         stringBuilder.append("Description: ").append(description).append("\n");
@@ -282,24 +270,14 @@ public class StoryClass implements Serializable, Parcelable
         }
     };
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(name);
-        dest.writeString(time);
-        dest.writeString(updateTime);
-        dest.writeString(author);
-        dest.writeString(status);
-        dest.writeString(description);
-        dest.writeInt(numberOfChapter);
-        dest.writeList(chapters);
-        dest.writeStringList(genres);
-        dest.writeInt(views);
-        dest.writeString(uri);
+
+    public String getUpdateTime()
+    {
+        return updateTime;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public void setUpdateTime(String updateTime)
+    {
+        this.updateTime = updateTime;
     }
 }

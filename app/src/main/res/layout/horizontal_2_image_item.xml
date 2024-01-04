@@ -11,6 +11,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
         app:cardCornerRadius="20dp"> <!-- Điều chỉnh giá trị để bo tròn góc -->
