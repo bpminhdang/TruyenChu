@@ -39,11 +39,9 @@ public class HomeActivity extends AppCompatActivity
 {
     FirebaseAuth mAuth;
     boolean isLoggedIn = false;
-    ArrayList<ArrayList<StoryClass>> listOfStoryLists = new ArrayList<>();
-    ArrayList<StoryClass> storyListNewPartial = new ArrayList<>();
-    ArrayList<StoryClass> storyListUpdatePartial = new ArrayList<>();
-    ArrayList<StoryClass> storyListFull = new ArrayList<>();
-
+    ArrayList<StoryClass> storyList = new ArrayList<>();
+    ArrayList<StoryClass> storyList1 = new ArrayList<>();
+    ArrayList<StoryClass> storyList2 = new ArrayList<>();
     private HomeFragment homeFragment;
 
 
@@ -52,9 +50,6 @@ public class HomeActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        listOfStoryLists.add(storyListNewPartial);
-        listOfStoryLists.add(storyListUpdatePartial);
-
 
 //        // Display an empty page while preparing to retrieve the story
 //        HomeLoadingFragment fragment0 = new HomeLoadingFragment();
@@ -122,6 +117,8 @@ public class HomeActivity extends AppCompatActivity
                 {
                     for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
                     {
+                        if (!storySnapshot.getKey().startsWith("storyCount"))
+                        {
                             // Lấy dữ liệu của từng story từ dataSnapshot
                             Map<String, Object> storyData = (Map<String, Object>) storySnapshot.getValue();
 
@@ -129,6 +126,7 @@ public class HomeActivity extends AppCompatActivity
                             StoryClass story = new StoryClass((int) (long) storyData.get("id"));
                             story.setName((String) storyData.get("name"));
                             story.setTime((String) storyData.get("time"));
+                            story.setUpdateTime((String) storyData.get("updateTime"));
                             story.setAuthor((String) storyData.get("author"));
                             story.setStatus((String) storyData.get("status"));
                             story.setDescription((String) storyData.get("description"));
@@ -156,18 +154,25 @@ public class HomeActivity extends AppCompatActivity
                                     story.getChapters().add(chapter);
                                 }
                             }
-                            Log.i("DBValue", story.toString());
                             // Thêm story vào danh sách storyList
-                            storyListNewPartial.add(story);
-                            listOfStoryLists.set(0, storyListNewPartial);
+                            storyList.add(story);
                         }
                     }
-                    homeFragment = HomeFragment.newInstance(listOfStoryLists);
+                    homeFragment = HomeFragment.newInstance(storyList);
                     getSupportFragmentManager().beginTransaction()
                             .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                             .add(R.id.fragment_container, homeFragment, "YOUR_FRAGMENT_TAG")
                             .commit();
+                    //sortStoryListByTime();
+//                    adapter.notifyDataSetChanged();
+//                    adapter1.notifyDataSetChanged();
+//                    adapter2.notifyDataSetChanged();
+
                 }
+
+
+
+            }
 
             @Override
             public void onCancelled(DatabaseError databaseError)
@@ -177,75 +182,11 @@ public class HomeActivity extends AppCompatActivity
 
         });
 
-
-        storiesRef.orderByChild("updateTime").limitToLast(6).addListenerForSingleValueEvent(new ValueEventListener()
-        {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                if (dataSnapshot.exists())
-                {
-                    for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
-                    {
-                        // Lấy dữ liệu của từng story từ dataSnapshot
-                        Map<String, Object> storyData = (Map<String, Object>) storySnapshot.getValue();
-
-                        // Tạo đối tượng StoryClass từ dữ liệu của mỗi story
-                        StoryClass story = new StoryClass((int) (long) storyData.get("id"));
-                        story.setName((String) storyData.get("name"));
-                        story.setTime((String) storyData.get("time"));
-                        story.setAuthor((String) storyData.get("author"));
-                        story.setStatus((String) storyData.get("status"));
-                        story.setDescription((String) storyData.get("description"));
-                        story.setNumberOfChapter((int) (long) storyData.get("numberOfChapter"));
-                        story.setViews((int) (long) storyData.get("views"));
-                        story.setUri((String) storyData.get("uri"));
-
-                        // Lấy danh sách genres
-                        List<String> genres = (List<String>) storyData.get("genresList");
-                        if (genres != null)
-                        {
-                            story.setGenres(genres);
-                        }
-
-                        // Lấy danh sách các chương
-                        Map<String, Map<String, Object>> chaptersMap = (Map<String, Map<String, Object>>) storyData.get("chapters");
-                        if (chaptersMap != null)
-                        {
-                            for (Map.Entry<String, Map<String, Object>> entry : chaptersMap.entrySet())
-                            {
-                                ChapterClass chapter = new ChapterClass();
-                                Map<String, Object> chapterData = entry.getValue();
-                                chapter.setChapterId((String) chapterData.get("chapterId"));
-                                chapter.setContent((String) chapterData.get("content"));
-                                story.getChapters().add(chapter);
-                            }
-                        }
-                        Log.i("DBValue", story.toString());
-                        // Thêm story vào danh sách storyList
-                        storyListUpdatePartial.add(story);
-                        listOfStoryLists.set(1, storyListUpdatePartial);
-                    }
-                }
-                homeFragment = HomeFragment.newInstance(listOfStoryLists);
-                getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-                        .add(R.id.fragment_container, homeFragment, "YOUR_FRAGMENT_TAG")
-                        .commit();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError)
-            {
-                Log.i("DB", "Lỗi: " + databaseError.getMessage());
-            }
-
-        });
 
         if (savedInstanceState == null)
         {
             // Nếu không có fragment đã được thêm, thêm vào
-            homeFragment = HomeFragment.newInstance(listOfStoryLists);
+            homeFragment = HomeFragment.newInstance(storyList);
             getSupportFragmentManager()
                     .beginTransaction()
                     .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
@@ -264,7 +205,7 @@ public class HomeActivity extends AppCompatActivity
                 selectedFragment = new DownloadFragment();
             } else if (item.getItemId() == R.id.navigation_home)
             {
-                selectedFragment = HomeFragment.newInstance(listOfStoryLists);
+                selectedFragment = HomeFragment.newInstance(storyList);
             } else if (item.getItemId() == R.id.navigation_profile)
             {
                 if (!isLoggedIn)

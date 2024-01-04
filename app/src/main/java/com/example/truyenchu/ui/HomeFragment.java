@@ -2,6 +2,7 @@ package com.example.truyenchu.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,12 +38,12 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static final String ARG_LIST_OF_STORY_LIST = "listStoryList";
+    private static final String ARG_STORY_LIST = "storyList";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private static ArrayList<ArrayList<StoryClass>> mListOfStoryList = new ArrayList<>();
+    private static ArrayList<StoryClass> mStoryList = new ArrayList<>();
 
     ImageButton profilePic;
     TextView profileName;
@@ -64,15 +65,15 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     * @listStoryList A list of story
+     * @storyList A list of story
      * @return A new instance of fragment HomeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(ArrayList<ArrayList<StoryClass>> listStoryList)
+    public static HomeFragment newInstance(ArrayList<StoryClass> storyList)
     {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_LIST_OF_STORY_LIST, listStoryList);
+        args.putParcelableArrayList(ARG_STORY_LIST, storyList);
         fragment.setArguments(args);
         return fragment;
     }
@@ -95,14 +96,9 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
                              Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            ArrayList<ArrayList<StoryClass>> receivedListOfLists = (ArrayList<ArrayList<StoryClass>>) bundle.getSerializable(ARG_LIST_OF_STORY_LIST);
-            if (receivedListOfLists != null) {
-               mListOfStoryList = receivedListOfLists;
+        if (getArguments() != null)
+            mStoryList = getArguments().getParcelableArrayList(ARG_STORY_LIST);
 
-            }
-        }
 
         // Khoảng mã lệnh trong Fragment cha để thêm Fragment con
         FragmentManager childFragmentManager = getChildFragmentManager();
@@ -110,13 +106,6 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         ProfilePanelFragment fragment = new ProfilePanelFragment();
         transaction.replace(R.id.home_profile_panel_container, fragment); // R.id.container là id của viewgroup trong Fragment cha
         transaction.commit();
-
-        if (mListOfStoryList.size() == 0)
-        {
-            ArrayList<StoryClass> storyClasses = new ArrayList<>();
-            mListOfStoryList.add(storyClasses);
-            mListOfStoryList.add(storyClasses);
-        }
 
         RecyclerView rcViewNew = view.findViewById(R.id.home_recycler_view);
         RecyclerView rcViewUpdate = view.findViewById(R.id.home_recycler_view_2);
@@ -130,15 +119,10 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         layoutManager2.setReverseLayout(true);
         layoutManager2.setStackFromEnd(true);
 
-        Horizontal_1_SmallImageAdapter adapter = new Horizontal_1_SmallImageAdapter(getActivity(), mListOfStoryList.get(0), story->
-        {
-            Intent intent = new Intent(getActivity(), StoryActivity.class);
-            intent.putExtra("storyData", (Serializable) story);
-            startActivity(intent);
-        });
-        Horizontal_3_ContentAdapter adapter1 = new Horizontal_3_ContentAdapter(getActivity(), mListOfStoryList.get(1), this::StartStoryDescriptionActivity);
-        Horizontal_2_ImageAdapter adapter2 = new Horizontal_2_ImageAdapter(getActivity(), mListOfStoryList.get(1), this::StartStoryDescriptionActivity);
-        // Todo: thêm recent
+        Horizontal_1_SmallImageAdapter adapter = new Horizontal_1_SmallImageAdapter(getActivity(), mStoryList, this::StartStoryDescriptionActivity);
+        Horizontal_3_ContentAdapter adapter1 = new Horizontal_3_ContentAdapter(getActivity(), mStoryList, this::StartStoryDescriptionActivity);
+        Horizontal_2_ImageAdapter adapter2 = new Horizontal_2_ImageAdapter(getActivity(), mStoryList, this::StartStoryDescriptionActivity);
+
         rcViewNew.setAdapter(adapter);
         rcViewNew.setLayoutManager(layoutManager);
         rcViewUpdate.setAdapter(adapter1);
@@ -178,4 +162,11 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         intent.putExtra("storyData", (Serializable) story);
         startActivity(intent);
     }
+
+    public void updateStories(ArrayList<StoryClass> updatedStories)
+    {
+        mStoryList = updatedStories;
+    }
+
+
 }

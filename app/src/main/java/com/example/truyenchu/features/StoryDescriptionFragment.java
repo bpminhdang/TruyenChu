@@ -96,13 +96,14 @@ public class StoryDescriptionFragment extends Fragment
             StoryClass.SetText(tvNameDes, receivedStory.getName());
             StoryClass.SetImage(requireContext(), receivedStory.getUri(), ivPicture);
             StoryClass.SetText(tvAuthor, receivedStory.getAuthor());
-            StoryClass.SetText(tvStatus, receivedStory.getStatus() + " - " + receivedStory.getTime());
+            StoryClass.SetText(tvStatus, receivedStory.getStatus() + " - " + receivedStory.getTime() + " - " + receivedStory.getUpdateTime());
             StoryClass.SetText(tvNumChapter, String.valueOf(receivedStory.getNumberOfChapter()));
             StoryClass.SetText(tvWatching, "Đang xem: " + "40");
             StoryClass.SetText(tvLiked, "100");
             // Todo: tvWatching tvLiked
             StoryClass.SetText(tvView, String.valueOf(receivedStory.getViews()));
             StoryClass.SetText(tvDescription, receivedStory.getDescription());
+
 
         }
         ivBack.setOnClickListener(v-> requireActivity().onBackPressed());
