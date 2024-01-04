@@ -25,7 +25,6 @@ public class StoryClass implements Serializable, Parcelable
     private String author;
     private String status;
     private String description;
-    @PropertyName("oaisdj")
     private int numberOfChapter;
     //private Image image;
     private List<ChapterClass> chapters = new ArrayList<>(); // List để lưu danh sách các chương
@@ -265,12 +264,12 @@ public class StoryClass implements Serializable, Parcelable
         description = in.readString();
         numberOfChapter = in.readInt();
         in.readList(chapters, ChapterClass.class.getClassLoader());
-        genres = in.createStringArrayList();
+        in.readStringList(genres);
         views = in.readInt();
         uri = in.readString();
     }
 
-    public static final Parcelable.Creator<StoryClass> CREATOR = new Parcelable.Creator<StoryClass>() {
+    public static final Creator<StoryClass> CREATOR = new Creator<StoryClass>() {
         @Override
         public StoryClass createFromParcel(Parcel in) {
             return new StoryClass(in);
@@ -302,4 +301,5 @@ public class StoryClass implements Serializable, Parcelable
     public int describeContents() {
         return 0;
     }
+
 }

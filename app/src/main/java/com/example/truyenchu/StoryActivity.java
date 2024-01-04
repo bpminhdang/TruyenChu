@@ -8,17 +8,19 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.features.StoryDescriptionFragment;
+import com.example.truyenchu.features.StoryPassInterface;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-public class StoryActivity extends AppCompatActivity
+public class StoryActivity extends AppCompatActivity implements StoryPassInterface
 {
     StoryClass receivedStory;
 
@@ -32,6 +34,7 @@ public class StoryActivity extends AppCompatActivity
             return;
         receivedStory = (StoryClass) intent.getSerializableExtra("storyData");
 
+
         // Hide action bar
         Objects.requireNonNull(getSupportActionBar()).hide();
         // Status bar icon: Black
@@ -41,26 +44,33 @@ public class StoryActivity extends AppCompatActivity
         // Navigation pill: White
         getWindow().setNavigationBarColor(Color.WHITE);
 
-        ConstraintLayout bottomNav = findViewById(R.id.bottom_navigation_custom_avs);
+        //ConstraintLayout bottomNav = findViewById(R.id.bottom_navigation_custom_avs);
 
-        if (savedInstanceState == null)
-        {
-            // Nếu không có fragment đã được thêm, thêm vào
-            StoryDescriptionFragment fragment = new StoryDescriptionFragment();
+//        if (savedInstanceState == null)
+//        {
+//            // Nếu không có fragment đã được thêm, thêm vào
+//            StoryDescriptionFragment fragment = new StoryDescriptionFragment();
+//
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("receivedStory", receivedStory);
+//            fragment.setArguments(bundle);
+//            getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .add(R.id.fragment_container_avs, fragment, "YOUR_FRAGMENT_TAG")
+//                    .commit();
+//        }
 
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("receivedStory", receivedStory);
-            fragment.setArguments(bundle);
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.fragment_container_avs, fragment, "YOUR_FRAGMENT_TAG")
-                    .commit();
-        }
 
+    }
+
+    @Override
+    public void onDataPass(Object data)
+    {
+
+    }
 //        getSupportFragmentManager().beginTransaction()
 //                .replace(R.id.fragment_container, selectedFragment)
 //                .addToBackStack(null) // Để thêm Fragment vào Backstack
 //                .commit();
 //        return true;
     }
-}

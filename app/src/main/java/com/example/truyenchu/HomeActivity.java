@@ -39,6 +39,7 @@ public class HomeActivity extends AppCompatActivity
 {
     FirebaseAuth mAuth;
     boolean isLoggedIn = false;
+    ArrayList<ArrayList<StoryClass>> listOfStoryLists = new ArrayList<>();
     ArrayList<StoryClass> storyListNewPartial = new ArrayList<>();
     ArrayList<StoryClass> storyListUpdatePartial = new ArrayList<>();
     ArrayList<StoryClass> storyListFull = new ArrayList<>();
@@ -51,6 +52,9 @@ public class HomeActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        listOfStoryLists.add(storyListNewPartial);
+        listOfStoryLists.add(storyListUpdatePartial);
+
 
 //        // Display an empty page while preparing to retrieve the story
 //        HomeLoadingFragment fragment0 = new HomeLoadingFragment();
@@ -155,9 +159,10 @@ public class HomeActivity extends AppCompatActivity
                             Log.i("DBValue", story.toString());
                             // Thêm story vào danh sách storyList
                             storyListNewPartial.add(story);
+                            listOfStoryLists.set(0, storyListNewPartial);
                         }
                     }
-                    homeFragment = HomeFragment.newInstance(storyListNewPartial, storyListUpdatePartial);
+                    homeFragment = HomeFragment.newInstance(listOfStoryLists);
                     getSupportFragmentManager().beginTransaction()
                             .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                             .add(R.id.fragment_container, homeFragment, "YOUR_FRAGMENT_TAG")
@@ -219,9 +224,10 @@ public class HomeActivity extends AppCompatActivity
                         Log.i("DBValue", story.toString());
                         // Thêm story vào danh sách storyList
                         storyListUpdatePartial.add(story);
+                        listOfStoryLists.set(1, storyListUpdatePartial);
                     }
                 }
-                homeFragment = HomeFragment.newInstance(storyListNewPartial, storyListUpdatePartial);
+                homeFragment = HomeFragment.newInstance(listOfStoryLists);
                 getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                         .add(R.id.fragment_container, homeFragment, "YOUR_FRAGMENT_TAG")
@@ -239,7 +245,7 @@ public class HomeActivity extends AppCompatActivity
         if (savedInstanceState == null)
         {
             // Nếu không có fragment đã được thêm, thêm vào
-            homeFragment = HomeFragment.newInstance(storyListNewPartial, storyListUpdatePartial);
+            homeFragment = HomeFragment.newInstance(listOfStoryLists);
             getSupportFragmentManager()
                     .beginTransaction()
                     .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
@@ -258,7 +264,7 @@ public class HomeActivity extends AppCompatActivity
                 selectedFragment = new DownloadFragment();
             } else if (item.getItemId() == R.id.navigation_home)
             {
-                selectedFragment = HomeFragment.newInstance(storyListNewPartial, storyListUpdatePartial);
+                selectedFragment = HomeFragment.newInstance(listOfStoryLists);
             } else if (item.getItemId() == R.id.navigation_profile)
             {
                 if (!isLoggedIn)
