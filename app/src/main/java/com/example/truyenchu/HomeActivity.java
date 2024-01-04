@@ -164,6 +164,8 @@ public class HomeActivity extends AppCompatActivity
                             .add(R.id.fragment_container, homeFragment, "YOUR_FRAGMENT_TAG")
                             .commit();
                     //sortStoryListByTime();
+
+
 //                    adapter.notifyDataSetChanged();
 //                    adapter1.notifyDataSetChanged();
 //                    adapter2.notifyDataSetChanged();
