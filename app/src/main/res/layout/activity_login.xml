@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FCE8EA"
+    android:background="#fdedee"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +25,7 @@
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_Back"
-            app:srcCompat="@drawable/icon" />
+            app:srcCompat="@drawable/light" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -143,7 +143,7 @@
             android:layout_height="22dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:background="#FCE8EA"
+            android:background="#fdedee"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/back" />
