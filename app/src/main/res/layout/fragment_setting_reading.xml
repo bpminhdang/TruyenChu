@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -274,4 +275,138 @@
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/chinhfont"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/kichthuocln"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/cus_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="Kiểu Chữ"
+            android:textAllCaps="true"
+            android:textColor="#86787878"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.003"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cus_font"
+            app:layout_constraintVertical_bias="0.0">
+
+            <TextView
+                android:id="@+id/avenir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/avenirnextltpro_regular"
+                android:text="AvenirNext"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/helvetica"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/helvetica_neue_regular"
+                android:paddingTop="10dp"
+                android:text="HelveticaNeue"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/arial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/arial"
+                android:paddingTop="10dp"
+                android:text="Arial"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/times"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/timesnewroman"
+                android:paddingTop="10dp"
+                android:text="TimesNewRoman"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/centur"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/utm_centur"
+                android:paddingTop="10dp"
+                android:text="UTM-Centur"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/georgia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/georgia"
+                android:paddingTop="10dp"
+                android:text="Georgia"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/roboto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:paddingTop="10dp"
+                android:text="Roboto"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/uvnvan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/uvn_van"
+                android:paddingTop="10dp"
+                android:text="UVNVan"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/literata"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/literatabook"
+                android:paddingTop="10dp"
+                android:text="Literata"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/monste"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
+                android:paddingTop="10dp"
+                android:text="Montserrat"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
