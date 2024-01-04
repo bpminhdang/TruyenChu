@@ -84,9 +84,9 @@ public class ProfilePanelFragment extends Fragment
         profileName.setText(username);
 
         if (username.equals("Guest"))
-            wellcome.setText("WELLCOME");
+            wellcome.setText("WELCOME");
         else
-            wellcome.setText("WELLCOME BACK!");
+            wellcome.setText("WELCOME BACK!");
 
         String profilePictureString = sharedPreferences.getString("profilePicture", "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/images%2Fprofile_picture.jpg?alt=media&token=bc33064a-23aa-4236-aa3a-b3e3b43eccbc");
         Glide.with(this).load(profilePictureString).into(profilePic);
