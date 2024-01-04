@@ -42,6 +42,8 @@ public class HomeActivity extends AppCompatActivity
     ArrayList<StoryClass> storyList = new ArrayList<>();
     ArrayList<StoryClass> storyList1 = new ArrayList<>();
     ArrayList<StoryClass> storyList2 = new ArrayList<>();
+    ArrayList<ArrayList<StoryClass>> listOfStoryLists = new ArrayList<>();
+
     private HomeFragment homeFragment;
 
 
@@ -50,14 +52,7 @@ public class HomeActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-//        // Display an empty page while preparing to retrieve the story
-//        HomeLoadingFragment fragment0 = new HomeLoadingFragment();
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .add(R.id.fragment_container, fragment0, "YOUR_FRAGMENT_TAG")
-//                .commit();
-
+        listOfStoryLists.add(storyList);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setSelectedItemId(R.id.navigation_home);
@@ -107,8 +102,9 @@ public class HomeActivity extends AppCompatActivity
         //FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").setPersistenceEnabled(true);
         DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
         DatabaseReference storiesRef = database.child("stories");
+//        storiesRef.orderByChild("time").limitToLast(6).addListenerForSingleValueEvent(new ValueEventListener()
 
-        storiesRef.orderByChild("time").limitToLast(6).addListenerForSingleValueEvent(new ValueEventListener()
+        storiesRef.orderByChild("time").addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
@@ -117,8 +113,6 @@ public class HomeActivity extends AppCompatActivity
                 {
                     for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
                     {
-                        if (!storySnapshot.getKey().startsWith("storyCount"))
-                        {
                             // Lấy dữ liệu của từng story từ dataSnapshot
                             Map<String, Object> storyData = (Map<String, Object>) storySnapshot.getValue();
 
@@ -156,14 +150,14 @@ public class HomeActivity extends AppCompatActivity
                             }
                             // Thêm story vào danh sách storyList
                             storyList.add(story);
-                        }
+
                     }
+                    //listOfStoryLists.set(0, storyList);
                     homeFragment = HomeFragment.newInstance(storyList);
                     getSupportFragmentManager().beginTransaction()
                             .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                             .add(R.id.fragment_container, homeFragment, "YOUR_FRAGMENT_TAG")
                             .commit();
-                    //sortStoryListByTime();
 
 
 //                    adapter.notifyDataSetChanged();
