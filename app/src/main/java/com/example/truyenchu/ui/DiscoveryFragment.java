@@ -3,7 +3,6 @@ package com.example.truyenchu.ui;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -11,28 +10,22 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.truyenchu.StoryActivity;
-import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.adapter.VerticalContentAdapter;
 import com.example.truyenchu.features.ProfilePanelFragment;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
-import java.io.Serializable;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,11 +39,14 @@ public class DiscoveryFragment extends Fragment
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_LIST_STORY_ID = "listStoryID";
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    ArrayList<StoryClass> storyList = new ArrayList<>();
+    ArrayList<String> storyListString = new ArrayList<>();
+    ArrayList<StoryClass> storyListObject = new ArrayList<>();
 
     public DiscoveryFragment()
     {
@@ -61,17 +57,14 @@ public class DiscoveryFragment extends Fragment
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment DiscoveryNewFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DiscoveryFragment newInstance(String param1, String param2)
+    public static DiscoveryFragment newInstance(ArrayList<String> storyList)
     {
         DiscoveryFragment fragment = new DiscoveryFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putSerializable(ARG_LIST_STORY_ID, storyList);
         fragment.setArguments(args);
         return fragment;
     }
@@ -102,8 +95,12 @@ public class DiscoveryFragment extends Fragment
                              Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_discovery_new, container, false);
-
-
+        if (getArguments() != null)
+            storyListString = (ArrayList<String>)getArguments().getSerializable(ARG_LIST_STORY_ID);
+       for (String storyID : storyListString)
+       {
+           storyListObject.add(loadStoryFromFile(storyID));
+       }
 
         FragmentManager childFragmentManager = getChildFragmentManager();
         FragmentTransaction transaction = childFragmentManager.beginTransaction();
@@ -112,8 +109,6 @@ public class DiscoveryFragment extends Fragment
         transaction.replace(R.id.dis_profile_panel_container, fragment);
         transaction.commit();
 
-        DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
-        DatabaseReference storiesRef = database.child("stories");
 
         RecyclerView recyclerView = view.findViewById(R.id.dis_recycler_view);
         Button btnNew = view.findViewById(R.id.dis_bt_new);
@@ -146,79 +141,50 @@ public class DiscoveryFragment extends Fragment
             }
         });
 
-        VerticalContentAdapter adapter = new VerticalContentAdapter(getActivity(), storyList, story ->
+
+
+        VerticalContentAdapter adapter = new VerticalContentAdapter(getActivity(), storyListObject, story ->
         {
             Intent intent = new Intent(getActivity(), StoryActivity.class);
-            intent.putExtra("storyData",(Serializable) story);
+            intent.putExtra("storyData", story);
             startActivity(intent);
         });
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-
-        storiesRef.addListenerForSingleValueEvent(new ValueEventListener()
-        {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                if (dataSnapshot.exists())
-                {
-                    for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
-                    {
-                        if (storySnapshot.getKey().startsWith("story_"))
-                        {
-                            // Lấy dữ liệu của từng story từ dataSnapshot
-                            Map<String, Object> storyData = (Map<String, Object>) storySnapshot.getValue();
-
-                            // Tạo đối tượng StoryClass từ dữ liệu của mỗi story
-                            StoryClass story = new StoryClass((int) (long) storyData.get("id"));
-                            story.setName((String) storyData.get("name"));
-                            story.setTime((String) storyData.get("time"));
-                            story.setAuthor((String) storyData.get("author"));
-                            story.setStatus((String) storyData.get("status"));
-                            story.setDescription((String) storyData.get("description"));
-                            story.setNumberOfChapter((int) (long) storyData.get("numberOfChapter"));
-                            story.setViews((int) (long) storyData.get("views"));
-                            story.setUri((String) storyData.get("uri"));
-
-                            // Lấy danh sách genres
-                            List<String> genres = (List<String>) storyData.get("genresList");
-                            if (genres != null)
-                            {
-                                story.setGenres(genres);
-                            }
-
-                            // Lấy danh sách các chương
-                            Map<String, Map<String, Object>> chaptersMap = (Map<String, Map<String, Object>>) storyData.get("chapters");
-                            if (chaptersMap != null)
-                            {
-                                for (Map.Entry<String, Map<String, Object>> entry : chaptersMap.entrySet())
-                                {
-                                    ChapterClass chapter = new ChapterClass();
-                                    Map<String, Object> chapterData = entry.getValue();
-                                    chapter.setChapterId((String) chapterData.get("chapterId"));
-                                    chapter.setContent((String) chapterData.get("content"));
-                                    story.getChapters().add(chapter);
-                                }
-                            }
-                            Log.i("DBValue", story.toString());
-                            // Thêm story vào danh sách storyList
-                            storyList.add(story);
-                            adapter.notifyDataSetChanged();
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error)
-            {
-
-            }
-
-        });
-
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(layoutManager);
 
         return view;
+    }
+
+    public StoryClass loadStoryFromFile(String storyId)
+    {
+        StoryClass loadedStory = null;
+        String fileName = storyId + ".json"; // Tên file là ID của truyện + ".json"
+
+        // Lấy đường dẫn đến thư mục "stories" trong internal storage
+        File directory = new File(getActivity().getFilesDir() + "/stories");
+        File file = new File(directory, fileName);
+
+        if (file.exists())
+        {
+            try (FileInputStream fis = new FileInputStream(file))
+            {
+                int size = fis.available();
+                byte[] buffer = new byte[size];
+                fis.read(buffer);
+                fis.close();
+                String storyJson = new String(buffer);
+
+                // Chuyển đổi chuỗi JSON thành đối tượng StoryClass
+                Gson gson = new Gson();
+                loadedStory = gson.fromJson(storyJson, StoryClass.class);
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return loadedStory;
     }
 }

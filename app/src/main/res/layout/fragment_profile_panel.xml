@@ -43,7 +43,7 @@
             android:id="@+id/profiile_panel_tvWellCome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="1dp"
             android:fontFamily="@font/sfpro"
             android:text="@string/welcomeback"
@@ -58,13 +58,12 @@
             android:id="@+id/profiile_panel_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="2dp"
             android:fontFamily="@font/sfprobold"
             android:text="@string/user_name"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/cardView"
             app:layout_constraintStart_toEndOf="@+id/cardView"
             app:layout_constraintTop_toBottomOf="@+id/profiile_panel_tvWellCome" />
 

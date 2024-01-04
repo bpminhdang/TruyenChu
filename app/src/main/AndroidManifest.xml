@@ -19,12 +19,10 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".features.AddDataFirebase_dev"
-            android:exported="true" />
-        <activity
             android:name=".StoryActivity"
             android:exported="false"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -67,7 +65,8 @@
         <activity
             android:name=".Login"
             android:exported="false"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            />
         <activity
             android:name=".MainActivity"
             android:exported="true"
