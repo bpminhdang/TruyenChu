@@ -28,7 +28,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,10 +44,11 @@ public class HomeActivity extends AppCompatActivity
 {
     FirebaseAuth mAuth;
     boolean isLoggedIn = false;
-    ArrayList<ArrayList<StoryClass>> listOfStoryLists = new ArrayList<>();
-    ArrayList<StoryClass> storyListNewPartial = new ArrayList<>();
-    ArrayList<StoryClass> storyListUpdatePartial = new ArrayList<>();
-    ArrayList<StoryClass> storyListFull = new ArrayList<>();
+    ArrayList<String> storyListAll = new ArrayList<>();
+    ArrayList<String> storyListNew = new ArrayList<>();
+    ArrayList<String> storyListUpdate = new ArrayList<>();
+    ArrayList<String> storyListRecent = new ArrayList<>();
+    ArrayList<ArrayList<String>> listOfStoryLists = new ArrayList<>();
 
     private HomeFragment homeFragment;
 
@@ -52,16 +58,17 @@ public class HomeActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        listOfStoryLists.add(storyListNewPartial);
-        listOfStoryLists.add(storyListUpdatePartial);
-
-
-//        // Display an empty page while preparing to retrieve the story
-//        HomeLoadingFragment fragment0 = new HomeLoadingFragment();
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .add(R.id.fragment_container, fragment0, "YOUR_FRAGMENT_TAG")
-//                .commit();
+        listOfStoryLists.add(storyListAll);
+        listOfStoryLists.add(storyListNew);
+        listOfStoryLists.add(storyListUpdate);
+        // Hide action bar
+        Objects.requireNonNull(getSupportActionBar()).hide();
+        // Status bar icon: Black
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        // Status bar: accent 1_0
+        getWindow().setStatusBarColor(getColor(R.color.accent_1_10));
+        // Navigation pill: White
+        getWindow().setNavigationBarColor(Color.WHITE);
 
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
@@ -100,85 +107,13 @@ public class HomeActivity extends AppCompatActivity
         }
 
 
-        // Hide action bar
-        Objects.requireNonNull(getSupportActionBar()).hide();
-        // Status bar icon: Black
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        // Status bar: accent 1_0
-        getWindow().setStatusBarColor(getColor(R.color.accent_1_10));
-        // Navigation pill: White
-        getWindow().setNavigationBarColor(Color.WHITE);
-
         //FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").setPersistenceEnabled(true);
         DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
         DatabaseReference storiesRef = database.child("stories");
+//        storiesRef.orderByChild("time").limitToLast(6).addListenerForSingleValueEvent(new ValueEventListener()
 
-        storiesRef.orderByChild("time").limitToLast(6).addListenerForSingleValueEvent(new ValueEventListener()
-        {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                if (dataSnapshot.exists())
-                {
-                    for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
-                    {
-                            // Lấy dữ liệu của từng story từ dataSnapshot
-                            Map<String, Object> storyData = (Map<String, Object>) storySnapshot.getValue();
-
-                            // Tạo đối tượng StoryClass từ dữ liệu của mỗi story
-                            StoryClass story = new StoryClass((int) (long) storyData.get("id"));
-                            story.setName((String) storyData.get("name"));
-                            story.setTime((String) storyData.get("time"));
-                            story.setAuthor((String) storyData.get("author"));
-                            story.setStatus((String) storyData.get("status"));
-                            story.setDescription((String) storyData.get("description"));
-                            story.setNumberOfChapter((int) (long) storyData.get("numberOfChapter"));
-                            story.setViews((int) (long) storyData.get("views"));
-                            story.setUri((String) storyData.get("uri"));
-
-                            // Lấy danh sách genres
-                            List<String> genres = (List<String>) storyData.get("genresList");
-                            if (genres != null)
-                            {
-                                story.setGenres(genres);
-                            }
-
-                            // Lấy danh sách các chương
-                            Map<String, Map<String, Object>> chaptersMap = (Map<String, Map<String, Object>>) storyData.get("chapters");
-                            if (chaptersMap != null)
-                            {
-                                for (Map.Entry<String, Map<String, Object>> entry : chaptersMap.entrySet())
-                                {
-                                    ChapterClass chapter = new ChapterClass();
-                                    Map<String, Object> chapterData = entry.getValue();
-                                    chapter.setChapterId((String) chapterData.get("chapterId"));
-                                    chapter.setContent((String) chapterData.get("content"));
-                                    story.getChapters().add(chapter);
-                                }
-                            }
-                            Log.i("DBValue", story.toString());
-                            // Thêm story vào danh sách storyList
-                            storyListNewPartial.add(story);
-                            listOfStoryLists.set(0, storyListNewPartial);
-                        }
-                    }
-                    homeFragment = HomeFragment.newInstance(listOfStoryLists);
-                    getSupportFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-                            .add(R.id.fragment_container, homeFragment, "YOUR_FRAGMENT_TAG")
-                            .commit();
-                }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError)
-            {
-                Log.i("DB", "Lỗi: " + databaseError.getMessage());
-            }
-
-        });
-
-
-        storiesRef.orderByChild("updateTime").limitToLast(6).addListenerForSingleValueEvent(new ValueEventListener()
+        // New: get ID to send to home fragment
+        storiesRef.orderByChild("time").limitToLast(8).addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
@@ -194,6 +129,7 @@ public class HomeActivity extends AppCompatActivity
                         StoryClass story = new StoryClass((int) (long) storyData.get("id"));
                         story.setName((String) storyData.get("name"));
                         story.setTime((String) storyData.get("time"));
+                        story.setUpdateTime((String) storyData.get("updateTime"));
                         story.setAuthor((String) storyData.get("author"));
                         story.setStatus((String) storyData.get("status"));
                         story.setDescription((String) storyData.get("description"));
@@ -221,17 +157,17 @@ public class HomeActivity extends AppCompatActivity
                                 story.getChapters().add(chapter);
                             }
                         }
-                        Log.i("DBValue", story.toString());
                         // Thêm story vào danh sách storyList
-                        storyListUpdatePartial.add(story);
-                        listOfStoryLists.set(1, storyListUpdatePartial);
+                        storyListNew.add(String.valueOf(story.getId()));
                     }
+                    homeFragment = HomeFragment.newInstance(listOfStoryLists);
+                    getSupportFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                            .add(R.id.fragment_container, homeFragment, "YOUR_FRAGMENT_TAG")
+                            .commit();
                 }
-                homeFragment = HomeFragment.newInstance(listOfStoryLists);
-                getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-                        .add(R.id.fragment_container, homeFragment, "YOUR_FRAGMENT_TAG")
-                        .commit();
+
+
             }
 
             @Override
@@ -241,6 +177,138 @@ public class HomeActivity extends AppCompatActivity
             }
 
         });
+
+        // Update: get ID to send to home fragment
+        storiesRef.orderByChild("updateTime").limitToLast(8).addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                if (dataSnapshot.exists())
+                {
+                    for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
+                    {
+                        // Lấy dữ liệu của từng story từ dataSnapshot
+                        Map<String, Object> storyData = (Map<String, Object>) storySnapshot.getValue();
+
+                        // Tạo đối tượng StoryClass từ dữ liệu của mỗi story
+                        StoryClass story = new StoryClass((int) (long) storyData.get("id"));
+                        story.setName((String) storyData.get("name"));
+                        story.setTime((String) storyData.get("time"));
+                        story.setUpdateTime((String) storyData.get("updateTime"));
+                        story.setAuthor((String) storyData.get("author"));
+                        story.setStatus((String) storyData.get("status"));
+                        story.setDescription((String) storyData.get("description"));
+                        story.setNumberOfChapter((int) (long) storyData.get("numberOfChapter"));
+                        story.setViews((int) (long) storyData.get("views"));
+                        story.setUri((String) storyData.get("uri"));
+
+                        // Lấy danh sách genres
+                        List<String> genres = (List<String>) storyData.get("genresList");
+                        if (genres != null)
+                        {
+                            story.setGenres(genres);
+                        }
+
+                        // Lấy danh sách các chương
+                        Map<String, Map<String, Object>> chaptersMap = (Map<String, Map<String, Object>>) storyData.get("chapters");
+                        if (chaptersMap != null)
+                        {
+                            for (Map.Entry<String, Map<String, Object>> entry : chaptersMap.entrySet())
+                            {
+                                ChapterClass chapter = new ChapterClass();
+                                Map<String, Object> chapterData = entry.getValue();
+                                chapter.setChapterId((String) chapterData.get("chapterId"));
+                                chapter.setContent((String) chapterData.get("content"));
+                                story.getChapters().add(chapter);
+                            }
+                        }
+                        // Thêm story vào danh sách storyList
+                        storyListUpdate.add(String.valueOf(story.getId()));
+                    }
+                    homeFragment = HomeFragment.newInstance(listOfStoryLists);
+                    getSupportFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                            .add(R.id.fragment_container, homeFragment, "YOUR_FRAGMENT_TAG")
+                            .commit();
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError)
+            {
+                Log.i("DB", "Lỗi: " + databaseError.getMessage());
+            }
+
+        });
+
+        // All: Save to local to send all fragment
+        storiesRef.orderByChild("time").addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                if (dataSnapshot.exists())
+                {
+                    for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
+                    {
+                        // Lấy dữ liệu của từng story từ dataSnapshot
+                        Map<String, Object> storyData = (Map<String, Object>) storySnapshot.getValue();
+
+                        // Tạo đối tượng StoryClass từ dữ liệu của mỗi story
+                        StoryClass story = new StoryClass((int) (long) storyData.get("id"));
+                        story.setName((String) storyData.get("name"));
+                        story.setTime((String) storyData.get("time"));
+                        story.setUpdateTime((String) storyData.get("updateTime"));
+                        story.setAuthor((String) storyData.get("author"));
+                        story.setStatus((String) storyData.get("status"));
+                        story.setDescription((String) storyData.get("description"));
+                        story.setNumberOfChapter((int) (long) storyData.get("numberOfChapter"));
+                        story.setViews((int) (long) storyData.get("views"));
+                        story.setUri((String) storyData.get("uri"));
+
+                        // Lấy danh sách genres
+                        List<String> genres = (List<String>) storyData.get("genresList");
+                        if (genres != null)
+                        {
+                            story.setGenres(genres);
+                        }
+
+                        // Lấy danh sách các chương
+                        Map<String, Map<String, Object>> chaptersMap = (Map<String, Map<String, Object>>) storyData.get("chapters");
+                        if (chaptersMap != null)
+                        {
+                            for (Map.Entry<String, Map<String, Object>> entry : chaptersMap.entrySet())
+                            {
+                                ChapterClass chapter = new ChapterClass();
+                                Map<String, Object> chapterData = entry.getValue();
+                                chapter.setChapterId((String) chapterData.get("chapterId"));
+                                chapter.setContent((String) chapterData.get("content"));
+                                story.getChapters().add(chapter);
+                            }
+                        }
+                        // Thêm story vào danh sách storyList
+                        storyListAll.add(String.valueOf(story.getId()));
+                        saveStoryToFile(story.getId(), story);
+                    }
+                    homeFragment = HomeFragment.newInstance(listOfStoryLists);
+                    getSupportFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                            .add(R.id.fragment_container, homeFragment, "YOUR_FRAGMENT_TAG")
+                            .commit();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError)
+            {
+                Log.i("DB", "Lỗi: " + databaseError.getMessage());
+            }
+
+        });
+
 
         if (savedInstanceState == null)
         {
@@ -258,7 +326,7 @@ public class HomeActivity extends AppCompatActivity
             Fragment selectedFragment = null;
             if (item.getItemId() == R.id.navigation_discovery)
             {
-                selectedFragment = new DiscoveryFragment();
+                selectedFragment = DiscoveryFragment.newInstance(listOfStoryLists.get(0));
             } else if (item.getItemId() == R.id.navigation_download)
             {
                 selectedFragment = new DownloadFragment();
@@ -285,7 +353,7 @@ public class HomeActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, selectedFragment)
                         .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-                        .addToBackStack(null) // Để thêm Fragment vào Backstack
+                        //.addToBackStack(null) // Để thêm Fragment vào Backstack
                         .commit();
                 return true;
             }
@@ -294,18 +362,38 @@ public class HomeActivity extends AppCompatActivity
         });
 
 
-
     }
 
-    public static void sortStoryListByTime(ArrayList<StoryClass> storyList)
+    public void updateData(Horizontal_1_SmallImageAdapter adapter, ArrayList<StoryClass> newDataList)
     {
-        Collections.sort(storyList, (s1, s2) -> s2.getTime().compareTo(s1.getTime()));
-    }
-
-    public void updateData(Horizontal_1_SmallImageAdapter adapter, ArrayList<StoryClass> newDataList) {
         // Update data trong adapter hoặc RecyclerView của bạn với newDataList
         // Ví dụ:
         adapter.setData(newDataList);
         adapter.notifyDataSetChanged(); // Sau khi thiết lập dữ liệu mới, thông báo cho adapter cập nhật giao diện
     }
+
+    public void saveStoryToFile(int storyId, StoryClass story) {
+        String fileName = storyId + ".json"; // Tên file là ID của truyện + ".json"
+
+        // Convert đối tượng StoryClass thành chuỗi JSON
+        Gson gson = new Gson();
+        String storyJson = gson.toJson(story);
+
+        // Lấy đường dẫn đến thư mục "stories" trong internal storage
+        File directory = new File(getFilesDir() + "/stories");
+        if (!directory.exists()) {
+            directory.mkdirs(); // Tạo thư mục nếu nó không tồn tại
+        }
+
+        // Ghi chuỗi dữ liệu vào file trong thư mục "stories"
+        File file = new File(directory, fileName);
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            fos.write(storyJson.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 }
