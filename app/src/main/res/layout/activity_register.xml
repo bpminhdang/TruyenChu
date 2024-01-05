@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FCE8EA"
+    android:background="#fdedee"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/register_linearLayoutCompat2"
+        android:id="@+id/linearLayoutCompat2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -17,24 +17,24 @@
         tools:context=".Register">
 
         <ImageView
-            android:id="@+id/register_imageView2"
+            android:id="@+id/imageView2"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_iv_Back"
-            app:srcCompat="@drawable/icon" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_Back"
+            app:srcCompat="@drawable/light" />
 
         <ProgressBar
-            android:id="@+id/register_progressBar"
+            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone" />
 
         <Button
-            android:id="@+id/register_bt_lg"
+            android:id="@+id/bt_lg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -47,11 +47,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.482"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_repassword" />
+            app:layout_constraintTop_toBottomOf="@+id/repassword" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/register_password_lg"
-            style="@style/ThemeOverlay.Material3.TextInputEditText"
+            android:id="@+id/password_lg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -61,11 +60,11 @@
             android:hint="@string/password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_email_lg" />
+            app:layout_constraintTop_toBottomOf="@+id/email_lg" />
 
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/register_repassword"
+            android:id="@+id/repassword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -76,10 +75,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.482"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_password_lg" />
+            app:layout_constraintTop_toBottomOf="@+id/password_lg" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/register_email_lg"
+            android:id="@+id/email_lg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -90,10 +89,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.517"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_reg_name" />
+            app:layout_constraintTop_toBottomOf="@+id/reg_name" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/register_reg_name"
+            android:id="@+id/reg_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -104,15 +103,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.482"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_imageView2" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
         <ImageView
-            android:id="@+id/register_iv_Back"
+            android:id="@+id/iv_Back"
             android:layout_width="24dp"
             android:layout_height="22dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:background="#FCE8EA"
+            android:background="#fdedee"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/back" />
