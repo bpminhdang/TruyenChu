@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +19,23 @@ import android.widget.Toast;
 
 import com.example.truyenchu.StoryActivity;
 import com.example.truyenchu.R;
+import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.adapter.VerticalContentAdapter;
 import com.example.truyenchu.features.ProfilePanelFragment;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,13 +56,15 @@ public class DiscoveryFragment extends Fragment
     private String mParam1;
     private String mParam2;
     ArrayList<String> storyListString = new ArrayList<>();
+    ArrayList<String> storyListStringUpdate = new ArrayList<>();
     ArrayList<StoryClass> storyListObject = new ArrayList<>();
     VerticalContentAdapter adapter = new VerticalContentAdapter(getActivity(), storyListObject, story ->
     {
         Intent intent = new Intent(getActivity(), StoryActivity.class);
         intent.putExtra("storyData", story);
         startActivity(intent);
-    });;
+    });
+    ;
 
     public DiscoveryFragment()
     {
@@ -86,6 +97,7 @@ public class DiscoveryFragment extends Fragment
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
     public void ResetColorAndSet(ArrayList<Button> btList, int position)
     {
         for (Button button : btList)
@@ -97,17 +109,82 @@ public class DiscoveryFragment extends Fragment
         btList.get(position).setTextColor(getResources().getColor(R.color.accent_1_10));
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_discovery_new, container, false);
+        DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
+        DatabaseReference storiesRef = database.child("stories");
+        storiesRef.orderByChild("updateTime").addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                storyListStringUpdate.clear();
+                if (dataSnapshot.exists())
+                {
+                    for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
+                    {
+                        // Lấy dữ liệu của từng story từ dataSnapshot
+                        Map<String, Object> storyData = (Map<String, Object>) storySnapshot.getValue();
+
+                        // Tạo đối tượng StoryClass từ dữ liệu của mỗi story
+                        StoryClass story = new StoryClass((int) (long) storyData.get("id"));
+                        story.setName((String) storyData.get("name"));
+                        story.setTime((String) storyData.get("time"));
+                        story.setUpdateTime((String) storyData.get("updateTime"));
+                        story.setAuthor((String) storyData.get("author"));
+                        story.setStatus((String) storyData.get("status"));
+                        story.setDescription((String) storyData.get("description"));
+                        story.setNumberOfChapter((int) (long) storyData.get("numberOfChapter"));
+                        story.setViews((int) (long) storyData.get("views"));
+                        story.setUri((String) storyData.get("uri"));
+
+                        // Lấy danh sách genres
+                        List<String> genres = (List<String>) storyData.get("genresList");
+                        if (genres != null)
+                        {
+                            story.setGenres(genres);
+                        }
+
+                        // Lấy danh sách các chương
+                        Map<String, Map<String, Object>> chaptersMap = (Map<String, Map<String, Object>>) storyData.get("chapters");
+                        if (chaptersMap != null)
+                        {
+                            for (Map.Entry<String, Map<String, Object>> entry : chaptersMap.entrySet())
+                            {
+                                ChapterClass chapter = new ChapterClass();
+                                Map<String, Object> chapterData = entry.getValue();
+                                chapter.setChapterId((String) chapterData.get("chapterId"));
+                                chapter.setContent((String) chapterData.get("content"));
+                                story.getChapters().add(chapter);
+                            }
+                        }
+                        // Thêm story vào danh sách storyList
+                        storyListStringUpdate.add(String.valueOf(story.getId()));
+                    }
+                }
+
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError)
+            {
+                Log.i("DB", "Lỗi: " + databaseError.getMessage());
+            }
+        });
+
+
+
+
         if (getArguments() != null)
-            storyListString = (ArrayList<String>)getArguments().getSerializable(ARG_LIST_STORY_ID);
-       for (String storyID : storyListString)
-       {
-           storyListObject.add(loadStoryFromFile(storyID));
-       }
+            storyListString = (ArrayList<String>) getArguments().getSerializable(ARG_LIST_STORY_ID);
+        for (String storyID : storyListString)
+        {
+            storyListObject.add(loadStoryFromFile(storyID));
+        }
 
         FragmentManager childFragmentManager = getChildFragmentManager();
         FragmentTransaction transaction = childFragmentManager.beginTransaction();
@@ -134,16 +211,29 @@ public class DiscoveryFragment extends Fragment
         Button btnFilter = view.findViewById(R.id.dis_fillter_button);
 
 
-
-        for (int i = 0; i < btList.size(); i++) {
+        for (int i = 0; i < btList.size(); i++)
+        {
             final int index = i; // Create a final variable to capture the value of i
             btList.get(i).setOnClickListener(v ->
             {
                 ResetColorAndSet(btList, index);
+                if (index == 0)
+                {
+                    Toast.makeText(getContext(), "0", Toast.LENGTH_SHORT).show();
+                    storyListObject.clear();
+                    for (String storyID : storyListString)
+                    {
+                        storyListObject.add(loadStoryFromFile(storyID));
+                    }
+                    adapter.updateData(storyListObject);
+                    recyclerView.scrollToPosition(adapter.getItemCount()-1);
+
+                }
                 if (index == 2)
                 {
-                    Toast.makeText(getActivity(), "Change", Toast.LENGTH_SHORT).show();
-                    storyListObject = new ArrayList<>();
+                    Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
+
+                    storyListObject.clear();
                     for (String storyID : storyListString)
                     {
                         StoryClass story = loadStoryFromFile(storyID);
@@ -151,33 +241,33 @@ public class DiscoveryFragment extends Fragment
                             storyListObject.add(story);
                     }
                     adapter.updateData(storyListObject);
+                    recyclerView.scrollToPosition(adapter.getItemCount()-1);
+
+                }
+
+                if (index == 1)
+                {
+                    Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
+
+                    storyListObject.clear();
+                    for (String storyID : storyListStringUpdate)
+                    {
+                        storyListObject.add(loadStoryFromFile(storyID));
+                    }
+
+                    adapter.updateData(storyListObject);
+                    recyclerView.scrollToPosition(adapter.getItemCount()-1);
+
+
                 }
             });
         }
-
-//        btnNew.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ResetColorAndSet(btList, 0);
-//            }
-//        });
-//
-//        btnUpdate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ResetColorAndSet(btList, 1);
-//            }
-//        });
-
-
-
 
         recyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
-
         return view;
     }
 
