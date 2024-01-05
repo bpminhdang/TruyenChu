@@ -33,11 +33,6 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
         this.listener = listener;
     }
 
-    public static void updateData(StoryClass e)
-    {
-        arr.add(e);
-    }
-
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
@@ -154,5 +149,11 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
     public int getItemCount()
     {
         return arr.size();
+    }
+
+    public void updateData(ArrayList<StoryClass> e)
+    {
+        arr = e;
+        notifyDataSetChanged();
     }
 }

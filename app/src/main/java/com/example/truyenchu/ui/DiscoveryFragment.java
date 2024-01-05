@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.truyenchu.StoryActivity;
 import com.example.truyenchu.R;
@@ -47,6 +48,12 @@ public class DiscoveryFragment extends Fragment
     private String mParam2;
     ArrayList<String> storyListString = new ArrayList<>();
     ArrayList<StoryClass> storyListObject = new ArrayList<>();
+    VerticalContentAdapter adapter = new VerticalContentAdapter(getActivity(), storyListObject, story ->
+    {
+        Intent intent = new Intent(getActivity(), StoryActivity.class);
+        intent.putExtra("storyData", story);
+        startActivity(intent);
+    });;
 
     public DiscoveryFragment()
     {
@@ -127,28 +134,44 @@ public class DiscoveryFragment extends Fragment
         Button btnFilter = view.findViewById(R.id.dis_fillter_button);
 
 
-        btnNew.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ResetColorAndSet(btList, 0);
-            }
-        });
 
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ResetColorAndSet(btList, 1);
-            }
-        });
+        for (int i = 0; i < btList.size(); i++) {
+            final int index = i; // Create a final variable to capture the value of i
+            btList.get(i).setOnClickListener(v ->
+            {
+                ResetColorAndSet(btList, index);
+                if (index == 2)
+                {
+                    Toast.makeText(getActivity(), "Change", Toast.LENGTH_SHORT).show();
+                    storyListObject = new ArrayList<>();
+                    for (String storyID : storyListString)
+                    {
+                        StoryClass story = loadStoryFromFile(storyID);
+                        if (story.getStatus().equals("Full"))
+                            storyListObject.add(story);
+                    }
+                    adapter.updateData(storyListObject);
+                }
+            });
+        }
+
+//        btnNew.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ResetColorAndSet(btList, 0);
+//            }
+//        });
+//
+//        btnUpdate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ResetColorAndSet(btList, 1);
+//            }
+//        });
 
 
 
-        VerticalContentAdapter adapter = new VerticalContentAdapter(getActivity(), storyListObject, story ->
-        {
-            Intent intent = new Intent(getActivity(), StoryActivity.class);
-            intent.putExtra("storyData", story);
-            startActivity(intent);
-        });
+
         recyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         layoutManager.setReverseLayout(true);

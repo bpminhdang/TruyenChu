@@ -29,7 +29,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dis_profile_panel_container">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical">
@@ -39,68 +40,80 @@
                 style="@style/Widget.Material3.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/common_padding"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="1"
+                android:layout_marginStart="20dp"
                 android:fontFamily="@font/montserrat_semibold"
-                android:text="Mới nhất" />
+                android:text="Mới nhất"
+                app:layout_constraintBaseline_toBaselineOf="@+id/dis_bt_update"
+                app:layout_constraintEnd_toStartOf="@+id/dis_bt_update"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Button
                 android:id="@+id/dis_bt_update"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="1"
                 android:fontFamily="@font/montserrat_semibold"
-                android:text="Mới cập nhật" />
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Mới cập nhật"
+                app:layout_constraintBaseline_toBaselineOf="@+id/dis_bt_full"
+                app:layout_constraintEnd_toStartOf="@+id/dis_bt_full"
+                app:layout_constraintStart_toEndOf="@+id/dis_bt_new" />
 
             <Button
                 android:id="@+id/dis_bt_full"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="1"
                 android:fontFamily="@font/montserrat_semibold"
-                android:text="Full" />
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Full"
+                app:layout_constraintBaseline_toBaselineOf="@+id/dis_bt_rating"
+                app:layout_constraintEnd_toStartOf="@+id/dis_bt_rating"
+                app:layout_constraintStart_toEndOf="@+id/dis_bt_update" />
 
             <Button
                 android:id="@+id/dis_bt_rating"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="1"
                 android:fontFamily="@font/montserrat_semibold"
-                android:text="Đánh giá" />
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Đánh giá"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/dis_bt_view"
+                app:layout_constraintStart_toEndOf="@+id/dis_bt_full" />
 
             <Button
                 android:id="@+id/dis_bt_view"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="1"
                 android:fontFamily="@font/montserrat_semibold"
-                android:text="Xem nhiều" />
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Xem nhiều"
+                app:layout_constraintBaseline_toBaselineOf="@+id/dis_bt_rating"
+                app:layout_constraintEnd_toStartOf="@+id/dis_bt_favorite"
+                app:layout_constraintStart_toEndOf="@+id/dis_bt_rating" />
 
             <Button
                 android:id="@+id/dis_bt_favorite"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="1"
                 android:fontFamily="@font/montserrat_semibold"
-                android:text="Yêu thích" />
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Yêu thích"
+                app:layout_constraintBaseline_toBaselineOf="@+id/dis_bt_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/dis_bt_view" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </HorizontalScrollView>
 
     <Button
