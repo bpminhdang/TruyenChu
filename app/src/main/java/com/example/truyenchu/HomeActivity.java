@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.truyenchu._class.ChapterClass;
+import com.example.truyenchu._class.CommentClass;
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.features.DataListener;
 import com.example.truyenchu.features.UploadStoryFragment;
@@ -283,6 +284,20 @@ public class HomeActivity extends AppCompatActivity implements DataListener
                         if (genres != null)
                         {
                             story.setGenres(genres);
+                        }
+
+                        // Lấy danh sách comment
+                        List<CommentClass> comments = (List<CommentClass>) storyData.get("comments");
+                        if (comments != null)
+                        {
+                            story.setComments(comments);
+                        }
+
+                        // Lấy danh sách yêu thích
+                        List<String> uuidLiked = (List<String>) storyData.get("uuidLikedUsers");
+                        if (uuidLiked != null)
+                        {
+                            story.setUuidLikedUsers(uuidLiked);
                         }
 
                         // Lấy danh sách các chương
