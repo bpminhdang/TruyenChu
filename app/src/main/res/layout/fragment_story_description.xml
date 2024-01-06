@@ -15,11 +15,25 @@
     android:background="@color/accent_1_10"
     tools:context=".features.StoryDescriptionFragment">
 
+    <ImageView
+        android:id="@+id/des_ivback"
+        android:layout_width="40dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_weight="1"
+        android:background="@color/accent_1_10"
+        android:scaleType="centerInside"
+        android:src="@drawable/back"
+        app:layout_constraintBottom_toBottomOf="@+id/tvName_des"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tvName_des"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="15dp"
         android:layout_weight="6"
         android:fontFamily="@font/montserrat_semibold"
         android:paddingEnd="30dp"
@@ -30,16 +44,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/des_ivback"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/des_ivback"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_weight="6"
-        android:padding="7dp"
-        android:src="@drawable/des_back"
-        app:layout_constraintBottom_toBottomOf="@+id/tvName_des"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"
@@ -53,14 +57,14 @@
 
         <ImageView
             android:id="@+id/des_iv_picture"
-            android:layout_width="124dp"
-            android:layout_height="180dp"
-            android:layout_marginEnd="16dp"
+            android:layout_width="92dp"
+            android:layout_height="135dp"
+            android:layout_marginEnd="24dp"
             android:src="@drawable/book_2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.521" />
+            app:layout_constraintVertical_bias="0.16" />
 
         <TextView
             android:id="@+id/des_tv_author"
@@ -82,10 +86,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="24dp"
             android:drawableLeft="@drawable/des_upload"
             android:drawablePadding="5dp"
+            android:fallbackLineSpacing="false"
             android:fontFamily="@font/montserrat_regular"
             android:text="Full - ngày 16 th 9, 2023"
             app:layout_constraintEnd_toStartOf="@+id/des_iv_picture"
@@ -97,7 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
 
             android:drawableStart="@drawable/hamburger_2"
             android:drawablePadding="5dp"
@@ -111,7 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:drawableStart="@drawable/des_heart"
             android:drawablePadding="5dp"
             android:fontFamily="@font/montserrat_regular"
@@ -124,7 +129,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/des_circle"
             android:drawablePadding="5dp"
             android:fontFamily="@font/montserrat_regular"
@@ -136,8 +141,8 @@
             android:id="@+id/des_tv_watching"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="24dp"
             android:drawablePadding="5dp"
             android:fontFamily="@font/montserrat_regular"
