@@ -40,7 +40,7 @@
                 style="@style/Widget.Material3.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:fontFamily="@font/montserrat_semibold"
                 android:text="Mới nhất"
                 app:layout_constraintBaseline_toBaselineOf="@+id/dis_bt_update"
@@ -116,29 +116,15 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </HorizontalScrollView>
 
-    <Button
-        android:id="@+id/dis_fillter_button"
-        style="@style/Widget.Material3.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        android:background="@color/accent_1_10"
-        android:drawableEnd="@drawable/filter_alt"
-        android:drawableTint="@color/accent_3_500"
-        android:fontFamily="@font/montserrat_semibold"
-        android:text="Lọc"
-        android:textColor="@color/accent_3_500"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dis_scrollview_button" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dis_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/accent_1_10"
+        android:paddingTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dis_fillter_button" />
+        app:layout_constraintTop_toBottomOf="@+id/dis_scrollview_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

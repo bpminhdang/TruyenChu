@@ -45,12 +45,12 @@
                 android:paddingEnd="20dp"
                 android:text="Các thể loại truyện nổi bật"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/Buttonmore"
+                app:layout_constraintEnd_toStartOf="@+id/home_bt_more_genres"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/Buttonmore"
+                android:id="@+id/home_bt_more_genres"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -253,12 +253,12 @@
                 android:text="Mới đăng"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/home_recycler_view"
-                app:layout_constraintEnd_toStartOf="@+id/btMoreMD"
+                app:layout_constraintEnd_toStartOf="@+id/home_bt_more_new"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/btMoreMD"
+                android:id="@+id/home_bt_more_new"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -286,7 +286,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btMoreMD" />
+                app:layout_constraintTop_toBottomOf="@+id/home_bt_more_new" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -311,12 +311,12 @@
                 android:text="Mới cập nhật"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/home_recycler_view_2"
-                app:layout_constraintEnd_toStartOf="@+id/btMoreMCN"
+                app:layout_constraintEnd_toStartOf="@+id/home_bt_more_update"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/btMoreMCN"
+                android:id="@+id/home_bt_more_update"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -343,7 +343,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btMoreMCN" />
+                app:layout_constraintTop_toBottomOf="@+id/home_bt_more_update" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -368,12 +368,12 @@
                 android:text="Đã đọc gần đây"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/home_recycler_view_3"
-                app:layout_constraintEnd_toStartOf="@+id/btMoreDDGD"
+                app:layout_constraintEnd_toStartOf="@+id/home_bt_more_recent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/btMoreDDGD"
+                android:id="@+id/home_bt_more_recent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -400,7 +400,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btMoreDDGD" />
+                app:layout_constraintTop_toBottomOf="@+id/home_bt_more_recent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

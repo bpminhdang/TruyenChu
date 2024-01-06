@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,7 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu._class.StoryClass;
-import com.example.truyenchu.adapter.Horizontal_1_SmallImageAdapter;
+import com.example.truyenchu.features.DataListener;
 import com.example.truyenchu.features.UploadStoryFragment;
 import com.example.truyenchu.ui.DownloadFragment;
 import com.example.truyenchu.ui.HomeFragment;
@@ -31,26 +32,31 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class HomeActivity extends AppCompatActivity
+public class HomeActivity extends AppCompatActivity implements DataListener
 {
     FirebaseAuth mAuth;
     boolean isLoggedIn = false;
-    ArrayList<String> storyListAll = new ArrayList<>();
-    ArrayList<String> storyListNew = new ArrayList<>();
-    ArrayList<String> storyListUpdate = new ArrayList<>();
+    ArrayList<String> storyListAll = new ArrayList<>();  // listOfStoryLists 0
+    ArrayList<String> storyListNew = new ArrayList<>(); // listOfStoryLists 1
+    ArrayList<String> storyListUpdate = new ArrayList<>(); // listOfStoryLists 2
     ArrayList<String> storyListRecent = new ArrayList<>();
+    /**
+     * 0: storyListAll - ID tất cả truyện _____________________________________________________________
+     * 1: storyListNew - ID 13 truyện mới nhất để lấy dữ liệu nhanh và đưa vào HomeFragment
+     * 2: storyListUpdate - ID 8 truyện mới cập nhật để lấy dữ liệu nhanh và đưa vào HomeFragment
+     */
     ArrayList<ArrayList<String>> listOfStoryLists = new ArrayList<>();
 
     private HomeFragment homeFragment;
+    BottomNavigationView bottomNav;
+
 
 
     @Override
@@ -58,6 +64,8 @@ public class HomeActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        // region Init
         listOfStoryLists.add(storyListAll);
         listOfStoryLists.add(storyListNew);
         listOfStoryLists.add(storyListUpdate);
@@ -71,9 +79,11 @@ public class HomeActivity extends AppCompatActivity
         getWindow().setNavigationBarColor(Color.WHITE);
 
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setSelectedItemId(R.id.navigation_home);
+        // endregion Init
 
+        // region Profile Panel
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser mUser = mAuth.getCurrentUser();
 
@@ -105,15 +115,14 @@ public class HomeActivity extends AppCompatActivity
             editor.putString("isLoggedIn", "false");
             editor.apply();
         }
+        // endregion Profile Panel
 
-
-        //FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").setPersistenceEnabled(true);
+        // region Get data from Firebase
         DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
         DatabaseReference storiesRef = database.child("stories");
-//        storiesRef.orderByChild("time").limitToLast(6).addListenerForSingleValueEvent(new ValueEventListener()
 
-        // New: get ID to send to home fragment
-        storiesRef.orderByChild("time").limitToLast(8).addListenerForSingleValueEvent(new ValueEventListener()
+        // region New: get ID to send to home fragment
+        storiesRef.orderByChild("time").limitToLast(13).addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
@@ -161,9 +170,10 @@ public class HomeActivity extends AppCompatActivity
                         storyListNew.add(String.valueOf(story.getId()));
                     }
                     homeFragment = HomeFragment.newInstance(listOfStoryLists);
+                    homeFragment.setDataListener(HomeActivity.this);
                     getSupportFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-                            .add(R.id.fragment_container, homeFragment, "YOUR_FRAGMENT_TAG")
+                            .setCustomAnimations(R.anim.fade_in_1000, R.anim.fade_out)
+                            .add(R.id.home_fragment_container, homeFragment)
                             .commit();
                 }
 
@@ -177,8 +187,10 @@ public class HomeActivity extends AppCompatActivity
             }
 
         });
+        // endregion New: get ID to send to home fragment
 
-        // Update: get ID to send to home fragment
+
+        // region Update: get ID to send to home fragment
         storiesRef.orderByChild("updateTime").limitToLast(8).addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
@@ -226,11 +238,6 @@ public class HomeActivity extends AppCompatActivity
                         // Thêm story vào danh sách storyList
                         storyListUpdate.add(String.valueOf(story.getId()));
                     }
-                    homeFragment = HomeFragment.newInstance(listOfStoryLists);
-                    getSupportFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-                            .add(R.id.fragment_container, homeFragment, "YOUR_FRAGMENT_TAG")
-                            .commit();
                 }
 
 
@@ -243,8 +250,10 @@ public class HomeActivity extends AppCompatActivity
             }
 
         });
+        // endregion Update: get ID to send to home fragment
 
-        // All: Save to local to send all fragment
+
+        // region All: Save to local to send all fragment
         storiesRef.orderByChild("time").addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
@@ -293,11 +302,11 @@ public class HomeActivity extends AppCompatActivity
                         storyListAll.add(String.valueOf(story.getId()));
                         saveStoryToFile(story.getId(), story);
                     }
-                    homeFragment = HomeFragment.newInstance(listOfStoryLists);
-                    getSupportFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-                            .add(R.id.fragment_container, homeFragment, "YOUR_FRAGMENT_TAG")
-                            .commit();
+//                    homeFragment = HomeFragment.newInstance(listOfStoryLists);
+//                    getSupportFragmentManager().beginTransaction()
+//                            .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+//                            .add(R.id.fragment_container, homeFragment, "YOUR_FRAGMENT_TAG")
+//                            .commit();
                 }
             }
 
@@ -308,71 +317,81 @@ public class HomeActivity extends AppCompatActivity
             }
 
         });
+        // endregion All: Save to local to send all fragment
 
+        // endregion get data from Firebase
 
+        // region Load Fragment
         if (savedInstanceState == null)
         {
             // Nếu không có fragment đã được thêm, thêm vào
             homeFragment = HomeFragment.newInstance(listOfStoryLists);
+            homeFragment.setDataListener(this);
+
             getSupportFragmentManager()
                     .beginTransaction()
-                    .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-                    .add(R.id.fragment_container, homeFragment, "YOUR_FRAGMENT_TAG")
+                    .setCustomAnimations(R.anim.fade_in_1000, R.anim.fade_out)
+                    .add(R.id.home_fragment_container, homeFragment, "YOUR_FRAGMENT_TAG")
                     .commit();
 
         }
         bottomNav.setOnItemSelectedListener(item ->
-        {
-            Fragment selectedFragment = null;
-            if (item.getItemId() == R.id.navigation_discovery)
-            {
-                selectedFragment = DiscoveryFragment.newInstance(listOfStoryLists.get(0));
-            } else if (item.getItemId() == R.id.navigation_download)
-            {
-                selectedFragment = new DownloadFragment();
-            } else if (item.getItemId() == R.id.navigation_home)
-            {
-                selectedFragment = HomeFragment.newInstance(listOfStoryLists);
-            } else if (item.getItemId() == R.id.navigation_profile)
-            {
-                if (!isLoggedIn)
-                {
-                    Intent intent = new Intent(getApplicationContext(), Login.class);
-                    startActivity(intent);
-                    finish();
-                    return false;
-                } else
-                    selectedFragment = new ProfileFragment();
-            } else if (item.getItemId() == R.id.navigation_search)
-            {
-                selectedFragment = new UploadStoryFragment();
-            }
-
-            if (selectedFragment != null)
-            {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, selectedFragment)
-                        .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-                        //.addToBackStack(null) // Để thêm Fragment vào Backstack
-                        .commit();
-                return true;
-            }
-
-            return false;
-        });
+                SetOnItemClick(item));
+        // endregion Load Fragment
 
 
     }
 
-    public void updateData(Horizontal_1_SmallImageAdapter adapter, ArrayList<StoryClass> newDataList)
+    public boolean SetOnItemClick(MenuItem item)
     {
-        // Update data trong adapter hoặc RecyclerView của bạn với newDataList
-        // Ví dụ:
-        adapter.setData(newDataList);
-        adapter.notifyDataSetChanged(); // Sau khi thiết lập dữ liệu mới, thông báo cho adapter cập nhật giao diện
+        Fragment selectedFragment = null;
+        if (item.getItemId() == R.id.navigation_discovery)
+        {
+            selectedFragment = DiscoveryFragment.newInstance(listOfStoryLists.get(0));
+        } else if (item.getItemId() == R.id.navigation_download)
+        {
+            selectedFragment = new DownloadFragment();
+        } else if (item.getItemId() == R.id.navigation_home)
+        {
+            selectedFragment = HomeFragment.newInstance(listOfStoryLists);
+            homeFragment.setDataListener(HomeActivity.this);
+
+        } else if (item.getItemId() == R.id.navigation_profile)
+        {
+            if (!isLoggedIn)
+            {
+                Intent intent = new Intent(getApplicationContext(), Login.class);
+                startActivity(intent);
+                finish();
+                return false;
+            } else
+                selectedFragment = new ProfileFragment();
+        } else if (item.getItemId() == R.id.navigation_search)
+        {
+            selectedFragment = new UploadStoryFragment();
+        }
+
+        if (selectedFragment != null)
+        {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.home_fragment_container, selectedFragment)
+                    .setCustomAnimations(R.anim.fade_in_1000, R.anim.fade_out)
+                    //.addToBackStack(null) // Để thêm Fragment vào Backstack
+                    .commit();
+            return true;
+        }
+
+        return false;
     }
 
-    public void saveStoryToFile(int storyId, StoryClass story) {
+    public boolean SetNotOnItemClick()
+    {
+        return true;
+    }
+
+
+    public void saveStoryToFile(int storyId, StoryClass story)
+    {
         String fileName = storyId + ".json"; // Tên file là ID của truyện + ".json"
 
         // Convert đối tượng StoryClass thành chuỗi JSON
@@ -381,19 +400,33 @@ public class HomeActivity extends AppCompatActivity
 
         // Lấy đường dẫn đến thư mục "stories" trong internal storage
         File directory = new File(getFilesDir() + "/stories");
-        if (!directory.exists()) {
+        if (!directory.exists())
             directory.mkdirs(); // Tạo thư mục nếu nó không tồn tại
-        }
 
         // Ghi chuỗi dữ liệu vào file trong thư mục "stories"
         File file = new File(directory, fileName);
-        try (FileOutputStream fos = new FileOutputStream(file)) {
+        try (FileOutputStream fos = new FileOutputStream(file))
+        {
             fos.write(storyJson.getBytes());
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
         }
     }
 
 
+    @Override
+    public void onDataReceived(String data)
+    {
+        Log.i("Data Listener","Receive data from fragment: " +  data);
+        if (data.equals("Click Discovery"))
+        {
+            bottomNav.setOnItemSelectedListener(item ->
+                    SetNotOnItemClick());
 
+            bottomNav.setSelectedItemId(R.id.navigation_discovery);
+
+            bottomNav.setOnItemSelectedListener(this::SetOnItemClick);
+        }
+    }
 }
