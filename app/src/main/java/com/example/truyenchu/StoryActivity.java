@@ -8,16 +8,18 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.example.truyenchu._class.StoryClass;
+import com.example.truyenchu.features.DataListener;
 import com.example.truyenchu.features.StoryDescriptionFragment;
 import com.example.truyenchu.features.StoryReadingFragment;
 
 import java.util.Objects;
 
-public class StoryActivity extends AppCompatActivity
+public class StoryActivity extends AppCompatActivity implements DataListener
 {
     StoryClass receivedStory;
 
@@ -63,18 +65,37 @@ public class StoryActivity extends AppCompatActivity
 //                .commit();
 //        return true;
         Button bt_read = findViewById(R.id.btRead);
-        bt_read.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StoryReadingFragment storyReadingFragment = new StoryReadingFragment();
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container_avs, storyReadingFragment)
-                        .setCustomAnimations(R.anim.fade_in_300, R.anim.fade_out)
-                        .addToBackStack(null) // Để thêm Fragment vào Backstack
-                        .commit();
-               FrameLayout frameLayout = findViewById(R.id.frameLayout_avs);
-               frameLayout.setVisibility(View.GONE);
-            }
+        bt_read.setOnClickListener(v ->
+        {
+            StoryReadingFragment storyReadingFragment = StoryReadingFragment.newInstance(receivedStory.getId());
+            storyReadingFragment.setDataListener(StoryActivity.this);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container_avs, storyReadingFragment)
+                    .setCustomAnimations(R.anim.fade_in_300, R.anim.fade_out)
+                    .addToBackStack(null) // Để thêm Fragment vào Backstack
+                    .commit();
+            FrameLayout frameLayoutNavigation = findViewById(R.id.frameLayout_avs);
+            frameLayoutNavigation.setVisibility(View.GONE);
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            );
+
         });
+    }
+
+    @Override
+    public void onDataReceived(String data)
+    {
+        Log.i("Data Listener","rev: " +  data);
+
+        if (data.equals("Exit reading"))
+        {
+            findViewById(R.id.frameLayout_avs).setVisibility(View.VISIBLE);
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            getWindow().setStatusBarColor(getColor(R.color.accent_1_10));
+            getWindow().setNavigationBarColor(Color.WHITE);
+        }
     }
 }

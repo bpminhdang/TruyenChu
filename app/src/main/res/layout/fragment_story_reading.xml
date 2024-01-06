@@ -18,7 +18,7 @@
             android:id="@+id/readingnehihi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/avenirnextltpro_regular"
+            android:fontFamily="@font/montserrat_regular"
             android:lineSpacingExtra="8sp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
@@ -63,7 +63,7 @@
             app:srcCompat="@drawable/r_quit" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/r_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"

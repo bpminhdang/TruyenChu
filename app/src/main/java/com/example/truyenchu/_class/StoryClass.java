@@ -280,4 +280,10 @@ public class StoryClass implements Serializable
     {
         this.updateTime = updateTime;
     }
+
+    public String getContent(int chapterNum)
+    {
+        return chapters.get(chapterNum).getContent();
+    }
+
 }

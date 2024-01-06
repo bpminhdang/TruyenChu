@@ -115,8 +115,6 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
     }
     private void sendDataToActivity(String data)
     {
-        Log.i("Data Listener","Send data to activity1: " +  data);
-
         // Gửi dữ liệu tới Activity thông qua Interface
         if (dataListener != null)
         {
