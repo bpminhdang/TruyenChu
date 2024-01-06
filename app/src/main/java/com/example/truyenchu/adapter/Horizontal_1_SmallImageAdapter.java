@@ -113,7 +113,7 @@ public class Horizontal_1_SmallImageAdapter extends RecyclerView.Adapter<Horizon
         Glide.with(viewHolder.itemView.getContext())
                 .load(story.getUri())
                 .into(viewHolder.getStoryImage());
-        viewHolder.getTvName().setText(story.getName(13));
+        viewHolder.getTvName().setText(story.GetNameCutOff(13));
     }
 
     // Return the size of your dataset (invoked by the layout manager)

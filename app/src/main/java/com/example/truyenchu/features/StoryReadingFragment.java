@@ -95,7 +95,7 @@ public class StoryReadingFragment extends Fragment
         NestedScrollView nestedScrollView = view.findViewById(R.id.readingkone);
 
         tvContent.setText(story.getContent(0));
-        tvName.setText(story.getName(13) + " | C" + (currentChapter + 1));
+        tvName.setText(story.GetNameCutOff(13) + " | C" + (currentChapter + 1));
         nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener()
         {
             @Override

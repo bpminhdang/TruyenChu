@@ -346,18 +346,24 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
             uuidLiked.add("asdas43");
             commentClasses.add(new CommentClass("guest2", 5, "Truyen hay v", uuidLiked));
 
+            ChapterClass chapterClass = new ChapterClass("1_1", "chasposkmoseuifnoaeifmjoasidjaosidjaoidejaoie");
+            ArrayList<ChapterClass> chapterClasses = new ArrayList<>();
+
+            chapterClasses.add(chapterClass);
+            chapterClass = new ChapterClass("1_2", "chasposkmoseuifnoaeifmjoasidjaosidjaoidejaoie");
+
+            chapterClasses.add(chapterClass);
             story.setComments(commentClasses);
             story.setUuidLikedUsers(uuidLiked);
+            story.setChapters(chapterClasses);
             // endregion Test
-
+            story.setUri("this is uri");
             storyRef.child("story_" + id).setValue(story, (databaseError, databaseReference) ->
             {
-                // Upload chapter
-                storyRef.child("story_" + id).child("chapters").child("chapter_" + id + "_" + numberOfChapter).setValue(new ChapterClass(id + "_" + numberOfChapter, content));
 
-                // Handle upload Story
-                uploadImageToFirebase("story_" + id, imageUriStringFB ->
-                        storyRef.child("story_" + id).child("uri").setValue(imageUriStringFB));
+//                // Handle upload Story
+//                uploadImageToFirebase("story_" + id, imageUriStringFB ->
+//                        storyRef.child("story_" + id).child("uri").setValue(imageUriStringFB));
 
                 if (databaseError != null)
                 {

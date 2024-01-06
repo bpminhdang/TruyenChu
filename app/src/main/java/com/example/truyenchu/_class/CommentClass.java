@@ -14,6 +14,10 @@ public class CommentClass implements Serializable
         this.uuidLikedUsers = uuidLikedUsers;
     }
 
+    public CommentClass()
+    {
+    }
+
     private String username;
     private double rating;
     private String comment;
@@ -35,7 +39,7 @@ public class CommentClass implements Serializable
         return rating;
     }
 
-    public void setRating(int rating)
+    public void setRating(double rating)
     {
         this.rating = rating;
     }
@@ -59,10 +63,4 @@ public class CommentClass implements Serializable
     {
         this.uuidLikedUsers = uuidLikedUsers;
     }
-
-    public int getNumLike()
-    {
-        return uuidLikedUsers.size();
-    }
-
 }

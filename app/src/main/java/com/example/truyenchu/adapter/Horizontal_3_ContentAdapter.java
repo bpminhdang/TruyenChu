@@ -74,7 +74,7 @@ public class Horizontal_3_ContentAdapter extends RecyclerView.Adapter<Horizontal
         Glide.with(viewHolder.itemView.getContext())
                 .load(story.getUri())
                 .into(viewHolder.getStoryImage());
-        viewHolder.getTvName().setText(story.getName(20));
+        viewHolder.getTvName().setText(story.GetNameCutOff(20));
 
         temp = context.getString(R.string.author) + " " + story.getAuthor();
         viewHolder.getTvAuthor().setText(temp);

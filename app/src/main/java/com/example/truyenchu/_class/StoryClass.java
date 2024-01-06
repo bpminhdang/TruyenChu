@@ -17,7 +17,7 @@ import java.util.List;
 // Lớp Truyen (Truyện)
 public class StoryClass implements Serializable
 {
-    private final int id;
+    private int id;
     private String name;
     private String time;
     private String updateTime;
@@ -57,9 +57,23 @@ public class StoryClass implements Serializable
         this.id = id;
     }
 
+    public StoryClass()
+    {
+    }
+
     public int getId()
     {
         return id;
+    }
+
+    public String getUri()
+    {
+        return uri;
+    }
+
+    public void setUri(String uri)
+    {
+        this.uri = uri;
     }
 
     public String getName()
@@ -67,15 +81,34 @@ public class StoryClass implements Serializable
         return name;
     }
 
-    public String getName(int cutOffWhenMoreThan)
+    public String GetNameCutOff(int length)
     {
-        return cutOff(name, cutOffWhenMoreThan);
+        return cutOff(name, length);
     }
 
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public String getTime()
+    {
+        return time;
+    }
+
+    public void setTime(String time)
+    {
+        this.time = time;
+    }
 
     public String getAuthor()
     {
         return author;
+    }
+
+    public void setAuthor(String author)
+    {
+        this.author = author;
     }
 
     public String getStatus()
@@ -83,17 +116,47 @@ public class StoryClass implements Serializable
         return status;
     }
 
+    public void setStatus(String status)
+    {
+        this.status = status;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
     public int getNumberOfChapter()
     {
         return numberOfChapter;
     }
 
-    public List<String> getGenresList()
+    public void setNumberOfChapter(int numberOfChapter)
+    {
+        this.numberOfChapter = numberOfChapter;
+    }
+
+    public List<ChapterClass> getChapters()
+    {
+        return chapters;
+    }
+
+    public void setChapters(List<ChapterClass> chapters)
+    {
+        this.chapters = chapters;
+    }
+
+    public List<String> getGenres()
     {
         return genres;
     }
 
-    public String getGenres(int cutOffWhenMoreThan)
+    public String GetGenresCutoff(int cutOffWhenMoreThan)
     {
         String s;
         if (genres.size() > 1)
@@ -112,87 +175,23 @@ public class StoryClass implements Serializable
         return s;
     }
 
-    public List<ChapterClass> getChapters()
+    public static String cutOff(String text,int maxLenght)
     {
-        return chapters;
+//        if (text.length() > maxLenght)
+//        {
+//            int lastIndex = text.lastIndexOf(' ', maxLenght);
+//            if (lastIndex != -1)
+//            {
+//                return text.substring(0, lastIndex) + "...";
+//            }
+//        }
+        return text;
     }
 
-    public int getViews()
-    {
-        return views;
-    }
-
-    // Thêm chương vào danh sách của truyện
-    public void addChapter(ChapterClass chapterClass)
-    {
-        chapters.add(chapterClass);
-    }
-
-
-    public String getTime()
-    {
-        return time;
-    }
-
-    public String getDescription()
-    {
-        return description;
-    }
-
-    public String getUri()
-    {
-        return uri;
-    }
-
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    public void setTime(String time)
-    {
-        this.time = time;
-    }
-
-    public void setAuthor(String author)
-    {
-        this.author = author;
-    }
-
-    public void setStatus(String status)
-    {
-        this.status = status;
-    }
-
-    public void setDescription(String description)
-    {
-        this.description = description;
-    }
-
-    public void setNumberOfChapter(int numberOfChapter)
-    {
-        this.numberOfChapter = numberOfChapter;
-    }
-
-    public void setChapters(List<ChapterClass> chapters)
-    {
-        this.chapters = chapters;
-    }
 
     public void setGenres(List<String> genres)
     {
         this.genres = genres;
-    }
-
-    public void setViews(int views)
-    {
-        this.views = views;
-    }
-
-    public void setUri(String uri)
-    {
-        this.uri = uri;
     }
 
     public List<CommentClass> getComments()
@@ -215,19 +214,15 @@ public class StoryClass implements Serializable
         this.uuidLikedUsers = uuidLikedUsers;
     }
 
-    public static String cutOff(String text, int maxLenght)
+    public int getViews()
     {
-        if (text.length() > maxLenght)
-        {
-            int lastIndex = text.lastIndexOf(' ', maxLenght);
-            if (lastIndex != -1)
-            {
-                return text.substring(0, lastIndex) + "...";
-            }
-        }
-        return text;
+        return views;
     }
 
+    public void setViews(int views)
+    {
+        this.views = views;
+    }
 
     @Override
     public String toString() {
