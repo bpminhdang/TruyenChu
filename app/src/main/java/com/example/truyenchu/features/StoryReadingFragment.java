@@ -174,7 +174,7 @@ public class StoryReadingFragment extends Fragment {
                     int previousChapter = currentChapter - 1;
                     StoryReadingFragment newFragment = StoryReadingFragment.newInstance("Chapter " + previousChapter, "YourParam2");
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragment_container, newFragment);
+                    transaction.replace(R.id.fragment_container_avs, newFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
                 } else {
@@ -197,7 +197,7 @@ public class StoryReadingFragment extends Fragment {
                     int nextChapter = currentChapter + 1;
                     StoryReadingFragment newFragment = StoryReadingFragment.newInstance("Chapter " + nextChapter, "YourParam2");
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragment_container, newFragment);
+                    transaction.replace(R.id.fragment_container_avs, newFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
                 } else {

@@ -38,7 +38,7 @@
             android:id="@+id/item_vertical_content_tvName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_semibold"
             android:maxLines="@android:integer/config_mediumAnimTime"
             android:paddingEnd="20dp"
@@ -53,11 +53,14 @@
             android:id="@+id/item_vertical_content_tvTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="5dp"
             android:fontFamily="@font/montserrat_regular"
             android:text="16 giờ trước"
             android:textSize="@dimen/small_text_size"
             app:layout_constraintBottom_toTopOf="@+id/item_vertical_content_tvAuthor"
-            app:layout_constraintStart_toStartOf="@+id/item_vertical_content_tvName" />
+            app:layout_constraintStart_toStartOf="@+id/item_vertical_content_tvName"
+            app:layout_constraintTop_toBottomOf="@+id/item_vertical_content_tvName" />
 
         <TextView
             android:id="@+id/item_vertical_content_tvAuthor"
@@ -73,7 +76,7 @@
             android:id="@+id/item_vertical_content_tvChapter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="10dp"
             android:fontFamily="@font/montserrat_regular"
             android:text="10 chương"
             android:textSize="@dimen/small_text_size"

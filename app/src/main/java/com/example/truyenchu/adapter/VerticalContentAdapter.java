@@ -136,10 +136,10 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
                 .load(story.getUri())
                 .into(viewHolder.getStoryImage());
         viewHolder.getTvName().setText(story.getName(40));
-        viewHolder.getTvTime().setText(story.getTime());
+        viewHolder.getTvTime().setText("Ngày đăng: " + story.getTime() + "\n" + "Cập nhật: " + story.getUpdateTime());
         viewHolder.getTvAuthor().setText("Tác giả: " + story.getAuthor());
         viewHolder.getTvChapter().setText("Số chương: " + String.valueOf(story.getNumberOfChapter()));
-        viewHolder.getTvGenre().setText(story.getGenres(40));
+        viewHolder.getTvGenre().setText(story.getGenres(25));
 
         Log.i("Vertical", story.getUri());
     }

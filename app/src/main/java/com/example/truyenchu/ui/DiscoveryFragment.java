@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,6 +51,10 @@ public class DiscoveryFragment extends Fragment
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_LIST_STORY_ID = "listStoryID";
+    private static final String ARG_BUTTON_ID = "btID";
+    private int buttonID = 0;
+    ArrayList<Button> btList = new ArrayList<>();
+
 
 
     // TODO: Rename and change types of parameters
@@ -87,14 +92,29 @@ public class DiscoveryFragment extends Fragment
         return fragment;
     }
 
+    public static DiscoveryFragment newInstance(ArrayList<String> storyList, int buttonID)
+    {
+        DiscoveryFragment fragment = new DiscoveryFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_LIST_STORY_ID, storyList);
+        args.putInt(ARG_BUTTON_ID, buttonID);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         if (getArguments() != null)
         {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            storyListString = (ArrayList<String>) getArguments().getSerializable(ARG_LIST_STORY_ID);
+            assert storyListString != null;
+            for (String storyID : storyListString)
+                storyListObject.add(loadStoryFromFile(storyID));
+            if (getArguments().containsKey(ARG_BUTTON_ID)) {
+                buttonID = getArguments().getInt(ARG_BUTTON_ID);
+            }
         }
     }
 
@@ -114,15 +134,17 @@ public class DiscoveryFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_discovery_new, container, false);
+        View view = inflater.inflate(R.layout.fragment_discovery, container, false);
+
         DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
         DatabaseReference storiesRef = database.child("stories");
+
         storiesRef.orderByChild("updateTime").addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
-                storyListStringUpdate.clear();
+               // storyListStringUpdate.clear();
                 if (dataSnapshot.exists())
                 {
                     for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
@@ -166,9 +188,14 @@ public class DiscoveryFragment extends Fragment
                         storyListStringUpdate.add(String.valueOf(story.getId()));
                     }
                 }
-
+                if (buttonID != 0 )
+                {
+                    Button btToClick = view.findViewById(R.id.dis_bt_update);
+                    btToClick.performClick();
+                }
 
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError)
             {
@@ -176,15 +203,6 @@ public class DiscoveryFragment extends Fragment
             }
         });
 
-
-
-
-        if (getArguments() != null)
-            storyListString = (ArrayList<String>) getArguments().getSerializable(ARG_LIST_STORY_ID);
-        for (String storyID : storyListString)
-        {
-            storyListObject.add(loadStoryFromFile(storyID));
-        }
 
         FragmentManager childFragmentManager = getChildFragmentManager();
         FragmentTransaction transaction = childFragmentManager.beginTransaction();
@@ -201,15 +219,17 @@ public class DiscoveryFragment extends Fragment
         Button btnRating = view.findViewById(R.id.dis_bt_rating);
         Button btnView = view.findViewById(R.id.dis_bt_view);
         Button btnFavorite = view.findViewById(R.id.dis_bt_favorite);
-        ArrayList<Button> btList = new ArrayList<>();
         btList.add(btnNew);
         btList.add(btnUpdate);
         btList.add(btnFull);
         btList.add(btnRating);
         btList.add(btnView);
         btList.add(btnFavorite);
-        Button btnFilter = view.findViewById(R.id.dis_fillter_button);
-
+        if (buttonID != 0)
+        {
+            ResetColorAndSet(btList, buttonID);
+            storyListObject.clear();
+        }
 
         for (int i = 0; i < btList.size(); i++)
         {
@@ -217,22 +237,20 @@ public class DiscoveryFragment extends Fragment
             btList.get(i).setOnClickListener(v ->
             {
                 ResetColorAndSet(btList, index);
+
                 if (index == 0)
                 {
-                    Toast.makeText(getContext(), "0", Toast.LENGTH_SHORT).show();
                     storyListObject.clear();
                     for (String storyID : storyListString)
                     {
                         storyListObject.add(loadStoryFromFile(storyID));
                     }
                     adapter.updateData(storyListObject);
-                    recyclerView.scrollToPosition(adapter.getItemCount()-1);
+                    recyclerView.scrollToPosition(adapter.getItemCount() - 1);
 
                 }
                 if (index == 2)
                 {
-                    Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
-
                     storyListObject.clear();
                     for (String storyID : storyListString)
                     {
@@ -241,14 +259,12 @@ public class DiscoveryFragment extends Fragment
                             storyListObject.add(story);
                     }
                     adapter.updateData(storyListObject);
-                    recyclerView.scrollToPosition(adapter.getItemCount()-1);
+                    recyclerView.scrollToPosition(adapter.getItemCount() - 1);
 
                 }
 
                 if (index == 1)
                 {
-                    Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
-
                     storyListObject.clear();
                     for (String storyID : storyListStringUpdate)
                     {
@@ -256,10 +272,9 @@ public class DiscoveryFragment extends Fragment
                     }
 
                     adapter.updateData(storyListObject);
-                    recyclerView.scrollToPosition(adapter.getItemCount()-1);
-
-
+                    recyclerView.scrollToPosition(adapter.getItemCount() - 1);
                 }
+
             });
         }
 
@@ -268,6 +283,9 @@ public class DiscoveryFragment extends Fragment
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
+
+
+
         return view;
     }
 

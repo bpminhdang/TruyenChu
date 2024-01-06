@@ -69,7 +69,7 @@ public class StoryActivity extends AppCompatActivity
                 StoryReadingFragment storyReadingFragment = new StoryReadingFragment();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container_avs, storyReadingFragment)
-                        .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                        .setCustomAnimations(R.anim.fade_in_300, R.anim.fade_out)
                         .addToBackStack(null) // Để thêm Fragment vào Backstack
                         .commit();
                FrameLayout frameLayout = findViewById(R.id.frameLayout_avs);

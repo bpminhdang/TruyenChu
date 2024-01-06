@@ -1,26 +1,34 @@
 package com.example.truyenchu.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.truyenchu.HomeActivity;
 import com.example.truyenchu.StoryActivity;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.adapter.Horizontal_3_ContentAdapter;
 import com.example.truyenchu.adapter.Horizontal_2_ImageAdapter;
 import com.example.truyenchu.adapter.Horizontal_1_SmallImageAdapter;
+import com.example.truyenchu.features.BlankFragment;
+import com.example.truyenchu.features.DataListener;
 import com.example.truyenchu.features.ProfilePanelFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -36,23 +44,26 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment// implements RecyclerViewItemClickListener
 {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     // private static final String ARG_STORY_LIST = "storyList";
     private static final String ARG_LIST_STORY_LIST = "listStoryList";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    //private static ArrayList<StoryClass> mStoryList = new ArrayList<>();
+    /**
+     * 0: storyListAll - ID tất cả truyện ____________________________________________________________________
+     * 1: storyListNew - ID 13 truyện mới nhất để lấy dữ liệu nhanh và đưa vào HomeFragment ______
+     * 2: storyListUpdate - ID 8 truyện mới cập nhật để lấy dữ liệu nhanh và đưa vào HomeFragment
+     */
     private ArrayList<ArrayList<String>> mListStoryList = new ArrayList<>();
     private ArrayList<StoryClass> mListStoryNew = new ArrayList<>();
     private ArrayList<StoryClass> mListStoryUpdate = new ArrayList<>();
-
+    private DataListener dataListener;
     ImageButton profilePic;
     TextView profileName;
+
+    // region Init
 
     public HomeFragment()
     {
@@ -75,7 +86,6 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         return fragment;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -86,6 +96,33 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+    }
+
+    // endregion Init
+    public void setDataListener(DataListener listener)
+    {
+        this.dataListener = listener;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            dataListener = (DataListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context + " must implement DataListener");
+        }
+    }
+    private void sendDataToActivity(String data)
+    {
+        Log.i("Data Listener","Send data to activity1: " +  data);
+
+        // Gửi dữ liệu tới Activity thông qua Interface
+        if (dataListener != null)
+        {
+            Log.i("Data Listener","Send data to activity: " +  data);
+            dataListener.onDataReceived(data);
+        }
     }
 
     @Override
@@ -123,7 +160,7 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         layoutManager2.setReverseLayout(true);
         layoutManager2.setStackFromEnd(true);
 
-        Horizontal_1_SmallImageAdapter adapter = new Horizontal_1_SmallImageAdapter(getActivity(),mListStoryNew, this::StartStoryDescriptionActivity);
+        Horizontal_1_SmallImageAdapter adapter = new Horizontal_1_SmallImageAdapter(getActivity(), mListStoryNew, this::StartStoryDescriptionActivity);
         Horizontal_3_ContentAdapter adapter1 = new Horizontal_3_ContentAdapter(getActivity(), mListStoryUpdate, this::StartStoryDescriptionActivity);
         Horizontal_2_ImageAdapter adapter2 = new Horizontal_2_ImageAdapter(getActivity(), mListStoryNew, this::StartStoryDescriptionActivity);
         // Todo: recent
@@ -133,6 +170,12 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         rcViewUpdate.setLayoutManager(layoutManager2);
         rcViewRecent.setAdapter(adapter2);
         rcViewRecent.setLayoutManager(layoutManager3);
+
+
+        view.findViewById(R.id.home_bt_more_new).setOnClickListener(v ->
+                switchToDiscoveryFromButton(0));
+        view.findViewById(R.id.home_bt_more_update).setOnClickListener(v ->
+                switchToDiscoveryFromButton(1));
 
 
 //        DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
@@ -155,6 +198,22 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
 
 
     }
+
+    private void switchToDiscoveryFromButton(int btID)
+    {
+        Fragment updateFragment = DiscoveryFragment.newInstance(mListStoryList.get(0), btID);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .add(R.id.home_fragment_container, new BlankFragment()) // Use blank fragment to hide all the content, smoother the animation
+                .commit();
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.fade_in_and_slide, R.anim.fade_out)
+                .add(R.id.home_fragment_container, updateFragment, "YOUR_FRAGMENT_TAG")
+                .commit();
+
+        sendDataToActivity("Click Discovery");
+    }
+
 
     public StoryClass loadStoryFromFile(String storyId)
     {

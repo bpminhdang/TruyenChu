@@ -8,7 +8,7 @@
     tools:context=".HomeActivity">
 
     <FrameLayout
-        android:id="@+id/fragment_container"
+        android:id="@+id/home_fragment_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/accent_1_0"
@@ -42,8 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@drawable/rounded_top_background"
-            app:itemActiveIndicatorStyle="@style/CustomBottomNavIndicator"
-            app:itemIconTint="@null"
+            app:itemActiveIndicatorStyle="@style/Widget.Material3.BottomNavigationView.ActiveIndicator"
             app:menu="@menu/bottom_nav_menu" />
     </FrameLayout>
 

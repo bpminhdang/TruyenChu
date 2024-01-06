@@ -1,4 +1,4 @@
-package com.example.truyenchu.features;
+package com.example.truyenchu.dev;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

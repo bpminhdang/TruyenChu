@@ -3,8 +3,6 @@ package com.example.truyenchu.features;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +12,10 @@ import com.example.truyenchu.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link HomeLoadingFragment#newInstance} factory method to
+ * Use the {@link BlankFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeLoadingFragment extends Fragment
+public class BlankFragment extends Fragment
 {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -29,7 +27,7 @@ public class HomeLoadingFragment extends Fragment
     private String mParam1;
     private String mParam2;
 
-    public HomeLoadingFragment()
+    public BlankFragment()
     {
         // Required empty public constructor
     }
@@ -40,12 +38,12 @@ public class HomeLoadingFragment extends Fragment
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeLoadingFragment.
+     * @return A new instance of fragment BlankFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeLoadingFragment newInstance(String param1, String param2)
+    public static BlankFragment newInstance(String param1, String param2)
     {
-        HomeLoadingFragment fragment = new HomeLoadingFragment();
+        BlankFragment fragment = new BlankFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -68,14 +66,7 @@ public class HomeLoadingFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-
-        FragmentManager childFragmentManager = getChildFragmentManager();
-        FragmentTransaction transaction = childFragmentManager.beginTransaction();
-
-        ProfilePanelFragment fragment = new ProfilePanelFragment();
-        transaction.replace(R.id.home_loading_home_profile_panel_container2, fragment); // R.id.container là id của viewgroup trong Fragment cha
-        transaction.commit();
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_loading, container, false);
+        return inflater.inflate(R.layout.fragment_blank, container, false);
     }
 }
