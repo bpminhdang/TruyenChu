@@ -8,9 +8,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
 
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.features.StoryDescriptionFragment;
+import com.example.truyenchu.features.StoryReadingFragment;
 
 import java.util.Objects;
 
@@ -59,5 +62,19 @@ public class StoryActivity extends AppCompatActivity
 //                .addToBackStack(null) // Để thêm Fragment vào Backstack
 //                .commit();
 //        return true;
+        Button bt_read = findViewById(R.id.btRead);
+        bt_read.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StoryReadingFragment storyReadingFragment = new StoryReadingFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container_avs, storyReadingFragment)
+                        .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                        .addToBackStack(null) // Để thêm Fragment vào Backstack
+                        .commit();
+               FrameLayout frameLayout = findViewById(R.id.frameLayout_avs);
+               frameLayout.setVisibility(View.GONE);
+            }
+        });
     }
 }

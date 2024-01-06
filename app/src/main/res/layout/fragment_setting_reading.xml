@@ -7,9 +7,7 @@
     android:background="@color/accent_1_10"
     android:fillViewport="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:backgroundTint="#000000">
@@ -19,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/helveticaneue"
+            android:fontFamily="sans-serif-medium"
             android:text="Thiết Lập Giao Diện"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,15 +26,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/previous_chapter3"
-            android:layout_width="32dp"
-            android:layout_height="27dp"
-            android:layout_marginStart="28dp"
+            android:id="@+id/setting_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:backgroundTint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.022"
+            app:layout_constraintVertical_bias="0.008"
             app:srcCompat="@drawable/r_quit" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -56,7 +54,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/helveticaneue"
+                android:fontFamily="sans-serif"
+                android:paddingTop="5sp"
                 android:text="Màu Nền"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -71,10 +70,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
+                android:fontFamily="sans-serif-light"
                 android:text="Màu Nền"
                 android:textAllCaps="true"
                 android:textColor="#86787878"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.003"
@@ -143,7 +143,7 @@
             android:id="@+id/kichthuoctx"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:paddingTop="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mauchu">
@@ -153,11 +153,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="12dp"
+                android:fontFamily="sans-serif-light"
                 android:text="Kích thước chữ"
                 android:textAllCaps="true"
                 android:textColor="#86787878"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.003"
@@ -170,7 +170,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/helveticaneue"
+                android:fontFamily="sans-serif"
+                android:paddingTop="5sp"
                 android:text="Kích Thước"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -218,7 +219,7 @@
             android:id="@+id/kichthuocln"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:paddingTop="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/kichthuoctx">
@@ -228,11 +229,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="12dp"
+                android:fontFamily="sans-serif-light"
                 android:text="Kích thước dòng"
                 android:textAllCaps="true"
                 android:textColor="#86787878"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.003"
@@ -245,7 +246,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/helveticaneue"
+                android:fontFamily="sans-serif"
+                android:paddingTop="5sp"
                 android:text="Kích Thước"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -293,8 +295,7 @@
             android:id="@+id/mauchu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingTop="10dp"
+            android:paddingTop="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/maunen">
@@ -305,7 +306,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/helveticaneue"
+                android:fontFamily="sans-serif"
+                android:paddingTop="5sp"
                 android:text="Màu Chữ"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -320,10 +322,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
+                android:fontFamily="sans-serif-light"
                 android:text="Màu Chữ"
                 android:textAllCaps="true"
                 android:textColor="#86787878"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.003"
@@ -391,7 +394,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:paddingTop="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -403,11 +406,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:paddingTop="12dp"
+                android:fontFamily="sans-serif-light"
+                android:paddingTop="0dp"
                 android:text="Kiểu Chữ"
                 android:textAllCaps="true"
                 android:textColor="#86787878"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.003"
@@ -418,7 +422,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingLeft="15dp"
+                android:paddingLeft="17dp"
                 android:paddingTop="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -432,89 +436,90 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/helveticaneue"
+                    android:paddingTop="10dp"
                     android:text="HelveticaNeue"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/arial"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/arial"
-                    android:paddingTop="6dp"
+                    android:paddingTop="20sp"
                     android:text="Arial"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/avenir"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/avenirnextltpro_regular"
-                    android:paddingTop="12dp"
+                    android:paddingTop="20sp"
                     android:text="AvenirNext"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/times"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/timesnewroman"
-                    android:paddingTop="10dp"
+                    android:paddingTop="20sp"
                     android:text="TimesNewRoman"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/georgia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/georgia"
-                    android:paddingTop="12dp"
+                    android:paddingTop="20sp"
                     android:text="Georgia"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/roboto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_regular"
-                    android:paddingTop="10dp"
+                    android:paddingTop="20sp"
                     android:text="Roboto"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/centur"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/utm_centur"
-                    android:paddingTop="10dp"
+                    android:paddingTop="20sp"
                     android:text="UTM-Centur"
-                    android:textSize="15sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/uvnvan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/uvn_van"
-                    android:paddingTop="10dp"
+                    android:paddingTop="20sp"
                     android:text="UVNVan"
-                    android:textSize="16sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/monts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_regular"
-                    android:paddingTop="10dp"
+                    android:paddingTop="20sp"
                     android:text="Montserrat"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/literata"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/literatabook"
-                    android:paddingTop="10dp"
+                    android:paddingTop="20sp"
                     android:text="Literata"
-                    android:textSize="16sp" />
+                    android:textSize="20sp" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
