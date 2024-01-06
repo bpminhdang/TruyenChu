@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.ChapterClass;
+import com.example.truyenchu._class.CommentClass;
 import com.example.truyenchu._class.NetworkUtil;
 import com.example.truyenchu._class.StoryClass;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -331,7 +332,24 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
             description = et_description_upload.getText().toString();
             content = et_chapter_content_upload.getText().toString();
 
+
             StoryClass story = new StoryClass(id, name, time, time, author, status, description, numberOfChapter, genres, views);
+
+            // region Test
+            ArrayList<String> uuidLiked = new ArrayList<>();
+            uuidLiked.add("asdasd");
+            uuidLiked.add("asdasd");
+            uuidLiked.add("asdasd");
+
+            ArrayList<CommentClass> commentClasses = new ArrayList<>();
+            commentClasses.add(new CommentClass("guest", 4.5, "Truyen hay", uuidLiked));
+            uuidLiked.add("asdas43");
+            commentClasses.add(new CommentClass("guest2", 5, "Truyen hay v", uuidLiked));
+
+            story.setComments(commentClasses);
+            story.setUuidLikedUsers(uuidLiked);
+            // endregion Test
+
             storyRef.child("story_" + id).setValue(story, (databaseError, databaseReference) ->
             {
                 // Upload chapter

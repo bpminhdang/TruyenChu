@@ -28,6 +28,8 @@ public class StoryClass implements Serializable
     //private Image image;
     private List<ChapterClass> chapters = new ArrayList<>(); // List để lưu danh sách các chương
     private List<String> genres = new ArrayList<>();
+    private List<CommentClass> comments = new ArrayList<>();
+    private List<String> uuidLikedUsers = new ArrayList<>();
     private int views;
 
     private String uri; // Retrive data from Firebase
@@ -48,6 +50,7 @@ public class StoryClass implements Serializable
         this.genres = genres;
         this.views = views;
     }
+
 
     public StoryClass(int id)
     {
@@ -192,7 +195,27 @@ public class StoryClass implements Serializable
         this.uri = uri;
     }
 
-    public static String cutOff(String text,int maxLenght)
+    public List<CommentClass> getComments()
+    {
+        return comments;
+    }
+
+    public void setComments(List<CommentClass> comments)
+    {
+        this.comments = comments;
+    }
+
+    public List<String> getUuidLikedUsers()
+    {
+        return uuidLikedUsers;
+    }
+
+    public void setUuidLikedUsers(List<String> uuidLikedUsers)
+    {
+        this.uuidLikedUsers = uuidLikedUsers;
+    }
+
+    public static String cutOff(String text, int maxLenght)
     {
         if (text.length() > maxLenght)
         {
@@ -204,6 +227,7 @@ public class StoryClass implements Serializable
         }
         return text;
     }
+
 
     @Override
     public String toString() {
@@ -243,32 +267,32 @@ public class StoryClass implements Serializable
     }
 
 
-    protected StoryClass(Parcel in) {
-        id = in.readInt();
-        name = in.readString();
-        time = in.readString();
-        updateTime = in.readString();
-        author = in.readString();
-        status = in.readString();
-        description = in.readString();
-        numberOfChapter = in.readInt();
-        in.readList(chapters, ChapterClass.class.getClassLoader());
-        genres = in.createStringArrayList();
-        views = in.readInt();
-        uri = in.readString();
-    }
-
-    public static final Parcelable.Creator<StoryClass> CREATOR = new Parcelable.Creator<StoryClass>() {
-        @Override
-        public StoryClass createFromParcel(Parcel in) {
-            return new StoryClass(in);
-        }
-
-        @Override
-        public StoryClass[] newArray(int size) {
-            return new StoryClass[size];
-        }
-    };
+//    protected StoryClass(Parcel in) {
+//        id = in.readInt();
+//        name = in.readString();
+//        time = in.readString();
+//        updateTime = in.readString();
+//        author = in.readString();
+//        status = in.readString();
+//        description = in.readString();
+//        numberOfChapter = in.readInt();
+//        in.readList(chapters, ChapterClass.class.getClassLoader());
+//        genres = in.createStringArrayList();
+//        views = in.readInt();
+//        uri = in.readString();
+//    }
+//
+//    public static final Parcelable.Creator<StoryClass> CREATOR = new Parcelable.Creator<StoryClass>() {
+//        @Override
+//        public StoryClass createFromParcel(Parcel in) {
+//            return new StoryClass(in);
+//        }
+//
+//        @Override
+//        public StoryClass[] newArray(int size) {
+//            return new StoryClass[size];
+//        }
+//    };
 
 
     public String getUpdateTime()
