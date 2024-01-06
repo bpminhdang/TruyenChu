@@ -54,7 +54,7 @@
     <string name="facebook_client_token">56789</string>
     <string name="default_web_client_id">106083076262-7tm7tqu57udnbpasl8j980mlkrlmlvg9.apps.googleusercontent.com</string>
 
-    <string name="hintnx">hintnx</string>
+    <string name="hintnx">Nội dung nhận xét tối thiểu 3 kí tự, tối đa 1000 kí tự</string>
 
     <string name="c1_test">Edit + Beta: V
     Trên hành lang dài trắng toát vang lên tiếng bước chân lúc nặng, lúc nhẹ.

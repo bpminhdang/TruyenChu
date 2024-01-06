@@ -132,10 +132,10 @@ public class Login extends AppCompatActivity
                     {
                         progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
-                           Toast.makeText(getApplicationContext(),"Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                           Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                           startActivity(intent);
-                           finish();
+                            Toast.makeText(getApplicationContext(),"Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                            startActivity(intent);
+                            finish();
                         } else {
                             Toast.makeText(Login.this, "Sai email/Sai mật khẩu",
                                     Toast.LENGTH_SHORT).show();
@@ -251,13 +251,13 @@ public class Login extends AppCompatActivity
     }
 
     private void updateUI(FirebaseUser user) {
-            if (user != null)
-            {
-                Intent intent = new Intent(Login.this, HomeActivity.class);
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, "Vui lòng đăng nhập để tiếp tục", Toast.LENGTH_SHORT).show();
-            }
+        if (user != null)
+        {
+            Intent intent = new Intent(Login.this, HomeActivity.class);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "Vui lòng đăng nhập để tiếp tục", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
