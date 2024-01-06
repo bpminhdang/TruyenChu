@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.truyenchu.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,16 +79,16 @@ public class ProfilePanelFragment extends Fragment
 
         ImageView profilePic = view.findViewById(R.id.profile_image);
         TextView profileName = view.findViewById(R.id.profiile_panel_name);
-        TextView wellcome = view.findViewById(R.id.profiile_panel_tvWellCome);
+        TextView welcome = view.findViewById(R.id.profiile_panel_tvWellCome);
 
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("users_prefs", MODE_PRIVATE);
         String username = sharedPreferences.getString("username", "Guest");
         profileName.setText(username);
 
         if (username.equals("Guest"))
-            wellcome.setText("WELCOME!");
+            welcome.setText("WELCOME");
         else
-            wellcome.setText("WELCOME BACK!");
+            welcome.setText("WELCOME BACK!");
 
         String profilePictureString = sharedPreferences.getString("profilePicture", "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/images%2Fprofile_picture.jpg?alt=media&token=bc33064a-23aa-4236-aa3a-b3e3b43eccbc");
         Glide.with(this).load(profilePictureString).into(profilePic);

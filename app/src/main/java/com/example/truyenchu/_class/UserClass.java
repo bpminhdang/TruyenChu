@@ -6,21 +6,28 @@ public class UserClass
     private String username;
     private String name;
     private String email;
+
+    private String profile;
     private String password;
     private String font;
     private int fontSize;
     private String backgroundColor;
 
     // Constructor to initialize the User object
-    public UserClass(String username, String name, String email, String password, String font, int fontSize, String backgroundColor)
+    public UserClass(String username, String name, String email, String profile, String password, String font, int fontSize, String backgroundColor)
     {
         this.username = username;
         this.name = name;
         this.email = email;
+        this.profile = profile;
         this.password = password;
         this.font = font;
         this.fontSize = fontSize;
         this.backgroundColor = backgroundColor;
+    }
+
+    public UserClass() {
+
     }
 
     // Getters and setters for each field
@@ -94,5 +101,12 @@ public class UserClass
         this.backgroundColor = backgroundColor;
     }
 
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
 }
 

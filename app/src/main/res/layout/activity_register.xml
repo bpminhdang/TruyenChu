@@ -34,7 +34,7 @@
             android:visibility="gone" />
 
         <Button
-            android:id="@+id/bt_lg"
+            android:id="@+id/bt_rg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -50,7 +50,7 @@
             app:layout_constraintTop_toBottomOf="@+id/repassword" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password_lg"
+            android:id="@+id/password_rg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -60,7 +60,7 @@
             android:hint="@string/password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email_lg" />
+            app:layout_constraintTop_toBottomOf="@+id/email_rg" />
 
 
         <com.google.android.material.textfield.TextInputEditText
@@ -75,10 +75,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.482"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password_lg" />
+            app:layout_constraintTop_toBottomOf="@+id/password_rg" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email_lg"
+            android:id="@+id/email_rg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
