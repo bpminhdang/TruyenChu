@@ -1,5 +1,8 @@
 package com.example.truyenchu.features;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.example.truyenchu.R;
 
@@ -57,17 +61,61 @@ public class SettingReadingFragment extends Fragment {
         }
     }
 
+    private void saveBackgroundColor(int color) {
+        SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("background_color", color);
+        editor.apply();
+    }
+
+    private int getSavedBackgroundColor() {
+        SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        return preferences.getInt("background_color", getResources().getColor(android.R.color.white));
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_setting_reading, container, false);
 
         View back = view.findViewById(R.id.setting_back);
         back.setOnClickListener(v -> requireActivity().onBackPressed());
 
+        View cwhite = view.findViewById(R.id.col_white);
+        cwhite.setOnClickListener(v -> {
+            saveBackgroundColor(Color.WHITE);
+            view.setBackgroundColor(Color.WHITE);
+        });
+
+        View cblack = view.findViewById(R.id.col_black);
+        cblack.setOnClickListener(v -> {
+            saveBackgroundColor(Color.BLACK);
+            view.setBackgroundColor(Color.BLACK);
+        });
+
+        View clgrey = view.findViewById(R.id.col_lightgrey);
+        clgrey.setOnClickListener(v -> {
+            saveBackgroundColor(Color.parseColor("#E2E2E2"));
+            view.setBackgroundColor(Color.parseColor("#E2E2E2"));
+        });
+
+        View cwbeige = view.findViewById(R.id.col_warmbeige);
+        cwbeige.setOnClickListener(v -> {
+            saveBackgroundColor(Color.parseColor("#f3dcba"));
+            view.setBackgroundColor(Color.parseColor("#f3dcba"));
+        });
+
+        View cowhite = view.findViewById(R.id.col_offwhite);
+        cowhite.setOnClickListener(v -> {
+            saveBackgroundColor(Color.parseColor("#fff9ef"));
+            view.setBackgroundColor(Color.parseColor("#fff9ef"));
+        });
+
+        int backgroundColor = getSavedBackgroundColor();
+        view.setBackgroundColor(backgroundColor);
 
         return view;
     }
-
 }
