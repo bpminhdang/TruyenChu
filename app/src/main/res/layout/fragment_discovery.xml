@@ -13,6 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="90dp"
         android:background="@color/accent_1_10"
+        android:elevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,6 +23,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/accent_1_10"
+        android:elevation="10dp"
         android:orientation="horizontal"
         android:scrollIndicators="none"
         android:scrollbarSize="0dp"

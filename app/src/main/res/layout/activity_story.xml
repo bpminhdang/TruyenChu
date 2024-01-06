@@ -10,7 +10,7 @@
         android:id="@+id/fragment_container_avs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/accent_1_0"
+        android:background="@color/accent_1_10"
         android:paddingTop="20dp"
         app:layout_constraintBottom_toTopOf="@+id/frameLayout_avs"
         app:layout_constraintEnd_toEndOf="parent"
