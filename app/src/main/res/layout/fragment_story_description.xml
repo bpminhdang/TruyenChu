@@ -149,8 +149,8 @@
 
         <ImageView
             android:id="@+id/des_iv_like"
-            android:layout_width="31dp"
-            android:layout_height="31dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -159,24 +159,14 @@
 
         <ImageView
             android:id="@+id/des_iv_comment"
-            android:layout_width="31dp"
-            android:layout_height="31dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="16dp"
             android:src="@drawable/comment"
             app:layout_constraintStart_toEndOf="@+id/des_iv_like"
             app:layout_constraintTop_toBottomOf="@+id/des_tv_liked"
             app:srcCompat="@drawable/des_comment" />
-
-        <ImageView
-            android:id="@+id/des_iv_share"
-            android:layout_width="31dp"
-            android:layout_height="31dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toEndOf="@+id/des_iv_comment"
-            app:layout_constraintTop_toBottomOf="@+id/des_tv_liked"
-            app:srcCompat="@drawable/des_share" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

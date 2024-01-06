@@ -85,7 +85,6 @@ public class StoryDescriptionFragment extends Fragment
         TextView tvWatching = view.findViewById(R.id.des_tv_watching);
         ImageView ivLike = view.findViewById(R.id.des_iv_like);
         ImageView ivComment = view.findViewById(R.id.des_iv_comment);
-        ImageView ivShare = view.findViewById(R.id.des_iv_share);
         TextView tvDescription = view.findViewById(R.id.des_tv_description);
 
 
