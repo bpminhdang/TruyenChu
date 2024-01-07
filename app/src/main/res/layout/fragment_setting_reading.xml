@@ -380,12 +380,12 @@
                     android:backgroundTint="#f3dcba" />
 
                 <Button
-                    android:id="@+id/coltx_offwhite"
+                    android:id="@+id/coltx_lblue"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="24dp"
                     android:layout_height="35dp"
                     android:layout_marginLeft="15dp"
-                    android:backgroundTint="#fff9ef" />
+                    android:backgroundTint="#DCF2F1 " />
 
             </LinearLayout>
 

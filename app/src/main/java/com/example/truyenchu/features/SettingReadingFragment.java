@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.truyenchu.R;
 
@@ -79,6 +80,7 @@ public class SettingReadingFragment extends Fragment {
         }
     }
 
+    // luu mau bg
     private void saveBackgroundColor(int color) {
         SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
@@ -86,6 +88,18 @@ public class SettingReadingFragment extends Fragment {
         editor.apply();
     }
 
+    //luu mau text
+    private void saveTextColor(int color) {
+        SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("text_color", color);
+        editor.apply();
+    }
+    private void applySavedTextColor(TextView mauchu) {
+        SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        int textColor = preferences.getInt("text_color", Color.BLACK);
+        mauchu.setTextColor(textColor);
+    }
     private int getSavedBackgroundColor() {
         SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
         return preferences.getInt("background_color", getResources().getColor(android.R.color.white));
@@ -98,54 +112,96 @@ public class SettingReadingFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_setting_reading, container, false);
 
+        //nut back
         View back = view.findViewById(R.id.setting_back);
         back.setOnClickListener(v -> requireActivity().onBackPressed());
 
+        // doi mau nen
         View cwhite = view.findViewById(R.id.col_white);
+        View cblack = view.findViewById(R.id.col_black);
+        View clgrey = view.findViewById(R.id.col_lightgrey);
+        View cwbeige = view.findViewById(R.id.col_warmbeige);
+        View cowhite = view.findViewById(R.id.col_offwhite);
+
         cwhite.setOnClickListener(v -> {
             saveBackgroundColor(Color.WHITE);
             view.setBackgroundColor(Color.WHITE);
         });
 
-        View cblack = view.findViewById(R.id.col_black);
         cblack.setOnClickListener(v -> {
             saveBackgroundColor(Color.BLACK);
             view.setBackgroundColor(Color.BLACK);
             if (colorChangedListener != null) {
                 colorChangedListener.onColorChanged(Color.BLACK);
             }
-            StoryReadingFragment storyReadingFragment2 = new StoryReadingFragment();
+           // StoryReadingFragment storyReadingFragment2 = new StoryReadingFragment();
             int newColor = getSavedBackgroundColor();
           //  storyReadingFragment2.onColorChanged(newColor);
 
             // Thực hiện chuyển Fragment
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.reading_hihi, storyReadingFragment2);
-            transaction.addToBackStack(null);
-            transaction.commit();
+          // FragmentTransaction transaction = getFragmentManager().beginTransaction();
+           // transaction.replace(R.id.reading_hihi, storyReadingFragment2);
+          //  transaction.addToBackStack(null);
+          //  transaction.commit();
         });
 
-        View clgrey = view.findViewById(R.id.col_lightgrey);
         clgrey.setOnClickListener(v -> {
             saveBackgroundColor(Color.parseColor("#E2E2E2"));
             view.setBackgroundColor(Color.parseColor("#E2E2E2"));
         });
 
-        View cwbeige = view.findViewById(R.id.col_warmbeige);
         cwbeige.setOnClickListener(v -> {
             saveBackgroundColor(Color.parseColor("#f3dcba"));
             view.setBackgroundColor(Color.parseColor("#f3dcba"));
         });
 
-        View cowhite = view.findViewById(R.id.col_offwhite);
         cowhite.setOnClickListener(v -> {
             saveBackgroundColor(Color.parseColor("#fff9ef"));
             view.setBackgroundColor(Color.parseColor("#fff9ef"));
         });
-
         int backgroundColor = getSavedBackgroundColor();
         view.setBackgroundColor(backgroundColor);
 
+
+        //doi mau chu
+        View ctwhite = view.findViewById(R.id.coltx_white);
+        View ctblack = view.findViewById(R.id.coltx_black);
+        View ctlgrey = view.findViewById(R.id.coltx_lightgrey);
+        View ctwbeige = view.findViewById(R.id.coltx_warmbeige);
+        View ctlblue = view.findViewById(R.id.coltx_lblue);
+        TextView mauchu = view.findViewById(R.id.tx_mauchu);
+        applySavedTextColor(mauchu);
+        ctwhite.setOnClickListener(v -> {
+            int newColor = Color.WHITE;
+            mauchu.setTextColor(newColor);
+            saveTextColor(newColor);
+        });
+
+        ctblack.setOnClickListener(v -> {
+            int newColor = Color.BLACK;
+            mauchu.setTextColor(newColor);
+            saveTextColor(newColor);
+        });
+
+        ctlgrey.setOnClickListener(v -> {
+            int newColor = Color.parseColor("#E2E2E2");
+            mauchu.setTextColor(newColor);
+            saveTextColor(newColor);
+        });
+
+        ctwbeige.setOnClickListener(v -> {
+            int newColor = Color.parseColor("#f3dcba");
+            mauchu.setTextColor(newColor);
+            saveTextColor(newColor);
+        });
+
+        ctlblue.setOnClickListener(v -> {
+            int newColor = Color.parseColor("#DCF2F1");
+            mauchu.setTextColor(newColor);
+            saveTextColor(newColor);
+        });
+
         return view;
     }
+
 }
