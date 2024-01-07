@@ -28,6 +28,7 @@ import java.util.Objects;
 public class StoryActivity extends AppCompatActivity implements DataListener
 {
     StoryClass receivedStory;
+    private boolean isRead = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,6 +41,7 @@ public class StoryActivity extends AppCompatActivity implements DataListener
         receivedStory = (StoryClass) intent.getSerializableExtra("storyData");
         DatabaseHelper.updateCount(receivedStory.getId(), "watching", 1);
 
+        Log.i("Life cycle", "OnCre");
 
 
         // Hide action bar
@@ -76,6 +78,14 @@ public class StoryActivity extends AppCompatActivity implements DataListener
         Button bt_read = findViewById(R.id.btRead);
         bt_read.setOnClickListener(v ->
         {
+            // Chỉ tăng view mỗi khi tạo activity mới
+            // Todo: Chỉ tăng view khi người dùng chưa từng đọc truyện (Optional)
+            if (!isRead)
+            {
+                DatabaseHelper.updateCount(receivedStory.getId(), "views", 1);
+                isRead = true;
+            }
+
             StoryReadingFragment storyReadingFragment = StoryReadingFragment.newInstance(receivedStory.getId());
             storyReadingFragment.setDataListener(StoryActivity.this);
             getSupportFragmentManager().beginTransaction()

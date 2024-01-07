@@ -75,7 +75,6 @@ public class StoryReadingFragment extends Fragment
         {
             mStoryID = getArguments().getInt(ARG_STORY);
             story = loadStoryFromFile(String.valueOf(mStoryID));
-            DatabaseHelper.updateCount(story.getId(), "views", 1);
         }
 
     }
