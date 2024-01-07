@@ -11,11 +11,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
+import com.google.gson.Gson;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,7 +32,8 @@ import java.util.Locale;
  * create an instance of this fragment.
  */
 
-public class StoryDescriptionFragment extends Fragment {
+public class StoryDescriptionFragment extends Fragment
+{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,7 +44,8 @@ public class StoryDescriptionFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public StoryDescriptionFragment() {
+    public StoryDescriptionFragment()
+    {
         // Required empty public constructor
     }
 
@@ -52,7 +59,8 @@ public class StoryDescriptionFragment extends Fragment {
      */
 
     // TODO: Rename and change types and number of parameters
-    public static StoryDescriptionFragment newInstance(String param1, String param2) {
+    public static StoryDescriptionFragment newInstance(String param1, String param2)
+    {
         StoryDescriptionFragment fragment = new StoryDescriptionFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -62,9 +70,11 @@ public class StoryDescriptionFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if (getArguments() != null)
+        {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
@@ -72,7 +82,8 @@ public class StoryDescriptionFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_story_description, container, false);
 
@@ -91,17 +102,28 @@ public class StoryDescriptionFragment extends Fragment {
 
 
         Bundle bundle = getArguments();
-        if (bundle != null) {
-            StoryClass receivedStory = (StoryClass) bundle.getSerializable("receivedStory");
+        if (bundle != null)
+        {
+            int receivedStoryID = bundle.getInt("receivedStoryID");
+            StoryClass receivedStory = loadStoryFromFile(String.valueOf(receivedStoryID));
             StoryClass.SetText(tvNameDes, receivedStory.getName());
             StoryClass.SetImage(requireContext(), receivedStory.getUri(), ivPicture);
             StoryClass.SetText(tvAuthor, receivedStory.getAuthor());
             String receivedDateString = receivedStory.getUpdateTime(); // Chuỗi ngày từ receivedStory
             String stt = receivedStory.getStatus();
-            if ("Đang cập nhật".equals(stt)) {
+            if ("Đang cập nhật".equals(stt))
+            {
                 stt = "Đang ra - ";
             }
-            StoryClass.SetText(tvStatus, stt + formattedDateString(receivedDateString));
+
+            try
+            {
+                StoryClass.SetText(tvStatus, stt + formattedDateString(receivedDateString));
+            } catch (Exception e)
+            {
+                StoryClass.SetText(tvStatus, stt + receivedDateString);
+
+            }
             StoryClass.SetText(tvNumChapter, String.valueOf(receivedStory.getNumberOfChapter()));
             StoryClass.SetText(tvWatching, "Đang xem: " + "40");
             StoryClass.SetText(tvLiked, "100");
@@ -116,16 +138,55 @@ public class StoryDescriptionFragment extends Fragment {
         return view;
     }
 
-    private String formattedDateString(String dateString) {
-        try {
+    private String formattedDateString(String dateString)
+    {
+        try
+        {
             SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
             SimpleDateFormat outputFormat = new SimpleDateFormat("'ngày' d 'th' M, yyyy", Locale.getDefault());
 
             Date date = inputFormat.parse(dateString);
             return outputFormat.format(date);
-        } catch (ParseException e) {
+        } catch (ParseException e)
+        {
             e.printStackTrace();
             return dateString; // Trả về chuỗi ban đầu nếu có lỗi
         }
+    }
+
+    public StoryClass loadStoryFromFile(String storyId)
+    {
+        StoryClass loadedStory = null;
+        String fileName = storyId + ".json"; // Tên file là ID của truyện + ".json"
+
+        // Lấy đường dẫn đến thư mục "stories" trong internal storage
+        File directory = new File(getActivity().getFilesDir() + "/stories");
+        File file = new File(directory, fileName);
+
+        if (file.exists())
+        {
+            try (FileInputStream fis = new FileInputStream(file))
+            {
+                int size = fis.available();
+                byte[] buffer = new byte[size];
+                fis.read(buffer);
+                fis.close();
+                String storyJson = new String(buffer);
+
+                // Chuyển đổi chuỗi JSON thành đối tượng StoryClass
+                Gson gson = new Gson();
+                loadedStory = gson.fromJson(storyJson, StoryClass.class);
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+                Log.i("Story loading", "Error1");
+
+            }
+        } else
+        {
+            Toast.makeText(getActivity(), "Can't find story", Toast.LENGTH_SHORT).show();
+            Log.i("Story loading", "Error");
+        }
+        return loadedStory;
     }
 }

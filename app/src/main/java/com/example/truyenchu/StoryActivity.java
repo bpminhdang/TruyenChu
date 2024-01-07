@@ -51,7 +51,7 @@ public class StoryActivity extends AppCompatActivity implements DataListener
             StoryDescriptionFragment fragment = new StoryDescriptionFragment();
 
             Bundle bundle = new Bundle();
-            bundle.putSerializable("receivedStory", receivedStory);
+            bundle.putInt("receivedStoryID", receivedStory.getId());
             fragment.setArguments(bundle);
             getSupportFragmentManager()
                     .beginTransaction()

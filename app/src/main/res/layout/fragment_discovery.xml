@@ -13,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="90dp"
         android:background="@color/accent_1_10"
-        android:elevation="10dp"
+        android:elevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,7 +23,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/accent_1_10"
-        android:elevation="10dp"
+        android:elevation="0dp"
         android:orientation="horizontal"
         android:scrollIndicators="none"
         android:scrollbarSize="0dp"
@@ -118,15 +118,25 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </HorizontalScrollView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/dis_recycler_view"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/accent_1_10"
-        android:paddingTop="10dp"
+        android:background="@drawable/rounded_top_background"
+        android:backgroundTint="@color/accent_2_50"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dis_scrollview_button" />
+        app:layout_constraintTop_toBottomOf="@+id/dis_scrollview_button">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dis_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="3dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
