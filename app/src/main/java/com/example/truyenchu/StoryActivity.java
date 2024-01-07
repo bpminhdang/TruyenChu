@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.adapter.DataListener;
+import com.example.truyenchu.features.DatabaseHelper;
 import com.example.truyenchu.features.StoryDescriptionFragment;
 import com.example.truyenchu.features.StoryReadingFragment;
 import com.google.firebase.database.DataSnapshot;
@@ -37,30 +38,8 @@ public class StoryActivity extends AppCompatActivity implements DataListener
         if (intent == null)
             return;
         receivedStory = (StoryClass) intent.getSerializableExtra("storyData");
+        DatabaseHelper.updateCount(receivedStory.getId(), "watching", 1);
 
-        DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
-        DatabaseReference storyRef = database.child("stories").child("story_" + receivedStory.getId()).child("watching");
-        storyRef.addListenerForSingleValueEvent(new ValueEventListener()
-        {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                if (dataSnapshot.exists())
-                {
-                    Integer watchingValue = dataSnapshot.getValue(Integer.class);
-                    if (watchingValue != null)
-                    {
-                        storyRef.setValue(watchingValue + 1);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error)
-            {
-
-            }
-        });
 
 
         // Hide action bar
@@ -141,29 +120,7 @@ public class StoryActivity extends AppCompatActivity implements DataListener
     {
         super.onDestroy();
         Log.i("Life cycle", "OnDes");
-        DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
-        DatabaseReference storyRef = database.child("stories").child("story_" + receivedStory.getId()).child("watching");
-        storyRef.addListenerForSingleValueEvent(new ValueEventListener()
-        {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                if (dataSnapshot.exists())
-                {
-                    Integer watchingValue = dataSnapshot.getValue(Integer.class);
-                    if (watchingValue != null)
-                    {
-                        storyRef.setValue(watchingValue - 1);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error)
-            {
-
-            }
-        });
+        DatabaseHelper.updateCount(receivedStory.getId(), "watching", -1);
 
     }
 }

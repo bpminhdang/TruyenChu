@@ -6,7 +6,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 public class DatabaseHelper {
-    public static void updateCount(String storyId, String path, int value) {
+    public static void updateCount(int storyId, String path, int value) {
         DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
         DatabaseReference storyRef = database.child("stories").child("story_" + storyId).child(path);
         storyRef.addListenerForSingleValueEvent(new ValueEventListener() {
