@@ -27,6 +27,18 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_Back"
             app:srcCompat="@drawable/light" />
 
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:paddingStart="20dp"
+            android:text="Đăng nhập"
+            android:textSize="26sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_Back"
+            app:layout_constraintStart_toEndOf="@+id/iv_Back"
+            app:layout_constraintTop_toTopOf="@+id/iv_Back" />
+
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
@@ -54,17 +66,14 @@
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="120dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="100dp"
             android:fontFamily="@font/avenirnextltpro_regular"
             android:text="@string/register"
             android:textColor="#E91E63"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/loginwith"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bt_lg"
-            app:layout_constraintVertical_bias="0.173" />
+            app:layout_constraintHorizontal_bias="0.089"
+            app:layout_constraintStart_toEndOf="@+id/loginwith"
+            app:layout_constraintTop_toTopOf="@+id/loginwith" />
 
         <TextView
             android:id="@+id/loginwith"
@@ -115,11 +124,12 @@
 
         <ImageView
             android:id="@+id/iv_Back"
-            android:layout_width="24dp"
-            android:layout_height="22dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:background="#fdedee"
+            android:padding="5dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/back" />

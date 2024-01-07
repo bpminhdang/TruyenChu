@@ -3,7 +3,7 @@ package com.example.truyenchu._class;
 public class UserClass
 {
     // Fields representing user attributes
-    private String username;
+    private String uuid;
     private String name;
     private String email;
 
@@ -12,11 +12,12 @@ public class UserClass
     private String font;
     private int fontSize;
     private String backgroundColor;
+    private String textColor;
 
     // Constructor to initialize the User object
-    public UserClass(String username, String name, String email, String profile, String password, String font, int fontSize, String backgroundColor)
+    public UserClass(String uuid, String name, String email, String profile, String password, String font, int fontSize, String backgroundColor)
     {
-       // this.username = username;
+        this.uuid = uuid;
         this.name = name;
         this.email = email;
         this.profile = profile;
@@ -31,14 +32,14 @@ public class UserClass
     }
 
     // Getters and setters for each field
-    public String getUsername()
+    public String getUuid()
     {
-        return username;
+        return uuid;
     }
 
-    public void setUsername(String username)
+    public void setUuid(String uuid)
     {
-        this.username = username;
+        this.uuid = uuid;
     }
 
     public String getName()
@@ -107,6 +108,16 @@ public class UserClass
 
     public void setProfile(String profile) {
         this.profile = profile;
+    }
+
+    public String getTextColor()
+    {
+        return textColor;
+    }
+
+    public void setTextColor(String textColor)
+    {
+        this.textColor = textColor;
     }
 }
 
