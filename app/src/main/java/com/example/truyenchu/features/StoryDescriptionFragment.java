@@ -1,5 +1,6 @@
 package com.example.truyenchu.features;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.truyenchu.R;
+import com.example.truyenchu.StoryActivity;
 import com.example.truyenchu._class.StoryClass;
 import com.google.gson.Gson;
 
@@ -136,8 +138,15 @@ public class StoryDescriptionFragment extends Fragment
             else
                 DatabaseHelper.getWatchingCountAndSetText(receivedStory, tvWatching, 0);
 
+            ivComment.setOnClickListener(v ->
+            {
+                Intent intent = new Intent(getActivity(), StoryRatingActivity.class);
+                intent.putExtra("storyData", receivedStory.getId());
+                startActivity(intent);
+            });
         }
         ivBack.setOnClickListener(v -> requireActivity().onBackPressed());
+
 
         return view;
     }

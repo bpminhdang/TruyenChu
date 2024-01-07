@@ -15,8 +15,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.truyenchu.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,7 +75,7 @@ public class ProfilePanelFragment extends Fragment
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile_panel, container, false);
 
-        ImageView profilePic = view.findViewById(R.id.profile_image);
+        ImageView profilePic = view.findViewById(R.id.cm_profile_image);
         TextView profileName = view.findViewById(R.id.profiile_panel_name);
         TextView welcome = view.findViewById(R.id.profiile_panel_tvWellCome);
 

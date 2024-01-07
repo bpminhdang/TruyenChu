@@ -32,7 +32,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/hint_rating"
+            android:id="@+id/asr_hint_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -45,7 +45,7 @@
             app:layout_constraintTop_toBottomOf="@+id/xemnhanxet_tx" />
 
         <RatingBar
-            android:id="@+id/ratingBar"
+            android:id="@+id/asr_ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
@@ -57,6 +57,7 @@
             app:layout_constraintTop_toBottomOf="@+id/xemnhanxet_tx" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/xemnhanxet_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="1dp"
@@ -67,11 +68,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button2"
+            app:layout_constraintTop_toBottomOf="@+id/asr_write_comment"
             app:layout_constraintVertical_bias="0.0" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/asr_write_comment"
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

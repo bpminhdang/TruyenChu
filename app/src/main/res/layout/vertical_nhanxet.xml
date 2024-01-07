@@ -4,6 +4,8 @@
     android:id="@+id/item_vertical_content_storyInfo"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
     android:orientation="horizontal"
     android:weightSum="10"
     app:layout_constraintBottom_toBottomOf="parent"
@@ -13,7 +15,7 @@
 
 
     <TextView
-        android:id="@+id/item_vertical_content_tvTime"
+        android:id="@+id/cm_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -25,11 +27,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/cardView"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar2"
+        app:layout_constraintTop_toBottomOf="@+id/cm_rating_bar"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/item_vertical_content_tvName"
+        android:id="@+id/cm_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -59,7 +61,7 @@
         app:layout_constraintVertical_bias="0.173"> <!-- Đặt giá trị radius bằng một nửa của kích thước chiều rộng hoặc chiều cao -->
 
         <ImageButton
-            android:id="@+id/profile_image"
+            android:id="@+id/cm_profile_image"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:adjustViewBounds="true"
@@ -69,7 +71,7 @@
     </androidx.cardview.widget.CardView>
 
     <RatingBar
-        android:id="@+id/ratingBar2"
+        android:id="@+id/cm_rating_bar"
         style="@style/Widget.AppCompat.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -78,5 +80,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/cardView"
-        app:layout_constraintTop_toBottomOf="@+id/item_vertical_content_tvName" />
+        app:layout_constraintTop_toBottomOf="@+id/cm_name" />
+
+    <ToggleButton
+        android:id="@+id/cm_button_liked"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/favorite_button_selector"
+        android:drawablePadding="3dp"
+        android:drawableTint="#EC2341"
+        android:paddingRight="25dp"
+        android:textColor="#EC2341"
+        android:textOff=" "
+        android:textOn=" "
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/cm_liked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cm_button_liked"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

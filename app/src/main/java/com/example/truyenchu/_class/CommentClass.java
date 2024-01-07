@@ -6,6 +6,10 @@ import java.util.List;
 
 public class CommentClass implements Serializable
 {
+    public CommentClass()
+    {
+    }
+
     public CommentClass(String username, double rating, String comment, ArrayList<String> uuidLikedUsers)
     {
         this.username = username;
@@ -19,6 +23,10 @@ public class CommentClass implements Serializable
     private String comment;
 
     private ArrayList<String> uuidLikedUsers = new ArrayList<>();
+
+    public CommentClass(String userName, float rating, String comment)
+    {
+    }
 
     public String getUsername()
     {
@@ -35,7 +43,7 @@ public class CommentClass implements Serializable
         return rating;
     }
 
-    public void setRating(int rating)
+    public void setRating(float rating)
     {
         this.rating = rating;
     }
@@ -60,7 +68,7 @@ public class CommentClass implements Serializable
         this.uuidLikedUsers = uuidLikedUsers;
     }
 
-    public int getNumLike()
+    public int GetNumLike()
     {
         return uuidLikedUsers.size();
     }
