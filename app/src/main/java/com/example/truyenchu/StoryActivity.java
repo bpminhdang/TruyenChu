@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.adapter.DataListener;
@@ -75,6 +77,8 @@ public class StoryActivity extends AppCompatActivity implements DataListener
 //                .addToBackStack(null) // Để thêm Fragment vào Backstack
 //                .commit();
 //        return true;
+        ImageView bt_tai = findViewById(R.id.btDown);
+
         Button bt_read = findViewById(R.id.btRead);
         bt_read.setOnClickListener(v ->
         {

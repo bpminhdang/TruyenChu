@@ -156,7 +156,7 @@ public class StoryDescriptionFragment extends Fragment
         try
         {
             SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            SimpleDateFormat outputFormat = new SimpleDateFormat("'ngày' d 'th' M, yyyy", Locale.getDefault());
+            SimpleDateFormat outputFormat = new SimpleDateFormat("'ng' d 'th' M, yyyy", Locale.getDefault());
 
             Date date = inputFormat.parse(dateString);
             return outputFormat.format(date);

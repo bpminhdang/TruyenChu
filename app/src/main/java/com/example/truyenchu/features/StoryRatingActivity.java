@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,6 +64,8 @@ public class StoryRatingActivity extends AppCompatActivity
         String receivedStoryID = String.valueOf(intent.getSerializableExtra("storyData"));
         storyRef = database.child("stories").child("story_" + receivedStoryID).child("comments");
 
+        ImageView but = findViewById(R.id.xemnhanxet_back);
+        but.setOnClickListener(v -> onBackPressed());
 
         RecyclerView recyclerView = findViewById(R.id.xemnhanxet_recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
