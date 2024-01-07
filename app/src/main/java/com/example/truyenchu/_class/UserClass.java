@@ -16,7 +16,7 @@ public class UserClass
     // Constructor to initialize the User object
     public UserClass(String username, String name, String email, String profile, String password, String font, int fontSize, String backgroundColor)
     {
-        this.username = username;
+       // this.username = username;
         this.name = name;
         this.email = email;
         this.profile = profile;
