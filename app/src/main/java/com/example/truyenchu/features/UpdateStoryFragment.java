@@ -60,7 +60,7 @@ import java.util.Objects;
  * Use the {@link UploadStoryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UploadStoryFragment extends Fragment implements StoryCountListener
+public class UpdateStoryFragment extends Fragment implements StoryCountListener
 {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -95,9 +95,9 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
      * @return A new instance of fragment AddStoryFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static UploadStoryFragment newInstance(String param1, String param2)
+    public static UpdateStoryFragment newInstance(String param1, String param2)
     {
-        UploadStoryFragment fragment = new UploadStoryFragment();
+        UpdateStoryFragment fragment = new UpdateStoryFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -105,7 +105,7 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
         return fragment;
     }
 
-    public UploadStoryFragment()
+    public UpdateStoryFragment()
     {
         // Required empty public constructor
     }
@@ -126,29 +126,29 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
                              Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_upload_story, container, false);
+        View view = inflater.inflate(R.layout.fragment_update_story, container, false);
 
-        TextInputEditText et_name_upload = view.findViewById(R.id.name_upload);
-        TextInputEditText et_genres_upload = view.findViewById(R.id.genres_upload);
+        TextInputEditText et_name_update = view.findViewById(R.id.name_update);
+        TextInputEditText et_genres_update = view.findViewById(R.id.genres_update);
         SwitchMaterial sw_final = view.findViewById(R.id.switch_final);
-        Button bt_chooseImage = view.findViewById(R.id.bt_chooseImage_upload);
-        TextInputEditText et_description_upload = view.findViewById(R.id.et_description);
-        TextInputEditText et_chapter_content_upload = view.findViewById(R.id.chapter_content_upload);
-        Button bt_Upload = view.findViewById(R.id.btUpload_upload);
-        Button bt_Draft = view.findViewById(R.id.btDraft_upload);
-        Button bt_Reload = view.findViewById(R.id.btReload_upload);
-        ImageView bt_Back = view.findViewById(R.id.ivBack_upload);
-        TextView tv_Author = view.findViewById(R.id.tvUsername_upload);
-        imageView = view.findViewById(R.id.iv_cover1);
+        Button bt_chooseImage = view.findViewById(R.id.bt_chooseImage_update);
+        TextInputEditText et_description_update = view.findViewById(R.id.et_description);
+        TextInputEditText et_chapter_content_update = view.findViewById(R.id.chapter_content_update);
+        Button bt_Upload = view.findViewById(R.id.btUpload_update);
+        Button bt_Draft = view.findViewById(R.id.btDraft_update);
+        Button bt_Reload = view.findViewById(R.id.btReload_update);
+        ImageView bt_Back = view.findViewById(R.id.ivBack_update);
+        TextView tv_Author = view.findViewById(R.id.tvUsername_update);
         SharedPreferences usersInfoPreference = getActivity().getSharedPreferences("users_info", Context.MODE_PRIVATE);
+
         tv_Author.setText(usersInfoPreference.getString("name", null));
 
         // Get database
         DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
         DatabaseReference storyRef = database.child("stories");
 
-        // Upload local storyCount variable when start this fragment and everytime a story uploaded successfully.
-       database.child("storyCount").addValueEventListener(new ValueEventListener()
+        // Upload local storyCount variable when start this fragment and everytime a story updateed successfully.
+        database.child("storyCount").addValueEventListener(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
@@ -158,7 +158,7 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
                 Integer value = dataSnapshot.getValue(Integer.class);
                 if (value == null)
                 {
-                   database.child("storyCount").setValue(0);
+                    database.child("storyCount").setValue(0);
                     onStoryCountReceived(0);
                 } else
                     onStoryCountReceived(value);
@@ -182,13 +182,13 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
 
         bt_Draft.setOnClickListener(v ->
         {
-            String name = et_name_upload.getText().toString();
-            String genres = et_genres_upload.getText().toString();
-            String description = et_description_upload.getText().toString();
-            String content = et_chapter_content_upload.getText().toString();
+            String name = et_name_update.getText().toString();
+            String genres = et_genres_update.getText().toString();
+            String description = et_description_update.getText().toString();
+            String content = et_chapter_content_update.getText().toString();
 
             // Saving other details to SharedPreferences
-            SharedPreferences sharedPreferences = requireContext().getSharedPreferences("StoryDraft", Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = requireContext().getSharedPreferences("StoryDraft2", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("name", name);
             editor.putString("genres", genres);
@@ -199,7 +199,7 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
             // Save story content to a text file
             try
             {
-                FileOutputStream fileOutputStream = requireContext().openFileOutput("story.txt", Context.MODE_PRIVATE);
+                FileOutputStream fileOutputStream = requireContext().openFileOutput("story2.txt", Context.MODE_PRIVATE);
                 fileOutputStream.write(content.getBytes());
                 fileOutputStream.close();
 
@@ -210,7 +210,7 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
                 {
                     bitmap = ((BitmapDrawable) drawable).getBitmap();
 
-                    String fileName = "story.jpg";
+                    String fileName = "story2.jpg";
                     FileOutputStream imageOutputStream = null;
 
                     try
@@ -244,23 +244,23 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
         bt_Reload.setOnClickListener(v ->
         {
 
-            SharedPreferences sharedPreferences = requireContext().getSharedPreferences("StoryDraft", Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = requireContext().getSharedPreferences("StoryDraft2", Context.MODE_PRIVATE);
             String savedName = sharedPreferences.getString("name", "");
             String savedGenres = sharedPreferences.getString("genres", "");
             String savedDescription = sharedPreferences.getString("description", "");
             String imageUriString = sharedPreferences.getString("imageUri", "");
-            String fileName = "story.jpg";
+            String fileName = "story2.jpg";
             Bitmap loadedBitmap = null;
 
 
-            et_name_upload.setText(savedName);
-            et_genres_upload.setText(savedGenres);
-            et_description_upload.setText(savedDescription);
+            et_name_update.setText(savedName);
+            et_genres_update.setText(savedGenres);
+            et_description_update.setText(savedDescription);
 
             // Load story content from the text file
             try
             {
-                FileInputStream fileInputStream = requireContext().openFileInput("story.txt");
+                FileInputStream fileInputStream = requireContext().openFileInput("story2.txt");
                 InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                 StringBuilder contentBuilder = new StringBuilder();
@@ -270,7 +270,7 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
                     contentBuilder.append(line).append("\n");
                 }
                 bufferedReader.close();
-                et_chapter_content_upload.setText(contentBuilder.toString());
+                et_chapter_content_update.setText(contentBuilder.toString());
                 Toast.makeText(getContext(), "Loaded successfully", Toast.LENGTH_SHORT).show();
             } catch (IOException e)
             {
@@ -324,7 +324,7 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
 
 
             id = storyCount + 1;                        // IDs are automatically generated
-            name = et_name_upload.getText().toString();
+            name = et_name_update.getText().toString();
             author = usersInfoPreference.getString("name", null);
             if (sw_final.isChecked())
                 status = "Full";
@@ -332,30 +332,15 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
                 status = "Đang cập nhật";
             time = LocalDate.now().toString();
             numberOfChapter = 1;
-            String[] splittedStrings = Objects.requireNonNull(et_genres_upload.getText()).toString().split(",\\s*");
+            String[] splittedStrings = Objects.requireNonNull(et_genres_update.getText()).toString().split(",\\s*");
             genres = new ArrayList<>(Arrays.asList(splittedStrings));
             views = 0;
-            description = et_description_upload.getText().toString();
-            content = et_chapter_content_upload.getText().toString();
+            description = et_description_update.getText().toString();
+            content = et_chapter_content_update.getText().toString();
 
 
             StoryClass story = new StoryClass(id, name, time, time, author, status, description, numberOfChapter, genres, views);
-
             story.setUserUUID(usersInfoPreference.getString("uuid", null));
-            // region Test
-            ArrayList<String> uuidLiked = new ArrayList<>();
-            uuidLiked.add("asdasd");
-            uuidLiked.add("asdasd");
-            uuidLiked.add("asdasd");
-
-            ArrayList<CommentClass> commentClasses = new ArrayList<>();
-            commentClasses.add(new CommentClass("guest", 4.5, "Truyen hay", uuidLiked));
-            uuidLiked.add("asdas43");
-            commentClasses.add(new CommentClass("guest2", 5, "Truyen hay v", uuidLiked));
-
-            story.setComments(commentClasses);
-            story.setUuidLikedUsers(uuidLiked);
-            // endregion Test
 
             storyRef.child("story_" + id).setValue(story, (databaseError, databaseReference) ->
             {
@@ -372,7 +357,7 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
                     Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                 } else
                 {
-                   database.child("storyCount").setValue(storyCount + 1);
+                    database.child("storyCount").setValue(storyCount + 1);
                     Log.i("DB", "Upload story success!");
                     Gson gson = new Gson();
                     String storyJson = gson.toJson(story); // Convert the object to to log it

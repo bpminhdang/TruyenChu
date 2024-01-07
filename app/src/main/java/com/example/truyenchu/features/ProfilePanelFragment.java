@@ -2,6 +2,7 @@ package com.example.truyenchu.features;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -79,19 +80,40 @@ public class ProfilePanelFragment extends Fragment
         TextView profileName = view.findViewById(R.id.profiile_panel_name);
         TextView welcome = view.findViewById(R.id.profiile_panel_tvWellCome);
 
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("users_prefs", MODE_PRIVATE);
-        String username = sharedPreferences.getString("username", "Guest");
-        profileName.setText(username);
+//        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("users_prefs", MODE_PRIVATE);
+//        String username = sharedPreferences.getString("username", "Guest");
+//        profileName.setText(username);
+//
+//        if (username.equals("Guest"))
+//            welcome.setText("WELCOME");
+//        else
+//            welcome.setText("WELCOME BACK!");
+//
+//        String profilePictureString = sharedPreferences.getString("profilePicture", "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/images%2Fprofile_picture.jpg?alt=media&token=bc33064a-23aa-4236-aa3a-b3e3b43eccbc");
+        SharedPreferences shf = getActivity().getSharedPreferences("users_info", Context.MODE_PRIVATE);
+        String uuid = shf.getString("uuid", null);
 
-        if (username.equals("Guest"))
-            welcome.setText("WELCOME");
-        else
-            welcome.setText("WELCOME BACK!");
+        if (uuid == null)
+        {
+            welcome.setText("CHÀO MỪNG");
+            profileName.setText("Người dùng khách");
+        } else
+        {
+            welcome.setText("CHÀO MỪNG QUAY TRỞ LẠI!");
+            profileName.setText(shf.getString("name", null));
+            Glide.with(this).load(shf.getString("uri", null)).into(profilePic);
+        }
 
-        String profilePictureString = sharedPreferences.getString("profilePicture", "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/images%2Fprofile_picture.jpg?alt=media&token=bc33064a-23aa-4236-aa3a-b3e3b43eccbc");
-        Glide.with(this).load(profilePictureString).into(profilePic);
+//        editor.putString("name", user.getName());
+//        editor.putString("email", user.getEmail());
+//        editor.putString("uri", user.getProfile());
+//        editor.putString("background", user.getBackgroundColor());
+//        editor.putString("font", user.getFont());
+//        editor.putString("fontSize", String.valueOf(user.getFontSize()));
+//        editor.putString("textColor", String.valueOf(user.getTextColor()));
+            //Glide.with(this).load(profilePictureString).into(profilePic);
 
 
-        return view;
+            return view;
     }
 }

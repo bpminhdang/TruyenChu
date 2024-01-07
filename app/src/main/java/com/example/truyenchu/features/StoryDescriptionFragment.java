@@ -128,7 +128,6 @@ public class StoryDescriptionFragment extends Fragment
             StoryClass.SetText(tvNumChapter, String.valueOf(receivedStory.getNumberOfChapter()));
             //StoryClass.SetText(tvWatching, "Đang xem: " + receivedStory.getWatching());
             StoryClass.SetText(tvLiked, String.valueOf(receivedStory.getUuidLikedUsers().size()));
-            // Todo: tvWatching tvLiked
             StoryClass.SetText(tvView, String.valueOf(receivedStory.getViews()));
             StoryClass.SetText(tvDescription, receivedStory.getDescription());
 
