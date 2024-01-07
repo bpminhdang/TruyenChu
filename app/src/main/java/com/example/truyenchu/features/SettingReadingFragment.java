@@ -8,12 +8,16 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.truyenchu.Login;
 import com.example.truyenchu.R;
 
 /**
@@ -79,7 +83,11 @@ public class SettingReadingFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+    //lay mau bg da co san
+    private int getSavedBackgroundColor() {
+        SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        return preferences.getInt("background_color", getResources().getColor(android.R.color.white));
+    }
     // luu mau bg
     private void saveBackgroundColor(int color) {
         SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
@@ -95,16 +103,26 @@ public class SettingReadingFragment extends Fragment {
         editor.putInt("text_color", color);
         editor.apply();
     }
+    //apply mau text da co khi out ra vo lai
     private void applySavedTextColor(TextView mauchu) {
         SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
         int textColor = preferences.getInt("text_color", Color.BLACK);
         mauchu.setTextColor(textColor);
     }
-    private int getSavedBackgroundColor() {
+    //lay textsize dang co
+    private float getSavedTextSize() {
         SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return preferences.getInt("background_color", getResources().getColor(android.R.color.white));
+        return preferences.getFloat("text_size", ourFontsize); //
+    }
+    //luu textsize vao
+    private void saveTextSize(float size) {
+        SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putFloat("text_size", size);
+        editor.apply();
     }
 
+    private float ourFontsize = 16f; //bien' size text
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -131,18 +149,19 @@ public class SettingReadingFragment extends Fragment {
         cblack.setOnClickListener(v -> {
             saveBackgroundColor(Color.BLACK);
             view.setBackgroundColor(Color.BLACK);
+
             if (colorChangedListener != null) {
                 colorChangedListener.onColorChanged(Color.BLACK);
             }
-           // StoryReadingFragment storyReadingFragment2 = new StoryReadingFragment();
+            // StoryReadingFragment storyReadingFragment2 = new StoryReadingFragment();
             int newColor = getSavedBackgroundColor();
-          //  storyReadingFragment2.onColorChanged(newColor);
+            //  storyReadingFragment2.onColorChanged(newColor);
 
             // Thực hiện chuyển Fragment
-          // FragmentTransaction transaction = getFragmentManager().beginTransaction();
-           // transaction.replace(R.id.reading_hihi, storyReadingFragment2);
-          //  transaction.addToBackStack(null);
-          //  transaction.commit();
+            // FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            // transaction.replace(R.id.reading_hihi, storyReadingFragment2);
+            //  transaction.addToBackStack(null);
+            //  transaction.commit();
         });
 
         clgrey.setOnClickListener(v -> {
@@ -170,7 +189,9 @@ public class SettingReadingFragment extends Fragment {
         View ctwbeige = view.findViewById(R.id.coltx_warmbeige);
         View ctlblue = view.findViewById(R.id.coltx_lblue);
         TextView mauchu = view.findViewById(R.id.tx_mauchu);
+
         applySavedTextColor(mauchu);
+
         ctwhite.setOnClickListener(v -> {
             int newColor = Color.WHITE;
             mauchu.setTextColor(newColor);
@@ -200,6 +221,35 @@ public class SettingReadingFragment extends Fragment {
             mauchu.setTextColor(newColor);
             saveTextColor(newColor);
         });
+
+
+        //tang giam size text
+        Button increase = view.findViewById(R.id.cus_tang);
+        Button decrease = view.findViewById(R.id.cus_giam);
+
+        float textSize = getSavedTextSize();
+        mauchu.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+
+        increase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Tăng kích thước văn bản
+                ourFontsize += 4f; //chinh gia tri mac dinh o line 118 file nay
+                mauchu.setTextSize(TypedValue.COMPLEX_UNIT_SP, ourFontsize);
+                saveTextSize(ourFontsize);
+            }
+        });
+
+        decrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Giam kích thước văn bản
+                ourFontsize -= 4f;
+                mauchu.setTextSize(TypedValue.COMPLEX_UNIT_SP, ourFontsize);
+                saveTextSize(ourFontsize);
+            }
+        });
+        Toast.makeText(getActivity(), String.valueOf(ourFontsize), Toast.LENGTH_SHORT).show();
 
         return view;
     }
