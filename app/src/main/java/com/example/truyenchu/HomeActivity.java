@@ -4,18 +4,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu._class.CommentClass;
 import com.example.truyenchu._class.StoryClass;
+import com.example.truyenchu._class.UserClass;
 import com.example.truyenchu.adapter.DataListener;
 import com.example.truyenchu.features.UploadStoryFragment;
 import com.example.truyenchu.ui.DownloadFragment;
@@ -43,7 +47,6 @@ import java.util.Objects;
 public class HomeActivity extends AppCompatActivity implements DataListener
 {
     FirebaseAuth mAuth;
-    boolean isLoggedIn = false;
     ArrayList<String> storyListAll = new ArrayList<>();  // listOfStoryLists 0
     ArrayList<String> storyListNew = new ArrayList<>(); // listOfStoryLists 1
     ArrayList<String> storyListUpdate = new ArrayList<>(); // listOfStoryLists 2
@@ -57,7 +60,6 @@ public class HomeActivity extends AppCompatActivity implements DataListener
 
     private HomeFragment homeFragment;
     BottomNavigationView bottomNav;
-
 
 
     @Override
@@ -82,41 +84,58 @@ public class HomeActivity extends AppCompatActivity implements DataListener
 
         bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setSelectedItemId(R.id.navigation_home);
+
         // endregion Init
 
-        // region Profile Panel
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser mUser = mAuth.getCurrentUser();
-
-        if (mUser != null)
+        if (!isNetworkAvailable())
         {
-            String name = mUser.getDisplayName();
-            SharedPreferences sharedPreferences = getSharedPreferences("users_prefs", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("username", name);
-            String photoURL;
-            try
-            {
-                photoURL = mUser.getPhotoUrl().toString();
-            } catch (Exception e)
-            {
-                photoURL = null; // Todo: Image mac dinh
-                Toast.makeText(this, "Cant retrive profile image", Toast.LENGTH_SHORT).show();
-            }
-            editor.putString("profilePicture", photoURL);
-            editor.putString("isLoggedIn", "true");
-            isLoggedIn = true;
-            editor.apply();
+            Toast.makeText(this, "Không có mạng!", Toast.LENGTH_SHORT).show();
         } else
         {
-            SharedPreferences sharedPreferences = getSharedPreferences("users_prefs", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("username", "Guest");
-            editor.putString("profilePicture", "R.drawable.guest_profile");
-            editor.putString("isLoggedIn", "false");
-            editor.apply();
+            mAuth = FirebaseAuth.getInstance();
+            FirebaseUser mUser = mAuth.getCurrentUser();
+            if (mUser != null)
+            {
+                String userUid = mUser.getUid();
+                DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
+                DatabaseReference userRef = database.child("users").child(userUid);
+
+                userRef.addListenerForSingleValueEvent(new ValueEventListener()
+                {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                    {
+                        if (dataSnapshot.exists())
+                        {
+                            UserClass user = dataSnapshot.getValue(UserClass.class);
+                            SharedPreferences sharedPreferences = getSharedPreferences("users_info", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("name", user.getName());
+                            editor.putString("email", user.getEmail());
+                            editor.putString("uri", user.getProfile());
+                            editor.putString("background", user.getBackgroundColor());
+                            editor.putString("font", user.getFont());
+                            String fontSize = String.valueOf(user.getFontSize());
+                            if (fontSize.equals("0"))
+                                fontSize = "12";
+                            editor.putString("fontSize", fontSize);
+                            editor.putString("textColor", String.valueOf(user.getTextColor()));
+                            editor.apply();
+
+                            Log.i("User db", user.getUuid());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError)
+                    {
+                        // Xử lý khi truy vấn bị hủy bỏ, ví dụ: bị lỗi
+                    }
+                });
+            }
+
         }
-        // endregion Profile Panel
+
 
         // region Get data from Firebase
         DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
@@ -370,7 +389,9 @@ public class HomeActivity extends AppCompatActivity implements DataListener
 
         } else if (item.getItemId() == R.id.navigation_profile)
         {
-            if (!isLoggedIn)
+            SharedPreferences shf = this.getSharedPreferences("users_info", Context.MODE_PRIVATE);
+            String uuid = shf.getString("uuid", null);
+            if (uuid == null)
             {
                 Intent intent = new Intent(getApplicationContext(), Login.class);
                 startActivity(intent);
@@ -430,7 +451,7 @@ public class HomeActivity extends AppCompatActivity implements DataListener
     @Override
     public void onDataReceived(String data)
     {
-        Log.i("Data Listener","Receive data from fragment: " +  data);
+        Log.i("Data Listener", "Receive data from fragment: " + data);
         if (data.equals("Click Discovery"))
         {
             bottomNav.setOnItemSelectedListener(item ->
@@ -441,4 +462,12 @@ public class HomeActivity extends AppCompatActivity implements DataListener
             bottomNav.setOnItemSelectedListener(this::SetOnItemClick);
         }
     }
+
+    public boolean isNetworkAvailable()
+    {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
 }

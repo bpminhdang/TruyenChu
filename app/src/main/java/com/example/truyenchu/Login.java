@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
@@ -65,6 +67,16 @@ public class Login extends AppCompatActivity
     }*/
 
     @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+        finish(); // Đóng LoginActivity sau khi chuyển đến HomeActivity
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -74,9 +86,9 @@ public class Login extends AppCompatActivity
         // Status bar icon: Black
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         // Status bar: accent 1_0
-        getWindow().setStatusBarColor(getColor(R.color.accent_1_10));
+        getWindow().setStatusBarColor(Color.parseColor("#fdedee"));
         // Navigation pill: White
-        getWindow().setNavigationBarColor(Color.WHITE);
+        getWindow().setNavigationBarColor(Color.parseColor("#fdedee"));
 
         mAuth = FirebaseAuth.getInstance();
         editTextEmail = findViewById(R.id.email_lg);
@@ -101,6 +113,7 @@ public class Login extends AppCompatActivity
             Intent intent = new Intent(Login.this, HomeActivity.class);
             startActivity(intent);
         });
+
 
         buttonLogin.setOnClickListener(v ->
         {
@@ -128,6 +141,11 @@ public class Login extends AppCompatActivity
                             if (mAuth.getCurrentUser().isEmailVerified())
                             {
                                 Toast.makeText(getApplicationContext(), "Login successfully", Toast.LENGTH_SHORT).show();
+                                SharedPreferences sharedPreferences = getSharedPreferences("users_info", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("uuid", mAuth.getCurrentUser().getUid());
+                                editor.apply();
+
                                 Intent intent = new Intent(Login.this, HomeActivity.class);
                                 startActivity(intent);
                             }

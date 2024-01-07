@@ -33,6 +33,7 @@ public class StoryClass implements Serializable
     private int views = 0;
     private int watching = 0;
     private String uri; // Retrive data from Firebase
+    private String userUUID;
 
 
 
@@ -318,5 +319,15 @@ public class StoryClass implements Serializable
     public void setWatching(int watching)
     {
         this.watching = watching;
+    }
+
+    public String getUserUUID()
+    {
+        return userUUID;
+    }
+
+    public void setUserUUID(String userUUID)
+    {
+        this.userUUID = userUUID;
     }
 }
