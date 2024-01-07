@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +30,24 @@ public class SettingReadingFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    //cuu
 
+    public interface OnColorChangedListener {
+        void onColorChanged(int newColor);
+
+        void setOnColorChangedListener(Object saveBackgroundColor);
+    }
+
+    private OnColorChangedListener colorChangedListener;
+
+    //... rest of the code
+
+    public void setOnColorChangedListener(OnColorChangedListener listener) {
+        this.colorChangedListener = listener;
+    }
+
+
+    //cuuuu
     public SettingReadingFragment() {
         // Required empty public constructor
     }
@@ -93,6 +111,18 @@ public class SettingReadingFragment extends Fragment {
         cblack.setOnClickListener(v -> {
             saveBackgroundColor(Color.BLACK);
             view.setBackgroundColor(Color.BLACK);
+            if (colorChangedListener != null) {
+                colorChangedListener.onColorChanged(Color.BLACK);
+            }
+            StoryReadingFragment storyReadingFragment2 = new StoryReadingFragment();
+            int newColor = getSavedBackgroundColor();
+            storyReadingFragment2.onColorChanged(newColor);
+
+            // Thực hiện chuyển Fragment
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.reading_hihi, storyReadingFragment2);
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
 
         View clgrey = view.findViewById(R.id.col_lightgrey);
