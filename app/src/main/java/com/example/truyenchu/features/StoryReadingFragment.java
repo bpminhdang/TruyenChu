@@ -19,6 +19,11 @@ import android.widget.Toast;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.adapter.DataListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -70,7 +75,29 @@ public class StoryReadingFragment extends Fragment
         {
             mStoryID = getArguments().getInt(ARG_STORY);
             story = loadStoryFromFile(String.valueOf(mStoryID));
+            DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
+            DatabaseReference storyRef = database.child("stories").child("story_" + story.getId()).child("views");
+            storyRef.addListenerForSingleValueEvent(new ValueEventListener()
+            {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot)
+                {
+                    if (dataSnapshot.exists())
+                    {
+                        Integer viewsValue = dataSnapshot.getValue(Integer.class);
+                        if (viewsValue != null)
+                        {
+                            storyRef.setValue(viewsValue + 1);
+                        }
+                    }
+                }
 
+                @Override
+                public void onCancelled(@NonNull DatabaseError error)
+                {
+
+                }
+            });
         }
 
     }

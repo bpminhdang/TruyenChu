@@ -1,5 +1,6 @@
 package com.example.truyenchu;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -15,6 +16,11 @@ import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.adapter.DataListener;
 import com.example.truyenchu.features.StoryDescriptionFragment;
 import com.example.truyenchu.features.StoryReadingFragment;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
@@ -31,6 +37,31 @@ public class StoryActivity extends AppCompatActivity implements DataListener
         if (intent == null)
             return;
         receivedStory = (StoryClass) intent.getSerializableExtra("storyData");
+
+        DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
+        DatabaseReference storyRef = database.child("stories").child("story_" + receivedStory.getId()).child("watching");
+        storyRef.addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                if (dataSnapshot.exists())
+                {
+                    Integer watchingValue = dataSnapshot.getValue(Integer.class);
+                    if (watchingValue != null)
+                    {
+                        storyRef.setValue(watchingValue + 1);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error)
+            {
+
+            }
+        });
+
 
         // Hide action bar
         Objects.requireNonNull(getSupportActionBar()).hide();
@@ -87,7 +118,7 @@ public class StoryActivity extends AppCompatActivity implements DataListener
     @Override
     public void onDataReceived(String data)
     {
-        Log.i("Data Listener","rev: " +  data);
+        Log.i("Data Listener", "rev: " + data);
 
         if (data.equals("Exit reading"))
         {
@@ -96,5 +127,43 @@ public class StoryActivity extends AppCompatActivity implements DataListener
             getWindow().setStatusBarColor(getColor(R.color.accent_1_10));
             getWindow().setNavigationBarColor(Color.WHITE);
         }
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        Log.i("Life cycle", "OnStop");
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        Log.i("Life cycle", "OnDes");
+        DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
+        DatabaseReference storyRef = database.child("stories").child("story_" + receivedStory.getId()).child("watching");
+        storyRef.addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                if (dataSnapshot.exists())
+                {
+                    Integer watchingValue = dataSnapshot.getValue(Integer.class);
+                    if (watchingValue != null)
+                    {
+                        storyRef.setValue(watchingValue - 1);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error)
+            {
+
+            }
+        });
+
     }
 }
