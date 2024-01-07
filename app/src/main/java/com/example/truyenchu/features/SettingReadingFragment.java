@@ -116,7 +116,7 @@ public class SettingReadingFragment extends Fragment {
             }
             StoryReadingFragment storyReadingFragment2 = new StoryReadingFragment();
             int newColor = getSavedBackgroundColor();
-            storyReadingFragment2.onColorChanged(newColor);
+          //  storyReadingFragment2.onColorChanged(newColor);
 
             // Thực hiện chuyển Fragment
             FragmentTransaction transaction = getFragmentManager().beginTransaction();

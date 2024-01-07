@@ -22,8 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
-public class Register extends AppCompatActivity
-{
+public class Register extends AppCompatActivity {
     TextInputEditText editTextEmail;
     TextInputEditText editTextPassword;
     TextInputEditText editTextRepassword;
@@ -37,7 +36,7 @@ public class Register extends AppCompatActivity
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        if (currentUser != null) {
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(intent);
         }
@@ -79,23 +78,22 @@ public class Register extends AppCompatActivity
             password = String.valueOf(editTextPassword.getText());
             repassword = String.valueOf(editTextRepassword.getText());
 
-            //Kiểm tra mật khẩu nhập 2 lần có giống nhau
-//            if (password != repassword)
-//            {
-//                progressBar.setVisibility(View.GONE);
-//                editTextPassword.setText("");
-//                editTextRepassword.setText("");
-//                Toast.makeText(Register.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-//                return;
-//            }
+          //  Kiểm tra mật khẩu nhập 2 lần có giống nhau
+            if (!TextUtils.equals(password, repassword)) {
+                progressBar.setVisibility(View.GONE);
+                editTextPassword.setText("");
+                editTextRepassword.setText("");
+                Toast.makeText(Register.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             //Check Empty
-            if (TextUtils.isEmpty(email)){
+            if (TextUtils.isEmpty(email)) {
                 Toast.makeText(Register.this, "Enter email", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            if (TextUtils.isEmpty(password)){
+            if (TextUtils.isEmpty(password)) {
                 Toast.makeText(Register.this, "Enter password", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -105,11 +103,10 @@ public class Register extends AppCompatActivity
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 progressBar.setVisibility(View.GONE);
-                                mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>()
-                                {
+                                mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()){
+                                        if (task.isSuccessful()) {
                                             Toast.makeText(Register.this, "User registered successfully. Please verify your email",
                                                     Toast.LENGTH_SHORT).show();
 
@@ -131,9 +128,7 @@ public class Register extends AppCompatActivity
                                             editTextRepassword.setText("");
                                             Intent intent = new Intent(Register.this, Login.class);
                                             startActivity(intent);
-                                        }
-                                        else
-                                        {
+                                        } else {
                                             Toast.makeText(Register.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                     }
