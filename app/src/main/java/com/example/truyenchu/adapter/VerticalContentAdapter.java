@@ -54,8 +54,8 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
             //storyInfo = view.findViewById(R.id.item_vertical_content_storyInfo);
             storyImage = view.findViewById(R.id.item_vertical_content_storyImage);
             //info = view.findViewById(R.id.item_vertical_content_info);
-            tvName = view.findViewById(R.id.item_vertical_content_tvName);
-            tvTime = view.findViewById(R.id.item_vertical_content_tvTime);
+            tvName = view.findViewById(R.id.cm_name);
+            tvTime = view.findViewById(R.id.cm_comment);
             tvAuthor = view.findViewById(R.id.item_vertical_content_tvAuthor);
             tvChapter = view.findViewById(R.id.item_vertical_content_tvChapter);
             tvGenre = view.findViewById(R.id.item_vertical_content_tvGenre);

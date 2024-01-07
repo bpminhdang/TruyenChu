@@ -242,7 +242,6 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
 
     private void StartStoryDescriptionActivity(StoryClass story)
     {
-
         Intent intent = new Intent(getActivity(), StoryActivity.class);
         intent.putExtra("storyData", story);
         startActivity(intent);

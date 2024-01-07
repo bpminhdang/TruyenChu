@@ -36,7 +36,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/hint_rating"
+            android:id="@+id/asr_hint_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -49,14 +49,14 @@
             app:layout_constraintTop_toBottomOf="@+id/nhanxet_tx" />
 
         <RatingBar
-            android:id="@+id/ratingBar"
+            android:id="@+id/asr_ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hint_rating" />
+            app:layout_constraintTop_toBottomOf="@+id/asr_hint_rating" />
 
         <TextView
             android:id="@+id/hint_nx"
@@ -67,7 +67,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+            app:layout_constraintTop_toBottomOf="@+id/asr_ratingBar" />
 
         <EditText
             android:id="@+id/editTextTextMultiLine"

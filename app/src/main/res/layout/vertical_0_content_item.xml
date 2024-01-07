@@ -35,7 +35,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/item_vertical_content_tvName"
+            android:id="@+id/cm_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -50,7 +50,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/item_vertical_content_tvTime"
+            android:id="@+id/cm_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -59,8 +59,8 @@
             android:text="16 giờ trước"
             android:textSize="@dimen/small_text_size"
             app:layout_constraintBottom_toTopOf="@+id/item_vertical_content_tvAuthor"
-            app:layout_constraintStart_toStartOf="@+id/item_vertical_content_tvName"
-            app:layout_constraintTop_toBottomOf="@+id/item_vertical_content_tvName" />
+            app:layout_constraintStart_toStartOf="@+id/cm_name"
+            app:layout_constraintTop_toBottomOf="@+id/cm_name" />
 
         <TextView
             android:id="@+id/item_vertical_content_tvAuthor"
@@ -70,7 +70,7 @@
             android:text="Paul Kalanithi"
             android:textSize="@dimen/small_text_size"
             app:layout_constraintBottom_toTopOf="@+id/item_vertical_content_tvChapter"
-            app:layout_constraintStart_toStartOf="@+id/item_vertical_content_tvTime" />
+            app:layout_constraintStart_toStartOf="@+id/cm_comment" />
 
         <TextView
             android:id="@+id/item_vertical_content_tvChapter"
