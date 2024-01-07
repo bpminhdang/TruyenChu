@@ -8,16 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
-import com.example.truyenchu.features.RecyclerViewItemClickListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContentAdapter.ViewHolder>

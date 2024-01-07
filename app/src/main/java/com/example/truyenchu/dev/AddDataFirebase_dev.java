@@ -28,7 +28,9 @@ public class AddDataFirebase_dev extends AppCompatActivity
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    snapshot.getRef().child("updateTime").setValue("2023-12-31");
+                    //snapshot.getRef().child("updateTime").setValue("2023-12-31");
+                    snapshot.getRef().child("watching").setValue(0);
+
                 }
             }
 

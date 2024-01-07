@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,17 +17,15 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.truyenchu.HomeActivity;
 import com.example.truyenchu.StoryActivity;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.adapter.Horizontal_3_ContentAdapter;
 import com.example.truyenchu.adapter.Horizontal_2_ImageAdapter;
 import com.example.truyenchu.adapter.Horizontal_1_SmallImageAdapter;
-import com.example.truyenchu.features.BlankFragment;
-import com.example.truyenchu.features.DataListener;
+import com.example.truyenchu.adapter.BlankFragment;
+import com.example.truyenchu.adapter.DataListener;
 import com.example.truyenchu.features.ProfilePanelFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
 import java.io.File;

@@ -30,8 +30,8 @@ public class StoryClass implements Serializable
     private List<String> genres = new ArrayList<>();
     private List<CommentClass> comments = new ArrayList<>();
     private List<String> uuidLikedUsers = new ArrayList<>();
-    private int views;
-
+    private int views = 0;
+    private int watching = 0;
     private String uri; // Retrive data from Firebase
 
 
@@ -310,4 +310,13 @@ public class StoryClass implements Serializable
         return chapters.get(chapterNum).getContent();
     }
 
+    public int getWatching()
+    {
+        return watching;
+    }
+
+    public void setWatching(int watching)
+    {
+        this.watching = watching;
+    }
 }

@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
-import com.example.truyenchu.features.RecyclerViewItemClickListener;
 
 import java.util.ArrayList;
 

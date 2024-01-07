@@ -1,4 +1,4 @@
-package com.example.truyenchu.features;
+package com.example.truyenchu.adapter;
 
 import com.example.truyenchu._class.StoryClass;
 

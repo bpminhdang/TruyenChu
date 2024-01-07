@@ -8,12 +8,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.example.truyenchu._class.StoryClass;
-import com.example.truyenchu.features.DataListener;
+import com.example.truyenchu.adapter.DataListener;
 import com.example.truyenchu.features.StoryDescriptionFragment;
 import com.example.truyenchu.features.StoryReadingFragment;
 

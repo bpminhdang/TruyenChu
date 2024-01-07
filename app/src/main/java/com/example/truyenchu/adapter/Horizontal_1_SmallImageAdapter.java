@@ -1,7 +1,6 @@
 package com.example.truyenchu.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +10,8 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.truyenchu.HomeActivity;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
-import com.example.truyenchu.features.RecyclerViewItemClickListener;
-import com.example.truyenchu.ui.HomeFragment;
 
 import java.util.ArrayList;
 

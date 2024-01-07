@@ -28,6 +28,8 @@ import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu._class.CommentClass;
 import com.example.truyenchu._class.NetworkUtil;
 import com.example.truyenchu._class.StoryClass;
+import com.example.truyenchu.adapter.ImageUploadCallback;
+import com.example.truyenchu.adapter.StoryCountListener;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;

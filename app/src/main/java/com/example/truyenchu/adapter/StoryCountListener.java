@@ -1,4 +1,4 @@
-package com.example.truyenchu.features;
+package com.example.truyenchu.adapter;
 
 // Use to get number of story from firebase to create ID for the next Story
 public interface StoryCountListener

@@ -1,4 +1,4 @@
-package com.example.truyenchu.features;
+package com.example.truyenchu.adapter;
 
 import android.os.Bundle;
 

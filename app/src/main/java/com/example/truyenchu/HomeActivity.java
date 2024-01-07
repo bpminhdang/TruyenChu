@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu._class.CommentClass;
 import com.example.truyenchu._class.StoryClass;
-import com.example.truyenchu.features.DataListener;
+import com.example.truyenchu.adapter.DataListener;
 import com.example.truyenchu.features.UploadStoryFragment;
 import com.example.truyenchu.ui.DownloadFragment;
 import com.example.truyenchu.ui.HomeFragment;
