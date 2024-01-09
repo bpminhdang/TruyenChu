@@ -1,5 +1,8 @@
 package com.example.truyenchu._class;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,5 +75,7 @@ public class CommentClass implements Serializable
     {
         return uuidLikedUsers.size();
     }
+
+
 
 }

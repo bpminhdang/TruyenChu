@@ -1,20 +1,27 @@
 package com.example.truyenchu.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.CommentClass;
-import com.example.truyenchu.features.DatabaseHelper;
+import com.example.truyenchu._class.UserClass;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
-import android.widget.Button;
 import android.widget.RatingBar;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 
@@ -57,39 +64,73 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         TextView commentTextView;
         TextView nameTextView;
         RatingBar ratingBar;
-        Button button;
-        TextView liked;
+        ToggleButton btLike;
+        TextView tvLiked;
+        ImageView ivProfilePic;
 
         public CommentViewHolder(@NonNull View itemView) {
             super(itemView);
             commentTextView = itemView.findViewById(R.id.cm_comment);
             nameTextView = itemView.findViewById(R.id.cm_name);
             ratingBar = itemView.findViewById(R.id.cm_rating_bar);
-            button = itemView.findViewById(R.id.cm_button_liked);
-            liked = itemView.findViewById(R.id.cm_liked);
+            btLike = itemView.findViewById(R.id.cm_button_liked);
+            tvLiked = itemView.findViewById(R.id.cm_liked);
+            ivProfilePic = itemView.findViewById(R.id.cm_profile_image);
             // Xử lý sự kiện khi nút được nhấn
-            button.setOnClickListener(new View.OnClickListener() {
+            btLike.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onClick(View v) {
-                    // Xử lý khi nút được nhấn ở đây
-                    // Ví dụ: Lấy vị trí của item trong RecyclerView
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        // Xử lý sự kiện click tại vị trí này
-                        Log.i("Comment", "Like" + position);
-                        // Todo: Update liked
-                        //DatabaseHelper.updateLiked();
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+                {
+                    if (isChecked)
+                    {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION)
+                        {
+
+                            tvLiked.setText(String.valueOf(Integer.parseInt((String) tvLiked.getText()) + 1));
+                            // Todo: Update liked
+                            //DatabaseHelper.updateLiked();
+                        }
+                    } else
+                    {
+                        tvLiked.setText(String.valueOf(Integer.parseInt((String) tvLiked.getText()) - 1));
                     }
                 }
             });
+
         }
 
         public void bind(CommentClass CommentClass) {
             commentTextView.setText(CommentClass.getComment());
-            nameTextView.setText(CommentClass.getUsername());
+            String uuid =  CommentClass.getUsername();
+            DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
+            DatabaseReference storyRef = database.child("users").child(uuid);
+            storyRef.addListenerForSingleValueEvent(new ValueEventListener()
+            {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot)
+                {
+                    if (dataSnapshot.exists())
+                    {
+                        UserClass user = dataSnapshot.getValue(UserClass.class);
+                        if (user != null)
+                        {
+                            nameTextView.setText(user.getName());
+                            Glide.with(itemView.getContext()).load(user.getProfile()).into(ivProfilePic);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error)
+                {
+                    // Xử lý khi có lỗi xảy ra trong quá trình truy vấn cơ sở dữ liệu
+                }
+            });
             ratingBar.setRating((float) CommentClass.getRating());
             // Thiết lập giá trị cho button
-            liked.setText(String.valueOf(CommentClass.GetNumLike()));
+            tvLiked.setText(String.valueOf(CommentClass.GetNumLike()));
+
         }
     }
 }

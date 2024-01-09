@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.CommentClass;
 import com.example.truyenchu._class.StoryClass;
+import com.example.truyenchu._class.UserClass;
 import com.example.truyenchu.adapter.CommentAdapter;
 import com.example.truyenchu.adapter.Horizontal_1_SmallImageAdapter;
 import com.example.truyenchu.adapter.Horizontal_2_ImageAdapter;
@@ -112,6 +113,11 @@ public class StoryRatingActivity extends AppCompatActivity
     }
 
     private void showCustomDialog() {
+        if (UserClass.GetUserInfoFromPref(this, "uuid") == null)
+        {
+            Toast.makeText(this, "Vui lòng đăng nhập để bình luận!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         // Tạo dialog mới và set layout từ file XML
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_write_comment);
@@ -133,9 +139,7 @@ public class StoryRatingActivity extends AppCompatActivity
                 CommentClass commentClass = new CommentClass();
                 commentClass.setComment(comment);
                 commentClass.setRating(rating);
-                commentClass.setUsername(getString(R.string.user_name));
-
-                // Todo: Lấy username thật của user, sau đó dùng username truy vấn ra profile picture
+                commentClass.setUsername(UserClass.GetUserInfoFromPref(getApplicationContext(), "uuid"));
                 storyRef.child(String.valueOf(commentClasses.size())).setValue(commentClass);
                 dialog.dismiss(); // Đóng dialog sau khi xử lý
             }

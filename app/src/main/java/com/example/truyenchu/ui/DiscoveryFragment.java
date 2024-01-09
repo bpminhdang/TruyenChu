@@ -46,8 +46,6 @@ import java.util.Objects;
 public class DiscoveryFragment extends Fragment
 {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_LIST_STORY_ID = "listStoryID";
@@ -57,7 +55,6 @@ public class DiscoveryFragment extends Fragment
 
 
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     ArrayList<String> storyListString = new ArrayList<>();
@@ -82,7 +79,6 @@ public class DiscoveryFragment extends Fragment
      *
      * @return A new instance of fragment DiscoveryNewFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static DiscoveryFragment newInstance(ArrayList<String> storyList)
     {
         DiscoveryFragment fragment = new DiscoveryFragment();

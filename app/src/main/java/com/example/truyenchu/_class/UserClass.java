@@ -1,5 +1,8 @@
 package com.example.truyenchu._class;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 public class UserClass
 {
     // Fields representing user attributes
@@ -118,6 +121,13 @@ public class UserClass
     public void setTextColor(String textColor)
     {
         this.textColor = textColor;
+    }
+
+    public static String GetUserInfoFromPref(Context context, String key)
+    {
+        SharedPreferences shf = context.getSharedPreferences("users_info", Context.MODE_PRIVATE);
+        String value = shf.getString(key, null);
+        return value;
     }
 }
 

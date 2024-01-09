@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.truyenchu.R;
 import com.example.truyenchu.StoryActivity;
 import com.example.truyenchu._class.StoryClass;
+import com.example.truyenchu._class.UserClass;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -35,13 +36,10 @@ import java.util.Locale;
 public class StoryDescriptionFragment extends Fragment
 {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private boolean isSwitchedToAnotherFragment = false;
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -59,7 +57,6 @@ public class StoryDescriptionFragment extends Fragment
      * @return A new instance of fragment StoryDescriptionFragment.
      */
 
-    // TODO: Rename and change types and number of parameters
     public static StoryDescriptionFragment newInstance(String param1, String param2)
     {
         StoryDescriptionFragment fragment = new StoryDescriptionFragment();

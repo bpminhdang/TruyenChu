@@ -389,8 +389,7 @@ public class HomeActivity extends AppCompatActivity implements DataListener
 
         } else if (item.getItemId() == R.id.navigation_profile)
         {
-            SharedPreferences shf = this.getSharedPreferences("users_info", Context.MODE_PRIVATE);
-            String uuid = shf.getString("uuid", null);
+            String uuid = UserClass.GetUserInfoFromPref(getApplicationContext(), "uuid");
             if (uuid == null)
             {
                 Intent intent = new Intent(getApplicationContext(), Login.class);

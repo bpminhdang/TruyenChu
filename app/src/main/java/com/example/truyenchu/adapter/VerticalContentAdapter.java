@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,6 +47,7 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
         private TextView tvAuthor;
         private TextView tvChapter;
         private TextView tvGenre;
+        private ToggleButton btFavorite;
 
         public ViewHolder(View view)
         {
@@ -54,11 +57,12 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
             //storyInfo = view.findViewById(R.id.item_vertical_content_storyInfo);
             storyImage = view.findViewById(R.id.item_vertical_content_storyImage);
             //info = view.findViewById(R.id.item_vertical_content_info);
-            tvName = view.findViewById(R.id.cm_name);
-            tvTime = view.findViewById(R.id.cm_comment);
+            tvName = view.findViewById(R.id.item_vertical_content_tvName);
+            tvTime = view.findViewById(R.id.item_vertical_content_tvTime);
             tvAuthor = view.findViewById(R.id.item_vertical_content_tvAuthor);
             tvChapter = view.findViewById(R.id.item_vertical_content_tvChapter);
             tvGenre = view.findViewById(R.id.item_vertical_content_tvGenre);
+            btFavorite = view.findViewById(R.id.item_vertical_content_toggle_button);
         }
 
 
@@ -97,6 +101,23 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
         public void bind(StoryClass story, RecyclerViewItemClickListener listener)
         {
             itemView.setOnClickListener(v-> listener.onItemClick(story));
+            btFavorite.setOnCheckedChangeListener((buttonView, isChecked) ->
+            {
+                if (isChecked)
+                {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION)
+                    {
+                        Toast.makeText(itemView.getContext(), "Added to favorite!", Toast.LENGTH_SHORT).show();
+                        //tvLiked.setText(String.valueOf(Integer.parseInt((String) tvLiked.getText()) + 1));
+                        // Todo: Update favorite story
+                        //DatabaseHelper.updateLiked();
+                    }
+                } else
+                {
+                    //tvLiked.setText(String.valueOf(Integer.parseInt((String) tvLiked.getText()) - 1));
+                }
+            });
         }
     }
 

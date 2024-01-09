@@ -26,6 +26,43 @@
             android:layout_height="160dp"
             android:scaleType="centerCrop"
             android:src="@drawable/book_1" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/triangle"
+                android:backgroundTint="#46000000"
+                android:backgroundTintMode="src_in"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ToggleButton
+                android:id="@+id/item_vertical_content_toggle_button"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginEnd="-10dp"
+                android:layout_marginBottom="-7dp"
+                android:backgroundTint="#CF1515"
+                android:backgroundTintMode="src_in"
+                android:drawableRight="@drawable/favorite_button_selector"
+                android:drawableTint="#FFFFFF"
+                android:textOff=""
+                android:textOn=""
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.cardview.widget.CardView>
 
 
@@ -35,7 +72,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/cm_name"
+            android:id="@+id/item_vertical_content_tvName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -50,17 +87,17 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/cm_comment"
+            android:id="@+id/item_vertical_content_tvTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="5dp"
             android:fontFamily="@font/montserrat_regular"
             android:text="16 giờ trước"
-            android:textSize="@dimen/small_text_size"
+            android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/item_vertical_content_tvAuthor"
-            app:layout_constraintStart_toStartOf="@+id/cm_name"
-            app:layout_constraintTop_toBottomOf="@+id/cm_name" />
+            app:layout_constraintStart_toStartOf="@+id/item_vertical_content_tvName"
+            app:layout_constraintTop_toBottomOf="@+id/item_vertical_content_tvName" />
 
         <TextView
             android:id="@+id/item_vertical_content_tvAuthor"
@@ -68,9 +105,9 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_regular"
             android:text="Paul Kalanithi"
-            android:textSize="@dimen/small_text_size"
+            android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/item_vertical_content_tvChapter"
-            app:layout_constraintStart_toStartOf="@+id/cm_comment" />
+            app:layout_constraintStart_toStartOf="@+id/item_vertical_content_tvTime" />
 
         <TextView
             android:id="@+id/item_vertical_content_tvChapter"
@@ -79,7 +116,7 @@
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/montserrat_regular"
             android:text="10 chương"
-            android:textSize="@dimen/small_text_size"
+            android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/item_vertical_content_tvGenre"
             app:layout_constraintStart_toStartOf="@+id/item_vertical_content_tvAuthor" />
 

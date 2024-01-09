@@ -63,8 +63,6 @@ import java.util.Objects;
 public class UpdateStoryFragment extends Fragment implements StoryCountListener
 {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -72,7 +70,6 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
     private static final int REQUEST_WRITE_EXTERNAL_STORAGE = 101;
     private Uri imageUri;
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private int storyCount;
@@ -94,7 +91,6 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
      * @param param2 Parameter 2.
      * @return A new instance of fragment AddStoryFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static UpdateStoryFragment newInstance(String param1, String param2)
     {
         UpdateStoryFragment fragment = new UpdateStoryFragment();
