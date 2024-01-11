@@ -21,6 +21,7 @@ import com.example.truyenchu._class.CommentClass;
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu._class.UserClass;
 import com.example.truyenchu.adapter.DataListener;
+import com.example.truyenchu.features.UpdateStoryFragment;
 import com.example.truyenchu.features.UploadStoryFragment;
 import com.example.truyenchu.ui.DownloadFragment;
 import com.example.truyenchu.ui.HomeFragment;
@@ -382,7 +383,7 @@ public class HomeActivity extends AppCompatActivity implements DataListener
             selectedFragment = DiscoveryFragment.newInstance(listOfStoryLists.get(0));
         } else if (item.getItemId() == R.id.navigation_download)
         {
-            selectedFragment = new DownloadFragment();
+            selectedFragment = new UploadStoryFragment();
         } else if (item.getItemId() == R.id.navigation_home)
         {
             selectedFragment = HomeFragment.newInstance(listOfStoryLists);
@@ -400,7 +401,7 @@ public class HomeActivity extends AppCompatActivity implements DataListener
                 selectedFragment = new ProfileFragment();
         } else if (item.getItemId() == R.id.navigation_search)
         {
-            selectedFragment = new UploadStoryFragment();
+            selectedFragment = new UpdateStoryFragment();
         }
 
         if (selectedFragment != null)

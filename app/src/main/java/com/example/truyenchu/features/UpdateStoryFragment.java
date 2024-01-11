@@ -12,27 +12,33 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.ChapterClass;
-import com.example.truyenchu._class.CommentClass;
 import com.example.truyenchu._class.NetworkUtil;
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.adapter.ImageUploadCallback;
 import com.example.truyenchu.adapter.StoryCountListener;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,7 +47,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -52,6 +57,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 
@@ -74,6 +80,10 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
     private String mParam2;
     private int storyCount;
     private ImageView imageView;
+    ArrayList<StoryClass> usersStory = new ArrayList<>();
+    ArrayList<String> usersStoryString = new ArrayList<>();
+    ArrayAdapter<String> adapter;
+    private int selectedStoryPosition = 0;
 
 
     @Override
@@ -123,62 +133,87 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
     {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_update_story, container, false);
+        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, usersStoryString);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner sp_name_update = view.findViewById(R.id.spiner_update);
+        sp_name_update.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+            {
+                selectedStoryPosition = position;
+            }
 
-        TextInputEditText et_name_update = view.findViewById(R.id.name_update);
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+        });
+        sp_name_update.setAdapter(adapter);
+
         TextInputEditText et_genres_update = view.findViewById(R.id.genres_update);
-        SwitchMaterial sw_final = view.findViewById(R.id.switch_final);
-        Button bt_chooseImage = view.findViewById(R.id.bt_chooseImage_update);
+        SwitchMaterial sw_final = view.findViewById(R.id.update_switch_final);
+        Button bt_chooseImage = view.findViewById(R.id.update_bt_chooseImage);
         TextInputEditText et_description_update = view.findViewById(R.id.et_description);
         TextInputEditText et_chapter_content_update = view.findViewById(R.id.chapter_content_update);
         Button bt_Upload = view.findViewById(R.id.btUpload_update);
         Button bt_Draft = view.findViewById(R.id.btDraft_update);
         Button bt_Reload = view.findViewById(R.id.btReload_update);
         ImageView bt_Back = view.findViewById(R.id.ivBack_update);
+        imageView = view.findViewById(R.id.update_iv_cover1);
         TextView tv_Author = view.findViewById(R.id.tvUsername_update);
         SharedPreferences usersInfoPreference = getActivity().getSharedPreferences("users_info", Context.MODE_PRIVATE);
+        String uuid = usersInfoPreference.getString("uuid", null);
+        if (uuid != null)
+            tv_Author.setText(usersInfoPreference.getString("name", null));
 
-        tv_Author.setText(usersInfoPreference.getString("name", null));
-
-        // Get database
         DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
         DatabaseReference storyRef = database.child("stories");
-
-        // Upload local storyCount variable when start this fragment and everytime a story updateed successfully.
-        database.child("storyCount").addValueEventListener(new ValueEventListener()
+        storyRef.addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                Integer value = dataSnapshot.getValue(Integer.class);
-                if (value == null)
+                // Iterate through the results
+                for (DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
-                    database.child("storyCount").setValue(0);
-                    onStoryCountReceived(0);
-                } else
-                    onStoryCountReceived(value);
-                Log.d("DB", "Number of existing stories: " + value);
+                    Map<String, Object> storyData = (Map<String, Object>) snapshot.getValue();
+                    if (storyData.get("userUUID") != null)
+                    {
+                        if (!storyData.get("userUUID").equals(uuid))
+                            continue;
+                        StoryClass story = new StoryClass((int) (long) storyData.get("id"));
+                        story.setName((String) storyData.get("name"));
+                        story.setNumberOfChapter((int) (long) storyData.get("numberOfChapter"));
+                        TextInputLayout textInputLayout = view.findViewById(R.id.update_input_layout_chapter_to_update);
+                        textInputLayout.setHint("Cập nhật chương: " + story.getNumberOfChapter());
+                        usersStory.add(story);
+                        usersStoryString.add(story.getId() + " - " + story.getName());
+                        adapter.notifyDataSetChanged();
+                    }
+                }
             }
 
             @Override
-            public void onCancelled(DatabaseError error)
+            public void onCancelled(@NonNull DatabaseError error)
             {
-                // Failed to read value
-                Log.w("DB", "Failed to read value.", error.toException());
+
             }
         });
 
-        bt_Back.setOnClickListener(v->
+
+        bt_Back.setOnClickListener(v ->
         {
             requireActivity().onBackPressed();
         });
         bt_chooseImage.setOnClickListener(v ->
+
                 openFileChooser());
 
         bt_Draft.setOnClickListener(v ->
         {
-            String name = et_name_update.getText().toString();
+            // String name = et_name_update.getText().toString();
             String genres = et_genres_update.getText().toString();
             String description = et_description_update.getText().toString();
             String content = et_chapter_content_update.getText().toString();
@@ -186,7 +221,7 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
             // Saving other details to SharedPreferences
             SharedPreferences sharedPreferences = requireContext().getSharedPreferences("StoryDraft2", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("name", name);
+            //editor.putString("name", name);
             editor.putString("genres", genres);
             editor.putString("description", description);
             editor.putString("imageUri", imageUri.toString());
@@ -249,7 +284,7 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
             Bitmap loadedBitmap = null;
 
 
-            et_name_update.setText(savedName);
+            //et_name_update.setText(savedName);
             et_genres_update.setText(savedGenres);
             et_description_update.setText(savedDescription);
 
@@ -295,76 +330,64 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
 
         bt_Upload.setOnClickListener(v ->
         {
-            if (imageUri == null)
-            {
-                Toast.makeText(getContext(), "Please choose cover image for story", Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            if(!NetworkUtil.isNetworkConnected(getContext()))
+            if (!NetworkUtil.isNetworkConnected(getContext()))
             {
                 Toast.makeText(getContext(), "Not connected to the internet. Check your connection and try again!", Toast.LENGTH_LONG).show();
                 return;
             }
 
-            int id;
-            String name;
-            String author;
+            StoryClass story = usersStory.get(selectedStoryPosition);
+            int id = story.getId();
+            DatabaseReference StoryUpdateRef = storyRef.child("story_" + id);
+
+            if (!TextUtils.isEmpty(et_chapter_content_update.getText()))
+            {
+                String content = et_chapter_content_update.getText().toString();
+                EditText et_chapter_num = view.findViewById(R.id.update_et_chapter_to_update);
+                int numberOfChapter;
+                if (TextUtils.isEmpty(et_chapter_num.getText()))
+                {
+                    story.setNumberOfChapter(story.getNumberOfChapter() + 1);
+                    numberOfChapter = story.getNumberOfChapter();
+                } else
+                    numberOfChapter = Integer.parseInt(et_chapter_num.getText().toString());
+
+                StoryUpdateRef.child("chapters").child("chapter_" + id + "_" + numberOfChapter).setValue(new ChapterClass(id + "_" + numberOfChapter, content));
+                StoryUpdateRef.child("numberOfChapter").setValue(numberOfChapter);
+            }
+
+
             String status;
-            String time;
-            String description;
-            String content;
-            int numberOfChapter;
-            List<String> genres;
-            int views;
-
-
-            id = storyCount + 1;                        // IDs are automatically generated
-            name = et_name_update.getText().toString();
-            author = usersInfoPreference.getString("name", null);
             if (sw_final.isChecked())
                 status = "Full";
             else
                 status = "Đang cập nhật";
-            time = LocalDate.now().toString();
-            numberOfChapter = 1;
-            String[] splittedStrings = Objects.requireNonNull(et_genres_update.getText()).toString().split(",\\s*");
-            genres = new ArrayList<>(Arrays.asList(splittedStrings));
-            views = 0;
-            description = et_description_update.getText().toString();
-            content = et_chapter_content_update.getText().toString();
+            StoryUpdateRef.child("status").setValue(status);
 
+            String updateTime = LocalDate.now().toString();
+            StoryUpdateRef.child("updateTime").setValue(updateTime);
 
-            StoryClass story = new StoryClass(id, name, time, time, author, status, description, numberOfChapter, genres, views);
-            story.setUserUUID(usersInfoPreference.getString("uuid", null));
+            if (!TextUtils.isEmpty(et_description_update.getText()))
+                StoryUpdateRef.child("description").setValue(et_description_update.getText().toString());
 
-            storyRef.child("story_" + id).setValue(story, (databaseError, databaseReference) ->
+            if (!TextUtils.isEmpty(et_genres_update.getText()))
             {
-                // Upload chapter
-                storyRef.child("story_" + id).child("chapters").child("chapter_" + id + "_" + numberOfChapter).setValue(new ChapterClass(id + "_" + numberOfChapter, content));
+                List<String> genres;
+                String[] splittedStrings = Objects.requireNonNull(et_genres_update.getText()).toString().split(",\\s*");
+                genres = new ArrayList<>(Arrays.asList(splittedStrings));
+                StoryUpdateRef.child("genresList").setValue(genres);
+            }
 
-                // Handle upload Story
+            // Handle upload Story
+            if (imageUri != null)
+            {
                 uploadImageToFirebase("story_" + id, imageUriStringFB ->
                         storyRef.child("story_" + id).child("uri").setValue(imageUriStringFB));
+            }
 
-                if (databaseError != null)
-                {
-                    Log.i("DB", "Data could not be saved " + databaseError.getMessage());
-                    Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                } else
-                {
-                    database.child("storyCount").setValue(storyCount + 1);
-                    Log.i("DB", "Upload story success!");
-                    Gson gson = new Gson();
-                    String storyJson = gson.toJson(story); // Convert the object to to log it
-                    Log.i("DB", "Data pushed: " + storyJson);
-                    Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
-
-                }
-            });
-
-
+            Toast.makeText(getActivity(), "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
         });
+
         return view;
     }
 

@@ -17,7 +17,7 @@ import java.util.List;
 // Lớp Truyen (Truyện)
 public class StoryClass implements Serializable
 {
-    private final int id;
+    private int id;
     private String name;
     private String time;
     private String updateTime;
@@ -56,6 +56,10 @@ public class StoryClass implements Serializable
     public StoryClass(int id)
     {
         this.id = id;
+    }
+
+    public StoryClass()
+    {
     }
 
     public int getId()

@@ -40,7 +40,7 @@ public class StoryReadingFragment extends Fragment
 
     private static final String ARG_STORY = "story";
     boolean isHidden = false;
-    int currentChapter = 0;
+    int currentChapter = 1;
     // TODO: Chapter = users.getchapter()
     private static int mStoryID;
     private StoryClass story;
@@ -96,8 +96,8 @@ public class StoryReadingFragment extends Fragment
         TextView tvName = view.findViewById(R.id.r_name);
         NestedScrollView nestedScrollView = view.findViewById(R.id.readingkone);
 
-        tvContent.setText(story.getContent(0));
-        tvName.setText(story.getName(13) + " | C" + (currentChapter + 1));
+        tvContent.setText(story.getContent(currentChapter -1));
+        tvName.setText(story.getName(13) + " | C" + currentChapter);
         nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener()
         {
             @Override
@@ -196,10 +196,9 @@ public class StoryReadingFragment extends Fragment
 
 
 // Todo:chuyen chapter va capnhat muc luc
-        pre.setOnClickListener(new View.OnClickListener()
+        pre.setOnClickListener(v->
         {
-            private void goToPreviousChapter()
-            {
+
                 if (currentChapter > 1)
                 {
                     int previousChapter = currentChapter - 1;
@@ -212,49 +211,21 @@ public class StoryReadingFragment extends Fragment
                 {
                     Toast.makeText(requireContext(), "Đây là chương đầu tiên", Toast.LENGTH_SHORT).show();
                 }
-            }
 
-            @Override
-            public void onClick(View v)
-            {
-                // Gọi phương thức để chuyển đến chương trước đó
-                goToPreviousChapter();
-            }
         });
-        ne.setOnClickListener(new View.OnClickListener()
-        {
-            private void goToNextChapter()
-            {
-                // Giả sử bạn có tổng số chương là maxChapter
-                int maxChapter = getMaxChapter();
 
+        ne.setOnClickListener(v ->
+        {
+                int maxChapter = story.getNumberOfChapter();
                 if (currentChapter < maxChapter)
                 {
-                    int nextChapter = currentChapter + 1;
-//                    StoryReadingFragment newFragment = StoryReadingFragment.newInstance("Chapter " + nextChapter, "YourParam2");
-//                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                    transaction.replace(R.id.fragment_container_avs, newFragment);
-//                    transaction.addToBackStack(null);
-//                    transaction.commit();
+                    tvContent.setText(story.getContent(currentChapter - 1));
+                    tvName.setText(story.getName(13) + " | C" + (currentChapter));
+                    currentChapter = currentChapter + 1;
                 } else
                 {
                     Toast.makeText(requireContext(), "Đây là chương cuối cùng", Toast.LENGTH_SHORT).show();
                 }
-            }
-
-            private int getMaxChapter()
-            {
-                // Hàm này trả về số chương tối đa, bạn có thể thay đổi cách lấy dữ liệu tùy vào ứng dụng của bạn
-                // Ví dụ: nếu bạn lấy từ Firebase, có thể làm một truy vấn để lấy tổng số chương
-                return 10; // Đây chỉ là ví dụ, bạn cần thay đổi theo ứng dụng của bạn
-            }
-
-            @Override
-            public void onClick(View v)
-            {
-                // Gọi phương thức để chuyển đến chương tiếp theo
-                goToNextChapter();
-            }
         });
 
         ml.setOnClickListener(new View.OnClickListener()

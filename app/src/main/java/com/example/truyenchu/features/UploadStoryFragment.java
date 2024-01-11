@@ -137,7 +137,9 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
         TextView tv_Author = view.findViewById(R.id.tvUsername_upload);
         imageView = view.findViewById(R.id.iv_cover1);
         SharedPreferences usersInfoPreference = getActivity().getSharedPreferences("users_info", Context.MODE_PRIVATE);
-        tv_Author.setText(usersInfoPreference.getString("name", null));
+        String uuid = usersInfoPreference.getString("uuid", null);
+        if (uuid != null)
+            tv_Author.setText(usersInfoPreference.getString("name", null));
 
         // Get database
         DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();

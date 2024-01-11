@@ -97,6 +97,7 @@ public class StoryDescriptionFragment extends Fragment
         ImageView ivLike = view.findViewById(R.id.des_iv_like);
         ImageView ivComment = view.findViewById(R.id.des_iv_comment);
         TextView tvDescription = view.findViewById(R.id.des_tv_description);
+        TextView tvID = view.findViewById(R.id.des_tv_id);
 
 
         Bundle bundle = getArguments();
@@ -105,8 +106,9 @@ public class StoryDescriptionFragment extends Fragment
             int receivedStoryID = bundle.getInt("receivedStoryID");
             StoryClass receivedStory = loadStoryFromFile(String.valueOf(receivedStoryID));
             StoryClass.SetText(tvNameDes, receivedStory.getName());
-            StoryClass.SetImage(requireContext(), receivedStory.getUri(), ivPicture);
             StoryClass.SetText(tvAuthor, receivedStory.getAuthor());
+            StoryClass.SetText(tvID, "ID: " + receivedStory.getId());
+            StoryClass.SetImage(requireContext(), receivedStory.getUri(), ivPicture);
             String receivedDateString = receivedStory.getUpdateTime(); // Chuỗi ngày từ receivedStory
             String stt = receivedStory.getStatus();
             if ("Đang cập nhật".equals(stt))
