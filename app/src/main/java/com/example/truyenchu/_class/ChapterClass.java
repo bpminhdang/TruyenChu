@@ -36,4 +36,19 @@ public class ChapterClass implements Serializable
     {
         this.content = content;
     }
+    public int GetChapterIDInt()
+    {
+        // Tách chuỗi thành mảng sử dụng dấu _
+        String[] parts = chapterId.split("_");
+        int id;
+        try
+        {
+            id = Integer.parseInt(parts[1]);
+        }
+        catch (Exception e)
+        {
+            id = -1;
+        }
+        return id;
+    }
 }

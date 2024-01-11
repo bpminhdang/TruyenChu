@@ -142,6 +142,8 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
             {
                 selectedStoryPosition = position;
+                TextInputLayout textInputLayout = view.findViewById(R.id.update_input_layout_chapter_to_update);
+                textInputLayout.setHint("Cập nhật chương: " + usersStory.get(position).getNumberOfChapter());
             }
 
             @Override
@@ -349,6 +351,8 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
                 {
                     story.setNumberOfChapter(story.getNumberOfChapter() + 1);
                     numberOfChapter = story.getNumberOfChapter();
+                    TextInputLayout textInputLayout = view.findViewById(R.id.update_input_layout_chapter_to_update);
+                    textInputLayout.setHint("Cập nhật chương: " + numberOfChapter);
                 } else
                     numberOfChapter = Integer.parseInt(et_chapter_num.getText().toString());
 

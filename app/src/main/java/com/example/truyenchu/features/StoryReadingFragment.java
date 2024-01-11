@@ -16,7 +16,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.truyenchu.HomeActivity;
 import com.example.truyenchu.R;
+import com.example.truyenchu.StoryActivity;
+import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.adapter.DataListener;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +32,8 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,7 +46,7 @@ public class StoryReadingFragment extends Fragment
     private static final String ARG_STORY = "story";
     boolean isHidden = false;
     int currentChapter = 1;
-    // TODO: Chapter = users.getchapter()
+    boolean firstNext = true;
     private static int mStoryID;
     private StoryClass story;
     private DataListener dataListener;
@@ -73,6 +78,17 @@ public class StoryReadingFragment extends Fragment
         {
             mStoryID = getArguments().getInt(ARG_STORY);
             story = loadStoryFromFile(String.valueOf(mStoryID));
+            story.sortChaptersById();
+//            List<ChapterClass> chapterClasses = story.getChapters();
+//            chapters = story.getChapters();
+//            for (int i =0; i< chapterClasses.size(); i++)
+//            {
+//                int index = chapterClasses.get(i).GetChapterIDInt();
+//                chapters.set(index - 1 , chapterClasses.get(i));
+//            }
+//            story.setChapters(chapters);
+//
+//            int i = 0;
         }
 
     }
@@ -96,7 +112,7 @@ public class StoryReadingFragment extends Fragment
         TextView tvName = view.findViewById(R.id.r_name);
         NestedScrollView nestedScrollView = view.findViewById(R.id.readingkone);
 
-        tvContent.setText(story.getContent(currentChapter -1));
+        tvContent.setText(story.getChapters().get(currentChapter -1).getContent());
         tvName.setText(story.getName(13) + " | C" + currentChapter);
         nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener()
         {
@@ -216,16 +232,20 @@ public class StoryReadingFragment extends Fragment
 
         ne.setOnClickListener(v ->
         {
-                int maxChapter = story.getNumberOfChapter();
-                if (currentChapter < maxChapter)
-                {
-                    tvContent.setText(story.getContent(currentChapter - 1));
-                    tvName.setText(story.getName(13) + " | C" + (currentChapter));
-                    currentChapter = currentChapter + 1;
-                } else
-                {
-                    Toast.makeText(requireContext(), "Đây là chương cuối cùng", Toast.LENGTH_SHORT).show();
-                }
+            if (firstNext) // Fix lỗi khi nhấn lần đầu nó ko next
+            {
+                currentChapter = currentChapter + 1;
+                firstNext = false;
+            }
+            if (currentChapter -1 == story.getNumberOfChapter())
+            {
+                Toast.makeText(requireActivity(), "Đây là chương cuối cùng", Toast.LENGTH_SHORT).show();
+            } else
+            {
+                tvContent.setText(story.getChapters().get(currentChapter -1).getContent());
+                tvName.setText(story.getName(13) + " | C" + (currentChapter));
+                currentChapter = currentChapter + 1;
+            }
         });
 
         ml.setOnClickListener(new View.OnClickListener()

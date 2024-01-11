@@ -12,6 +12,8 @@ import com.google.firebase.database.PropertyName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 // Lớp Truyen (Truyện)
@@ -333,5 +335,22 @@ public class StoryClass implements Serializable
     public void setUserUUID(String userUUID)
     {
         this.userUUID = userUUID;
+    }
+
+    public void sortChaptersById() {
+        Collections.sort(chapters, Comparator.comparingInt(chapter -> extractIndex(chapter.getChapterId())));
+    }
+
+    // Phương thức trích xuất số từ chapterId
+    private int extractIndex(String chapterId) {
+        String[] parts = chapterId.split("_");
+        if (parts.length == 2) {
+            try {
+                return Integer.parseInt(parts[1]);
+            } catch (NumberFormatException e) {
+                e.printStackTrace(); // Xử lý trường hợp không chuyển đổi được thành số nguyên
+            }
+        }
+        return -1; // Trả về giá trị mặc định khi không thành công
     }
 }
