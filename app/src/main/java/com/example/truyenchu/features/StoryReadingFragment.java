@@ -41,6 +41,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import android.animation.ObjectAnimator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -186,6 +189,22 @@ public class StoryReadingFragment extends Fragment {
             textView.setTypeface(savedFont);
         }
     }
+
+    private void fadeOutView(View view) {
+        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(view, "alpha", 1.0f, 0.0f);
+        alphaAnimator.setDuration(500); // Set the duration in milliseconds
+        alphaAnimator.setInterpolator(new DecelerateInterpolator()); // Use DecelerateInterpolator for a gradual fade-out
+        alphaAnimator.start();
+        view.setVisibility(View.GONE);
+    }
+
+    private void fadeInView(View view) {
+        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(view, "alpha", 0.0f, 1.0f);
+        alphaAnimator.setDuration(300); // Set the duration of the animation in milliseconds
+        alphaAnimator.setInterpolator(new DecelerateInterpolator()); // You can adjust the interpolator
+        alphaAnimator.start();
+        view.setVisibility(View.VISIBLE);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -203,9 +222,11 @@ public class StoryReadingFragment extends Fragment {
         tvName = view.findViewById(R.id.r_name);
         NestedScrollView nestedScrollView = view.findViewById(R.id.readingkone);
 
+        // Áp dụng các setting
         int backgroundColor = getSavedBackgroundColor();
-        // Áp dụng màu nền cho giao diện
+
         nestedScrollView.setBackgroundColor(backgroundColor);
+
         applySavedTextColor(tvContent);
 
         float textSize = getSavedTextSize();
@@ -213,33 +234,34 @@ public class StoryReadingFragment extends Fragment {
 
         float lineSpacingMultiplier = getSavedLineSpacingMultiplier();
         applyLineSpacingMultiplier(tvContent, lineSpacingMultiplier);
+
         applySavedFont(tvContent);
 
+        //hihi
+
         SwitchToChapter(currentChapter);
-        nestedScrollView.setOnScrollChangeListener((View.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) ->
-        {
-            // Kiểm tra hướng cuộn và ẩn/hiện top và bot tùy thuộc vào hướng cuộn
+
+        nestedScrollView.setOnScrollChangeListener((View.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             if (scrollY > oldScrollY && !isHidden) {
-                top.setVisibility(View.GONE);
-                bot.setVisibility(View.GONE);
+                fadeOutView(top);
+                fadeOutView(bot);
                 isHidden = true;
             } else if (scrollY < oldScrollY && isHidden) {
-                top.setVisibility(View.VISIBLE);
-                bot.setVisibility(View.VISIBLE);
+                fadeInView(top);
+                fadeInView(bot);
                 isHidden = false;
             }
         });
 
         // Xử lý sự kiện khi TextView được nhấp vào
-        tvContent.setOnClickListener(v ->
-        {
+        tvContent.setOnClickListener(v -> {
             // Chuyển đổi trạng thái của View khi được nhấp vào
             if (isHidden) {
-                top.setVisibility(View.VISIBLE);
-                bot.setVisibility(View.VISIBLE);
+                fadeInView(top);
+                fadeInView(bot);
             } else {
-                top.setVisibility(View.GONE);
-                bot.setVisibility(View.GONE);
+                fadeOutView(top);
+                fadeOutView(bot);
             }
 
             // Đảo ngược giá trị của biến flag
