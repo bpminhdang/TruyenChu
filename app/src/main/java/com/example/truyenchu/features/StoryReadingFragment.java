@@ -47,6 +47,7 @@ public class StoryReadingFragment extends Fragment
     boolean isHidden = false;
     int currentChapter = 1;
     boolean firstNext = true;
+    boolean firstPrev = true;
     private static int mStoryID;
     private StoryClass story;
     private DataListener dataListener;
@@ -112,7 +113,7 @@ public class StoryReadingFragment extends Fragment
         TextView tvName = view.findViewById(R.id.r_name);
         NestedScrollView nestedScrollView = view.findViewById(R.id.readingkone);
 
-        tvContent.setText(story.getChapters().get(currentChapter -1).getContent());
+        tvContent.setText(story.GetChapterContent(currentChapter));
         tvName.setText(story.getName(13) + " | C" + currentChapter);
         nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener()
         {
@@ -214,38 +215,28 @@ public class StoryReadingFragment extends Fragment
 // Todo:chuyen chapter va capnhat muc luc
         pre.setOnClickListener(v->
         {
-
                 if (currentChapter > 1)
                 {
-                    int previousChapter = currentChapter - 1;
-//                    StoryReadingFragment newFragment = StoryReadingFragment.newInstance("Chapter " + previousChapter, "YourParam2");
-//                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                    transaction.replace(R.id.fragment_container_avs, newFragment);
-//                    transaction.addToBackStack(null);
-//                    transaction.commit();
-                } else
-                {
-                    Toast.makeText(requireContext(), "Đây là chương đầu tiên", Toast.LENGTH_SHORT).show();
+                    currentChapter--;
+                    tvContent.setText(story.GetChapterContent(currentChapter));
+                    tvName.setText(story.getName(13) + " | C" + (currentChapter));
                 }
+                else
+                    Toast.makeText(requireContext(), "Đây là chương đầu tiên", Toast.LENGTH_SHORT).show();
 
         });
 
         ne.setOnClickListener(v ->
         {
-            if (firstNext) // Fix lỗi khi nhấn lần đầu nó ko next
+            if (currentChapter < story.getNumberOfChapter())
             {
-                currentChapter = currentChapter + 1;
-                firstNext = false;
-            }
-            if (currentChapter -1 == story.getNumberOfChapter())
-            {
-                Toast.makeText(requireActivity(), "Đây là chương cuối cùng", Toast.LENGTH_SHORT).show();
-            } else
-            {
-                tvContent.setText(story.getChapters().get(currentChapter -1).getContent());
+                currentChapter++;
+                tvContent.setText(story.GetChapterContent(currentChapter));
                 tvName.setText(story.getName(13) + " | C" + (currentChapter));
-                currentChapter = currentChapter + 1;
             }
+            else
+                Toast.makeText(requireActivity(), "Đây là chương cuối cùng", Toast.LENGTH_SHORT).show();
+
         });
 
         ml.setOnClickListener(new View.OnClickListener()

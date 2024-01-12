@@ -353,4 +353,9 @@ public class StoryClass implements Serializable
         }
         return -1; // Trả về giá trị mặc định khi không thành công
     }
+
+    public String GetChapterContent(int chapterID)
+    {
+        return chapters.get(chapterID - 1).getContent();
+    }
 }
