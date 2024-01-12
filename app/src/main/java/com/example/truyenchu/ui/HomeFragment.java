@@ -20,17 +20,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.truyenchu.StoryActivity;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
+import com.example.truyenchu._class.UserClass;
 import com.example.truyenchu.adapter.Horizontal_3_ContentAdapter;
 import com.example.truyenchu.adapter.Horizontal_2_ImageAdapter;
 import com.example.truyenchu.adapter.Horizontal_1_SmallImageAdapter;
 import com.example.truyenchu.adapter.BlankFragment;
 import com.example.truyenchu.adapter.DataListener;
+import com.example.truyenchu.features.DatabaseHelper;
 import com.example.truyenchu.features.ProfilePanelFragment;
-import com.google.gson.Gson;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -56,6 +58,7 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
     private ArrayList<ArrayList<String>> mListStoryList = new ArrayList<>();
     private ArrayList<StoryClass> mListStoryNew = new ArrayList<>();
     private ArrayList<StoryClass> mListStoryUpdate = new ArrayList<>();
+    private ArrayList<StoryClass> mListStoryRecent = new ArrayList<>();
     private DataListener dataListener;
     ImageButton profilePic;
     TextView profileName;
@@ -136,6 +139,16 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
             mListStoryUpdate.add(StoryClass.loadStoryFromFile(getActivity() ,storyID));
         }
 
+        String recentString = UserClass.GetUserInfoFromPref(getActivity(), "recent");
+        if (recentString!= null)
+        {
+            String[] recentStringArray = recentString.split("_");
+            for (String id : recentStringArray)
+            {
+                mListStoryRecent.add(StoryClass.loadStoryFromFile(getActivity(), id));
+            }
+        }
+
         // Khoảng mã lệnh trong Fragment cha để thêm Fragment con
         FragmentManager childFragmentManager = getChildFragmentManager();
         FragmentTransaction transaction = childFragmentManager.beginTransaction();
@@ -157,8 +170,7 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
 
         Horizontal_1_SmallImageAdapter adapter = new Horizontal_1_SmallImageAdapter(getActivity(), mListStoryNew, this::StartStoryDescriptionActivity);
         Horizontal_3_ContentAdapter adapter1 = new Horizontal_3_ContentAdapter(getActivity(), mListStoryUpdate, this::StartStoryDescriptionActivity);
-        Horizontal_2_ImageAdapter adapter2 = new Horizontal_2_ImageAdapter(getActivity(), mListStoryNew, this::StartStoryDescriptionActivity);
-        // Todo: recent
+        Horizontal_2_ImageAdapter adapter2 = new Horizontal_2_ImageAdapter(getActivity(), mListStoryRecent, this::StartStoryDescriptionActivity);
         rcViewNew.setAdapter(adapter);
         rcViewNew.setLayoutManager(layoutManager);
         rcViewUpdate.setAdapter(adapter1);
@@ -171,23 +183,40 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
                 switchToDiscoveryFromButton(0));
         view.findViewById(R.id.home_bt_more_update).setOnClickListener(v ->
                 switchToDiscoveryFromButton(1));
+        view.findViewById(R.id.home_bt_more_recent).setOnClickListener(v ->
+                switchToDiscoveryFromButton(2));
 
 
-//        DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
-//        DatabaseReference usersRef = database.child("users");
-//        Map<String, Object> users = new HashMap<>();
-//        users.put("userId1", new UserClass("user1", "User One", "user1@example.com", "hashedpassword1", "Arial", 12, "#FFFFFF"));
-//        users.put("userId2", new UserClass("user2", "User Two", "user2@example.com", "hashedpassword2", "Times New Roman", 14, "#F0F0F0"));
-//        usersRef.setValue(users, (databaseError, databaseReference) ->
-//        {
-//            if (databaseError != null)
-//            {
-//                System.out.println("Data could not be saved " + databaseError.getMessage());
-//            } else
-//            {
-//                System.out.println("Users data saved successfully.");
-//            }
-//        });
+        String uuid = UserClass.GetUserInfoFromPref(getActivity(),"uuid");
+        if (uuid != null)
+        {
+            DatabaseReference currentUserRef = DatabaseHelper.GetCurrentUserReference(getActivity())
+                    .child("recentString");
+            currentUserRef.addValueEventListener(new ValueEventListener()
+            {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot)
+                {
+                    if (dataSnapshot.exists())
+                    {
+                        String recentString = dataSnapshot.getValue(String.class);
+                        String[] recentStringArray = recentString.split("_");
+                        mListStoryRecent.clear();
+                        for (String id : recentStringArray)
+                        {
+                            mListStoryRecent.add(StoryClass.loadStoryFromFile(getActivity(), id));
+                        }
+                        adapter2.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error)
+                {
+
+                }
+            });
+        }
 
         return view;
 
@@ -196,6 +225,20 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
 
     private void switchToDiscoveryFromButton(int btID)
     {
+        if (btID == 2)
+        {
+            Fragment downloadFragment = new DownloadFragment();
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .add(R.id.home_fragment_container, new BlankFragment()) // Use blank fragment to hide all the content, smoother the animation
+                    .commit();
+
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.fade_in_and_slide, R.anim.fade_out)
+                    .add(R.id.home_fragment_container, downloadFragment, "YOUR_FRAGMENT_TAG")
+                    .commit();
+            return;
+        }
+
         Fragment updateFragment = DiscoveryFragment.newInstance(mListStoryList.get(0), btID);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .add(R.id.home_fragment_container, new BlankFragment()) // Use blank fragment to hide all the content, smoother the animation

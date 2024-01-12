@@ -20,6 +20,7 @@ import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu._class.CommentClass;
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu._class.UserClass;
+import com.example.truyenchu.adapter.BlankFragment;
 import com.example.truyenchu.adapter.DataListener;
 import com.example.truyenchu.ui.DownloadFragment;
 import com.example.truyenchu.ui.HomeFragment;
@@ -406,9 +407,12 @@ public class HomeActivity extends AppCompatActivity implements DataListener
         if (selectedFragment != null)
         {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.home_fragment_container, selectedFragment)
-                    .setCustomAnimations(R.anim.fade_in_1000, R.anim.fade_out)
-                    //.addToBackStack(null) // Để thêm Fragment vào Backstack
+                    .add(R.id.home_fragment_container, new BlankFragment()) // Use blank fragment to hide all the content, smoother the animation
+                    .commit();
+
+           getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.fade_in_and_slide, R.anim.fade_out)
+                    .add(R.id.home_fragment_container, selectedFragment, "YOUR_FRAGMENT_TAG")
                     .commit();
             return true;
         }
