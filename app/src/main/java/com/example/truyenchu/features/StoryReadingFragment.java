@@ -169,29 +169,22 @@ public class StoryReadingFragment extends Fragment {
         textView.setLineSpacing(0, multiplier);
     }
 
-    private static final String PREF_SELECTED_FONT = "selected_font";
+    private static final String PREF_SELECTED_FONT_PATH = "selected_font_path";
 
-    // Hàm đọc tên font đã chọn từ SharedPreferences và áp dụng nó
-    private void applySavedFont() {
-        Typeface savedFont = getSelectedFont();
+    private String getSelectedFontPath() {
+        SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        return preferences.getString(PREF_SELECTED_FONT_PATH, "");
     }
 
-    private Typeface getSelectedFont() {
-        SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        String fontName = preferences.getString(PREF_SELECTED_FONT, "");
-        return Typeface.create(fontName, Typeface.NORMAL);
-    }
-    private void saveSelectedFont(String fontName) {
-        SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(PREF_SELECTED_FONT, fontName);
-        editor.apply();
-    }
-    private void setFontForView(String fontName, TextView textView) {
-        Typeface typeface = Typeface.createFromAsset(requireContext().getAssets(), fontName);
-        textView.setTypeface(typeface);
-        // Lưu thông tin về font đã chọn vào SharedPreferences
-        saveSelectedFont(fontName);
+    // Hàm áp dụng font từ đường dẫn đã chọn
+    private void applySavedFont(TextView textView) {
+        String fontPath = getSelectedFontPath();
+
+        if (!fontPath.isEmpty()) {
+            // Tạo Typeface từ đường dẫn đã lưu
+            Typeface savedFont = Typeface.createFromAsset(requireActivity().getAssets(), fontPath);
+            textView.setTypeface(savedFont);
+        }
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -220,8 +213,7 @@ public class StoryReadingFragment extends Fragment {
 
         float lineSpacingMultiplier = getSavedLineSpacingMultiplier();
         applyLineSpacingMultiplier(tvContent, lineSpacingMultiplier);
-        applySavedFont();
-
+        applySavedFont(tvContent);
 
         SwitchToChapter(currentChapter);
         nestedScrollView.setOnScrollChangeListener((View.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) ->

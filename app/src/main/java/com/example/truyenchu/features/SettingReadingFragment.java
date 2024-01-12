@@ -148,28 +148,32 @@ public class SettingReadingFragment extends Fragment {
     private float lineSpacingMultiplier = 1.0f; // Giá trị mặc định
 
     //doi font
-    private static final String PREF_SELECTED_FONT = "selected_font";
+    private static final String PREF_SELECTED_FONT_PATH = "selected_font_path";
 
-    // Hàm lưu tên font đã chọn vào SharedPreferences
-    private void saveSelectedFont(String fontName) {
+    // Hàm đọc tên font đã chọn từ SharedPreferences
+    private void saveSelectedFontPath(String fontPath) {
         SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(PREF_SELECTED_FONT, fontName);
+        editor.putString(PREF_SELECTED_FONT_PATH, fontPath);
         editor.apply();
     }
-    // Hàm đọc tên font đã chọn từ SharedPreferences
-    private Typeface getSelectedFont() {
+
+    // Hàm lấy đường dẫn font đã chọn từ SharedPreferences
+    private String getSelectedFontPath() {
         SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        String fontName = preferences.getString(PREF_SELECTED_FONT, "");
-        return Typeface.create(fontName, Typeface.NORMAL);
+        return preferences.getString(PREF_SELECTED_FONT_PATH, "");
     }
 
-    //  Hàm áp dụng font
+    // Hàm áp dụng font từ đường dẫn đã chọn
     private void applySavedFont(TextView textView) {
-        Typeface savedFont = getSelectedFont();
-        textView.setTypeface(savedFont);
-    }
+        String fontPath = getSelectedFontPath();
 
+        if (!fontPath.isEmpty()) {
+            // Tạo Typeface từ đường dẫn đã lưu
+            Typeface savedFont = Typeface.createFromAsset(requireActivity().getAssets(), fontPath);
+            textView.setTypeface(savedFont);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -237,7 +241,6 @@ public class SettingReadingFragment extends Fragment {
         View ctwbeige = view.findViewById(R.id.coltx_warmbeige);
         View ctlblue = view.findViewById(R.id.coltx_lblue);
         TextView mauchu = view.findViewById(R.id.tx_mauchu);
-
         //applySavedTextColor(mauchu);
 
         ctwhite.setOnClickListener(v -> {
@@ -293,7 +296,6 @@ public class SettingReadingFragment extends Fragment {
                 saveTextSize(ourFontsize);
             }
         });
-        Toast.makeText(getActivity(), String.valueOf(ourFontsize), Toast.LENGTH_SHORT).show();
 
         //tang giam size dong`
         View inline = view.findViewById(R.id.cus_tangln);
@@ -340,74 +342,74 @@ public class SettingReadingFragment extends Fragment {
         hel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveSelectedFont("helveticaneue.ttf");
-                applySavedFont(mauchu);
+                Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(), "helveticaneue.ttf");
+                saveSelectedFontPath("helveticaneue.ttf");
             }
         });
         ari.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveSelectedFont("arial.ttf");
-                applySavedFont(mauchu);
+                Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(), "arial.ttf");
+                saveSelectedFontPath("arial.ttf");
             }
         });
         avir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveSelectedFont("avenirnextltpro_regular.otf");
-                applySavedFont(mauchu);
-
+                Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(), "avenirnextltpro_regular.otf");
+                saveSelectedFontPath("avenirnextltpro_regular.otf");
             }
         });
         time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveSelectedFont("timesnewroman.ttf");
-                applySavedFont(mauchu);
-
+                Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(), "timesnewroman.ttf");
+                saveSelectedFontPath("timesnewroman.ttf");
             }
         });
 
         geo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveSelectedFont("georgia.ttf");
-                applySavedFont(mauchu);
-
+                Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(), "georgia.ttf");
+                saveSelectedFontPath("georgia.ttf");
             }
         });
-//        rob.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-//        cen.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-//        van.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-//        mont.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-//        lite.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-        //applySavedFont(mauchu);
-
+        rob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(), "roboto_regular.ttf");
+                saveSelectedFontPath("roboto_regular.ttf");
+            }
+        });
+        cen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(), "utm_centur.ttf");
+                saveSelectedFontPath("utm_centur.ttf");
+            }
+        });
+        van.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(), "uvn_van.TTF");
+                saveSelectedFontPath("uvn_van.TTF");
+            }
+        });
+        mont.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(), "montserrat_regular.otf");
+                saveSelectedFontPath("montserrat_regular.otf");
+            }
+        });
+        lite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(), "literatabook.otf");
+                saveSelectedFontPath("literatabook.otf");
+            }
+        });
         return view;
     }
 
