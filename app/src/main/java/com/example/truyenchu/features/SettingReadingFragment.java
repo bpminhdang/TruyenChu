@@ -3,6 +3,7 @@ package com.example.truyenchu.features;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -125,28 +126,50 @@ public class SettingReadingFragment extends Fragment {
 
     private float ourFontsize = 16f; //bien' size text
 
-    // Hàm để lưu kích thước dòng vào SharedPreferences
-    private void saveLineSpacing(float lineSpacing) {
+    // Hàm áp dụng giá trị kích thước dòng mới cho TextView
+    private void applyLineSpacingMultiplier(TextView textView, float multiplier) {
+        textView.setLineSpacing(0, multiplier);
+    }
+
+    // Hàm lưu giá trị kích thước dòng mới vào SharedPreferences
+    private void saveLineSpacingMultiplier(float multiplier) {
         SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putFloat("line_spacing", lineSpacing);
+        editor.putFloat("line_spacing_multiplier", multiplier);
         editor.apply();
     }
 
-    // Hàm để lấy giá trị kích thước dòng từ SharedPreferences
-    private float getSavedLineSpacing() {
+    // Hàm lấy giá trị kích thước dòng từ SharedPreferences
+    private float getSavedLineSpacingMultiplier() {
         SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return preferences.getFloat("line_spacing", 0); // Giá trị mặc định nếu không có giá trị đã lưu
+        return preferences.getFloat("line_spacing_multiplier", 1.0f);
     }
 
-    // Hàm để áp dụng kích thước dòng cho TextView
-    private void applyLineSpacing(TextView textView, float lineSpacing) {
-        // Áp dụng giá trị kích thước dòng cho TextView
-        textView.setLineSpacing(lineSpacing, 1f);
+    private float lineSpacingMultiplier = 1.0f; // Giá trị mặc định
+
+    //doi font
+    private static final String PREF_SELECTED_FONT = "selected_font";
+
+    // Hàm lưu tên font đã chọn vào SharedPreferences
+    private void saveSelectedFont(String fontName) {
+        SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(PREF_SELECTED_FONT, fontName);
+        editor.apply();
+    }
+    // Hàm đọc tên font đã chọn từ SharedPreferences
+    private Typeface getSelectedFont() {
+        SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        String fontName = preferences.getString(PREF_SELECTED_FONT, "");
+        return Typeface.create(fontName, Typeface.NORMAL);
     }
 
-    // Lấy giá trị kích thước dòng từ SharedPreferences
-    float lineSpacing = getSavedLineSpacing();
+    //  Hàm áp dụng font
+    private void applySavedFont(TextView textView) {
+        Typeface savedFont = getSelectedFont();
+        textView.setTypeface(savedFont);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -275,7 +298,6 @@ public class SettingReadingFragment extends Fragment {
         //tang giam size dong`
         View inline = view.findViewById(R.id.cus_tangln);
         View deline = view.findViewById(R.id.cus_giamln);
-        applyLineSpacing(mauchu, lineSpacing);
 
 
         // Áp dụng giá trị kích thước dòng cho TextView
@@ -283,11 +305,11 @@ public class SettingReadingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Tăng kích thước dòng
-                lineSpacing += 1f;
+                lineSpacingMultiplier += 0.3f;
+
                 // Lưu giá trị mới vào SharedPreferences
-                saveLineSpacing(lineSpacing);
-                // Áp dụng giá trị mới cho TextView
-                applyLineSpacing(mauchu, lineSpacing);
+                saveLineSpacingMultiplier(lineSpacingMultiplier);
+
             }
         });
 
@@ -295,14 +317,97 @@ public class SettingReadingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Giảm kích thước dòng
-                lineSpacing -= 1f;
+                lineSpacingMultiplier -= 0.1f;
+
                 // Lưu giá trị mới vào SharedPreferences
-                saveLineSpacing(lineSpacing);
-                // Áp dụng giá trị mới cho TextView
-                applyLineSpacing(mauchu, lineSpacing);
+                saveLineSpacingMultiplier(lineSpacingMultiplier);
+
             }
         });
- //nãy giờ làm trên 2 cái fragment reading thôi, nên giờ t pull thì có mất ko
+
+        //doi font
+        View hel = view.findViewById(R.id.helveticaneue);
+        View ari = view.findViewById(R.id.arial);
+        View avir = view.findViewById(R.id.avenir);
+        View time = view.findViewById(R.id.times);
+        View geo = view.findViewById(R.id.georgia);
+        View rob = view.findViewById(R.id.roboto);
+        View cen = view.findViewById(R.id.centur);
+        View van = view.findViewById(R.id.uvnvan);
+        View mont = view.findViewById(R.id.monts);
+        View lite = view.findViewById(R.id.literata);
+
+        hel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveSelectedFont("helveticaneue.ttf");
+                applySavedFont(mauchu);
+            }
+        });
+        ari.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveSelectedFont("arial.ttf");
+                applySavedFont(mauchu);
+            }
+        });
+        avir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveSelectedFont("avenirnextltpro_regular.otf");
+                applySavedFont(mauchu);
+
+            }
+        });
+        time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveSelectedFont("timesnewroman.ttf");
+                applySavedFont(mauchu);
+
+            }
+        });
+
+        geo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveSelectedFont("georgia.ttf");
+                applySavedFont(mauchu);
+
+            }
+        });
+//        rob.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+//        cen.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+//        van.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+//        mont.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+//        lite.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+        //applySavedFont(mauchu);
+
         return view;
     }
 

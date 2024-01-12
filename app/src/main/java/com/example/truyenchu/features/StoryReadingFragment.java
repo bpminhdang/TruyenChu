@@ -3,6 +3,7 @@ package com.example.truyenchu.features;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -151,10 +152,46 @@ public class StoryReadingFragment extends Fragment {
         int textColor = preferences.getInt("text_color", Color.BLACK);
         mauchu.setTextColor(textColor);
     }
+
     private float ourFontsize = 16f; //bien' size text
+
     private float getSavedTextSize() {
         SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
         return preferences.getFloat("text_size", ourFontsize); //
+    }
+
+    private float getSavedLineSpacingMultiplier() {
+        SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        return preferences.getFloat("line_spacing_multiplier", 1.0f);
+    }
+
+    private void applyLineSpacingMultiplier(TextView textView, float multiplier) {
+        textView.setLineSpacing(0, multiplier);
+    }
+
+    private static final String PREF_SELECTED_FONT = "selected_font";
+
+    // Hàm đọc tên font đã chọn từ SharedPreferences và áp dụng nó
+    private void applySavedFont() {
+        Typeface savedFont = getSelectedFont();
+    }
+
+    private Typeface getSelectedFont() {
+        SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        String fontName = preferences.getString(PREF_SELECTED_FONT, "");
+        return Typeface.create(fontName, Typeface.NORMAL);
+    }
+    private void saveSelectedFont(String fontName) {
+        SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(PREF_SELECTED_FONT, fontName);
+        editor.apply();
+    }
+    private void setFontForView(String fontName, TextView textView) {
+        Typeface typeface = Typeface.createFromAsset(requireContext().getAssets(), fontName);
+        textView.setTypeface(typeface);
+        // Lưu thông tin về font đã chọn vào SharedPreferences
+        saveSelectedFont(fontName);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -180,6 +217,10 @@ public class StoryReadingFragment extends Fragment {
 
         float textSize = getSavedTextSize();
         tvContent.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+
+        float lineSpacingMultiplier = getSavedLineSpacingMultiplier();
+        applyLineSpacingMultiplier(tvContent, lineSpacingMultiplier);
+        applySavedFont();
 
 
         SwitchToChapter(currentChapter);
