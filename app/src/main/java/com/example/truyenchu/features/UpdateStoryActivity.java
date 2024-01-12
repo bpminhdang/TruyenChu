@@ -1,21 +1,19 @@
 package com.example.truyenchu.features;
 
-import static android.app.Activity.RESULT_OK;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -60,17 +58,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link UploadStoryFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class UpdateStoryFragment extends Fragment implements StoryCountListener
+public class UpdateStoryActivity extends AppCompatActivity implements StoryCountListener
 {
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int REQUEST_READ_EXTERNAL_STORAGE = 100;
     private static final int REQUEST_WRITE_EXTERNAL_STORAGE = 101;
@@ -92,57 +81,30 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
         this.storyCount = storyCount;
     }
 
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AddStoryFragment.
-     */
-    public static UpdateStoryFragment newInstance(String param1, String param2)
+    protected void onCreate(Bundle savedInstanceState)
     {
-        UpdateStoryFragment fragment = new UpdateStoryFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
-    public UpdateStoryFragment()
-    {
-        // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null)
-        {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+        setContentView(R.layout.activity_update_story);
+        // Hide action bar
+        Objects.requireNonNull(getSupportActionBar()).hide();
+        // Status bar icon: Black
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        // Status bar: accent 1_0
+        getWindow().setStatusBarColor(getColor(R.color.accent_1_10));
+        // Navigation pill: White
+        getWindow().setNavigationBarColor(Color.WHITE);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
-    {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_update_story, container, false);
-        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, usersStoryString);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, usersStoryString);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Spinner sp_name_update = view.findViewById(R.id.spiner_update);
+        Spinner sp_name_update = findViewById(R.id.spiner_update);
         sp_name_update.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
             {
                 selectedStoryPosition = position;
-                TextInputLayout textInputLayout = view.findViewById(R.id.update_input_layout_chapter_to_update);
+                TextInputLayout textInputLayout = findViewById(R.id.update_input_layout_chapter_to_update);
                 textInputLayout.setHint("Cập nhật chương: " + usersStory.get(position).getNumberOfChapter());
             }
 
@@ -154,18 +116,18 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
         });
         sp_name_update.setAdapter(adapter);
 
-        TextInputEditText et_genres_update = view.findViewById(R.id.genres_update);
-        SwitchMaterial sw_final = view.findViewById(R.id.update_switch_final);
-        Button bt_chooseImage = view.findViewById(R.id.update_bt_chooseImage);
-        TextInputEditText et_description_update = view.findViewById(R.id.et_description);
-        TextInputEditText et_chapter_content_update = view.findViewById(R.id.chapter_content_update);
-        Button bt_Upload = view.findViewById(R.id.btUpload_update);
-        Button bt_Draft = view.findViewById(R.id.btDraft_update);
-        Button bt_Reload = view.findViewById(R.id.btReload_update);
-        ImageView bt_Back = view.findViewById(R.id.ivBack_update);
-        imageView = view.findViewById(R.id.update_iv_cover1);
-        TextView tv_Author = view.findViewById(R.id.tvUsername_update);
-        SharedPreferences usersInfoPreference = getActivity().getSharedPreferences("users_info", Context.MODE_PRIVATE);
+        TextInputEditText et_genres_update = findViewById(R.id.genres_update);
+        SwitchMaterial sw_final = findViewById(R.id.update_switch_final);
+        Button bt_chooseImage = findViewById(R.id.update_bt_chooseImage);
+        TextInputEditText et_description_update = findViewById(R.id.et_description);
+        TextInputEditText et_chapter_content_update = findViewById(R.id.chapter_content_update);
+        Button bt_Upload = findViewById(R.id.btUpload_update);
+        Button bt_Draft = findViewById(R.id.btDraft_update);
+        Button bt_Reload = findViewById(R.id.btReload_update);
+        ImageView bt_Back = findViewById(R.id.ivBack_update);
+        imageView = findViewById(R.id.update_iv_cover1);
+        TextView tv_Author = findViewById(R.id.tvUsername_update);
+        SharedPreferences usersInfoPreference = this.getSharedPreferences("users_info", Context.MODE_PRIVATE);
         String uuid = usersInfoPreference.getString("uuid", null);
         if (uuid != null)
             tv_Author.setText(usersInfoPreference.getString("name", null));
@@ -188,7 +150,7 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
                         StoryClass story = new StoryClass((int) (long) storyData.get("id"));
                         story.setName((String) storyData.get("name"));
                         story.setNumberOfChapter((int) (long) storyData.get("numberOfChapter"));
-                        TextInputLayout textInputLayout = view.findViewById(R.id.update_input_layout_chapter_to_update);
+                        TextInputLayout textInputLayout = findViewById(R.id.update_input_layout_chapter_to_update);
                         textInputLayout.setHint("Cập nhật chương: " + story.getNumberOfChapter());
                         usersStory.add(story);
                         usersStoryString.add(story.getId() + " - " + story.getName());
@@ -207,7 +169,7 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
 
         bt_Back.setOnClickListener(v ->
         {
-            requireActivity().onBackPressed();
+            onBackPressed();
         });
         bt_chooseImage.setOnClickListener(v ->
 
@@ -221,7 +183,7 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
             String content = et_chapter_content_update.getText().toString();
 
             // Saving other details to SharedPreferences
-            SharedPreferences sharedPreferences = requireContext().getSharedPreferences("StoryDraft2", Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences("StoryDraft2", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             //editor.putString("name", name);
             editor.putString("genres", genres);
@@ -232,7 +194,7 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
             // Save story content to a text file
             try
             {
-                FileOutputStream fileOutputStream = requireContext().openFileOutput("story2.txt", Context.MODE_PRIVATE);
+                FileOutputStream fileOutputStream = openFileOutput("story2.txt", Context.MODE_PRIVATE);
                 fileOutputStream.write(content.getBytes());
                 fileOutputStream.close();
 
@@ -248,7 +210,7 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
 
                     try
                     {
-                        imageOutputStream = requireContext().openFileOutput(fileName, Context.MODE_PRIVATE);
+                        imageOutputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, imageOutputStream); // Compress and save the bitmap
                     } catch (Exception e)
                     {
@@ -268,7 +230,7 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
                     }
                 }
 
-                Toast.makeText(getContext(), "Saved successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Saved successfully", Toast.LENGTH_SHORT).show();
             } catch (IOException e)
             {
                 e.printStackTrace();
@@ -277,7 +239,7 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
         bt_Reload.setOnClickListener(v ->
         {
 
-            SharedPreferences sharedPreferences = requireContext().getSharedPreferences("StoryDraft2", Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences("StoryDraft2", Context.MODE_PRIVATE);
             String savedName = sharedPreferences.getString("name", "");
             String savedGenres = sharedPreferences.getString("genres", "");
             String savedDescription = sharedPreferences.getString("description", "");
@@ -293,7 +255,7 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
             // Load story content from the text file
             try
             {
-                FileInputStream fileInputStream = requireContext().openFileInput("story2.txt");
+                FileInputStream fileInputStream = openFileInput("story2.txt");
                 InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                 StringBuilder contentBuilder = new StringBuilder();
@@ -304,10 +266,10 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
                 }
                 bufferedReader.close();
                 et_chapter_content_update.setText(contentBuilder.toString());
-                Toast.makeText(getContext(), "Loaded successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Loaded successfully", Toast.LENGTH_SHORT).show();
             } catch (IOException e)
             {
-                Toast.makeText(getContext(), "Error loading content!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Error loading content!", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
 
@@ -318,13 +280,13 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
                     imageUri = Uri.parse(imageUriString);
                     imageView.setImageURI(imageUri); // Set the selected image to the ImageView
                 }
-                FileInputStream fileInputStream = requireContext().openFileInput(fileName);
+                FileInputStream fileInputStream = openFileInput(fileName);
                 loadedBitmap = BitmapFactory.decodeStream(fileInputStream); // Decode the stored file into a Bitmap
                 fileInputStream.close(); // Close the file input stream
                 imageView.setImageBitmap(loadedBitmap);
             } catch (Exception e)
             {
-                Toast.makeText(getContext(), "Can't retrieve image, please choose it manually!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Can't retrieve image, please choose it manually!", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         });
@@ -332,9 +294,9 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
 
         bt_Upload.setOnClickListener(v ->
         {
-            if (!NetworkUtil.isNetworkConnected(getContext()))
+            if (!NetworkUtil.isNetworkConnected(this))
             {
-                Toast.makeText(getContext(), "Not connected to the internet. Check your connection and try again!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Not connected to the internet. Check your connection and try again!", Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -345,13 +307,13 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
             if (!TextUtils.isEmpty(et_chapter_content_update.getText()))
             {
                 String content = et_chapter_content_update.getText().toString();
-                EditText et_chapter_num = view.findViewById(R.id.update_et_chapter_to_update);
+                EditText et_chapter_num = findViewById(R.id.update_et_chapter_to_update);
                 int numberOfChapter;
                 if (TextUtils.isEmpty(et_chapter_num.getText()))
                 {
                     story.setNumberOfChapter(story.getNumberOfChapter() + 1);
                     numberOfChapter = story.getNumberOfChapter();
-                    TextInputLayout textInputLayout = view.findViewById(R.id.update_input_layout_chapter_to_update);
+                    TextInputLayout textInputLayout = findViewById(R.id.update_input_layout_chapter_to_update);
                     textInputLayout.setHint("Cập nhật chương: " + numberOfChapter);
                 } else
                     numberOfChapter = Integer.parseInt(et_chapter_num.getText().toString());
@@ -389,10 +351,9 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
                         storyRef.child("story_" + id).child("uri").setValue(imageUriStringFB));
             }
 
-            Toast.makeText(getActivity(), "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
         });
 
-        return view;
     }
 
     private void openFileChooser()
@@ -448,4 +409,3 @@ public class UpdateStoryFragment extends Fragment implements StoryCountListener
         }
     }
 }
-

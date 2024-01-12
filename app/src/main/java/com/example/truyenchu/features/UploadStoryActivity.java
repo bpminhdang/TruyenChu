@@ -1,20 +1,18 @@
 package com.example.truyenchu.features;
 
-import static android.app.Activity.RESULT_OK;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,13 +52,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link UploadStoryFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class UploadStoryFragment extends Fragment implements StoryCountListener
+public class UploadStoryActivity extends AppCompatActivity implements StoryCountListener
 {
 
     private static final String ARG_PARAM1 = "param1";
@@ -81,62 +73,39 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
     {
         this.storyCount = storyCount;
     }
-
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AddStoryFragment.
-     */
-    public static UploadStoryFragment newInstance(String param1, String param2)
-    {
-        UploadStoryFragment fragment = new UploadStoryFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    public UploadStoryFragment()
+    
+    public void UploadStoryFragment()
     {
         // Required empty public constructor
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
+    protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null)
-        {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+        setContentView(R.layout.activity_upload_story);
+        // Hide action bar
+        Objects.requireNonNull(getSupportActionBar()).hide();
+        // Status bar icon: Black
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        // Status bar: accent 1_0
+        getWindow().setStatusBarColor(getColor(R.color.accent_1_10));
+        // Navigation pill: White
+        getWindow().setNavigationBarColor(Color.WHITE);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
-    {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_upload_story, container, false);
-
-        TextInputEditText et_name_upload = view.findViewById(R.id.name_upload);
-        TextInputEditText et_genres_upload = view.findViewById(R.id.genres_upload);
-        SwitchMaterial sw_final = view.findViewById(R.id.switch_final);
-        Button bt_chooseImage = view.findViewById(R.id.bt_chooseImage_upload);
-        TextInputEditText et_description_upload = view.findViewById(R.id.et_description);
-        TextInputEditText et_chapter_content_upload = view.findViewById(R.id.chapter_content_upload);
-        Button bt_Upload = view.findViewById(R.id.btUpload_upload);
-        Button bt_Draft = view.findViewById(R.id.btDraft_upload);
-        Button bt_Reload = view.findViewById(R.id.btReload_upload);
-        ImageView bt_Back = view.findViewById(R.id.ivBack_upload);
-        TextView tv_Author = view.findViewById(R.id.tvUsername_upload);
-        imageView = view.findViewById(R.id.iv_cover1);
-        SharedPreferences usersInfoPreference = getActivity().getSharedPreferences("users_info", Context.MODE_PRIVATE);
+        TextInputEditText et_name_upload = findViewById(R.id.name_upload);
+        TextInputEditText et_genres_upload = findViewById(R.id.genres_upload);
+        SwitchMaterial sw_final = findViewById(R.id.switch_final);
+        Button bt_chooseImage = findViewById(R.id.bt_chooseImage_upload);
+        TextInputEditText et_description_upload = findViewById(R.id.et_description);
+        TextInputEditText et_chapter_content_upload = findViewById(R.id.chapter_content_upload);
+        Button bt_Upload = findViewById(R.id.btUpload_upload);
+        Button bt_Draft = findViewById(R.id.btDraft_upload);
+        Button bt_Reload = findViewById(R.id.btReload_upload);
+        ImageView bt_Back = findViewById(R.id.ivBack_upload);
+        TextView tv_Author = findViewById(R.id.tvUsername_upload);
+        imageView = findViewById(R.id.iv_cover1);
+        SharedPreferences usersInfoPreference =getSharedPreferences("users_info", Context.MODE_PRIVATE);
         String uuid = usersInfoPreference.getString("uuid", null);
         if (uuid != null)
             tv_Author.setText(usersInfoPreference.getString("name", null));
@@ -146,7 +115,7 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
         DatabaseReference storyRef = database.child("stories");
 
         // Upload local storyCount variable when start this fragment and everytime a story uploaded successfully.
-       database.child("storyCount").addValueEventListener(new ValueEventListener()
+        database.child("storyCount").addValueEventListener(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
@@ -156,7 +125,7 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
                 Integer value = dataSnapshot.getValue(Integer.class);
                 if (value == null)
                 {
-                   database.child("storyCount").setValue(0);
+                    database.child("storyCount").setValue(0);
                     onStoryCountReceived(0);
                 } else
                     onStoryCountReceived(value);
@@ -173,7 +142,7 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
 
         bt_Back.setOnClickListener(v->
         {
-            requireActivity().onBackPressed();
+            onBackPressed();
         });
         bt_chooseImage.setOnClickListener(v ->
                 openFileChooser());
@@ -186,7 +155,7 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
             String content = et_chapter_content_upload.getText().toString();
 
             // Saving other details to SharedPreferences
-            SharedPreferences sharedPreferences = requireContext().getSharedPreferences("StoryDraft", Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences("StoryDraft", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("name", name);
             editor.putString("genres", genres);
@@ -197,7 +166,7 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
             // Save story content to a text file
             try
             {
-                FileOutputStream fileOutputStream = requireContext().openFileOutput("story.txt", Context.MODE_PRIVATE);
+                FileOutputStream fileOutputStream = openFileOutput("story.txt", Context.MODE_PRIVATE);
                 fileOutputStream.write(content.getBytes());
                 fileOutputStream.close();
 
@@ -213,7 +182,7 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
 
                     try
                     {
-                        imageOutputStream = requireContext().openFileOutput(fileName, Context.MODE_PRIVATE);
+                        imageOutputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, imageOutputStream); // Compress and save the bitmap
                     } catch (Exception e)
                     {
@@ -233,7 +202,7 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
                     }
                 }
 
-                Toast.makeText(getContext(), "Saved successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Saved successfully", Toast.LENGTH_SHORT).show();
             } catch (IOException e)
             {
                 e.printStackTrace();
@@ -242,7 +211,7 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
         bt_Reload.setOnClickListener(v ->
         {
 
-            SharedPreferences sharedPreferences = requireContext().getSharedPreferences("StoryDraft", Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences("StoryDraft", Context.MODE_PRIVATE);
             String savedName = sharedPreferences.getString("name", "");
             String savedGenres = sharedPreferences.getString("genres", "");
             String savedDescription = sharedPreferences.getString("description", "");
@@ -258,7 +227,7 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
             // Load story content from the text file
             try
             {
-                FileInputStream fileInputStream = requireContext().openFileInput("story.txt");
+                FileInputStream fileInputStream = openFileInput("story.txt");
                 InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                 StringBuilder contentBuilder = new StringBuilder();
@@ -269,10 +238,10 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
                 }
                 bufferedReader.close();
                 et_chapter_content_upload.setText(contentBuilder.toString());
-                Toast.makeText(getContext(), "Loaded successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Loaded successfully", Toast.LENGTH_SHORT).show();
             } catch (IOException e)
             {
-                Toast.makeText(getContext(), "Error loading content!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Error loading content!", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
 
@@ -283,13 +252,13 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
                     imageUri = Uri.parse(imageUriString);
                     imageView.setImageURI(imageUri); // Set the selected image to the ImageView
                 }
-                FileInputStream fileInputStream = requireContext().openFileInput(fileName);
+                FileInputStream fileInputStream = openFileInput(fileName);
                 loadedBitmap = BitmapFactory.decodeStream(fileInputStream); // Decode the stored file into a Bitmap
                 fileInputStream.close(); // Close the file input stream
                 imageView.setImageBitmap(loadedBitmap);
             } catch (Exception e)
             {
-                Toast.makeText(getContext(), "Can't retrieve image, please choose it manually!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Can't retrieve image, please choose it manually!", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         });
@@ -299,13 +268,13 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
         {
             if (imageUri == null)
             {
-                Toast.makeText(getContext(), "Please choose cover image for story", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Please choose cover image for story", Toast.LENGTH_LONG).show();
                 return;
             }
 
-            if(!NetworkUtil.isNetworkConnected(getContext()))
+            if(!NetworkUtil.isNetworkConnected(this))
             {
-                Toast.makeText(getContext(), "Not connected to the internet. Check your connection and try again!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Not connected to the internet. Check your connection and try again!", Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -367,22 +336,21 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
                 if (databaseError != null)
                 {
                     Log.i("DB", "Data could not be saved " + databaseError.getMessage());
-                    Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
                 } else
                 {
-                   database.child("storyCount").setValue(storyCount + 1);
+                    database.child("storyCount").setValue(storyCount + 1);
                     Log.i("DB", "Upload story success!");
                     Gson gson = new Gson();
                     String storyJson = gson.toJson(story); // Convert the object to to log it
                     Log.i("DB", "Data pushed: " + storyJson);
-                    Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
 
                 }
             });
 
 
         });
-        return view;
     }
 
     private void openFileChooser()
@@ -438,4 +406,3 @@ public class UploadStoryFragment extends Fragment implements StoryCountListener
         }
     }
 }
-

@@ -19,9 +19,15 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".features.UploadStoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.UpdateStoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".features.StoryRatingActivity"
             android:exported="false"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".dev.AddDataFirebase_dev"
             android:exported="true" />

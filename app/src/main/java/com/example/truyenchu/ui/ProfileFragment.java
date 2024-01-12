@@ -15,7 +15,10 @@ import android.view.ViewGroup;
 
 import com.example.truyenchu.HomeActivity;
 import com.example.truyenchu.R;
+import com.example.truyenchu.adapter.BlankFragment;
 import com.example.truyenchu.features.ProfilePanelFragment;
+import com.example.truyenchu.features.UpdateStoryActivity;
+import com.example.truyenchu.features.UploadStoryActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
@@ -79,7 +82,7 @@ public class ProfileFragment extends Fragment
         transaction.replace(R.id.fragmentProfileContainerView_profile, fragment); // R.id.container là id của viewgroup trong Fragment cha
         transaction.commit();
 
-        view.findViewById(R.id.btSignOut).setOnClickListener(v->
+        view.findViewById(R.id.btSignOut).setOnClickListener(v ->
         {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(getActivity(), HomeActivity.class);
@@ -91,6 +94,17 @@ public class ProfileFragment extends Fragment
             getActivity().finish();
         });
 
+        view.findViewById(R.id.pro_upload).setOnClickListener(v ->
+        {
+            Intent intent = new Intent(getActivity(), UploadStoryActivity.class);
+            startActivity(intent);
+        });
+
+        view.findViewById(R.id.pro_update).setOnClickListener(v ->
+        {
+            Intent intent = new Intent(getActivity(), UpdateStoryActivity.class);
+            startActivity(intent);
+        });
         return view;
     }
 }

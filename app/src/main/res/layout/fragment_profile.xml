@@ -24,7 +24,6 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="138dp"
                 android:layout_height="41dp"
-                android:layout_marginBottom="20dp"
                 android:text="Đăng xuất"
                 android:textColor="#0E0E0E"
                 android:textSize="12sp"
@@ -41,13 +40,85 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragmentProfileContainerView_profile">
+
+                <TextView
+                    android:id="@+id/lichsu2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:paddingLeft="20dp"
+                    android:text="QUẢN LÝ TRUYỆN"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="30dp"
+                    android:paddingBottom="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lichsu2">
+
+                    <TextView
+                        android:id="@+id/pro_my_story"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/history_button_selector"
+                        android:drawableEnd="@drawable/vector_button_selector"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:paddingBottom="10dp"
+                        android:text="Truyện của tôi"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/pro_upload"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/heart_button_selector"
+                        android:drawableEnd="@drawable/vector_button_selector"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:paddingBottom="10dp"
+                        android:text="Tải truyện lên"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/pro_update"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/dw_button_selector"
+                        android:drawableEnd="@drawable/vector_button_selector"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:paddingBottom="10dp"
+                        android:text="Cập nhật truyện"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="25dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fragmentProfileContainerView_profile">
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout5">
 
                 <TextView
                     android:id="@+id/lichsu"
@@ -75,7 +146,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/lichsu">
 
                     <TextView
-                        android:id="@+id/xem"
+                        android:id="@+id/pro_recent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/history_button_selector"
@@ -87,7 +158,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/thich"
+                        android:id="@+id/pro_like"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/heart_button_selector"
@@ -99,7 +170,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/tai"
+                        android:id="@+id/pro_download"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/dw_button_selector"
