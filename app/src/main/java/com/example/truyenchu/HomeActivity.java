@@ -25,6 +25,7 @@ import com.example.truyenchu.ui.DownloadFragment;
 import com.example.truyenchu.ui.HomeFragment;
 import com.example.truyenchu.ui.ProfileFragment;
 import com.example.truyenchu.ui.DiscoveryFragment;
+import com.example.truyenchu.ui.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -381,7 +382,7 @@ public class HomeActivity extends AppCompatActivity implements DataListener
             selectedFragment = DiscoveryFragment.newInstance(listOfStoryLists.get(0));
         } else if (item.getItemId() == R.id.navigation_download)
         {
-            //selectedFragment = new UploadStoryFragment();
+            selectedFragment = new DownloadFragment();
         } else if (item.getItemId() == R.id.navigation_home)
         {
             selectedFragment = HomeFragment.newInstance(listOfStoryLists);
@@ -399,7 +400,7 @@ public class HomeActivity extends AppCompatActivity implements DataListener
                 selectedFragment = new ProfileFragment();
         } else if (item.getItemId() == R.id.navigation_search)
         {
-            //selectedFragment = new UpdateStoryFragment();
+            selectedFragment = new SearchFragment();
         }
 
         if (selectedFragment != null)
@@ -452,11 +453,11 @@ public class HomeActivity extends AppCompatActivity implements DataListener
         Log.i("Data Listener", "Receive data from fragment: " + data);
         if (data.equals("Click Discovery"))
         {
+            // Tắt onclick của navigation để chuyển vị trí selected Item
             bottomNav.setOnItemSelectedListener(item ->
                     SetNotOnItemClick());
 
             bottomNav.setSelectedItemId(R.id.navigation_discovery);
-
             bottomNav.setOnItemSelectedListener(this::SetOnItemClick);
         }
     }

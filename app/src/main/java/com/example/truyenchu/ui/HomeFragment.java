@@ -129,11 +129,11 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
             mListStoryList = (ArrayList<ArrayList<String>>) getArguments().getSerializable(ARG_LIST_STORY_LIST);
         for (String storyID : mListStoryList.get(1))
         {
-            mListStoryNew.add(loadStoryFromFile(storyID));
+            mListStoryNew.add(StoryClass.loadStoryFromFile(getActivity() ,storyID));
         }
         for (String storyID : mListStoryList.get(2))
         {
-            mListStoryUpdate.add(loadStoryFromFile(storyID));
+            mListStoryUpdate.add(StoryClass.loadStoryFromFile(getActivity() ,storyID));
         }
 
         // Khoảng mã lệnh trong Fragment cha để thêm Fragment con
@@ -209,36 +209,6 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         sendDataToActivity("Click Discovery");
     }
 
-
-    public StoryClass loadStoryFromFile(String storyId)
-    {
-        StoryClass loadedStory = null;
-        String fileName = storyId + ".json"; // Tên file là ID của truyện + ".json"
-
-        // Lấy đường dẫn đến thư mục "stories" trong internal storage
-        File directory = new File(getActivity().getFilesDir() + "/stories");
-        File file = new File(directory, fileName);
-
-        if (file.exists())
-        {
-            try (FileInputStream fis = new FileInputStream(file))
-            {
-                int size = fis.available();
-                byte[] buffer = new byte[size];
-                fis.read(buffer);
-                fis.close();
-                String storyJson = new String(buffer);
-
-                // Chuyển đổi chuỗi JSON thành đối tượng StoryClass
-                Gson gson = new Gson();
-                loadedStory = gson.fromJson(storyJson, StoryClass.class);
-            } catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        return loadedStory;
-    }
 
     private void StartStoryDescriptionActivity(StoryClass story)
     {

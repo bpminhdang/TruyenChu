@@ -1,14 +1,26 @@
 package com.example.truyenchu.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.truyenchu.R;
+import com.example.truyenchu.StoryActivity;
+import com.example.truyenchu._class.StoryClass;
+import com.example.truyenchu._class.UserClass;
+import com.example.truyenchu.adapter.Horizontal_1_SmallImageAdapter;
+import com.example.truyenchu.adapter.Horizontal_2_ImageAdapter;
+import com.example.truyenchu.adapter.Horizontal_3_ContentAdapter;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,36 +76,26 @@ public class DownloadFragment extends Fragment
         //TODO: Thay vì tự tạo Story, lấy dữ liệu từ Firebase và đưa nó vào nhiều object, sau đó đưa vào recyclerView
 
         View view = inflater.inflate(R.layout.fragment_download, container, false);
-//        ArrayList<StoryClass> Stories = new ArrayList<>();
-//        StoryClass story_Class_1 = new StoryClass(2, "Khi hơi thở hóa thinh không", "Paul Katy", "Full", "19 giờ trước", 10, new Lis{"Helpless"}, 103);
-//        String chapter_1 = "Trong một thung lũng xa xôi, nơi tình khúc hòa với tiếng gió, có một lão già tên là Oren. Ông là người duy nhất trong làng biết về bí mật của \"Hơi Thở Hóa Thinh Không\".\n" +
-//                "Lão Oren từng nói rằng mỗi sinh linh đều có khả năng biến hơi thở của mình thành một sức mạnh vô hình, tạo nên những điều kỳ diệu. Người ta cười chê và coi ông như một người mơ mộng.\n" +
-//                "Trong một buổi chiều trời rực rỡ, Dara - một cô bé tinh nghịch, đầy tò mò đã đến thăm lão Oren. Cô bé vừa học được về bí mật này và muốn hiểu rõ hơn.\n" +
-//                "\"Mỗi hơi thở là một phép màu, Dara,\" ông Oren nói. \"Nếu ta biết cách tập trung, ta có thể làm bất cứ điều gì.\"\n" +
-//                "Dara đã quyết định thử sức. Cô bé đóng một quả bóng và nhả hơi thở của mình vào đó. Rồi, kì diệu đã xảy ra. Quả bóng bắt đầu nhấp nhổm, bay lên và sáng rực như ngọn đèn lồng.\n" +
-//                "Với sức mạnh của hơi thở, Dara tạo ra những hình ảnh phong phú: một con rồng nhỏ bay quanh, một bông hoa màu sắc lấp lánh, và thậm chí là một cánh buồm trắng nhẹ nhàng trên mặt nước.\n" +
-//                "Từ ngày đó, tin đồn về \"Hơi Thở Hóa Thinh Không\" lan tỏa khắp làng. Mọi người hiểu rõ hơn về sức mạnh tiềm ẩn trong từng hơi thở. Họ đã học cách tin vào điều không tưởng và thấy rằng, trong mỗi chúng ta, đều có khả năng tạo ra kỳ diệu từ những điều tưởng chừng nhỏ nhất.";
-//        story_Class_1.addChapter(new ChapterClass(1, chapter_1));
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//        Stories.add(story_Class_1);
-//
-//        RecyclerView recyclerView = view.findViewById(R.id.read_recycler_view);
-//        HorizontalImageAdapter adapter = new HorizontalImageAdapter(getActivity(), Stories);
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-//
-//        RecyclerView recyclerView1 = view.findViewById(R.id.download_recycler_view);
-//        HorizontalImageAdapter adapter1 = new HorizontalImageAdapter(getActivity(), Stories);
-//        recyclerView1.setAdapter(adapter1);
-//        recyclerView1.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-//
+        String recentString = UserClass.GetUserInfoFromPref(getActivity(), "recent");
+        String[] recentStringArray = recentString.split("_");
+        ArrayList<StoryClass> storyClasses = new ArrayList<>();
+        for (String id : recentStringArray)
+        {
+            storyClasses.add(StoryClass.loadStoryFromFile(getActivity(), id));
+        }
+
+
+        RecyclerView recyclerView = view.findViewById(R.id.download_recycler_view_recent);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
+        Horizontal_2_ImageAdapter adapter = new Horizontal_2_ImageAdapter(getActivity() ,storyClasses, story->
+        {
+            Intent intent = new Intent(getActivity(), StoryActivity.class);
+            intent.putExtra("storyData", story);
+            startActivity(intent);
+        });
+        recyclerView.setAdapter(adapter);
+
         return view;
     }
 }

@@ -6,7 +6,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -363,5 +367,35 @@ public class StoryClass implements Serializable
     public String GetIdString()
     {
         return String.valueOf(id);
+    }
+
+    public static StoryClass loadStoryFromFile(Context context ,String storyId)
+    {
+        StoryClass loadedStory = null;
+        String fileName = storyId + ".json"; // Tên file là ID của truyện + ".json"
+
+        // Lấy đường dẫn đến thư mục "stories" trong internal storage
+        File directory = new File(context.getFilesDir() + "/stories");
+        File file = new File(directory, fileName);
+
+        if (file.exists())
+        {
+            try (FileInputStream fis = new FileInputStream(file))
+            {
+                int size = fis.available();
+                byte[] buffer = new byte[size];
+                fis.read(buffer);
+                fis.close();
+                String storyJson = new String(buffer);
+
+                // Chuyển đổi chuỗi JSON thành đối tượng StoryClass
+                Gson gson = new Gson();
+                loadedStory = gson.fromJson(storyJson, StoryClass.class);
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return loadedStory;
     }
 }

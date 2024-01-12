@@ -5,9 +5,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -34,10 +37,13 @@ import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 public class StoryActivity extends AppCompatActivity implements DataListener
 {
@@ -103,6 +109,45 @@ public class StoryActivity extends AppCompatActivity implements DataListener
             {
                 DatabaseHelper.updateCount(receivedStory.getId(), "views", 1);
                 isRead = true;
+                String uuid = UserClass.GetUserInfoFromPref(this, "uuid");
+                if (uuid != null)
+                {
+                    SharedPreferences sharedPreferences = getSharedPreferences("users_info", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    String recent = UserClass.GetUserInfoFromPref(this, "recent");
+                    if (recent == null)
+                        editor.putString("recent", receivedStory.GetIdString());
+                    else
+                    {
+                        recent = receivedStory.GetIdString() + "_" + recent;
+                        String[] numbers = recent.split("_");
+
+                        // Chuyển mảng thành Set để loại bỏ số trùng lặp (sử dụng LinkedHashSet để duy trì thứ tự)
+                        Set<String> uniqueNumbersSet = new LinkedHashSet<>(Arrays.asList(numbers));
+                        String[] resultArray = uniqueNumbersSet.toArray(new String[0]);
+                        recent = String.join("_", resultArray);
+
+
+                        int countRecent = 0;
+                        int maxRecentStory = 20;
+                        for (char c : recent.toCharArray())
+                        {
+                            if (c == '_')
+                                countRecent++;
+                        }
+                        if (countRecent > maxRecentStory)
+                        {
+                            String[] parts = recent.split("_");
+                            recent = String.join("_", Arrays.copyOf(parts, maxRecentStory));
+                        }
+                        editor.putString("recent", recent);
+                        DatabaseHelper.GetCurrentUserReference(this).child("recentString").setValue(recent);
+
+                    }
+
+                    editor.apply();
+                }
+
             }
 
             StoryReadingFragment storyReadingFragment = StoryReadingFragment.newInstance(receivedStory.getId(), readList, favList, isLoggedIn, 1);

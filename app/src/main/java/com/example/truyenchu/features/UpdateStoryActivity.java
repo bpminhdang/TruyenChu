@@ -54,9 +54,11 @@ import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 public class UpdateStoryActivity extends AppCompatActivity implements StoryCountListener
 {
@@ -350,9 +352,55 @@ public class UpdateStoryActivity extends AppCompatActivity implements StoryCount
                 uploadImageToFirebase("story_" + id, imageUriStringFB ->
                         storyRef.child("story_" + id).child("uri").setValue(imageUriStringFB));
             }
+            DatabaseReference updateStringRef = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app")
+                    .getReference()
+                    .child("updateString");
+            updateStringRef.addListenerForSingleValueEvent(new ValueEventListener()
+            {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot)
+                {
+                    String recent = story.GetIdString();
+                    if (dataSnapshot.exists())
+                    {
+                        recent += "_" + dataSnapshot.getValue(String.class);
+
+                        String[] numbers = recent.split("_");
+
+                        // Chuyển mảng thành Set để loại bỏ số trùng lặp (sử dụng LinkedHashSet để duy trì thứ tự)
+                        Set<String> uniqueNumbersSet = new LinkedHashSet<>(Arrays.asList(numbers));
+                        String[] resultArray = uniqueNumbersSet.toArray(new String[0]);
+                        recent = String.join("_", resultArray);
+
+                        int countRecent = 0;
+                        int maxRecentStory = 20;
+                        for (char c : recent.toCharArray())
+                        {
+                            if (c == '_')
+                                countRecent++;
+                        }
+                        if (countRecent > maxRecentStory)
+                        {
+                            String[] parts = recent.split("_");
+                            recent = String.join("_", Arrays.copyOf(parts, maxRecentStory));
+                        }
+
+                    }
+                    updateStringRef.setValue(recent);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError)
+                {
+                    Log.e("Firebase", "Lỗi khi truy xuất dữ liệu: " + databaseError.getMessage());
+                }
+            });
+
 
             Toast.makeText(this, "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
+
         });
+
 
     }
 

@@ -4,17 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#00FFFFFF"
-    android:paddingStart="5dp"
-    android:paddingEnd="5dp">
+    android:background="#00FFFFFF">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="160dp"
         android:layout_marginStart="10dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginBottom="10dp"
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp"
         app:cardCornerRadius="20dp"> <!-- Điều chỉnh giá trị để bo tròn góc -->
 
         <FrameLayout
@@ -23,14 +20,14 @@
 
             <ImageView
                 android:id="@+id/item_horizontal_image_storyImage"
-                android:layout_width="162dp"
-                android:layout_height="239dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/book_2" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginStart="7dp"
                 android:layout_marginBottom="8dp"

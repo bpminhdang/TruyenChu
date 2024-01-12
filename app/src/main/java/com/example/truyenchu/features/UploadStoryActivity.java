@@ -73,7 +73,7 @@ public class UploadStoryActivity extends AppCompatActivity implements StoryCount
     {
         this.storyCount = storyCount;
     }
-    
+
     public void UploadStoryFragment()
     {
         // Required empty public constructor
@@ -105,7 +105,7 @@ public class UploadStoryActivity extends AppCompatActivity implements StoryCount
         ImageView bt_Back = findViewById(R.id.ivBack_upload);
         TextView tv_Author = findViewById(R.id.tvUsername_upload);
         imageView = findViewById(R.id.iv_cover1);
-        SharedPreferences usersInfoPreference =getSharedPreferences("users_info", Context.MODE_PRIVATE);
+        SharedPreferences usersInfoPreference = getSharedPreferences("users_info", Context.MODE_PRIVATE);
         String uuid = usersInfoPreference.getString("uuid", null);
         if (uuid != null)
             tv_Author.setText(usersInfoPreference.getString("name", null));
@@ -140,7 +140,7 @@ public class UploadStoryActivity extends AppCompatActivity implements StoryCount
             }
         });
 
-        bt_Back.setOnClickListener(v->
+        bt_Back.setOnClickListener(v ->
         {
             onBackPressed();
         });
@@ -272,7 +272,7 @@ public class UploadStoryActivity extends AppCompatActivity implements StoryCount
                 return;
             }
 
-            if(!NetworkUtil.isNetworkConnected(this))
+            if (!NetworkUtil.isNetworkConnected(this))
             {
                 Toast.makeText(this, "Not connected to the internet. Check your connection and try again!", Toast.LENGTH_LONG).show();
                 return;
@@ -346,6 +346,44 @@ public class UploadStoryActivity extends AppCompatActivity implements StoryCount
                     Log.i("DB", "Data pushed: " + storyJson);
                     Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
 
+                }
+            });
+
+
+            // Thêm chuỗi upload để lấy theo thứ tự
+            DatabaseReference uploadStringRef =    FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app")
+                    .getReference()
+                    .child("uploadString");
+            uploadStringRef.addListenerForSingleValueEvent(new ValueEventListener()
+            {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot)
+                {
+                    String recent = story.GetIdString();
+                    if (dataSnapshot.exists())
+                    {
+                        recent += "_" + dataSnapshot.getValue(String.class);
+                        int countRecent = 0;
+                        int maxRecentStory = 20;
+                        for (char c : recent.toCharArray())
+                        {
+                            if (c == '_')
+                                countRecent++;
+                        }
+                        if (countRecent > maxRecentStory)
+                        {
+                            String[] parts = recent.split("_");
+                            recent = String.join("_", Arrays.copyOf(parts, maxRecentStory));
+                        }
+
+                    }
+                    uploadStringRef.setValue(recent);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError)
+                {
+                    Log.e("Firebase", "Lỗi khi truy xuất dữ liệu: " + databaseError.getMessage());
                 }
             });
 
