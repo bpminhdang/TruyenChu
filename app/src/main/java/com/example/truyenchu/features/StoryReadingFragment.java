@@ -65,6 +65,11 @@ public class StoryReadingFragment extends Fragment
         // Required empty public constructor
     }
 
+    public StoryReadingFragment(int currentChapter)
+    {
+        this.currentChapter = currentChapter;
+    }
+
     public void setDataListener(DataListener dataListener)
     {
         this.dataListener = dataListener;
