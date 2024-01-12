@@ -25,10 +25,10 @@ import com.example.truyenchu._class.UserClass;
 import com.example.truyenchu.adapter.BlankFragment;
 import com.example.truyenchu.adapter.DataListener;
 import com.example.truyenchu.features.ProfilePanelFragment;
-import com.example.truyenchu.ui.DownloadFragment;
 import com.example.truyenchu.ui.HomeFragment;
 import com.example.truyenchu.ui.ProfileFragment;
 import com.example.truyenchu.ui.DiscoveryFragment;
+import com.example.truyenchu.ui.SavedFragment;
 import com.example.truyenchu.ui.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -392,7 +392,7 @@ public class HomeActivity extends AppCompatActivity implements DataListener
             selectedFragment = DiscoveryFragment.newInstance(listOfStoryLists.get(0));
         } else if (item.getItemId() == R.id.navigation_download)
         {
-            selectedFragment = new DownloadFragment();
+            selectedFragment = new SavedFragment();
         } else if (item.getItemId() == R.id.navigation_home)
         {
             selectedFragment = HomeFragment.newInstance(listOfStoryLists);

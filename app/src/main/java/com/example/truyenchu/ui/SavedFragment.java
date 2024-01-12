@@ -16,30 +16,23 @@ import com.example.truyenchu.R;
 import com.example.truyenchu.StoryActivity;
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu._class.UserClass;
-import com.example.truyenchu.adapter.Horizontal_1_SmallImageAdapter;
 import com.example.truyenchu.adapter.Horizontal_2_ImageAdapter;
-import com.example.truyenchu.adapter.Horizontal_3_ContentAdapter;
+import com.example.truyenchu.adapter.VerticalContentAdapter;
 import com.example.truyenchu.features.DatabaseHelper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DownloadFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class DownloadFragment extends Fragment
+public class SavedFragment extends Fragment
 {
-    ArrayList<StoryClass> storyClasses = new ArrayList<>();
+    ArrayList<StoryClass> storyClassesRecent = new ArrayList<>();
+    ArrayList<StoryClass> storyClassesSaved = new ArrayList<>();
 
 
-    public DownloadFragment()
+    public SavedFragment()
     {
         // Required empty public constructor
     }
@@ -60,19 +53,38 @@ public class DownloadFragment extends Fragment
         String[] recentStringArray = recentString.split("_");
         for (String id : recentStringArray)
         {
-            storyClasses.add(StoryClass.loadStoryFromFile(getActivity(), id));
+            storyClassesRecent.add(StoryClass.loadStoryFromFile(getActivity(), id));
         }
 
-        RecyclerView recyclerView = view.findViewById(R.id.download_recycler_view_recent);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        RecyclerView recyclerViewRecent = view.findViewById(R.id.download_recycler_view_recent);
+        recyclerViewRecent.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
-        Horizontal_2_ImageAdapter adapter = new Horizontal_2_ImageAdapter(getActivity() ,storyClasses, story->
+        Horizontal_2_ImageAdapter adapter = new Horizontal_2_ImageAdapter(getActivity() , storyClassesRecent, story->
         {
             Intent intent = new Intent(getActivity(), StoryActivity.class);
             intent.putExtra("storyData", story);
             startActivity(intent);
         });
-        recyclerView.setAdapter(adapter);
+        recyclerViewRecent.setAdapter(adapter);
+
+        String savedString = UserClass.GetUserInfoFromPref(getActivity(), "saved");
+        String[] savedStringArray = savedString.split("_");
+        for (String id : savedStringArray)
+        {
+            storyClassesSaved.add(StoryClass.loadStoryFromFile(getActivity(), id));
+        }
+
+
+       RecyclerView recyclerViewSaved = view.findViewById(R.id.download_recycler_view_saved);
+        recyclerViewSaved.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+      VerticalContentAdapter adapter1 = new VerticalContentAdapter(getActivity() , storyClassesSaved, story->
+        {
+            Intent intent = new Intent(getActivity(), StoryActivity.class);
+            intent.putExtra("storyData", story);
+            startActivity(intent);
+        });
+        recyclerViewSaved.setAdapter(adapter1);
+
 
         String uuid = UserClass.GetUserInfoFromPref(getActivity(),"uuid");
         if (uuid == null)
@@ -89,10 +101,10 @@ public class DownloadFragment extends Fragment
                 {
                     String recentString = dataSnapshot.getValue(String.class);
                     String[] recentStringArray = recentString.split("_");
-                    storyClasses.clear();
+                    storyClassesRecent.clear();
                     for (String id : recentStringArray)
                     {
-                        storyClasses.add(StoryClass.loadStoryFromFile(getActivity(), id));
+                        storyClassesRecent.add(StoryClass.loadStoryFromFile(getActivity(), id));
                     }
                     adapter.notifyDataSetChanged();
                 }

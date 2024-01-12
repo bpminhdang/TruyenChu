@@ -99,10 +99,60 @@ public class StoryActivity extends AppCompatActivity implements DataListener
 //                .commit();
 //        return true;
         ImageView bt_tai = findViewById(R.id.btDown);
+        bt_tai.setOnClickListener(v->
+        {
+            String uuid = UserClass.GetUserInfoFromPref(this, "uuid");
+            if (uuid != null)
+            {
+                SharedPreferences sharedPreferences = getSharedPreferences("users_info", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                String recent = UserClass.GetUserInfoFromPref(this, "saved");
+                if (recent == null)
+                    editor.putString("saved", receivedStory.GetIdString());
+                else if (recent.contains(receivedStory.GetIdString()))
+                {
+                    // Nếu có, tạo chuỗi mới không chứa số đó
+                    String[] numbers = recent.split("_");
+                    StringBuilder resultBuilder = new StringBuilder();
+
+                    for (String number : numbers)
+                    {
+                        int currentNumber = Integer.parseInt(number);
+                        if (currentNumber != receivedStory.getId())
+                        {
+                            resultBuilder.append(number).append("_");
+                        }
+                    }
+
+                    // Loại bỏ dấu '_' cuối cùng nếu có
+                    if (resultBuilder.length() > 0)
+                        resultBuilder.deleteCharAt(resultBuilder.length() - 1);
+                    String resultString = resultBuilder.toString();
+                    editor.putString("saved", resultString);
+                    DatabaseHelper.GetCurrentUserReference(this).child("saved").setValue(resultString);
+                    Toast.makeText(getApplicationContext(), "Đã xóa khỏi danh sách truyện!", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    recent = receivedStory.GetIdString() + "_" + recent;
+                    String[] numbers = recent.split("_");
+
+                    // Chuyển mảng thành Set để loại bỏ số trùng lặp (sử dụng LinkedHashSet để duy trì thứ tự)
+                    Set<String> uniqueNumbersSet = new LinkedHashSet<>(Arrays.asList(numbers));
+                    String[] resultArray = uniqueNumbersSet.toArray(new String[0]);
+                    recent = String.join("_", resultArray);
+                    editor.putString("saved", recent);
+                    DatabaseHelper.GetCurrentUserReference(this).child("saved").setValue(recent);
+                    Toast.makeText(getApplicationContext(), "Đã lưu vào danh sách truyện!", Toast.LENGTH_SHORT).show();
+                }
+                editor.apply();
+            }
+        });
 
         Button bt_read = findViewById(R.id.btRead);
         bt_read.setOnClickListener(v ->
         {
+            //Todo: màu
             // Chỉ tăng view mỗi khi tạo activity mới
             // Todo: Chỉ tăng view khi người dùng chưa từng đọc truyện (Optional)
             if (!isRead)

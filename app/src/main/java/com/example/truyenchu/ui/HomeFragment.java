@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,7 +25,6 @@ import com.example.truyenchu.adapter.Horizontal_1_SmallImageAdapter;
 import com.example.truyenchu.adapter.BlankFragment;
 import com.example.truyenchu.adapter.DataListener;
 import com.example.truyenchu.features.DatabaseHelper;
-import com.example.truyenchu.features.ProfilePanelFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -220,7 +217,7 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
     {
         if (btID == 2)
         {
-            Fragment downloadFragment = new DownloadFragment();
+            Fragment downloadFragment = new SavedFragment();
             getActivity().getSupportFragmentManager().beginTransaction()
                     .add(R.id.home_fragment_container, new BlankFragment()) // Use blank fragment to hide all the content, smoother the animation
                     .commit();
