@@ -34,5 +34,13 @@
         <item name="android:elevation">8dp</item>
     </style>
 
+    <style name="RoundBorderDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@drawable/round_border_background</item>
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
+
 
 </resources>

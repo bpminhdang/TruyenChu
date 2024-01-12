@@ -1,14 +1,11 @@
 package com.example.truyenchu._class;
 
 import android.content.Context;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.database.PropertyName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -357,5 +354,10 @@ public class StoryClass implements Serializable
     public String GetChapterContent(int chapterID)
     {
         return chapters.get(chapterID - 1).getContent();
+    }
+
+    public String GetIdString()
+    {
+        return String.valueOf(id);
     }
 }

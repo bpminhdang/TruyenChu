@@ -1,5 +1,6 @@
 package com.example.truyenchu.features;
 
+import android.content.Context;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -68,5 +69,11 @@ public class DatabaseHelper
         });
     }
 
+    public static DatabaseReference GetCurrentUserReference(Context context)
+    {
+        String uuid = UserClass.GetUserInfoFromPref(context, "uuid");
+        DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
+        return database.child("users").child(uuid);
+    }
 
 }

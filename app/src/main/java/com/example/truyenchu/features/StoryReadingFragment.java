@@ -1,9 +1,11 @@
 package com.example.truyenchu.features;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -12,20 +14,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.truyenchu.HomeActivity;
 import com.example.truyenchu.R;
-import com.example.truyenchu.StoryActivity;
-import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu._class.StoryClass;
+import com.example.truyenchu._class.UserClass;
 import com.example.truyenchu.adapter.DataListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
@@ -33,7 +33,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,11 +48,14 @@ public class StoryReadingFragment extends Fragment
     private static final String ARG_STORY = "story";
     boolean isHidden = false;
     int currentChapter = 1;
-    boolean firstNext = true;
-    boolean firstPrev = true;
+    boolean isLoggedIn = false;
     private static int mStoryID;
+    List<Boolean> readList = new ArrayList<>();
+    List<Boolean> favList = new ArrayList<>();
     private StoryClass story;
     private DataListener dataListener;
+    TextView tvName;
+    TextView tvContent;
 
     public StoryReadingFragment()
     {
@@ -80,16 +85,6 @@ public class StoryReadingFragment extends Fragment
             mStoryID = getArguments().getInt(ARG_STORY);
             story = loadStoryFromFile(String.valueOf(mStoryID));
             story.sortChaptersById();
-//            List<ChapterClass> chapterClasses = story.getChapters();
-//            chapters = story.getChapters();
-//            for (int i =0; i< chapterClasses.size(); i++)
-//            {
-//                int index = chapterClasses.get(i).GetChapterIDInt();
-//                chapters.set(index - 1 , chapterClasses.get(i));
-//            }
-//            story.setChapters(chapters);
-//
-//            int i = 0;
         }
 
     }
@@ -109,98 +104,192 @@ public class StoryReadingFragment extends Fragment
         ImageButton ne = bot.findViewById(R.id.nextchapter);
         ImageButton set = bot.findViewById(R.id.setting_read);
         ImageButton ml = bot.findViewById(R.id.mucluc_read);
-        TextView tvContent = view.findViewById(R.id.readingnehihi);
-        TextView tvName = view.findViewById(R.id.r_name);
+        tvContent = view.findViewById(R.id.readingnehihi);
+        tvName = view.findViewById(R.id.r_name);
         NestedScrollView nestedScrollView = view.findViewById(R.id.readingkone);
 
-        tvContent.setText(story.GetChapterContent(currentChapter));
-        tvName.setText(story.getName(13) + " | C" + currentChapter);
-        nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener()
+        String uuid = UserClass.GetUserInfoFromPref(getActivity(), "uuid");
+        if (uuid != null)
         {
-            @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY)
+            DatabaseReference currentUsersRef = DatabaseHelper.GetCurrentUserReference(getActivity());
+            DatabaseReference recentStoryReadRef = currentUsersRef.child("recentStoryRead").child(String.valueOf(story.getId()));
+
+            // Kiểm tra xem khóa tồn tại hay không
+            recentStoryReadRef.addListenerForSingleValueEvent(new ValueEventListener()
             {
-                // Kiểm tra hướng cuộn và ẩn/hiện top và bot tùy thuộc vào hướng cuộn
-                if (scrollY > oldScrollY && !isHidden)
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot)
                 {
-                    top.setVisibility(View.GONE);
-                    bot.setVisibility(View.GONE);
-                    isHidden = true;
-                } else if (scrollY < oldScrollY && isHidden)
-                {
-                    top.setVisibility(View.VISIBLE);
-                    bot.setVisibility(View.VISIBLE);
-                    isHidden = false;
+                    if (!dataSnapshot.exists())
+                    {
+                        // Khóa không tồn tại, tạo nó và thực hiện các hành động tiếp theo
+                        Map<String, Object> updateMap = new HashMap<>();
+                        for (int i = 1; i <= story.getNumberOfChapter(); i++)
+                        {
+                            updateMap.put("fav/" + i, false);
+                            updateMap.put("read/" + i, false);
+                        }
+                        updateMap.put("read/1", true);
+
+                        recentStoryReadRef.updateChildren(updateMap);
+                    }
+
+                    // Thực hiện lấy dữ liệu
+                    recentStoryReadRef.child("read").addListenerForSingleValueEvent(new ValueEventListener()
+                    {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                        {
+                            if (dataSnapshot.exists())
+                            {
+                                // Chuyển dữ liệu từ Firebase thành mảng
+                                readList.add(true);
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                                {
+                                    Boolean value = snapshot.getValue(Boolean.class);
+                                    readList.add(value);
+                                }
+                            }
+                        }
+
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError)
+                        {
+                            // Xử lý lỗi nếu cần thiết
+                        }
+                    });
+
+                    recentStoryReadRef.child("fav").addListenerForSingleValueEvent(new ValueEventListener()
+                    {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                        {
+                            if (dataSnapshot.exists())
+                            {
+                                // Chuyển dữ liệu từ Firebase thành mảng
+                                favList.add(false);
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                                {
+                                    Boolean value = snapshot.getValue(Boolean.class);
+                                    favList.add(value);
+                                }
+                            }
+                        }
+
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError)
+                        {
+                            // Xử lý lỗi nếu cần thiết
+                        }
+                    });
+
+                    isLoggedIn = true;
                 }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError)
+                {
+                    // Xử lý lỗi nếu cần thiết
+                }
+            });
+        }
+
+
+        SwitchToChapter(currentChapter);
+//        tvContent.setText(story.GetChapterContent(currentChapter));
+//        tvName.setText(story.getName(13) + " | C" + (currentChapter));
+        nestedScrollView.setOnScrollChangeListener((View.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) ->
+        {
+            // Kiểm tra hướng cuộn và ẩn/hiện top và bot tùy thuộc vào hướng cuộn
+            if (scrollY > oldScrollY && !isHidden)
+            {
+                top.setVisibility(View.GONE);
+                bot.setVisibility(View.GONE);
+                isHidden = true;
+            } else if (scrollY < oldScrollY && isHidden)
+            {
+                top.setVisibility(View.VISIBLE);
+                bot.setVisibility(View.VISIBLE);
+                isHidden = false;
             }
         });
 
         // Xử lý sự kiện khi TextView được nhấp vào
-        tvContent.setOnClickListener(new View.OnClickListener()
+        tvContent.setOnClickListener(v ->
         {
-            @Override
-            public void onClick(View v)
+            // Chuyển đổi trạng thái của View khi được nhấp vào
+            if (isHidden)
             {
-                // Chuyển đổi trạng thái của View khi được nhấp vào
-                if (isHidden)
-                {
-                    top.setVisibility(View.VISIBLE);
-                    bot.setVisibility(View.VISIBLE);
-                } else
-                {
-                    top.setVisibility(View.GONE);
-                    bot.setVisibility(View.GONE);
-                }
-
-                // Đảo ngược giá trị của biến flag
-                isHidden = !isHidden;
+                top.setVisibility(View.VISIBLE);
+                bot.setVisibility(View.VISIBLE);
+            } else
+            {
+                top.setVisibility(View.GONE);
+                bot.setVisibility(View.GONE);
             }
+
+            // Đảo ngược giá trị của biến flag
+            isHidden = !isHidden;
         });
+
         exit.setOnClickListener(v ->
         {
             requireActivity().onBackPressed();
             sendDataToActivity("Exit reading");
         });
-        reload.setOnClickListener(new View.OnClickListener()
+
+        reload.setOnClickListener(v ->
         {
-            @Override
-            public void onClick(View v)
+            if (isLoggedIn)
             {
-                reloadFragment();
+                DatabaseReference currentUsersRef = DatabaseHelper.GetCurrentUserReference(getActivity());
+                currentUsersRef.child("recentStoryRead")
+                        .child(story.GetIdString())
+                        .child("fav")
+                        .child(String.valueOf(currentChapter)).setValue(true);
+                favList.set(currentChapter, true);
             }
-
-            private void refreshUI()
-            {
-                // Lấy TextView từ layout
-                TextView textView = view.findViewById(R.id.readingnehihi);
-
-                // Thực hiện các bước cập nhật UI dựa trên dữ liệu mới
-                // Ví dụ: Cập nhật nội dung TextView
-                textView.setText("Nội dung mới từ Firebase");
-            }
-
-            private void fetchDataFromFirebase()
-            {
-                // Thực hiện lấy dữ liệu mới từ Firebase
-                // Đây là nơi bạn sẽ thực hiện các thao tác để lấy dữ liệu từ Firebase
-                // Sau khi lấy được dữ liệu mới, gọi hàm cập nhật giao diện người dùng
-                updateDataAndUI();
-            }
-
-            public void updateDataAndUI()
-            {
-                // Gọi hàm để lấy dữ liệu mới từ Firebase
-                fetchDataFromFirebase();
-
-                // Cập nhật giao diện người dùng sau khi có dữ liệu mới
-                refreshUI();
-            }
-
-            private void reloadFragment()
-            {
-                updateDataAndUI();
-            }
+//            @Override
+//            public void onClick(View v)
+//            {
+//                reloadFragment();
+//            }
+//
+//            private void refreshUI()
+//            {
+//                // Lấy TextView từ layout
+//                TextView textView = view.findViewById(R.id.readingnehihi);
+//
+//                // Thực hiện các bước cập nhật UI dựa trên dữ liệu mới
+//                // Ví dụ: Cập nhật nội dung TextView
+//                textView.setText("Nội dung mới từ Firebase");
+//            }
+//
+//            private void fetchDataFromFirebase()
+//            {
+//                // Thực hiện lấy dữ liệu mới từ Firebase
+//                // Đây là nơi bạn sẽ thực hiện các thao tác để lấy dữ liệu từ Firebase
+//                // Sau khi lấy được dữ liệu mới, gọi hàm cập nhật giao diện người dùng
+//                updateDataAndUI();
+//            }
+//
+//            public void updateDataAndUI()
+//            {
+//                // Gọi hàm để lấy dữ liệu mới từ Firebase
+//                fetchDataFromFirebase();
+//
+//                // Cập nhật giao diện người dùng sau khi có dữ liệu mới
+//                refreshUI();
+//            }
+//
+//            private void reloadFragment()
+//            {
+//                updateDataAndUI();
+//            }
         });
+
         set.setOnClickListener(v ->
         {
             SettingReadingFragment settingReadingFragment = new SettingReadingFragment();
@@ -211,18 +300,14 @@ public class StoryReadingFragment extends Fragment
             transaction.commit();
         });
 
-
-// Todo:chuyen chapter va capnhat muc luc
-        pre.setOnClickListener(v->
+        pre.setOnClickListener(v ->
         {
-                if (currentChapter > 1)
-                {
-                    currentChapter--;
-                    tvContent.setText(story.GetChapterContent(currentChapter));
-                    tvName.setText(story.getName(13) + " | C" + (currentChapter));
-                }
-                else
-                    Toast.makeText(requireContext(), "Đây là chương đầu tiên", Toast.LENGTH_SHORT).show();
+            if (currentChapter > 1)
+            {
+                currentChapter--;
+                SwitchToChapter(currentChapter);
+            } else
+                Toast.makeText(requireContext(), "Đây là chương đầu tiên", Toast.LENGTH_SHORT).show();
 
         });
 
@@ -231,47 +316,94 @@ public class StoryReadingFragment extends Fragment
             if (currentChapter < story.getNumberOfChapter())
             {
                 currentChapter++;
-                tvContent.setText(story.GetChapterContent(currentChapter));
-                tvName.setText(story.getName(13) + " | C" + (currentChapter));
-            }
-            else
+                SwitchToChapter(currentChapter);
+            } else
                 Toast.makeText(requireActivity(), "Đây là chương cuối cùng", Toast.LENGTH_SHORT).show();
 
         });
 
-        ml.setOnClickListener(new View.OnClickListener()
+        ml.setOnClickListener(v ->
         {
-            @Override
-            public void onClick(View v)
+            ArrayList<String> optionsList = new ArrayList<>();
+            optionsList.add("  Chương đã đọc được tô màu xám");
+            for (int i = 0; i < story.getNumberOfChapter(); i++)
             {
-
+                optionsList.add("  Chương " + (i + 1));
             }
+            String[] options = optionsList.toArray(new String[0]);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.RoundBorderDialog);
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, options)
+            {
+                @Override
+                public android.view.View getView(int position, android.view.View convertView, android.view.ViewGroup parent)
+                {
+                    TextView textView = (TextView) super.getView(position, convertView, parent);
+                    if (readList.get(position))
+                        textView.setTextColor(Color.GRAY);
+                    if (favList.get(position))
+                        textView.setText(textView.getText() + " ⭐");
+                    return textView;
+                }
+            };
+            builder.setTitle("Chọn chương: ");
+            builder.setAdapter(adapter, (dialog, chapterPos) ->
+            {
+                if (chapterPos == 0)
+                    return;
+                SwitchToChapter(chapterPos);
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
 
 
         return view;
     }
 
+    private void SwitchToChapter(int chapter)
+    {
+        currentChapter = chapter;
+        tvContent.setText(story.GetChapterContent(currentChapter));
+        tvName.setText(story.getName(13) + " | C" + (currentChapter));
+        if (isLoggedIn)
+        {
+            DatabaseReference currentUsersRef = DatabaseHelper.GetCurrentUserReference(getActivity());
+            currentUsersRef.child("recentStoryRead")
+                    .child(story.GetIdString())
+                    .child("read")
+                    .child(String.valueOf(currentChapter)).setValue(true);
+            readList.set(currentChapter, true);
+        }
+    }
+
     @Override
-    public void onAttach(@NonNull Context context) {
+    public void onAttach(@NonNull Context context)
+    {
         super.onAttach(context);
-        try {
+        try
+        {
             dataListener = (DataListener) context;
-        } catch (ClassCastException e) {
+        } catch (ClassCastException e)
+        {
             throw new ClassCastException(context + " must implement DataListener");
         }
     }
+
     private void sendDataToActivity(String data)
     {
-        Log.i("Data Listener","Send data to activity1: " +  data);
+        Log.i("Data Listener", "Send data to activity1: " + data);
 
         // Gửi dữ liệu tới Activity thông qua Interface
         if (dataListener != null)
         {
-            Log.i("Data Listener","Send data to activity: " +  data);
+            Log.i("Data Listener", "Send data to activity: " + data);
             dataListener.onDataReceived(data);
         }
     }
+
     public StoryClass loadStoryFromFile(String storyId)
     {
         StoryClass loadedStory = null;
