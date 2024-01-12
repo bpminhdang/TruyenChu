@@ -233,10 +233,38 @@ public class StoryActivity extends AppCompatActivity implements DataListener
                     // Xử lý lỗi nếu cần thiết
                 }
             });
+            findViewById(R.id.btMucluc).setOnClickListener(v ->
+                    ChapterChooseClick());
         }
+        else
+            findViewById(R.id.btMucluc).setOnClickListener(v ->
+                    ChapterChooseClickGuest());
 
-        findViewById(R.id.btMucluc).setOnClickListener(v ->
-                ChapterChooseClick());
+    }
+
+    private void ChapterChooseClickGuest()
+    {
+        ArrayList<String> optionsList = new ArrayList<>();
+        optionsList.add("  Chương đã đọc được tô màu xám");
+        for (int i = 0; i < receivedStory.getNumberOfChapter(); i++)
+        {
+            optionsList.add("  Chương " + (i + 1));
+        }
+        String[] options = optionsList.toArray(new String[0]);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.RoundBorderDialog);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, options);
+        builder.setTitle("Chọn chương: ");
+        builder.setAdapter(adapter, (dialog, chapterPos) ->
+        {
+            if (chapterPos == 0)
+                return;
+            SwitchToChapter(chapterPos);
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void ChapterChooseClick()
