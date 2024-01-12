@@ -187,10 +187,9 @@ public class Register extends AppCompatActivity {
         DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
         DatabaseReference usersRef = database.child("users");
         usersRef.child(user.getUuid()).setValue(user);
+        usersRef.child(user.getUuid()).child("readCount").setValue(0);
         uploadImageToFirebase(user.getUuid(), imageUriStringFB->
-        {
-            usersRef.child(user.getUuid()).child("profile").setValue(imageUriStringFB);
-        });
+                usersRef.child(user.getUuid()).child("profile").setValue(imageUriStringFB));
 
     }
 

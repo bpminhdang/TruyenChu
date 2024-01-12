@@ -148,6 +148,10 @@ public class StoryClass implements Serializable
         return uri;
     }
 
+    public void setId(int id)
+    {
+        this.id = id;
+    }
 
     public void setName(String name)
     {

@@ -26,6 +26,8 @@ import com.example.truyenchu.adapter.DataListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
@@ -56,6 +58,7 @@ public class StoryReadingFragment extends Fragment
     private DataListener dataListener;
     TextView tvName;
     TextView tvContent;
+    int readCount = -1;
 
     public StoryReadingFragment()
     {
@@ -109,97 +112,111 @@ public class StoryReadingFragment extends Fragment
         NestedScrollView nestedScrollView = view.findViewById(R.id.readingkone);
 
         String uuid = UserClass.GetUserInfoFromPref(getActivity(), "uuid");
-        if (uuid != null)
-        {
+        if (uuid != null) {
             DatabaseReference currentUsersRef = DatabaseHelper.GetCurrentUserReference(getActivity());
-            DatabaseReference recentStoryReadRef = currentUsersRef.child("recentStoryRead").child(String.valueOf(story.getId()));
 
-            // Kiểm tra xem khóa tồn tại hay không
-            recentStoryReadRef.addListenerForSingleValueEvent(new ValueEventListener()
-            {
+            // Lấy giá trị của readCount
+            DatabaseReference readCountRef = currentUsersRef.child("readCount");
+            readCountRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-                {
-                    if (!dataSnapshot.exists())
-                    {
-                        // Khóa không tồn tại, tạo nó và thực hiện các hành động tiếp theo
-                        Map<String, Object> updateMap = new HashMap<>();
-                        for (int i = 1; i <= story.getNumberOfChapter(); i++)
-                        {
-                            updateMap.put("fav/" + i, false);
-                            updateMap.put("read/" + i, false);
-                        }
-                        updateMap.put("read/1", true);
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        int readCount = dataSnapshot.getValue(Integer.class);
+                        String recentStoryReadPath = "recentStoryRead/" + story.getId();
+                        DatabaseReference recentStoryReadRef = currentUsersRef.child(recentStoryReadPath);
 
-                        recentStoryReadRef.updateChildren(updateMap);
+
+                        // Kiểm tra xem nút tồn tại hay không
+                        recentStoryReadRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (!dataSnapshot.exists()) {
+                                    // Nếu nút không tồn tại, thực hiện các hành động tạo mới
+                                    Map<String, Object> updateMap = new HashMap<>();
+                                    for (int i = 1; i <= story.getNumberOfChapter(); i++) {
+                                        updateMap.put("fav/" + i, false);
+                                        updateMap.put("read/" + i, false);
+                                    }
+                                    updateMap.put("read/1", true);
+                                    recentStoryReadRef.updateChildren(updateMap);
+                                    // Lưu giá trị count để tìm được truyện gần nhất đưa vào home
+                                    recentStoryReadRef.child("count").setValue(readCount);
+                                    // Gọi incrementReadCount() nếu cần
+                                    incrementReadCount(readCountRef);
+                                }
+
+                                recentStoryReadRef.child("read").addListenerForSingleValueEvent(new ValueEventListener()
+                                {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                                    {
+                                        if (dataSnapshot.exists())
+                                        {
+                                            // Chuyển dữ liệu từ Firebase thành mảng
+                                            readList.add(true);
+                                            for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                                            {
+                                                Boolean value = snapshot.getValue(Boolean.class);
+                                                readList.add(value);
+                                            }
+                                        }
+                                    }
+
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError)
+                                    {
+                                        // Xử lý lỗi nếu cần thiết
+                                    }
+                                });
+
+                                recentStoryReadRef.child("fav").addListenerForSingleValueEvent(new ValueEventListener()
+                                {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                                    {
+                                        if (dataSnapshot.exists())
+                                        {
+                                            // Chuyển dữ liệu từ Firebase thành mảng
+                                            favList.add(false);
+                                            for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                                            {
+                                                Boolean value = snapshot.getValue(Boolean.class);
+                                                favList.add(value);
+                                            }
+                                        }
+                                    }
+
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError)
+                                    {
+                                        // Xử lý lỗi nếu cần thiết
+                                    }
+                                });
+
+                                isLoggedIn = true;
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                // Xử lý lỗi nếu cần thiết
+                            }
+                        });
                     }
-
-                    // Thực hiện lấy dữ liệu
-                    recentStoryReadRef.child("read").addListenerForSingleValueEvent(new ValueEventListener()
-                    {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-                        {
-                            if (dataSnapshot.exists())
-                            {
-                                // Chuyển dữ liệu từ Firebase thành mảng
-                                readList.add(true);
-                                for (DataSnapshot snapshot : dataSnapshot.getChildren())
-                                {
-                                    Boolean value = snapshot.getValue(Boolean.class);
-                                    readList.add(value);
-                                }
-                            }
-                        }
-
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError)
-                        {
-                            // Xử lý lỗi nếu cần thiết
-                        }
-                    });
-
-                    recentStoryReadRef.child("fav").addListenerForSingleValueEvent(new ValueEventListener()
-                    {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-                        {
-                            if (dataSnapshot.exists())
-                            {
-                                // Chuyển dữ liệu từ Firebase thành mảng
-                                favList.add(false);
-                                for (DataSnapshot snapshot : dataSnapshot.getChildren())
-                                {
-                                    Boolean value = snapshot.getValue(Boolean.class);
-                                    favList.add(value);
-                                }
-                            }
-                        }
-
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError)
-                        {
-                            // Xử lý lỗi nếu cần thiết
-                        }
-                    });
-
-                    isLoggedIn = true;
                 }
 
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError)
-                {
+                public void onCancelled(@NonNull DatabaseError databaseError) {
                     // Xử lý lỗi nếu cần thiết
                 }
             });
         }
 
 
+
+
         SwitchToChapter(currentChapter);
-//        tvContent.setText(story.GetChapterContent(currentChapter));
-//        tvName.setText(story.getName(13) + " | C" + (currentChapter));
         nestedScrollView.setOnScrollChangeListener((View.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) ->
         {
             // Kiểm tra hướng cuộn và ẩn/hiện top và bot tùy thuộc vào hướng cuộn
@@ -359,8 +376,41 @@ public class StoryReadingFragment extends Fragment
             dialog.show();
         });
 
-
         return view;
+    }
+
+    private void incrementReadCount(DatabaseReference readCountRef)
+    {
+        readCountRef.runTransaction(new Transaction.Handler()
+        {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData)
+            {
+                Integer currentValue = mutableData.getValue(Integer.class);
+                if (currentValue == null)
+                {
+                    // Nếu giá trị hiện tại là null, set giá trị là 1
+                    mutableData.setValue(1);
+                } else
+                {
+                    // Ngược lại, tăng giá trị hiện tại lên 1
+                    mutableData.setValue(currentValue + 1);
+                }
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot)
+            {
+                // Xử lý khi giao dịch hoàn tất (hoặc xảy ra lỗi)
+                if (committed)
+                {
+                } else
+                {
+                    // Xảy ra lỗi trong quá trình thực hiện giao dịch
+                }
+            }
+        });
     }
 
     private void SwitchToChapter(int chapter)
