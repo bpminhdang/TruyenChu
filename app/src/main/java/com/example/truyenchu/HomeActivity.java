@@ -463,6 +463,11 @@ public class HomeActivity extends AppCompatActivity implements DataListener
         }
     }
 
+    @Override
+    public void onBooleanListReceived(List<Boolean> readList, List<Boolean> favList)
+    {
+    }
+
     public boolean isNetworkAvailable()
     {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

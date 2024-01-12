@@ -46,14 +46,13 @@ import java.util.Map;
  */
 public class StoryReadingFragment extends Fragment
 {
-
     private static final String ARG_STORY = "story";
     boolean isHidden = false;
     int currentChapter = 1;
-    boolean isLoggedIn = false;
     private static int mStoryID;
     List<Boolean> readList = new ArrayList<>();
     List<Boolean> favList = new ArrayList<>();
+    boolean isLoggedIn = false;
     private StoryClass story;
     private DataListener dataListener;
     TextView tvName;
@@ -65,9 +64,32 @@ public class StoryReadingFragment extends Fragment
         // Required empty public constructor
     }
 
-    public StoryReadingFragment(int currentChapter)
-    {
-        this.currentChapter = currentChapter;
+//    public static StoryReadingFragment newInstance(List<Boolean> readList, List<Boolean> favList, boolean isLoggedIn) {
+//        StoryReadingFragment fragment = new StoryReadingFragment();
+//
+//        // Truyền dữ liệu vào fragment thông qua Bundle
+//        Bundle args = new Bundle();
+//
+//        // Chuyển List<Boolean> thành boolean[] để sử dụng putBooleanArray
+//        boolean[] readArray = convertBooleanListToArray(readList);
+//        boolean[] favArray = convertBooleanListToArray(favList);
+//
+//        args.putBooleanArray("readList", readArray);
+//        args.putBooleanArray("favList", favArray);
+//        args.putBoolean("isLoggedIn", isLoggedIn);
+//
+//        // Đặt các tham số vào fragment
+//        fragment.setArguments(args);
+//
+//        return fragment;
+//    }
+
+    private static boolean[] convertBooleanListToArray(List<Boolean> booleanList) {
+        boolean[] booleanArray = new boolean[booleanList.size()];
+        for (int i = 0; i < booleanList.size(); i++) {
+            booleanArray[i] = booleanList.get(i);
+        }
+        return booleanArray;
     }
 
     public void setDataListener(DataListener dataListener)
@@ -75,11 +97,20 @@ public class StoryReadingFragment extends Fragment
         this.dataListener = dataListener;
     }
 
-    public static StoryReadingFragment newInstance(int storyID)
-    {
+    public static StoryReadingFragment newInstance(int storyID, List<Boolean> readList, List<Boolean> favList, boolean isLoggedIn, int chapter) {
         StoryReadingFragment fragment = new StoryReadingFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_STORY, storyID);
+
+        // Chuyển đổi List<Boolean> thành boolean[] để đặt vào Bundle
+        boolean[] readArray = convertBooleanListToArray(readList);
+        boolean[] favArray = convertBooleanListToArray(favList);
+
+        args.putBooleanArray("readList", readArray);
+        args.putBooleanArray("favList", favArray);
+        args.putBoolean("isLoggedIn", isLoggedIn);
+        args.putInt("chapter", chapter);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -93,8 +124,24 @@ public class StoryReadingFragment extends Fragment
             mStoryID = getArguments().getInt(ARG_STORY);
             story = loadStoryFromFile(String.valueOf(mStoryID));
             story.sortChaptersById();
+
+            boolean[] readArray = getArguments().getBooleanArray("readList");
+            boolean[] favArray = getArguments().getBooleanArray("favList");
+            isLoggedIn = getArguments().getBoolean("isLoggedIn");
+            currentChapter = getArguments().getInt("chapter");
+            // Chuyển đổi mảng thành List<Boolean>
+            readList = convertBooleanArrayToList(readArray);
+            favList = convertBooleanArrayToList(favArray);
         }
 
+    }
+
+    private List<Boolean> convertBooleanArrayToList(boolean[] booleanArray) {
+        List<Boolean> booleanList = new ArrayList<>();
+        for (boolean value : booleanArray) {
+            booleanList.add(value);
+        }
+        return booleanList;
     }
 
 
@@ -116,107 +163,7 @@ public class StoryReadingFragment extends Fragment
         tvName = view.findViewById(R.id.r_name);
         NestedScrollView nestedScrollView = view.findViewById(R.id.readingkone);
 
-        String uuid = UserClass.GetUserInfoFromPref(getActivity(), "uuid");
-        if (uuid != null) {
-            DatabaseReference currentUsersRef = DatabaseHelper.GetCurrentUserReference(getActivity());
 
-            // Lấy giá trị của readCount
-            DatabaseReference readCountRef = currentUsersRef.child("readCount");
-            readCountRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        int readCount = dataSnapshot.getValue(Integer.class);
-                        String recentStoryReadPath = "recentStoryRead/" + story.getId();
-                        DatabaseReference recentStoryReadRef = currentUsersRef.child(recentStoryReadPath);
-
-
-                        // Kiểm tra xem nút tồn tại hay không
-                        recentStoryReadRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if (!dataSnapshot.exists()) {
-                                    // Nếu nút không tồn tại, thực hiện các hành động tạo mới
-                                    Map<String, Object> updateMap = new HashMap<>();
-                                    for (int i = 1; i <= story.getNumberOfChapter(); i++) {
-                                        updateMap.put("fav/" + i, false);
-                                        updateMap.put("read/" + i, false);
-                                    }
-                                    updateMap.put("read/1", true);
-                                    recentStoryReadRef.updateChildren(updateMap);
-                                    // Lưu giá trị count để tìm được truyện gần nhất đưa vào home
-                                    recentStoryReadRef.child("count").setValue(readCount);
-                                    // Gọi incrementReadCount() nếu cần
-                                    incrementReadCount(readCountRef);
-                                }
-
-                                recentStoryReadRef.child("read").addListenerForSingleValueEvent(new ValueEventListener()
-                                {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-                                    {
-                                        if (dataSnapshot.exists())
-                                        {
-                                            // Chuyển dữ liệu từ Firebase thành mảng
-                                            readList.add(true);
-                                            for (DataSnapshot snapshot : dataSnapshot.getChildren())
-                                            {
-                                                Boolean value = snapshot.getValue(Boolean.class);
-                                                readList.add(value);
-                                            }
-                                        }
-                                    }
-
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError)
-                                    {
-                                        // Xử lý lỗi nếu cần thiết
-                                    }
-                                });
-
-                                recentStoryReadRef.child("fav").addListenerForSingleValueEvent(new ValueEventListener()
-                                {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-                                    {
-                                        if (dataSnapshot.exists())
-                                        {
-                                            // Chuyển dữ liệu từ Firebase thành mảng
-                                            favList.add(false);
-                                            for (DataSnapshot snapshot : dataSnapshot.getChildren())
-                                            {
-                                                Boolean value = snapshot.getValue(Boolean.class);
-                                                favList.add(value);
-                                            }
-                                        }
-                                    }
-
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError)
-                                    {
-                                        // Xử lý lỗi nếu cần thiết
-                                    }
-                                });
-
-                                isLoggedIn = true;
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                // Xử lý lỗi nếu cần thiết
-                            }
-                        });
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    // Xử lý lỗi nếu cần thiết
-                }
-            });
-        }
 
 
 
@@ -272,6 +219,13 @@ public class StoryReadingFragment extends Fragment
                         .child("fav")
                         .child(String.valueOf(currentChapter)).setValue(true);
                 favList.set(currentChapter, true);
+                // Chuyển dữ liệu sang Activity
+                Log.i("Reading", "gui dl");
+
+                if (dataListener != null) {
+                    Log.i("Reading", "gui dl that");
+                    dataListener.onBooleanListReceived(readList, favList);
+                }
             }
 //            @Override
 //            public void onClick(View v)
@@ -384,39 +338,7 @@ public class StoryReadingFragment extends Fragment
         return view;
     }
 
-    private void incrementReadCount(DatabaseReference readCountRef)
-    {
-        readCountRef.runTransaction(new Transaction.Handler()
-        {
-            @Override
-            public Transaction.Result doTransaction(MutableData mutableData)
-            {
-                Integer currentValue = mutableData.getValue(Integer.class);
-                if (currentValue == null)
-                {
-                    // Nếu giá trị hiện tại là null, set giá trị là 1
-                    mutableData.setValue(1);
-                } else
-                {
-                    // Ngược lại, tăng giá trị hiện tại lên 1
-                    mutableData.setValue(currentValue + 1);
-                }
-                return Transaction.success(mutableData);
-            }
 
-            @Override
-            public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot)
-            {
-                // Xử lý khi giao dịch hoàn tất (hoặc xảy ra lỗi)
-                if (committed)
-                {
-                } else
-                {
-                    // Xảy ra lỗi trong quá trình thực hiện giao dịch
-                }
-            }
-        });
-    }
 
     private void SwitchToChapter(int chapter)
     {
@@ -431,6 +353,13 @@ public class StoryReadingFragment extends Fragment
                     .child("read")
                     .child(String.valueOf(currentChapter)).setValue(true);
             readList.set(currentChapter, true);
+            // Chuyển dữ liệu sang Activity
+            Log.i("Reading", "gui dl");
+
+            if (dataListener != null) {
+                Log.i("Reading", "gui dl that");
+                dataListener.onBooleanListReceived(readList, favList);
+            }
         }
     }
 
