@@ -1,7 +1,6 @@
 package com.example.truyenchu.features;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -12,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +44,8 @@ import java.util.Map;
  * Use the {@link StoryReadingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StoryReadingFragment extends Fragment {
+public class StoryReadingFragment extends Fragment
+{
     private static final String ARG_STORY = "story";
     boolean isHidden = false;
     int currentChapter = 1;
@@ -60,7 +59,8 @@ public class StoryReadingFragment extends Fragment {
     TextView tvContent;
     int readCount = -1;
 
-    public StoryReadingFragment() {
+    public StoryReadingFragment()
+    {
         // Required empty public constructor
     }
 
@@ -84,19 +84,23 @@ public class StoryReadingFragment extends Fragment {
 //        return fragment;
 //    }
 
-    private static boolean[] convertBooleanListToArray(List<Boolean> booleanList) {
+    private static boolean[] convertBooleanListToArray(List<Boolean> booleanList)
+    {
         boolean[] booleanArray = new boolean[booleanList.size()];
-        for (int i = 0; i < booleanList.size(); i++) {
+        for (int i = 0; i < booleanList.size(); i++)
+        {
             booleanArray[i] = booleanList.get(i);
         }
         return booleanArray;
     }
 
-    public void setDataListener(DataListener dataListener) {
+    public void setDataListener(DataListener dataListener)
+    {
         this.dataListener = dataListener;
     }
 
-    public static StoryReadingFragment newInstance(int storyID, List<Boolean> readList, List<Boolean> favList, boolean isLoggedIn, int chapter) {
+    public static StoryReadingFragment newInstance(int storyID, List<Boolean> readList, List<Boolean> favList, boolean isLoggedIn, int chapter)
+    {
         StoryReadingFragment fragment = new StoryReadingFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_STORY, storyID);
@@ -114,16 +118,12 @@ public class StoryReadingFragment extends Fragment {
         return fragment;
     }
 
-    // Hàm để lấy màu nền từ SharedPreferences
-    private int getSavedBackgroundColor() {
-        SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return preferences.getInt("background_color", getResources().getColor(android.R.color.white));
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if (getArguments() != null)
+        {
             mStoryID = getArguments().getInt(ARG_STORY);
             story = loadStoryFromFile(String.valueOf(mStoryID));
             story.sortChaptersById();
@@ -136,29 +136,24 @@ public class StoryReadingFragment extends Fragment {
             readList = convertBooleanArrayToList(readArray);
             favList = convertBooleanArrayToList(favArray);
         }
+
     }
 
-    private List<Boolean> convertBooleanArrayToList(boolean[] booleanArray) {
+    private List<Boolean> convertBooleanArrayToList(boolean[] booleanArray)
+    {
         List<Boolean> booleanList = new ArrayList<>();
-        for (boolean value : booleanArray) {
+        for (boolean value : booleanArray)
+        {
             booleanList.add(value);
         }
         return booleanList;
     }
 
-    private void applySavedTextColor(TextView mauchu) {
-        SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        int textColor = preferences.getInt("text_color", Color.BLACK);
-        mauchu.setTextColor(textColor);
-    }
-    private float ourFontsize = 16f; //bien' size text
-    private float getSavedTextSize() {
-        SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return preferences.getFloat("text_size", ourFontsize); //
-    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_story_reading, container, false);
         View top = view.findViewById(R.id.top_navigation_custom_avs);
@@ -173,24 +168,18 @@ public class StoryReadingFragment extends Fragment {
         tvName = view.findViewById(R.id.r_name);
         NestedScrollView nestedScrollView = view.findViewById(R.id.readingkone);
 
-        int backgroundColor = getSavedBackgroundColor();
-        // Áp dụng màu nền cho giao diện
-        nestedScrollView.setBackgroundColor(backgroundColor);
-        applySavedTextColor(tvContent);
-
-        float textSize = getSavedTextSize();
-        tvContent.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
-
 
         SwitchToChapter(currentChapter);
         nestedScrollView.setOnScrollChangeListener((View.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) ->
         {
             // Kiểm tra hướng cuộn và ẩn/hiện top và bot tùy thuộc vào hướng cuộn
-            if (scrollY > oldScrollY && !isHidden) {
+            if (scrollY > oldScrollY && !isHidden)
+            {
                 top.setVisibility(View.GONE);
                 bot.setVisibility(View.GONE);
                 isHidden = true;
-            } else if (scrollY < oldScrollY && isHidden) {
+            } else if (scrollY < oldScrollY && isHidden)
+            {
                 top.setVisibility(View.VISIBLE);
                 bot.setVisibility(View.VISIBLE);
                 isHidden = false;
@@ -201,10 +190,12 @@ public class StoryReadingFragment extends Fragment {
         tvContent.setOnClickListener(v ->
         {
             // Chuyển đổi trạng thái của View khi được nhấp vào
-            if (isHidden) {
+            if (isHidden)
+            {
                 top.setVisibility(View.VISIBLE);
                 bot.setVisibility(View.VISIBLE);
-            } else {
+            } else
+            {
                 top.setVisibility(View.GONE);
                 bot.setVisibility(View.GONE);
             }
@@ -221,7 +212,8 @@ public class StoryReadingFragment extends Fragment {
 
         reload.setOnClickListener(v ->
         {
-            if (isLoggedIn) {
+            if (isLoggedIn)
+            {
                 DatabaseReference currentUsersRef = DatabaseHelper.GetCurrentUserReference(getActivity());
                 currentUsersRef.child("recentStoryRead")
                         .child(story.GetIdString())
@@ -231,7 +223,8 @@ public class StoryReadingFragment extends Fragment {
                 // Chuyển dữ liệu sang Activity
                 Log.i("Reading", "gui dl");
 
-                if (dataListener != null) {
+                if (dataListener != null)
+                {
                     Log.i("Reading", "gui dl that");
                     dataListener.onBooleanListReceived(readList, favList);
                 }
@@ -287,7 +280,8 @@ public class StoryReadingFragment extends Fragment {
 
         pre.setOnClickListener(v ->
         {
-            if (currentChapter > 1) {
+            if (currentChapter > 1)
+            {
                 currentChapter--;
                 SwitchToChapter(currentChapter);
             } else
@@ -297,7 +291,8 @@ public class StoryReadingFragment extends Fragment {
 
         ne.setOnClickListener(v ->
         {
-            if (currentChapter < story.getNumberOfChapter()) {
+            if (currentChapter < story.getNumberOfChapter())
+            {
                 currentChapter++;
                 SwitchToChapter(currentChapter);
             } else
@@ -305,21 +300,25 @@ public class StoryReadingFragment extends Fragment {
 
         });
 
-        if (isLoggedIn) {
+        if (isLoggedIn)
+        {
             ml.setOnClickListener(v ->
             {
                 ArrayList<String> optionsList = new ArrayList<>();
                 optionsList.add("  Chương đã đọc được tô màu xám");
-                for (int i = 0; i < story.getNumberOfChapter(); i++) {
+                for (int i = 0; i < story.getNumberOfChapter(); i++)
+                {
                     optionsList.add("  Chương " + (i + 1));
                 }
                 String[] options = optionsList.toArray(new String[0]);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.RoundBorderDialog);
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, options) {
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, options)
+                {
                     @Override
-                    public android.view.View getView(int position, android.view.View convertView, android.view.ViewGroup parent) {
+                    public android.view.View getView(int position, android.view.View convertView, android.view.ViewGroup parent)
+                    {
                         TextView textView = (TextView) super.getView(position, convertView, parent);
                         if (readList.get(position))
                             textView.setTextColor(Color.GRAY);
@@ -339,12 +338,14 @@ public class StoryReadingFragment extends Fragment {
                 AlertDialog dialog = builder.create();
                 dialog.show();
             });
-        } else {
+        } else
+        {
             ml.setOnClickListener(v ->
             {
                 ArrayList<String> optionsList = new ArrayList<>();
                 optionsList.add("  Chương đã đọc được tô màu xám");
-                for (int i = 0; i < story.getNumberOfChapter(); i++) {
+                for (int i = 0; i < story.getNumberOfChapter(); i++)
+                {
                     optionsList.add("  Chương " + (i + 1));
                 }
                 String[] options = optionsList.toArray(new String[0]);
@@ -366,14 +367,16 @@ public class StoryReadingFragment extends Fragment {
         }
 
         return view;
-    }
+}
 
 
-    private void SwitchToChapter(int chapter) {
+    private void SwitchToChapter(int chapter)
+    {
         currentChapter = chapter;
         tvContent.setText(story.GetChapterContent(currentChapter));
         tvName.setText(story.getName(13) + " | C" + (currentChapter));
-        if (isLoggedIn) {
+        if (isLoggedIn)
+        {
             DatabaseReference currentUsersRef = DatabaseHelper.GetCurrentUserReference(getActivity());
             currentUsersRef.child("recentStoryRead")
                     .child(story.GetIdString())
@@ -383,7 +386,8 @@ public class StoryReadingFragment extends Fragment {
             // Chuyển dữ liệu sang Activity
             Log.i("Reading", "gui dl");
 
-            if (dataListener != null) {
+            if (dataListener != null)
+            {
                 Log.i("Reading", "gui dl that");
                 dataListener.onBooleanListReceived(readList, favList);
             }
@@ -391,26 +395,32 @@ public class StoryReadingFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(@NonNull Context context) {
+    public void onAttach(@NonNull Context context)
+    {
         super.onAttach(context);
-        try {
+        try
+        {
             dataListener = (DataListener) context;
-        } catch (ClassCastException e) {
+        } catch (ClassCastException e)
+        {
             throw new ClassCastException(context + " must implement DataListener");
         }
     }
 
-    private void sendDataToActivity(String data) {
+    private void sendDataToActivity(String data)
+    {
         Log.i("Data Listener", "Send data to activity1: " + data);
 
         // Gửi dữ liệu tới Activity thông qua Interface
-        if (dataListener != null) {
+        if (dataListener != null)
+        {
             Log.i("Data Listener", "Send data to activity: " + data);
             dataListener.onDataReceived(data);
         }
     }
 
-    public StoryClass loadStoryFromFile(String storyId) {
+    public StoryClass loadStoryFromFile(String storyId)
+    {
         StoryClass loadedStory = null;
         String fileName = storyId + ".json"; // Tên file là ID của truyện + ".json"
 
@@ -418,8 +428,10 @@ public class StoryReadingFragment extends Fragment {
         File directory = new File(getActivity().getFilesDir() + "/stories");
         File file = new File(directory, fileName);
 
-        if (file.exists()) {
-            try (FileInputStream fis = new FileInputStream(file)) {
+        if (file.exists())
+        {
+            try (FileInputStream fis = new FileInputStream(file))
+            {
                 int size = fis.available();
                 byte[] buffer = new byte[size];
                 fis.read(buffer);
@@ -429,7 +441,8 @@ public class StoryReadingFragment extends Fragment {
                 // Chuyển đổi chuỗi JSON thành đối tượng StoryClass
                 Gson gson = new Gson();
                 loadedStory = gson.fromJson(storyJson, StoryClass.class);
-            } catch (IOException e) {
+            } catch (IOException e)
+            {
                 e.printStackTrace();
             }
         }

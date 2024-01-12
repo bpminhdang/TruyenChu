@@ -79,13 +79,11 @@ public class SettingReadingFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
     //lay mau bg da co san
     private int getSavedBackgroundColor() {
         SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
         return preferences.getInt("background_color", getResources().getColor(android.R.color.white));
     }
-
     // luu mau bg
     private void saveBackgroundColor(int color) {
         SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
@@ -101,20 +99,17 @@ public class SettingReadingFragment extends Fragment {
         editor.putInt("text_color", color);
         editor.apply();
     }
-
     //apply mau text da co khi out ra vo lai
     private void applySavedTextColor(TextView mauchu) {
         SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
         int textColor = preferences.getInt("text_color", Color.BLACK);
         mauchu.setTextColor(textColor);
     }
-
     //lay textsize dang co
     private float getSavedTextSize() {
         SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
         return preferences.getFloat("text_size", ourFontsize); //
     }
-
     //luu textsize vao
     private void saveTextSize(float size) {
         SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
@@ -124,30 +119,6 @@ public class SettingReadingFragment extends Fragment {
     }
 
     private float ourFontsize = 16f; //bien' size text
-
-    // Hàm để lưu kích thước dòng vào SharedPreferences
-    private void saveLineSpacing(float lineSpacing) {
-        SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putFloat("line_spacing", lineSpacing);
-        editor.apply();
-    }
-
-    // Hàm để lấy giá trị kích thước dòng từ SharedPreferences
-    private float getSavedLineSpacing() {
-        SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return preferences.getFloat("line_spacing", 0); // Giá trị mặc định nếu không có giá trị đã lưu
-    }
-
-    // Hàm để áp dụng kích thước dòng cho TextView
-    private void applyLineSpacing(TextView textView, float lineSpacing) {
-        // Áp dụng giá trị kích thước dòng cho TextView
-        textView.setLineSpacing(lineSpacing, 1f);
-    }
-
-    // Lấy giá trị kích thước dòng từ SharedPreferences
-    float lineSpacing = getSavedLineSpacing();
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -204,7 +175,7 @@ public class SettingReadingFragment extends Fragment {
             view.setBackgroundColor(Color.parseColor("#fff9ef"));
         });
         int backgroundColor = getSavedBackgroundColor();
-        //view.setBackgroundColor(backgroundColor);
+        view.setBackgroundColor(backgroundColor);
 
 
         //doi mau chu
@@ -215,7 +186,7 @@ public class SettingReadingFragment extends Fragment {
         View ctlblue = view.findViewById(R.id.coltx_lblue);
         TextView mauchu = view.findViewById(R.id.tx_mauchu);
 
-        //applySavedTextColor(mauchu);
+        applySavedTextColor(mauchu);
 
         ctwhite.setOnClickListener(v -> {
             int newColor = Color.WHITE;
@@ -253,11 +224,14 @@ public class SettingReadingFragment extends Fragment {
         Button decrease = view.findViewById(R.id.cus_giam);
 
         float textSize = getSavedTextSize();
+        mauchu.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+
         increase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Tăng kích thước văn bản
-                ourFontsize += 3f; //chinh gia tri mac dinh o line 121 file nay
+                ourFontsize += 4f; //chinh gia tri mac dinh o line 118 file nay
+                mauchu.setTextSize(TypedValue.COMPLEX_UNIT_SP, ourFontsize);
                 saveTextSize(ourFontsize);
             }
         });
@@ -266,43 +240,13 @@ public class SettingReadingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // Giam kích thước văn bản
-                ourFontsize -= 3f;
+                ourFontsize -= 4f;
+                mauchu.setTextSize(TypedValue.COMPLEX_UNIT_SP, ourFontsize);
                 saveTextSize(ourFontsize);
             }
         });
         Toast.makeText(getActivity(), String.valueOf(ourFontsize), Toast.LENGTH_SHORT).show();
 
-        //tang giam size dong`
-        View inline = view.findViewById(R.id.cus_tangln);
-        View deline = view.findViewById(R.id.cus_giamln);
-        applyLineSpacing(mauchu, lineSpacing);
-
-
-        // Áp dụng giá trị kích thước dòng cho TextView
-        inline.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Tăng kích thước dòng
-                lineSpacing += 1f;
-                // Lưu giá trị mới vào SharedPreferences
-                saveLineSpacing(lineSpacing);
-                // Áp dụng giá trị mới cho TextView
-                applyLineSpacing(mauchu, lineSpacing);
-            }
-        });
-
-        deline.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Giảm kích thước dòng
-                lineSpacing -= 1f;
-                // Lưu giá trị mới vào SharedPreferences
-                saveLineSpacing(lineSpacing);
-                // Áp dụng giá trị mới cho TextView
-                applyLineSpacing(mauchu, lineSpacing);
-            }
-        });
- //nãy giờ làm trên 2 cái fragment reading thôi, nên giờ t pull thì có mất ko
         return view;
     }
 
