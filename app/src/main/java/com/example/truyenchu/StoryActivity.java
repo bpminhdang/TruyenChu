@@ -157,7 +157,6 @@ public class StoryActivity extends AppCompatActivity implements DataListener
                                         updateMap.put("fav/" + i, false);
                                         updateMap.put("read/" + i, false);
                                     }
-                                    updateMap.put("read/1", true);
                                     recentStoryReadRef.updateChildren(updateMap);
                                     // Lưu giá trị count để tìm được truyện gần nhất đưa vào home
                                     recentStoryReadRef.child("count").setValue(readCount);
@@ -233,10 +232,38 @@ public class StoryActivity extends AppCompatActivity implements DataListener
                     // Xử lý lỗi nếu cần thiết
                 }
             });
+            findViewById(R.id.btMucluc).setOnClickListener(v ->
+                    ChapterChooseClick());
         }
+        else
+            findViewById(R.id.btMucluc).setOnClickListener(v ->
+                    ChapterChooseClickGuest());
 
-        findViewById(R.id.btMucluc).setOnClickListener(v ->
-                ChapterChooseClick());
+    }
+
+    private void ChapterChooseClickGuest()
+    {
+        ArrayList<String> optionsList = new ArrayList<>();
+        optionsList.add("  Chương đã đọc được tô màu xám");
+        for (int i = 0; i < receivedStory.getNumberOfChapter(); i++)
+        {
+            optionsList.add("  Chương " + (i + 1));
+        }
+        String[] options = optionsList.toArray(new String[0]);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.RoundBorderDialog);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, options);
+        builder.setTitle("Chọn chương: ");
+        builder.setAdapter(adapter, (dialog, chapterPos) ->
+        {
+            if (chapterPos == 0)
+                return;
+            SwitchToChapter(chapterPos);
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void ChapterChooseClick()
@@ -346,8 +373,6 @@ public class StoryActivity extends AppCompatActivity implements DataListener
     {
         this.readList = readList;
         this.favList = favList;
-        findViewById(R.id.btMucluc).setOnClickListener(v ->
-                ChapterChooseClick());
     }
 
     @Override
@@ -371,7 +396,6 @@ public class StoryActivity extends AppCompatActivity implements DataListener
     {
         super.onPause();
         Log.i("Life cycle story", "onPause");
-        DatabaseHelper.updateCount(receivedStory.getId(), "watching", -1);
 
     }
 
@@ -380,7 +404,6 @@ public class StoryActivity extends AppCompatActivity implements DataListener
     {
         super.onResume();
         Log.i("Life cycle story", "onrs");
-        DatabaseHelper.updateCount(receivedStory.getId(), "watching", -1);
 
     }
 }

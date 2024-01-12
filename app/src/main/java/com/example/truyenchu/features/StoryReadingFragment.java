@@ -84,9 +84,11 @@ public class StoryReadingFragment extends Fragment
 //        return fragment;
 //    }
 
-    private static boolean[] convertBooleanListToArray(List<Boolean> booleanList) {
+    private static boolean[] convertBooleanListToArray(List<Boolean> booleanList)
+    {
         boolean[] booleanArray = new boolean[booleanList.size()];
-        for (int i = 0; i < booleanList.size(); i++) {
+        for (int i = 0; i < booleanList.size(); i++)
+        {
             booleanArray[i] = booleanList.get(i);
         }
         return booleanArray;
@@ -97,7 +99,8 @@ public class StoryReadingFragment extends Fragment
         this.dataListener = dataListener;
     }
 
-    public static StoryReadingFragment newInstance(int storyID, List<Boolean> readList, List<Boolean> favList, boolean isLoggedIn, int chapter) {
+    public static StoryReadingFragment newInstance(int storyID, List<Boolean> readList, List<Boolean> favList, boolean isLoggedIn, int chapter)
+    {
         StoryReadingFragment fragment = new StoryReadingFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_STORY, storyID);
@@ -136,9 +139,11 @@ public class StoryReadingFragment extends Fragment
 
     }
 
-    private List<Boolean> convertBooleanArrayToList(boolean[] booleanArray) {
+    private List<Boolean> convertBooleanArrayToList(boolean[] booleanArray)
+    {
         List<Boolean> booleanList = new ArrayList<>();
-        for (boolean value : booleanArray) {
+        for (boolean value : booleanArray)
+        {
             booleanList.add(value);
         }
         return booleanList;
@@ -162,10 +167,6 @@ public class StoryReadingFragment extends Fragment
         tvContent = view.findViewById(R.id.readingnehihi);
         tvName = view.findViewById(R.id.r_name);
         NestedScrollView nestedScrollView = view.findViewById(R.id.readingkone);
-
-
-
-
 
 
         SwitchToChapter(currentChapter);
@@ -222,7 +223,8 @@ public class StoryReadingFragment extends Fragment
                 // Chuyển dữ liệu sang Activity
                 Log.i("Reading", "gui dl");
 
-                if (dataListener != null) {
+                if (dataListener != null)
+                {
                     Log.i("Reading", "gui dl that");
                     dataListener.onBooleanListReceived(readList, favList);
                 }
@@ -298,46 +300,74 @@ public class StoryReadingFragment extends Fragment
 
         });
 
-        ml.setOnClickListener(v ->
+        if (isLoggedIn)
         {
-            ArrayList<String> optionsList = new ArrayList<>();
-            optionsList.add("  Chương đã đọc được tô màu xám");
-            for (int i = 0; i < story.getNumberOfChapter(); i++)
+            ml.setOnClickListener(v ->
             {
-                optionsList.add("  Chương " + (i + 1));
-            }
-            String[] options = optionsList.toArray(new String[0]);
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.RoundBorderDialog);
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, options)
-            {
-                @Override
-                public android.view.View getView(int position, android.view.View convertView, android.view.ViewGroup parent)
+                ArrayList<String> optionsList = new ArrayList<>();
+                optionsList.add("  Chương đã đọc được tô màu xám");
+                for (int i = 0; i < story.getNumberOfChapter(); i++)
                 {
-                    TextView textView = (TextView) super.getView(position, convertView, parent);
-                    if (readList.get(position))
-                        textView.setTextColor(Color.GRAY);
-                    if (favList.get(position))
-                        textView.setText(textView.getText() + " ⭐");
-                    return textView;
+                    optionsList.add("  Chương " + (i + 1));
                 }
-            };
-            builder.setTitle("Chọn chương: ");
-            builder.setAdapter(adapter, (dialog, chapterPos) ->
-            {
-                if (chapterPos == 0)
-                    return;
-                SwitchToChapter(chapterPos);
-            });
+                String[] options = optionsList.toArray(new String[0]);
 
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        });
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.RoundBorderDialog);
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, options)
+                {
+                    @Override
+                    public android.view.View getView(int position, android.view.View convertView, android.view.ViewGroup parent)
+                    {
+                        TextView textView = (TextView) super.getView(position, convertView, parent);
+                        if (readList.get(position))
+                            textView.setTextColor(Color.GRAY);
+                        if (favList.get(position))
+                            textView.setText(textView.getText() + " ⭐");
+                        return textView;
+                    }
+                };
+                builder.setTitle("Chọn chương: ");
+                builder.setAdapter(adapter, (dialog, chapterPos) ->
+                {
+                    if (chapterPos == 0)
+                        return;
+                    SwitchToChapter(chapterPos);
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            });
+        } else
+        {
+            ml.setOnClickListener(v ->
+            {
+                ArrayList<String> optionsList = new ArrayList<>();
+                optionsList.add("  Chương đã đọc được tô màu xám");
+                for (int i = 0; i < story.getNumberOfChapter(); i++)
+                {
+                    optionsList.add("  Chương " + (i + 1));
+                }
+                String[] options = optionsList.toArray(new String[0]);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.RoundBorderDialog);
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, options);
+                builder.setTitle("Chọn chương: ");
+                builder.setAdapter(adapter, (dialog, chapterPos) ->
+                {
+                    if (chapterPos == 0)
+                        return;
+                    SwitchToChapter(chapterPos);
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            });
+        }
 
         return view;
-    }
-
+}
 
 
     private void SwitchToChapter(int chapter)
@@ -356,7 +386,8 @@ public class StoryReadingFragment extends Fragment
             // Chuyển dữ liệu sang Activity
             Log.i("Reading", "gui dl");
 
-            if (dataListener != null) {
+            if (dataListener != null)
+            {
                 Log.i("Reading", "gui dl that");
                 dataListener.onBooleanListReceived(readList, favList);
             }
