@@ -7,6 +7,14 @@
     android:windowActionBar="true"
     tools:context=".HomeActivity">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/home_fragment_container_profile"
+        android:layout_width="0dp"
+        android:layout_height="90dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <FrameLayout
         android:id="@+id/home_fragment_container"
         android:layout_width="0dp"
@@ -16,7 +24,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/home_fragment_container_profile">
 
 
     </FrameLayout>

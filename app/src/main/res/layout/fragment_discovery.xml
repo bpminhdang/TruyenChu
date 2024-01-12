@@ -7,17 +7,6 @@
     android:background="@color/accent_1_10">
 
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/dis_profile_panel_container"
-        style="material3 button"
-        android:layout_width="0dp"
-        android:layout_height="90dp"
-        android:background="@color/accent_1_10"
-        android:elevation="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <HorizontalScrollView
         android:id="@+id/dis_scrollview_button"
         android:layout_width="0dp"
@@ -29,7 +18,7 @@
         android:scrollbarSize="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dis_profile_panel_container">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayout3"

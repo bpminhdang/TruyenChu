@@ -200,14 +200,6 @@ public class DiscoveryFragment extends Fragment
         });
 
 
-        FragmentManager childFragmentManager = getChildFragmentManager();
-        FragmentTransaction transaction = childFragmentManager.beginTransaction();
-
-        ProfilePanelFragment fragment = new ProfilePanelFragment();
-        transaction.replace(R.id.dis_profile_panel_container, fragment);
-        transaction.commit();
-
-
         RecyclerView recyclerView = view.findViewById(R.id.dis_recycler_view);
         Button btnNew = view.findViewById(R.id.dis_bt_new);
         Button btnUpdate = view.findViewById(R.id.dis_bt_update);

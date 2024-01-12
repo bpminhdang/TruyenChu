@@ -149,13 +149,6 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
             }
         }
 
-        // Khoảng mã lệnh trong Fragment cha để thêm Fragment con
-        FragmentManager childFragmentManager = getChildFragmentManager();
-        FragmentTransaction transaction = childFragmentManager.beginTransaction();
-        ProfilePanelFragment fragment = new ProfilePanelFragment();
-        transaction.replace(R.id.home_profile_panel_container, fragment); // R.id.container là id của viewgroup trong Fragment cha
-        transaction.commit();
-
         RecyclerView rcViewNew = view.findViewById(R.id.home_recycler_view);
         RecyclerView rcViewUpdate = view.findViewById(R.id.home_recycler_view_2);
         RecyclerView rcViewRecent = view.findViewById(R.id.home_recycler_view_3);
@@ -236,6 +229,7 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
                     .setCustomAnimations(R.anim.fade_in_and_slide, R.anim.fade_out)
                     .add(R.id.home_fragment_container, downloadFragment, "YOUR_FRAGMENT_TAG")
                     .commit();
+            sendDataToActivity("Click Saved");
             return;
         }
 

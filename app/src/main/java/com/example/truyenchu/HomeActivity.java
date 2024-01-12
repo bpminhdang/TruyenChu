@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu._class.CommentClass;
@@ -22,6 +24,7 @@ import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu._class.UserClass;
 import com.example.truyenchu.adapter.BlankFragment;
 import com.example.truyenchu.adapter.DataListener;
+import com.example.truyenchu.features.ProfilePanelFragment;
 import com.example.truyenchu.ui.DownloadFragment;
 import com.example.truyenchu.ui.HomeFragment;
 import com.example.truyenchu.ui.ProfileFragment;
@@ -68,6 +71,12 @@ public class HomeActivity extends AppCompatActivity implements DataListener
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        // Khoảng mã lệnh trong Fragment cha để thêm Fragment con
+        FragmentManager childFragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = childFragmentManager.beginTransaction();
+        ProfilePanelFragment fragment = new ProfilePanelFragment();
+        transaction.replace(R.id.home_fragment_container_profile, fragment); // R.id.container là id của viewgroup trong Fragment cha
+        transaction.commit();
 
         // region Init
         listOfStoryLists.add(storyListAll);
@@ -462,6 +471,15 @@ public class HomeActivity extends AppCompatActivity implements DataListener
                     SetNotOnItemClick());
 
             bottomNav.setSelectedItemId(R.id.navigation_discovery);
+            bottomNav.setOnItemSelectedListener(this::SetOnItemClick);
+        }
+        else if (data.equals("Click Saved"))
+        {
+            // Tắt onclick của navigation để chuyển vị trí selected Item
+            bottomNav.setOnItemSelectedListener(item ->
+                    SetNotOnItemClick());
+
+            bottomNav.setSelectedItemId(R.id.navigation_download);
             bottomNav.setOnItemSelectedListener(this::SetOnItemClick);
         }
     }

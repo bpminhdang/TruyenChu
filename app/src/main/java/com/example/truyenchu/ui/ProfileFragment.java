@@ -75,12 +75,6 @@ public class ProfileFragment extends Fragment
     {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        FragmentManager childFragmentManager = getChildFragmentManager();
-        FragmentTransaction transaction = childFragmentManager.beginTransaction();
-
-        ProfilePanelFragment fragment = new ProfilePanelFragment();
-        transaction.replace(R.id.fragmentProfileContainerView_profile, fragment); // R.id.container là id của viewgroup trong Fragment cha
-        transaction.commit();
 
         view.findViewById(R.id.btSignOut).setOnClickListener(v ->
         {

@@ -15,21 +15,13 @@
         tools:context=".ui.HomeFragment">
 
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/home_profile_panel_container"
-            android:layout_width="0dp"
-            android:layout_height="90dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/home_profile_panel_container">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/textView"
