@@ -74,6 +74,7 @@
                         android:fontFamily="@font/montserrat_regular"
                         android:paddingBottom="10dp"
                         android:text="Truyện của tôi"
+                        android:textColor="@color/neutral_1_300"
                         android:textSize="16sp" />
 
                     <TextView
