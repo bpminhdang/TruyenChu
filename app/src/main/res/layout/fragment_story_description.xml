@@ -1,218 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/accent_1_10"
     android:fillViewport="true"
-    android:background="@color/accent_1_10"
-    >
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/frameLayout6"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/accent_1_10"
-    tools:context=".features.StoryDescriptionFragment">
-
-    <ImageView
-        android:id="@+id/des_ivback"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="5dp"
-        android:layout_weight="1"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="@+id/tvName_des"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/closene" />
-
-    <TextView
-        android:id="@+id/tvName_des"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_weight="6"
-        android:fontFamily="@font/montserrat_semibold"
-        android:paddingEnd="30dp"
-        android:text="Truyện lạ trong thang máy lúc nửa đêm"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/des_ivback"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:paddingBottom="80dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvName_des">
-
-        <ToggleButton
-            android:id="@+id/des_iv_like"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:drawableRight="@drawable/favorite_button_selector_big"
-            android:drawableTint="@color/black"
-            android:textColor="#EC2341"
-            android:textOff=" "
-            android:textOn=" "
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/des_iv_comment"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/des_iv_comment" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            app:cardCornerRadius="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"> <!-- Điều chỉnh giá trị để bo tròn góc -->
-
-            <ImageView
-                android:id="@+id/des_iv_picture"
-                android:layout_width="92dp"
-                android:layout_height="135dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/book_2" />
-        </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:id="@+id/des_tv_author"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:drawableLeft="@drawable/des_author"
-            android:drawablePadding="5dp"
-            android:fontFamily="@font/montserrat_regular"
-            android:text="Hanks Chi"
-            app:layout_constraintEnd_toStartOf="@+id/des_iv_picture"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/des_tv_status"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="24dp"
-            android:drawableLeft="@drawable/des_upload"
-            android:drawablePadding="5dp"
-            android:fallbackLineSpacing="false"
-            android:fontFamily="@font/montserrat_regular"
-            android:text="Full - ngày 16 th 9, 2023"
-            app:layout_constraintEnd_toStartOf="@+id/des_iv_picture"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/des_tv_author" />
-
-        <TextView
-            android:id="@+id/des_tv_num_chapter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="10dp"
-
-            android:drawableStart="@drawable/hamburger_2"
-            android:drawablePadding="5dp"
-            android:fontFamily="@font/montserrat_regular"
-            android:text="47"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/des_tv_status" />
-
-        <TextView
-            android:id="@+id/des_tv_liked"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="10dp"
-            android:drawableStart="@drawable/des_heart"
-            android:drawablePadding="5dp"
-            android:fontFamily="@font/montserrat_regular"
-            android:text="123"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/des_tv_num_chapter" />
-
-        <TextView
-            android:id="@+id/des_tv_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/des_circle"
-            android:drawablePadding="5dp"
-            android:fontFamily="@font/montserrat_regular"
-            android:text="1.5K"
-            app:layout_constraintStart_toEndOf="@+id/des_tv_liked"
-            app:layout_constraintTop_toBottomOf="@+id/des_tv_num_chapter" />
-
-        <TextView
-            android:id="@+id/des_tv_watching"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="24dp"
-            android:drawablePadding="5dp"
-            android:fontFamily="@font/montserrat_regular"
-            android:text="Đang xem: "
-            app:layout_constraintEnd_toStartOf="@+id/des_iv_picture"
-            app:layout_constraintHorizontal_bias="0.02"
-            app:layout_constraintStart_toEndOf="@+id/des_tv_num_chapter"
-            app:layout_constraintTop_toBottomOf="@+id/des_tv_status" />
+        android:id="@+id/frameLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/accent_1_10"
+        tools:context=".features.StoryDescriptionFragment">
 
         <ImageView
-            android:id="@+id/des_iv_comment"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="16dp"
-            android:tint="@color/black"
-            app:layout_constraintStart_toEndOf="@+id/des_iv_like"
-            app:layout_constraintTop_toBottomOf="@+id/des_tv_liked"
-            app:srcCompat="@drawable/cmt" />
+            android:id="@+id/des_ivback"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="@+id/tvName_des"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/closene" />
 
         <TextView
-            android:id="@+id/des_tv_id"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvName_des"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="6"
+            android:fontFamily="@font/montserrat_semibold"
+            android:paddingEnd="30dp"
+            android:text="Truyện lạ trong thang máy lúc nửa đêm"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/des_ivback"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvName_des">
+
+            <ToggleButton
+                android:id="@+id/des_iv_like"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:drawableRight="@drawable/favorite_button_selector_big"
+                android:drawableTint="@color/black"
+                android:textColor="#EC2341"
+                android:textOff=" "
+                android:textOn=" "
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/des_iv_comment"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/des_iv_comment" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                app:cardCornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"> <!-- Điều chỉnh giá trị để bo tròn góc -->
+
+                <ImageView
+                    android:id="@+id/des_iv_picture"
+                    android:layout_width="92dp"
+                    android:layout_height="135dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/book_2" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/des_tv_author"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:drawableLeft="@drawable/des_author"
+                android:drawablePadding="5dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Hanks Chi"
+                app:layout_constraintEnd_toStartOf="@+id/des_iv_picture"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/des_tv_status"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="24dp"
+                android:drawableLeft="@drawable/des_upload"
+                android:drawablePadding="5dp"
+                android:fallbackLineSpacing="false"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Full - ngày 16 th 9, 2023"
+                app:layout_constraintEnd_toStartOf="@+id/des_iv_picture"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/des_tv_author" />
+
+            <TextView
+                android:id="@+id/des_tv_num_chapter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="10dp"
+
+                android:drawableStart="@drawable/hamburger_2"
+                android:drawablePadding="5dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="47"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/des_tv_status" />
+
+            <TextView
+                android:id="@+id/des_tv_liked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/des_heart"
+                android:drawablePadding="5dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="123"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/des_tv_num_chapter" />
+
+            <TextView
+                android:id="@+id/des_tv_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/des_circle"
+                android:drawablePadding="5dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="1.5K"
+                app:layout_constraintStart_toEndOf="@+id/des_tv_liked"
+                app:layout_constraintTop_toBottomOf="@+id/des_tv_num_chapter" />
+
+            <TextView
+                android:id="@+id/des_tv_watching"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="24dp"
+                android:drawablePadding="5dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Đang xem: "
+                app:layout_constraintEnd_toStartOf="@+id/des_iv_picture"
+                app:layout_constraintHorizontal_bias="0.02"
+                app:layout_constraintStart_toEndOf="@+id/des_tv_num_chapter"
+                app:layout_constraintTop_toBottomOf="@+id/des_tv_status" />
+
+            <ImageView
+                android:id="@+id/des_iv_comment"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="16dp"
+                android:tint="@color/black"
+                app:layout_constraintStart_toEndOf="@+id/des_iv_like"
+                app:layout_constraintTop_toBottomOf="@+id/des_tv_liked"
+                app:srcCompat="@drawable/cmt" />
+
+            <TextView
+                android:id="@+id/des_tv_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="ID:"
+                app:layout_constraintEnd_toEndOf="@+id/cardView2"
+                app:layout_constraintStart_toStartOf="@+id/cardView2"
+                app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/des_tv_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_regular"
-            android:text="ID:"
-            app:layout_constraintEnd_toEndOf="@+id/cardView2"
-            app:layout_constraintStart_toStartOf="@+id/cardView2"
-            app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+            android:paddingLeft="30dp"
+            android:paddingTop="20dp"
+            android:paddingRight="30dp"
+            android:text="Văn án:\n\nMục Tế Vân – phó giáo sư đại học Nam Đại, học vấn uyên bác, chính trực nghiêm túc.\n\nSở Chiêu Chiêu – học bá của học bá, tài đức vẹn toàn, khiêm tốn lễ phép.\n\nTối nọ, tại quán bar Giang Thành. Sở Chiêu Chiêu trang điểm đậm đi làm thì bắt gặp Mục Tế Vân ở đó, ngón tay anh kẹp điếu thuốc đang đỏ lửa, áo sơ-mi phẳng phiu đã mở ba cúc đầu, cả người dựa lên sofa, dáng vẻ phong lưu phóng đãng.\n\nTừ đó về sau, Sở Chiêu Chiêu dường như đã bị ghim rồi.\n\nMôn bắt buộc là anh, môn tự chọn là anh, đến cả luận văn tốt nghiệp cũng là anh.\n\nPhó giáo sư đại học trong ngoài bất nhất x Nữ học bá hai mặt. wiejkoqiwejo\n\niqrjeiqojeoqjoiejiojekioqjeiqejiqoejkoijewoiejqoiejqwe\n\nqwejqoweioqwejqoeoqwi"
+            android:textAlignment="viewStart"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/des_tv_description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_regular"
-        android:paddingLeft="30dp"
-        android:paddingTop="20dp"
-        android:paddingRight="30dp"
-        android:text="Văn án:\n\nMục Tế Vân – phó giáo sư đại học Nam Đại, học vấn uyên bác, chính trực nghiêm túc.\n\nSở Chiêu Chiêu – học bá của học bá, tài đức vẹn toàn, khiêm tốn lễ phép.\n\nTối nọ, tại quán bar Giang Thành. Sở Chiêu Chiêu trang điểm đậm đi làm thì bắt gặp Mục Tế Vân ở đó, ngón tay anh kẹp điếu thuốc đang đỏ lửa, áo sơ-mi phẳng phiu đã mở ba cúc đầu, cả người dựa lên sofa, dáng vẻ phong lưu phóng đãng.\n\nTừ đó về sau, Sở Chiêu Chiêu dường như đã bị ghim rồi.\n\nMôn bắt buộc là anh, môn tự chọn là anh, đến cả luận văn tốt nghiệp cũng là anh.\n\nPhó giáo sư đại học trong ngoài bất nhất x Nữ học bá hai mặt. wiejkoqiwejo\n\niqrjeiqojeoqjoiejiojekioqjeiqejiqoejkoijewoiejqoiejqwe\n\nqwejqoweioqwejqoeoqwi"
-        android:textAlignment="viewStart"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

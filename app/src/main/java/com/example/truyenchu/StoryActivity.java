@@ -151,8 +151,7 @@ public class StoryActivity extends AppCompatActivity implements DataListener
         Button bt_read = findViewById(R.id.btRead);
         bt_read.setOnClickListener(v ->
         {
-            //Todo: màu
-            // Chỉ tăng view mỗi khi tạo activity mới
+            getWindow().setNavigationBarColor(Color.WHITE);
             // Todo: Chỉ tăng view khi người dùng chưa từng đọc truyện (Optional)
             if (!isRead)
             {

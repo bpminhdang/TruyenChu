@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -221,9 +223,10 @@ public class StoryReadingFragment extends Fragment {
         tvContent = view.findViewById(R.id.readingnehihi);
         tvName = view.findViewById(R.id.r_name);
         NestedScrollView nestedScrollView = view.findViewById(R.id.readingkone);
-
         // Áp dụng các setting
         int backgroundColor = getSavedBackgroundColor();
+
+        getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         nestedScrollView.setBackgroundColor(backgroundColor);
 
@@ -246,10 +249,27 @@ public class StoryReadingFragment extends Fragment {
                 fadeOutView(top);
                 fadeOutView(bot);
                 isHidden = true;
+                getActivity().getWindow().setNavigationBarColor(backgroundColor);
+                getActivity().getWindow().setStatusBarColor(backgroundColor);
+                View fragmentView = getView();
+                if (fragmentView != null) {
+                    FragmentContainerView fragmentContainer = fragmentView.findViewById(R.id.fragment_container_avs);
+                    if (fragmentContainer!= null)
+                        fragmentContainer.setBackgroundColor(backgroundColor);
+                }
             } else if (scrollY < oldScrollY && isHidden) {
                 fadeInView(top);
                 fadeInView(bot);
                 isHidden = false;
+                getActivity().getWindow().setNavigationBarColor(Color.WHITE);
+                getActivity().getWindow().setStatusBarColor(Color.WHITE);
+                View fragmentView = getView();
+                if (fragmentView != null) {
+                    FragmentContainerView fragmentContainer = fragmentView.findViewById(R.id.fragment_container_avs);
+                    if (fragmentContainer!= null)
+                        fragmentContainer.setBackgroundColor(Color.WHITE);
+                }
+
             }
         });
 

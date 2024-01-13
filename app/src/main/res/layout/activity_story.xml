@@ -6,19 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".StoryActivity">
 
-    <FrameLayout
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container_avs"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/accent_1_10"
-        android:paddingTop="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/frameLayout_avs"
+        android:name="com.example.truyenchu.features.StoryDescriptionFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-    </FrameLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         android:id="@+id/frameLayout_avs"
