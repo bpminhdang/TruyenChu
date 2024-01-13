@@ -24,6 +24,7 @@ import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu._class.UserClass;
 import com.example.truyenchu.adapter.BlankFragment;
 import com.example.truyenchu.adapter.DataListener;
+import com.example.truyenchu.features.DatabaseHelper;
 import com.example.truyenchu.features.ProfilePanelFragment;
 import com.example.truyenchu.ui.HomeFragment;
 import com.example.truyenchu.ui.ProfileFragment;
@@ -64,6 +65,7 @@ public class HomeActivity extends AppCompatActivity implements DataListener
 
     private HomeFragment homeFragment;
     BottomNavigationView bottomNav;
+    boolean firstStart = true;
 
 
     @Override
@@ -151,140 +153,204 @@ public class HomeActivity extends AppCompatActivity implements DataListener
         DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
         DatabaseReference storiesRef = database.child("stories");
 
-        // region New: get ID to send to home fragment
-        storiesRef.orderByChild("time").limitToLast(13).addListenerForSingleValueEvent(new ValueEventListener()
+//        // region New: get ID to send to home fragment
+//        storiesRef.orderByChild("time").limitToLast(13).addListenerForSingleValueEvent(new ValueEventListener()
+//        {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot)
+//            {
+//                if (dataSnapshot.exists())
+//                {
+//                    for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
+//                    {
+//                        // Lấy dữ liệu của từng story từ dataSnapshot
+//                        Map<String, Object> storyData = (Map<String, Object>) storySnapshot.getValue();
+//
+//                        // Tạo đối tượng StoryClass từ dữ liệu của mỗi story
+//                        StoryClass story = new StoryClass((int) (long) storyData.get("id"));
+//                        story.setName((String) storyData.get("name"));
+//                        story.setTime((String) storyData.get("time"));
+//                        story.setUpdateTime((String) storyData.get("updateTime"));
+//                        story.setAuthor((String) storyData.get("author"));
+//                        story.setStatus((String) storyData.get("status"));
+//                        story.setDescription((String) storyData.get("description"));
+//                        story.setNumberOfChapter((int) (long) storyData.get("numberOfChapter"));
+//                        story.setViews((int) (long) storyData.get("views"));
+//                        story.setUri((String) storyData.get("uri"));
+//
+//                        // Lấy danh sách genres
+//                        List<String> genres = (List<String>) storyData.get("genresList");
+//                        if (genres != null)
+//                        {
+//                            story.setGenres(genres);
+//                        }
+//
+//                        // Lấy danh sách các chương
+//                        Map<String, Map<String, Object>> chaptersMap = (Map<String, Map<String, Object>>) storyData.get("chapters");
+//                        if (chaptersMap != null)
+//                        {
+//                            for (Map.Entry<String, Map<String, Object>> entry : chaptersMap.entrySet())
+//                            {
+//                                ChapterClass chapter = new ChapterClass();
+//                                Map<String, Object> chapterData = entry.getValue();
+//                                chapter.setChapterId((String) chapterData.get("chapterId"));
+//                                chapter.setContent((String) chapterData.get("content"));
+//                                story.getChapters().add(chapter);
+//                            }
+//                        }
+//                        // Thêm story vào danh sách storyList
+//                        storyListNew.add(String.valueOf(story.getId()));
+//                    }
+//                    homeFragment = HomeFragment.newInstance(listOfStoryLists);
+//
+//                    getSupportFragmentManager().beginTransaction()
+//                            .setCustomAnimations(R.anim.fade_in_1000, R.anim.fade_out)
+//                            .add(R.id.home_fragment_container, homeFragment)
+//                            .commit();
+//                }
+//
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError)
+//            {
+//                Log.i("DB", "Lỗi: " + databaseError.getMessage());
+//            }
+//
+//        });
+//        // endregion New: get ID to send to home fragment
+        database.addValueEventListener(new ValueEventListener()
         {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
+            public void onDataChange(@NonNull DataSnapshot snapshot)
             {
-                if (dataSnapshot.exists())
+                if (snapshot.exists())
                 {
-                    for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
+                    String upload = snapshot.child("uploadString").getValue(String.class);
+                    String[] uploadStringArray = upload.split("_");
+                    storyListNew.clear();
+                    for (String id : uploadStringArray)
                     {
-                        // Lấy dữ liệu của từng story từ dataSnapshot
-                        Map<String, Object> storyData = (Map<String, Object>) storySnapshot.getValue();
-
-                        // Tạo đối tượng StoryClass từ dữ liệu của mỗi story
-                        StoryClass story = new StoryClass((int) (long) storyData.get("id"));
-                        story.setName((String) storyData.get("name"));
-                        story.setTime((String) storyData.get("time"));
-                        story.setUpdateTime((String) storyData.get("updateTime"));
-                        story.setAuthor((String) storyData.get("author"));
-                        story.setStatus((String) storyData.get("status"));
-                        story.setDescription((String) storyData.get("description"));
-                        story.setNumberOfChapter((int) (long) storyData.get("numberOfChapter"));
-                        story.setViews((int) (long) storyData.get("views"));
-                        story.setUri((String) storyData.get("uri"));
-
-                        // Lấy danh sách genres
-                        List<String> genres = (List<String>) storyData.get("genresList");
-                        if (genres != null)
-                        {
-                            story.setGenres(genres);
-                        }
-
-                        // Lấy danh sách các chương
-                        Map<String, Map<String, Object>> chaptersMap = (Map<String, Map<String, Object>>) storyData.get("chapters");
-                        if (chaptersMap != null)
-                        {
-                            for (Map.Entry<String, Map<String, Object>> entry : chaptersMap.entrySet())
-                            {
-                                ChapterClass chapter = new ChapterClass();
-                                Map<String, Object> chapterData = entry.getValue();
-                                chapter.setChapterId((String) chapterData.get("chapterId"));
-                                chapter.setContent((String) chapterData.get("content"));
-                                story.getChapters().add(chapter);
-                            }
-                        }
-                        // Thêm story vào danh sách storyList
-                        storyListNew.add(String.valueOf(story.getId()));
+                        storyListNew.add(id);
                     }
-                    homeFragment = HomeFragment.newInstance(listOfStoryLists);
 
+                    String update = snapshot.child("updateString").getValue(String.class);
+                    String[] savedStringArray = update.split("_");
+                    storyListUpdate.clear();
+                    for (String id : savedStringArray)
+                    {
+                        storyListUpdate.add(id);
+                    }
+                }
+                // Chỉ cập nhật home fragment khi khởi tạo hoặc khi ngưởi dùng muốn reload,
+                // trành việc cập nhật làm mất truyện đang tìm của người dùng
+                if (firstStart)
+                {
+                    homeFragment = HomeFragment.newInstance(listOfStoryLists);
                     getSupportFragmentManager().beginTransaction()
                             .setCustomAnimations(R.anim.fade_in_1000, R.anim.fade_out)
                             .add(R.id.home_fragment_container, homeFragment)
                             .commit();
+                    firstStart = false;
                 }
-
-
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError)
+            public void onCancelled(@NonNull DatabaseError error)
             {
-                Log.i("DB", "Lỗi: " + databaseError.getMessage());
+
             }
-
         });
-        // endregion New: get ID to send to home fragment
 
-
+//        database.child("updateString").addListenerForSingleValueEvent(new ValueEventListener()
+//        {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot)
+//            {
+//                if (snapshot.exists())
+//                {
+//                    String update = snapshot.getValue(String.class);
+//                    String[] savedStringArray = update.split("_");
+//                    storyListUpdate.clear();
+//                    for (String id : savedStringArray)
+//                    {
+//                        storyListUpdate.add(id);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error)
+//            {
+//
+//            }
+//        });
         // region Update: get ID to send to home fragment
-        storiesRef.orderByChild("updateTime").limitToLast(8).addListenerForSingleValueEvent(new ValueEventListener()
-        {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                if (dataSnapshot.exists())
-                {
-                    for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
-                    {
-                        // Lấy dữ liệu của từng story từ dataSnapshot
-                        Map<String, Object> storyData = (Map<String, Object>) storySnapshot.getValue();
-
-                        // Tạo đối tượng StoryClass từ dữ liệu của mỗi story
-                        StoryClass story = new StoryClass((int) (long) storyData.get("id"));
-                        story.setName((String) storyData.get("name"));
-                        story.setTime((String) storyData.get("time"));
-                        story.setUpdateTime((String) storyData.get("updateTime"));
-                        story.setAuthor((String) storyData.get("author"));
-                        story.setStatus((String) storyData.get("status"));
-                        story.setDescription((String) storyData.get("description"));
-                        story.setNumberOfChapter((int) (long) storyData.get("numberOfChapter"));
-                        story.setViews((int) (long) storyData.get("views"));
-                        story.setUri((String) storyData.get("uri"));
-
-                        // Lấy danh sách genres
-                        List<String> genres = (List<String>) storyData.get("genresList");
-                        if (genres != null)
-                        {
-                            story.setGenres(genres);
-                        }
-
-                        // Lấy danh sách các chương
-                        Map<String, Map<String, Object>> chaptersMap = (Map<String, Map<String, Object>>) storyData.get("chapters");
-                        if (chaptersMap != null)
-                        {
-                            for (Map.Entry<String, Map<String, Object>> entry : chaptersMap.entrySet())
-                            {
-                                ChapterClass chapter = new ChapterClass();
-                                Map<String, Object> chapterData = entry.getValue();
-                                chapter.setChapterId((String) chapterData.get("chapterId"));
-                                chapter.setContent((String) chapterData.get("content"));
-                                story.getChapters().add(chapter);
-                            }
-                        }
-                        // Thêm story vào danh sách storyList
-                        storyListUpdate.add(String.valueOf(story.getId()));
-                    }
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError)
-            {
-                Log.i("DB", "Lỗi: " + databaseError.getMessage());
-            }
-
-        });
+//        storiesRef.orderByChild("updateTime").limitToLast(8).addListenerForSingleValueEvent(new ValueEventListener()
+//        {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot)
+//            {
+//                if (dataSnapshot.exists())
+//                {
+//                    for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
+//                    {
+//                        // Lấy dữ liệu của từng story từ dataSnapshot
+//                        Map<String, Object> storyData = (Map<String, Object>) storySnapshot.getValue();
+//
+//                        // Tạo đối tượng StoryClass từ dữ liệu của mỗi story
+//                        StoryClass story = new StoryClass((int) (long) storyData.get("id"));
+//                        story.setName((String) storyData.get("name"));
+//                        story.setTime((String) storyData.get("time"));
+//                        story.setUpdateTime((String) storyData.get("updateTime"));
+//                        story.setAuthor((String) storyData.get("author"));
+//                        story.setStatus((String) storyData.get("status"));
+//                        story.setDescription((String) storyData.get("description"));
+//                        story.setNumberOfChapter((int) (long) storyData.get("numberOfChapter"));
+//                        story.setViews((int) (long) storyData.get("views"));
+//                        story.setUri((String) storyData.get("uri"));
+//
+//                        // Lấy danh sách genres
+//                        List<String> genres = (List<String>) storyData.get("genresList");
+//                        if (genres != null)
+//                        {
+//                            story.setGenres(genres);
+//                        }
+//
+//                        // Lấy danh sách các chương
+//                        Map<String, Map<String, Object>> chaptersMap = (Map<String, Map<String, Object>>) storyData.get("chapters");
+//                        if (chaptersMap != null)
+//                        {
+//                            for (Map.Entry<String, Map<String, Object>> entry : chaptersMap.entrySet())
+//                            {
+//                                ChapterClass chapter = new ChapterClass();
+//                                Map<String, Object> chapterData = entry.getValue();
+//                                chapter.setChapterId((String) chapterData.get("chapterId"));
+//                                chapter.setContent((String) chapterData.get("content"));
+//                                story.getChapters().add(chapter);
+//                            }
+//                        }
+//                        // Thêm story vào danh sách storyList
+//                        storyListUpdate.add(String.valueOf(story.getId()));
+//                    }
+//                }
+//
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError)
+//            {
+//                Log.i("DB", "Lỗi: " + databaseError.getMessage());
+//            }
+//
+//        });
         // endregion Update: get ID to send to home fragment
 
 
         // region All: Save to local to send all fragment
-        storiesRef.orderByChild("time").addListenerForSingleValueEvent(new ValueEventListener()
+        storiesRef.orderByChild("time").addValueEventListener(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
@@ -346,11 +412,6 @@ public class HomeActivity extends AppCompatActivity implements DataListener
                         storyListAll.add(String.valueOf(story.getId()));
                         saveStoryToFile(story.getId(), story);
                     }
-//                    homeFragment = HomeFragment.newInstance(listOfStoryLists);
-//                    getSupportFragmentManager().beginTransaction()
-//                            .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-//                            .add(R.id.fragment_container, homeFragment, "YOUR_FRAGMENT_TAG")
-//                            .commit();
                 }
             }
 
@@ -419,7 +480,7 @@ public class HomeActivity extends AppCompatActivity implements DataListener
                     .add(R.id.home_fragment_container, new BlankFragment()) // Use blank fragment to hide all the content, smoother the animation
                     .commit();
 
-           getSupportFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.fade_in_and_slide, R.anim.fade_out)
                     .add(R.id.home_fragment_container, selectedFragment, "YOUR_FRAGMENT_TAG")
                     .commit();
@@ -463,7 +524,7 @@ public class HomeActivity extends AppCompatActivity implements DataListener
     @Override
     public void onDataReceived(String data)
     {
-        Log.i("Data Listener", "Receive data from fragment: " + data);
+        //Log.i("Data Listener", "Receive data from fragment: " + data);
         if (data.equals("Click Discovery"))
         {
             // Tắt onclick của navigation để chuyển vị trí selected Item
@@ -472,8 +533,7 @@ public class HomeActivity extends AppCompatActivity implements DataListener
 
             bottomNav.setSelectedItemId(R.id.navigation_discovery);
             bottomNav.setOnItemSelectedListener(this::SetOnItemClick);
-        }
-        else if (data.equals("Click Saved"))
+        } else if (data.equals("Click Saved"))
         {
             // Tắt onclick của navigation để chuyển vị trí selected Item
             bottomNav.setOnItemSelectedListener(item ->
@@ -481,6 +541,17 @@ public class HomeActivity extends AppCompatActivity implements DataListener
 
             bottomNav.setSelectedItemId(R.id.navigation_download);
             bottomNav.setOnItemSelectedListener(this::SetOnItemClick);
+        } else if (data.equals("Reload"))
+        {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.home_fragment_container, new BlankFragment()) // Use blank fragment to hide all the content, smoother the animation
+                    .commit();
+
+            homeFragment = HomeFragment.newInstance(listOfStoryLists);
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.fade_in_and_slide, R.anim.fade_out)
+                    .add(R.id.home_fragment_container, homeFragment, "YOUR_FRAGMENT_TAG")
+                    .commit();
         }
     }
 
@@ -495,5 +566,7 @@ public class HomeActivity extends AppCompatActivity implements DataListener
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
+
+
 
 }

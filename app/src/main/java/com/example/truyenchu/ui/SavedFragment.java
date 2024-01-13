@@ -56,17 +56,6 @@ public class SavedFragment extends Fragment
             storyClassesRecent.add(StoryClass.loadStoryFromFile(getActivity(), id));
         }
 
-        RecyclerView recyclerViewRecent = view.findViewById(R.id.download_recycler_view_recent);
-        recyclerViewRecent.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-
-        Horizontal_2_ImageAdapter adapter = new Horizontal_2_ImageAdapter(getActivity() , storyClassesRecent, story->
-        {
-            Intent intent = new Intent(getActivity(), StoryActivity.class);
-            intent.putExtra("storyData", story);
-            startActivity(intent);
-        });
-        recyclerViewRecent.setAdapter(adapter);
-
         String savedString = UserClass.GetUserInfoFromPref(getActivity(), "saved");
         String[] savedStringArray = savedString.split("_");
         for (String id : savedStringArray)
@@ -74,15 +63,27 @@ public class SavedFragment extends Fragment
             storyClassesSaved.add(StoryClass.loadStoryFromFile(getActivity(), id));
         }
 
+        RecyclerView recyclerViewRecent = view.findViewById(R.id.download_recycler_view_recent);
+        RecyclerView recyclerViewSaved = view.findViewById(R.id.download_recycler_view_saved);
 
-       RecyclerView recyclerViewSaved = view.findViewById(R.id.download_recycler_view_saved);
+        recyclerViewRecent.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         recyclerViewSaved.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+
+        Horizontal_2_ImageAdapter adapter = new Horizontal_2_ImageAdapter(getActivity() , storyClassesRecent, story->
+        {
+            Intent intent = new Intent(getActivity(), StoryActivity.class);
+            intent.putExtra("storyData", story);
+            startActivity(intent);
+        });
+
       VerticalContentAdapter adapter1 = new VerticalContentAdapter(getActivity() , storyClassesSaved, story->
         {
             Intent intent = new Intent(getActivity(), StoryActivity.class);
             intent.putExtra("storyData", story);
             startActivity(intent);
         });
+
+        recyclerViewRecent.setAdapter(adapter);
         recyclerViewSaved.setAdapter(adapter1);
 
 
@@ -90,9 +91,9 @@ public class SavedFragment extends Fragment
         if (uuid == null)
             return view;
 
-        DatabaseReference currentUserRef = DatabaseHelper.GetCurrentUserReference(getActivity())
-                .child("recentString");
-        currentUserRef.addValueEventListener(new ValueEventListener()
+        DatabaseReference currentUserRef = DatabaseHelper.GetCurrentUserReference(getActivity());
+
+        currentUserRef.child("recentString").addValueEventListener(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
@@ -109,6 +110,33 @@ public class SavedFragment extends Fragment
                     adapter.notifyDataSetChanged();
                 }
             }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error)
+            {
+
+            }
+        });
+
+        currentUserRef.child("saved").addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                if (dataSnapshot.exists())
+                {
+                    String savedString = dataSnapshot.getValue(String.class);
+                    String[] savedStringArray = savedString.split("_");
+                    storyClassesSaved.clear();
+                    for (String id : savedStringArray)
+                    {
+                        storyClassesSaved.add(StoryClass.loadStoryFromFile(getActivity(), id));
+                    }
+                    adapter1.notifyDataSetChanged();
+                }
+            }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error)

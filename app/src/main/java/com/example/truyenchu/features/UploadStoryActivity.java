@@ -66,7 +66,7 @@ public class UploadStoryActivity extends AppCompatActivity implements StoryCount
     private String mParam2;
     private int storyCount;
     private ImageView imageView;
-
+    private boolean canExit = true;
 
     @Override
     public void onStoryCountReceived(int storyCount)
@@ -142,6 +142,11 @@ public class UploadStoryActivity extends AppCompatActivity implements StoryCount
 
         bt_Back.setOnClickListener(v ->
         {
+            if (!canExit)
+            {
+                Toast.makeText(this, "Đang tải lên, vui lòng chờ một lát!", Toast.LENGTH_SHORT).show();
+                return;
+            }
             onBackPressed();
         });
         bt_chooseImage.setOnClickListener(v ->
@@ -266,6 +271,7 @@ public class UploadStoryActivity extends AppCompatActivity implements StoryCount
 
         bt_Upload.setOnClickListener(v ->
         {
+            canExit = false;
             if (imageUri == null)
             {
                 Toast.makeText(this, "Please choose cover image for story", Toast.LENGTH_LONG).show();
@@ -331,7 +337,11 @@ public class UploadStoryActivity extends AppCompatActivity implements StoryCount
 
                 // Handle upload Story
                 uploadImageToFirebase("story_" + id, imageUriStringFB ->
-                        storyRef.child("story_" + id).child("uri").setValue(imageUriStringFB));
+                {
+                    storyRef.child("story_" + id).child("uri").setValue(imageUriStringFB);
+                    Toast.makeText(this, "Tải lên thành công", Toast.LENGTH_SHORT).show();
+                    canExit = true;
+                });
 
                 if (databaseError != null)
                 {
@@ -344,14 +354,13 @@ public class UploadStoryActivity extends AppCompatActivity implements StoryCount
                     Gson gson = new Gson();
                     String storyJson = gson.toJson(story); // Convert the object to to log it
                     Log.i("DB", "Data pushed: " + storyJson);
-                    Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(this, "Đang tải lên, vui lòng không thoát trang này", Toast.LENGTH_SHORT).show();
                 }
             });
 
 
             // Thêm chuỗi upload để lấy theo thứ tự
-            DatabaseReference uploadStringRef =    FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app")
+            DatabaseReference uploadStringRef = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app")
                     .getReference()
                     .child("uploadString");
             uploadStringRef.addListenerForSingleValueEvent(new ValueEventListener()

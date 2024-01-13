@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -106,10 +107,17 @@ public class Horizontal_1_SmallImageAdapter extends RecyclerView.Adapter<Horizon
         StoryClass story = arr.get(position);
         String temp;
 
-        Glide.with(viewHolder.itemView.getContext())
-                .load(story.getUri())
-                .into(viewHolder.getStoryImage());
-        viewHolder.getTvName().setText(story.getName(13));
+        try
+        {
+            Glide.with(viewHolder.itemView.getContext())
+                    .load(story.getUri())
+                    .into(viewHolder.getStoryImage());
+            viewHolder.getTvName().setText(story.getName(13));
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(context.getApplicationContext(), "Không thể tải một số ảnh bìa truyện, vui lòng chờ 1 lát và vuốt lên để tải lại", Toast.LENGTH_LONG).show();
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

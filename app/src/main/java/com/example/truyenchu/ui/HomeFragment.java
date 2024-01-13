@@ -3,15 +3,20 @@ package com.example.truyenchu.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,6 +52,7 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
 
     private String mParam1;
     private String mParam2;
+    boolean firstScroll = true;
     /**
      * 0: storyListAll - ID tất cả truyện ____________________________________________________________________
      * 1: storyListNew - ID 13 truyện mới nhất để lấy dữ liệu nhanh và đưa vào HomeFragment ______
@@ -59,7 +65,8 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
     private DataListener dataListener;
     ImageButton profilePic;
     TextView profileName;
-
+    private boolean isScrolling = false;
+    private final int scrollThreshold = 20;
     // region Init
 
     public HomeFragment()
@@ -102,20 +109,24 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
     }
 
     @Override
-    public void onAttach(@NonNull Context context) {
+    public void onAttach(@NonNull Context context)
+    {
         super.onAttach(context);
-        try {
+        try
+        {
             dataListener = (DataListener) context;
-        } catch (ClassCastException e) {
+        } catch (ClassCastException e)
+        {
             throw new ClassCastException(context + " must implement DataListener");
         }
     }
+
     private void sendDataToActivity(String data)
     {
         // Gửi dữ liệu tới Activity thông qua Interface
         if (dataListener != null)
         {
-            Log.i("Data Listener","Send data to activity: " +  data);
+            Log.i("Data Listener", "Send data to activity: " + data);
             dataListener.onDataReceived(data);
         }
     }
@@ -129,15 +140,15 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
             mListStoryList = (ArrayList<ArrayList<String>>) getArguments().getSerializable(ARG_LIST_STORY_LIST);
         for (String storyID : mListStoryList.get(1))
         {
-            mListStoryNew.add(StoryClass.loadStoryFromFile(getActivity() ,storyID));
+            mListStoryNew.add(StoryClass.loadStoryFromFile(getActivity(), storyID));
         }
         for (String storyID : mListStoryList.get(2))
         {
-            mListStoryUpdate.add(StoryClass.loadStoryFromFile(getActivity() ,storyID));
+            mListStoryUpdate.add(StoryClass.loadStoryFromFile(getActivity(), storyID));
         }
 
         String recentString = UserClass.GetUserInfoFromPref(getActivity(), "recent");
-        if (recentString!= null)
+        if (recentString != null)
         {
             String[] recentStringArray = recentString.split("_");
             for (String id : recentStringArray)
@@ -152,11 +163,6 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         LinearLayoutManager layoutManager3 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        // Reverse lại vì dữ liệu được lấy về bị sắp xếp ngược
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
-        layoutManager2.setReverseLayout(true);
-        layoutManager2.setStackFromEnd(true);
 
         Horizontal_1_SmallImageAdapter adapter = new Horizontal_1_SmallImageAdapter(getActivity(), mListStoryNew, this::StartStoryDescriptionActivity);
         Horizontal_3_ContentAdapter adapter1 = new Horizontal_3_ContentAdapter(getActivity(), mListStoryUpdate, this::StartStoryDescriptionActivity);
@@ -175,9 +181,42 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
                 switchToDiscoveryFromButton(1));
         view.findViewById(R.id.home_bt_more_recent).setOnClickListener(v ->
                 switchToDiscoveryFromButton(2));
+        NestedScrollView nestedScrollView = view.findViewById(R.id.home_nested_scroll_view);
+        view.findViewById(R.id.home_bt_more_genres).setOnClickListener(v ->
+        {
+        });
 
+        nestedScrollView.post(() ->
+        {
+            nestedScrollView.scrollTo(0, 310);
+            firstScroll = false;
+        });
+        nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) ->
+        {
+            if (scrollY < 310)
+            {
+                if (Math.abs(scrollY - oldScrollY) > 0 && !isScrolling)
+                {
+                    isScrolling = true;
 
-        String uuid = UserClass.GetUserInfoFromPref(getActivity(),"uuid");
+                    // Dùng Handler để chờ một khoảng thời gian rồi mới thực hiện smooth scroll
+                    new Handler().postDelayed(() ->
+                    {
+                        // Scroll đến vị trí cụ thể trong NestedScrollView
+                        nestedScrollView.smoothScrollTo(0, 310);
+                        // Đặt cờ scroll lại false sau khi đã thực hiện smooth scroll
+                        isScrolling = false;
+                    }, 500); // 500 milliseconds là thời gian chờ trước khi thực hiện smooth scroll
+                }
+            }
+
+            if (scrollY < 20 && !firstScroll)
+            {
+                sendDataToActivity("Reload");
+            }
+
+        });
+        String uuid = UserClass.GetUserInfoFromPref(getActivity(), "uuid");
         if (uuid != null)
         {
             DatabaseReference currentUserRef = DatabaseHelper.GetCurrentUserReference(getActivity())
