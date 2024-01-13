@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -218,15 +219,17 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
                     .add(R.id.home_fragment_container, genresFragment, "YOUR_FRAGMENT_TAG")
                     .commit();
         });
-
+        // TextView textView = view.findViewById(R.id.home_textViewstory_new);
+        //int scrollYofTop = textView.getTop();
+        int scrollYofTop = 620;
         nestedScrollView.post(() ->
         {
-            nestedScrollView.scrollTo(0, 620);
+            nestedScrollView.scrollTo(0, scrollYofTop);
             firstScroll = false;
         });
         nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) ->
         {
-            if (scrollY < 620)
+            if (scrollY < scrollYofTop)
             {
                 if (Math.abs(scrollY - oldScrollY) > 0 && !isScrolling)
                 {
@@ -236,7 +239,7 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
                     new Handler().postDelayed(() ->
                     {
                         // Scroll đến vị trí cụ thể trong NestedScrollView
-                        nestedScrollView.smoothScrollTo(0, 620);
+                        nestedScrollView.smoothScrollTo(0, scrollYofTop);
                         // Đặt cờ scroll lại false sau khi đã thực hiện smooth scroll
                         isScrolling = false;
                     }, 500); // 500 milliseconds là thời gian chờ trước khi thực hiện smooth scroll
