@@ -15,7 +15,7 @@ public class CSBM extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_csbm2);
+        setContentView(R.layout.activity_csbm);
         // Hide action bar
         Objects.requireNonNull(getSupportActionBar()).hide();
         // Status bar icon: Black
