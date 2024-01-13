@@ -53,7 +53,7 @@
     <string name="fb_login_protocol_scheme">antruyen</string>
     <string name="facebook_client_token">56789</string>
     <string name="default_web_client_id">106083076262-7tm7tqu57udnbpasl8j980mlkrlmlvg9.apps.googleusercontent.com</string>
-
+    <string name="testtx">Đây là đoạn văn mẫu.\nLựa chọn kích cỡ chữ phù hợp, màu chữ và nền tương phản với nhau nhưng vẫn đảm bảo không mỏi mắt khi đọc trong thời gian dài.</string>
     <string name="hintnx">Nội dung nhận xét tối thiểu 3 kí tự, tối đa 1000 kí tự</string>
 
     <string name="c1_test">Edit + Beta: V

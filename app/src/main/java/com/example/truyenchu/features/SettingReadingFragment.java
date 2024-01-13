@@ -104,10 +104,10 @@ public class SettingReadingFragment extends Fragment {
     }
 
     //apply mau text da co khi out ra vo lai
-    private void applySavedTextColor(TextView mauchu) {
+    private void applySavedTextColor(TextView testne) {
         SharedPreferences preferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
         int textColor = preferences.getInt("text_color", Color.BLACK);
-        mauchu.setTextColor(textColor);
+        testne.setTextColor(textColor);
     }
 
     //lay textsize dang co
@@ -145,7 +145,7 @@ public class SettingReadingFragment extends Fragment {
         return preferences.getFloat("line_spacing_multiplier", 1.0f);
     }
 
-    private float lineSpacingMultiplier = 1.0f; // Giá trị mặc định
+    private float LineSpacingMultiplier = 1.0f; // Giá trị mặc định
 
     //doi font
     private static final String PREF_SELECTED_FONT_PATH = "selected_font_path";
@@ -187,104 +187,161 @@ public class SettingReadingFragment extends Fragment {
         back.setOnClickListener(v -> requireActivity().onBackPressed());
 
         // doi mau nen
-        View cwhite = view.findViewById(R.id.col_white);
-        View cblack = view.findViewById(R.id.col_black);
-        View clgrey = view.findViewById(R.id.col_lightgrey);
-        View cwbeige = view.findViewById(R.id.col_warmbeige);
-        View cowhite = view.findViewById(R.id.col_offwhite);
+        View cday1= view.findViewById(R.id.col_day1);
+        View cday2 = view.findViewById(R.id.col_day2);
+        View cday3 = view.findViewById(R.id.col_day3);
+        View cday4 = view.findViewById(R.id.col_day4);
+        View cday5 = view.findViewById(R.id.col_day5);
+        View cnight1= view.findViewById(R.id.col_night1);
+        View cnight2 = view.findViewById(R.id.col_night2);
+        View cnight3 = view.findViewById(R.id.col_night3);
+        View cnight4 = view.findViewById(R.id.col_night4);
+        View cnight5 = view.findViewById(R.id.col_night5);
+        View testbg=view.findViewById(R.id.test);
 
-        cwhite.setOnClickListener(v -> {
-            saveBackgroundColor(Color.WHITE);
-            view.setBackgroundColor(Color.WHITE);
-        });
-
-        cblack.setOnClickListener(v -> {
-            saveBackgroundColor(Color.BLACK);
-            view.setBackgroundColor(Color.BLACK);
-
-            if (colorChangedListener != null) {
-                colorChangedListener.onColorChanged(Color.BLACK);
-            }
-            // StoryReadingFragment storyReadingFragment2 = new StoryReadingFragment();
-            int newColor = getSavedBackgroundColor();
-            //  storyReadingFragment2.onColorChanged(newColor);
-
-            // Thực hiện chuyển Fragment
-            // FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            // transaction.replace(R.id.reading_hihi, storyReadingFragment2);
-            //  transaction.addToBackStack(null);
-            //  transaction.commit();
-        });
-
-        clgrey.setOnClickListener(v -> {
-            saveBackgroundColor(Color.parseColor("#E2E2E2"));
-            view.setBackgroundColor(Color.parseColor("#E2E2E2"));
-        });
-
-        cwbeige.setOnClickListener(v -> {
-            saveBackgroundColor(Color.parseColor("#f3dcba"));
-            view.setBackgroundColor(Color.parseColor("#f3dcba"));
-        });
-
-        cowhite.setOnClickListener(v -> {
-            saveBackgroundColor(Color.parseColor("#fff9ef"));
-            view.setBackgroundColor(Color.parseColor("#fff9ef"));
-        });
         int backgroundColor = getSavedBackgroundColor();
-        //view.setBackgroundColor(backgroundColor);
+        testbg.setBackgroundColor(backgroundColor);
+
+
+        cday1.setOnClickListener(v -> {
+            saveBackgroundColor(Color.WHITE);
+            testbg.setBackgroundColor(Color.WHITE);
+        });
+
+        cday2.setOnClickListener(v -> {
+            saveBackgroundColor(Color.parseColor("#E2E2E2"));
+            testbg.setBackgroundColor(Color.parseColor("#E2E2E2"));
+        });
+
+        cday3.setOnClickListener(v -> {
+            saveBackgroundColor(Color.parseColor("#fff9ef"));
+            testbg.setBackgroundColor(Color.parseColor("#fff9ef"));
+        });
+
+        cday4.setOnClickListener(v -> {
+            saveBackgroundColor(Color.parseColor("#f3dcba"));
+            testbg.setBackgroundColor(Color.parseColor("#f3dcba"));
+        });
+
+        cday5.setOnClickListener(v -> {
+            saveBackgroundColor(Color.parseColor("#FFFACD"));
+            testbg.setBackgroundColor(Color.parseColor("#FFFACD"));
+        });
+
+        cnight1.setOnClickListener(v -> {
+            saveBackgroundColor(Color.BLACK);
+            testbg.setBackgroundColor(Color.BLACK);
+        });
+
+        cnight2.setOnClickListener(v -> {
+            saveBackgroundColor(Color.parseColor("#1C1C1C"));
+            testbg.setBackgroundColor(Color.parseColor("#1C1C1C"));
+        });
+
+        cnight3.setOnClickListener(v -> {
+            saveBackgroundColor(Color.parseColor("#333333"));
+            testbg.setBackgroundColor(Color.parseColor("#333333"));
+        });
+
+        cnight4.setOnClickListener(v -> {
+            saveBackgroundColor(Color.parseColor("#0E253A"));
+            testbg.setBackgroundColor(Color.parseColor("#0E253A"));
+        });
+
+        cnight5.setOnClickListener(v -> {
+            saveBackgroundColor(Color.parseColor("#120037"));
+            testbg.setBackgroundColor(Color.parseColor("#120037"));
+        });
 
 
         //doi mau chu
-        View ctwhite = view.findViewById(R.id.coltx_white);
-        View ctblack = view.findViewById(R.id.coltx_black);
-        View ctlgrey = view.findViewById(R.id.coltx_lightgrey);
-        View ctwbeige = view.findViewById(R.id.coltx_warmbeige);
-        View ctlblue = view.findViewById(R.id.coltx_lblue);
-        TextView mauchu = view.findViewById(R.id.tx_mauchu);
-        //applySavedTextColor(mauchu);
+        View ctday1= view.findViewById(R.id.coltx_day1);
+        View ctday2 = view.findViewById(R.id.coltx_day2);
+        View ctday3 = view.findViewById(R.id.coltx_day3);
+        View ctday4 = view.findViewById(R.id.coltx_day4);
+        View ctday5 = view.findViewById(R.id.coltx_day5);
+        View ctnight1= view.findViewById(R.id.coltx_night1);
+        View ctnight2 = view.findViewById(R.id.coltx_night2);
+        View ctnight3 = view.findViewById(R.id.coltx_night3);
+        View ctnight4 = view.findViewById(R.id.coltx_night4);
+        View ctnight5 = view.findViewById(R.id.coltx_night5);
+        TextView testne = view.findViewById(R.id.test_tx);
 
-        ctwhite.setOnClickListener(v -> {
+        applySavedTextColor(testne);
+
+        ctday1.setOnClickListener(v -> {
             int newColor = Color.WHITE;
-            mauchu.setTextColor(newColor);
+            testne.setTextColor(newColor);
             saveTextColor(newColor);
         });
 
-        ctblack.setOnClickListener(v -> {
-            int newColor = Color.BLACK;
-            mauchu.setTextColor(newColor);
+        ctday2.setOnClickListener(v -> {
+            int newColor = Color.parseColor("#F2F2F2");
+            testne.setTextColor(newColor);
             saveTextColor(newColor);
         });
 
-        ctlgrey.setOnClickListener(v -> {
-            int newColor = Color.parseColor("#E2E2E2");
-            mauchu.setTextColor(newColor);
+        ctday3.setOnClickListener(v -> {
+            int newColor = Color.parseColor("#C1CDCD");
+            testne.setTextColor(newColor);
             saveTextColor(newColor);
         });
 
-        ctwbeige.setOnClickListener(v -> {
-            int newColor = Color.parseColor("#f3dcba");
-            mauchu.setTextColor(newColor);
+        ctday4.setOnClickListener(v -> {
+            int newColor = Color.parseColor("#FFFFCC");
+            testne.setTextColor(newColor);
             saveTextColor(newColor);
         });
 
-        ctlblue.setOnClickListener(v -> {
+        ctday5.setOnClickListener(v -> {
             int newColor = Color.parseColor("#DCF2F1");
-            mauchu.setTextColor(newColor);
+            testne.setTextColor(newColor);
+            saveTextColor(newColor);
+        });
+        ctnight1.setOnClickListener(v -> {
+            int newColor = Color.BLACK;
+            testne.setTextColor(newColor);
             saveTextColor(newColor);
         });
 
+        ctnight2.setOnClickListener(v -> {
+            int newColor = Color.parseColor("#333333");
+            testne.setTextColor(newColor);
+            saveTextColor(newColor);
+        });
+
+        ctnight3.setOnClickListener(v -> {
+            int newColor = Color.parseColor("#8B4513");
+            testne.setTextColor(newColor);
+            saveTextColor(newColor);
+        });
+
+        ctnight4.setOnClickListener(v -> {
+            int newColor = Color.parseColor("#008000");
+            testne.setTextColor(newColor);
+            saveTextColor(newColor);
+        });
+
+        ctnight5.setOnClickListener(v -> {
+            int newColor = Color.parseColor("#000080");
+            testne.setTextColor(newColor);
+            saveTextColor(newColor);
+        });
 
         //tang giam size text
         Button increase = view.findViewById(R.id.cus_tang);
         Button decrease = view.findViewById(R.id.cus_giam);
 
         float textSize = getSavedTextSize();
+        testne.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+
         increase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Tăng kích thước văn bản
                 ourFontsize += 3f; //chinh gia tri mac dinh o line 121 file nay
                 saveTextSize(ourFontsize);
+                testne.setTextSize(TypedValue.COMPLEX_UNIT_SP, ourFontsize);
             }
         });
 
@@ -294,23 +351,28 @@ public class SettingReadingFragment extends Fragment {
                 // Giam kích thước văn bản
                 ourFontsize -= 3f;
                 saveTextSize(ourFontsize);
+                testne.setTextSize(TypedValue.COMPLEX_UNIT_SP, ourFontsize);
             }
         });
 
         //tang giam size dong`
         View inline = view.findViewById(R.id.cus_tangln);
         View deline = view.findViewById(R.id.cus_giamln);
-
+        float lineSpacingMultiplier = getSavedLineSpacingMultiplier();
+        applyLineSpacingMultiplier(testne, lineSpacingMultiplier);
 
         // Áp dụng giá trị kích thước dòng cho TextView
         inline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Tăng kích thước dòng
-                lineSpacingMultiplier += 0.3f;
+                LineSpacingMultiplier += 0.3f;
 
                 // Lưu giá trị mới vào SharedPreferences
-                saveLineSpacingMultiplier(lineSpacingMultiplier);
+                saveLineSpacingMultiplier(LineSpacingMultiplier);
+
+                applyLineSpacingMultiplier(testne, LineSpacingMultiplier);
+
 
             }
         });
@@ -319,10 +381,12 @@ public class SettingReadingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Giảm kích thước dòng
-                lineSpacingMultiplier -= 0.1f;
+                LineSpacingMultiplier -= 0.1f;
 
                 // Lưu giá trị mới vào SharedPreferences
-                saveLineSpacingMultiplier(lineSpacingMultiplier);
+                saveLineSpacingMultiplier(LineSpacingMultiplier);
+
+                applyLineSpacingMultiplier(testne, LineSpacingMultiplier);
 
             }
         });
@@ -338,12 +402,13 @@ public class SettingReadingFragment extends Fragment {
         View van = view.findViewById(R.id.uvnvan);
         View mont = view.findViewById(R.id.monts);
         View lite = view.findViewById(R.id.literata);
-
+        applySavedFont(testne);
         hel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(), "helveticaneue.ttf");
                 saveSelectedFontPath("helveticaneue.ttf");
+                applySavedFont(testne);
             }
         });
         ari.setOnClickListener(new View.OnClickListener() {
@@ -351,6 +416,7 @@ public class SettingReadingFragment extends Fragment {
             public void onClick(View v) {
                 Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(), "arial.ttf");
                 saveSelectedFontPath("arial.ttf");
+                applySavedFont(testne);
             }
         });
         avir.setOnClickListener(new View.OnClickListener() {
@@ -358,6 +424,7 @@ public class SettingReadingFragment extends Fragment {
             public void onClick(View v) {
                 Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(), "avenirnextltpro_regular.otf");
                 saveSelectedFontPath("avenirnextltpro_regular.otf");
+                applySavedFont(testne);
             }
         });
         time.setOnClickListener(new View.OnClickListener() {
@@ -365,6 +432,7 @@ public class SettingReadingFragment extends Fragment {
             public void onClick(View v) {
                 Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(), "timesnewroman.ttf");
                 saveSelectedFontPath("timesnewroman.ttf");
+                applySavedFont(testne);
             }
         });
 
@@ -373,6 +441,7 @@ public class SettingReadingFragment extends Fragment {
             public void onClick(View v) {
                 Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(), "georgia.ttf");
                 saveSelectedFontPath("georgia.ttf");
+                applySavedFont(testne);
             }
         });
         rob.setOnClickListener(new View.OnClickListener() {
@@ -380,6 +449,7 @@ public class SettingReadingFragment extends Fragment {
             public void onClick(View v) {
                 Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(), "roboto_regular.ttf");
                 saveSelectedFontPath("roboto_regular.ttf");
+                applySavedFont(testne);
             }
         });
         cen.setOnClickListener(new View.OnClickListener() {
@@ -387,6 +457,7 @@ public class SettingReadingFragment extends Fragment {
             public void onClick(View v) {
                 Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(), "utm_centur.ttf");
                 saveSelectedFontPath("utm_centur.ttf");
+                applySavedFont(testne);
             }
         });
         van.setOnClickListener(new View.OnClickListener() {
@@ -394,6 +465,7 @@ public class SettingReadingFragment extends Fragment {
             public void onClick(View v) {
                 Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(), "uvn_van.TTF");
                 saveSelectedFontPath("uvn_van.TTF");
+                applySavedFont(testne);
             }
         });
         mont.setOnClickListener(new View.OnClickListener() {
@@ -401,6 +473,7 @@ public class SettingReadingFragment extends Fragment {
             public void onClick(View v) {
                 Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(), "montserrat_regular.otf");
                 saveSelectedFontPath("montserrat_regular.otf");
+                applySavedFont(testne);
             }
         });
         lite.setOnClickListener(new View.OnClickListener() {
@@ -408,6 +481,7 @@ public class SettingReadingFragment extends Fragment {
             public void onClick(View v) {
                 Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(), "literatabook.otf");
                 saveSelectedFontPath("literatabook.otf");
+                applySavedFont(testne);
             }
         });
         return view;

@@ -50,7 +50,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.545"
-            app:srcCompat="@drawable/r_reload" />
+            app:srcCompat="@drawable/grade" />
 
         <ImageButton
             android:id="@+id/r_exit"
@@ -61,7 +61,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/r_quit" />
+            app:srcCompat="@drawable/closene" />
 
         <TextView
             android:id="@+id/r_name"
@@ -97,7 +97,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.515"
-            app:srcCompat="@drawable/r_previous" />
+            app:srcCompat="@drawable/previous" />
 
         <ImageButton
             android:id="@+id/setting_read"
@@ -110,7 +110,7 @@
             app:layout_constraintStart_toEndOf="@+id/previous_chapter"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.545"
-            app:srcCompat="@drawable/r_setting" />
+            app:srcCompat="@drawable/settingsne" />
 
         <ImageButton
             android:id="@+id/mucluc_read"
@@ -123,7 +123,7 @@
             app:layout_constraintStart_toEndOf="@+id/setting_read"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.529"
-            app:srcCompat="@drawable/r_mucluc" />
+            app:srcCompat="@drawable/muclucne" />
 
         <ImageButton
             android:id="@+id/nextchapter"
@@ -135,7 +135,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.484"
-            app:srcCompat="@drawable/r_next" />
+            app:srcCompat="@drawable/next" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

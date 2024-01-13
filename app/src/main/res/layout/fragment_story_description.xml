@@ -18,22 +18,22 @@
     <ImageView
         android:id="@+id/des_ivback"
         android:layout_width="40dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="15dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
         android:layout_weight="1"
-        android:background="@color/accent_1_10"
         android:scaleType="centerInside"
-        android:src="@drawable/back"
         app:layout_constraintBottom_toBottomOf="@+id/tvName_des"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/cancel" />
 
     <TextView
         android:id="@+id/tvName_des"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:layout_weight="6"
         android:fontFamily="@font/montserrat_semibold"
         android:paddingEnd="30dp"
@@ -171,14 +171,13 @@
 
         <ImageView
             android:id="@+id/des_iv_comment"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="16dp"
-            android:src="@drawable/comment"
             app:layout_constraintStart_toEndOf="@+id/des_iv_like"
             app:layout_constraintTop_toBottomOf="@+id/des_tv_liked"
-            app:srcCompat="@drawable/des_comment" />
+            app:srcCompat="@drawable/cmt" />
 
         <TextView
             android:id="@+id/des_tv_id"
