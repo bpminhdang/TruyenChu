@@ -18,7 +18,7 @@
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="200dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -90,7 +90,7 @@
                         app:cardCornerRadius="10dp">
 
                         <Button
-                            android:id="@+id/button9"
+                            android:id="@+id/home_button_genre_1"
                             style="@style/Widget.AppCompat.Button.Borderless.Colored"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -112,7 +112,7 @@
                         app:cardCornerRadius="@dimen/buttonCornerRadius">
 
                         <Button
-                            android:id="@+id/button10"
+                            android:id="@+id/home_button_genre_2"
                             style="@style/Widget.AppCompat.Button.Borderless.Colored"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -131,7 +131,7 @@
                         app:cardCornerRadius="10dp">
 
                         <Button
-                            android:id="@+id/button12"
+                            android:id="@+id/home_button_genre_3"
                             style="@style/Widget.AppCompat.Button.Borderless.Colored"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -159,7 +159,7 @@
                         app:cardCornerRadius="10dp">
 
                         <Button
-                            android:id="@+id/button13"
+                            android:id="@+id/home_button_genre_4"
                             style="@style/Widget.AppCompat.Button.Borderless.Colored"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -181,7 +181,7 @@
                         app:cardCornerRadius="10dp">
 
                         <Button
-                            android:id="@+id/button14"
+                            android:id="@+id/home_button_genre_5"
                             style="@style/Widget.AppCompat.Button.Borderless.Colored"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -202,7 +202,7 @@
                         app:cardCornerRadius="10dp">
 
                         <Button
-                            android:id="@+id/button15"
+                            android:id="@+id/home_button_genre_6"
                             style="@style/Widget.AppCompat.Button.Borderless.Colored"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

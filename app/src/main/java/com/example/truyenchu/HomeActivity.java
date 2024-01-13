@@ -541,6 +541,14 @@ public class HomeActivity extends AppCompatActivity implements DataListener
 
             bottomNav.setSelectedItemId(R.id.navigation_download);
             bottomNav.setOnItemSelectedListener(this::SetOnItemClick);
+        } else if (data.equals("Click Search"))
+        {
+            // Tắt onclick của navigation để chuyển vị trí selected Item
+            bottomNav.setOnItemSelectedListener(item ->
+                    SetNotOnItemClick());
+
+            bottomNav.setSelectedItemId(R.id.navigation_search);
+            bottomNav.setOnItemSelectedListener(this::SetOnItemClick);
         } else if (data.equals("Reload"))
         {
             getSupportFragmentManager().beginTransaction()
@@ -566,7 +574,6 @@ public class HomeActivity extends AppCompatActivity implements DataListener
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
-
 
 
 }

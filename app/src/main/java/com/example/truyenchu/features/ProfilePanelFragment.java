@@ -77,16 +77,6 @@ public class ProfilePanelFragment extends Fragment
         TextView profileName = view.findViewById(R.id.profiile_panel_name);
         TextView welcome = view.findViewById(R.id.profiile_panel_tvWellCome);
 
-//        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("users_prefs", MODE_PRIVATE);
-//        String username = sharedPreferences.getString("username", "Guest");
-//        profileName.setText(username);
-//
-//        if (username.equals("Guest"))
-//            welcome.setText("WELCOME");
-//        else
-//            welcome.setText("WELCOME BACK!");
-//
-//        String profilePictureString = sharedPreferences.getString("profilePicture", "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/images%2Fprofile_picture.jpg?alt=media&token=bc33064a-23aa-4236-aa3a-b3e3b43eccbc");
         String uuid = UserClass.GetUserInfoFromPref(getActivity(), "uuid");
         if (uuid == null)
         {

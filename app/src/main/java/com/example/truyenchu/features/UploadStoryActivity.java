@@ -275,12 +275,21 @@ public class UploadStoryActivity extends AppCompatActivity implements StoryCount
             if (imageUri == null)
             {
                 Toast.makeText(this, "Please choose cover image for story", Toast.LENGTH_LONG).show();
+                canExit = true;
                 return;
             }
 
             if (!NetworkUtil.isNetworkConnected(this))
             {
                 Toast.makeText(this, "Not connected to the internet. Check your connection and try again!", Toast.LENGTH_LONG).show();
+                canExit = true;
+                return;
+            }
+
+            if (et_genres_upload.getText().toString() == "")
+            {
+                Toast.makeText(this, "Thể loại không hợp lệ!", Toast.LENGTH_LONG).show();
+                canExit = true;
                 return;
             }
 
@@ -316,24 +325,29 @@ public class UploadStoryActivity extends AppCompatActivity implements StoryCount
 
             story.setUserUUID(usersInfoPreference.getString("uuid", null));
             // region Test
-            ArrayList<String> uuidLiked = new ArrayList<>();
-            uuidLiked.add("asdasd");
-            uuidLiked.add("asdasd");
-            uuidLiked.add("asdasd");
-
-            ArrayList<CommentClass> commentClasses = new ArrayList<>();
-            commentClasses.add(new CommentClass("guest", 4.5, "Truyen hay", uuidLiked));
-            uuidLiked.add("asdas43");
-            commentClasses.add(new CommentClass("guest2", 5, "Truyen hay v", uuidLiked));
-
-            story.setComments(commentClasses);
-            story.setUuidLikedUsers(uuidLiked);
+//            ArrayList<String> uuidLiked = new ArrayList<>();
+//            uuidLiked.add("asdasd");
+//            uuidLiked.add("asdasd");
+//            uuidLiked.add("asdasd");
+//
+//            ArrayList<CommentClass> commentClasses = new ArrayList<>();
+//            commentClasses.add(new CommentClass("guest", 4.5, "Truyen hay", uuidLiked));
+//            uuidLiked.add("asdas43");
+//            commentClasses.add(new CommentClass("guest2", 5, "Truyen hay v", uuidLiked));
+//
+//            story.setComments(commentClasses);
+//            story.setUuidLikedUsers(uuidLiked);
             // endregion Test
 
             storyRef.child("story_" + id).setValue(story, (databaseError, databaseReference) ->
             {
                 // Upload chapter
                 storyRef.child("story_" + id).child("chapters").child("chapter_" + id + "_" + numberOfChapter).setValue(new ChapterClass(id + "_" + numberOfChapter, content));
+
+                // Upload name query
+                storyRef.child("story_" + id).child("queryName").setValue(StoryClass.NormalizedData(story.getName()));
+                // Upload author query
+                storyRef.child("story_" + id).child("queryAuthor").setValue(StoryClass.NormalizedData(story.getAuthor()));
 
                 // Handle upload Story
                 uploadImageToFirebase("story_" + id, imageUriStringFB ->
