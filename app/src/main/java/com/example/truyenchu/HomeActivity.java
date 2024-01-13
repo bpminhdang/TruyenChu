@@ -58,8 +58,8 @@ public class HomeActivity extends AppCompatActivity implements DataListener
     ArrayList<String> storyListRecent = new ArrayList<>();
     /**
      * 0: storyListAll - ID tất cả truyện _____________________________________________________________
-     * 1: storyListNew - ID 13 truyện mới nhất để lấy dữ liệu nhanh và đưa vào HomeFragment
-     * 2: storyListUpdate - ID 8 truyện mới cập nhật để lấy dữ liệu nhanh và đưa vào HomeFragment
+     * 1: storyListNew - ID 10 truyện mới nhất để lấy dữ liệu nhanh và đưa vào HomeFragment
+     * 2: storyListUpdate - ID 10 truyện mới cập nhật để lấy dữ liệu nhanh và đưa vào HomeFragment
      */
     ArrayList<ArrayList<String>> listOfStoryLists = new ArrayList<>();
 

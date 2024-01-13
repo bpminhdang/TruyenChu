@@ -12,10 +12,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 // Lớp Truyen (Truyện)
 public class StoryClass implements Serializable
@@ -397,5 +399,14 @@ public class StoryClass implements Serializable
             }
         }
         return loadedStory;
+    }
+
+    public static String NormalizedData(String s)
+    {
+        String normalized = Normalizer.normalize(s, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        String converted = pattern.matcher(normalized).replaceAll("").toLowerCase();
+        converted = converted.replace("đ", "d").replace(" ", "");
+        return converted;
     }
 }

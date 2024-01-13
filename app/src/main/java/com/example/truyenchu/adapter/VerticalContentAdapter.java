@@ -149,15 +149,24 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
        viewHolder.bind(arr.get(position), listener);
         StoryClass story = arr.get(position);
 
+        try
+        {
+            Glide.with(viewHolder.itemView.getContext())
+                    .load(story.getUri())
+                    .into(viewHolder.getStoryImage());
+            viewHolder.getTvName().setText(story.getName(40));
+            viewHolder.getTvTime().setText("Ngày đăng: " + story.getTime() + "\n" + "Cập nhật: " + story.getUpdateTime());
+            viewHolder.getTvAuthor().setText("Tác giả: " + story.getAuthor());
+            viewHolder.getTvChapter().setText("Số chương: " + String.valueOf(story.getNumberOfChapter()));
+            viewHolder.getTvGenre().setText(story.getGenres(25));
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(context.getApplicationContext(), "Không thể load một vài hình ảnh truyện!", Toast.LENGTH_SHORT).show();
 
-        Glide.with(viewHolder.itemView.getContext())
-                .load(story.getUri())
-                .into(viewHolder.getStoryImage());
-        viewHolder.getTvName().setText(story.getName(40));
-        viewHolder.getTvTime().setText("Ngày đăng: " + story.getTime() + "\n" + "Cập nhật: " + story.getUpdateTime());
-        viewHolder.getTvAuthor().setText("Tác giả: " + story.getAuthor());
-        viewHolder.getTvChapter().setText("Số chương: " + String.valueOf(story.getNumberOfChapter()));
-        viewHolder.getTvGenre().setText(story.getGenres(25));
+
+        }
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)
