@@ -18,32 +18,22 @@
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="0.5"
-            android:fontFamily="@font/montserrat_semibold"
-            android:gravity="center_vertical"
-            android:paddingEnd="20dp"
-            android:text="Các thể loại"
-            android:textSize="20sp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/rowdies_regular"
+            android:text="Thể loại"
+            android:textSize="34sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dis_profile_panel_container" />
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/dis_profile_panel_container"
-            android:layout_width="0dp"
-            android:layout_height="90dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
         <LinearLayout
             android:id="@+id/row1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,21 +42,21 @@
 
             <Button
                 android:id="@+id/dis_bt1"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:text="Ngôn Tình" />
 
             <Button
                 android:id="@+id/dis_bt2"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:text="Ngược" />
 
@@ -88,21 +78,21 @@
 
             <Button
                 android:id="@+id/dis_bt3"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:text="Đam Mỹ" />
 
             <Button
                 android:id="@+id/dis_bt4"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:text="Hài Hước" />
 
@@ -122,21 +112,21 @@
 
             <Button
                 android:id="@+id/dis_bt5"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:text="Xuyên Không" />
 
             <Button
                 android:id="@+id/dis_bt6"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:text="Xuyên Nhanh" />
 
@@ -156,21 +146,21 @@
 
             <Button
                 android:id="@+id/dis_bt7"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:text="Đô Thị" />
 
             <Button
                 android:id="@+id/dis_bt8"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:text="Sủng" />
 
@@ -190,21 +180,21 @@
 
             <Button
                 android:id="@+id/dis_bt9"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:text="Nữ Cường" />
 
             <Button
                 android:id="@+id/dis_bt10"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:text="Nữ Phụ" />
 
@@ -224,21 +214,21 @@
 
             <Button
                 android:id="@+id/dis_bt11"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:text="Tiên Hiệp" />
 
             <Button
                 android:id="@+id/dis_bt12"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:text="Kiếm Hiệp" />
 
@@ -258,21 +248,21 @@
 
             <Button
                 android:id="@+id/dis_bt13"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:text="Võng Du" />
 
             <Button
                 android:id="@+id/dis_bt14"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:text="Trọng Sinh" />
 
@@ -292,21 +282,21 @@
 
             <Button
                 android:id="@+id/dis_bt15"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:text="Dị Năng" />
 
             <Button
                 android:id="@+id/dis_bt16"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:text="Dị Giới" />
 
@@ -326,21 +316,21 @@
 
             <Button
                 android:id="@+id/dis_bt17"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:text="Hệ Thống" />
 
             <Button
                 android:id="@+id/dis_bt18"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:text="Truyện Ngắn" />
 
@@ -360,21 +350,21 @@
 
             <Button
                 android:id="@+id/dis_bt19"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:text="Trinh Thám" />
 
             <Button
                 android:id="@+id/dis_bt20"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:text="Kinh Dị" />
 
@@ -396,21 +386,21 @@
 
             <Button
                 android:id="@+id/dis_bt21"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:text="Cung Đấu" />
 
             <Button
                 android:id="@+id/dis_bt22"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:text="Gia Đấu" />
 

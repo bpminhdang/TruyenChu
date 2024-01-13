@@ -8,13 +8,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.truyenchu.R;
 import com.example.truyenchu.StoryActivity;
@@ -26,7 +27,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -43,8 +43,8 @@ public class SearchFragment extends Fragment
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private String mParam1;
-    private String mParam2;
+    private String mParam1_input;
+    private String mParam2_type;
     private EditText editTextInput;
     private ScrollView scrollView3;
     private ChipGroup chipGroup;
@@ -85,8 +85,8 @@ public class SearchFragment extends Fragment
         super.onCreate(savedInstanceState);
         if (getArguments() != null)
         {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam1_input = getArguments().getString(ARG_PARAM1);
+            mParam2_type = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -136,8 +136,8 @@ public class SearchFragment extends Fragment
         searchRecyclerView.setAdapter(adapter);
         searchRecyclerView.setLayoutManager(layoutManager);
         TextView tv_notFound = view.findViewById(R.id.tv_not_found);
-
-        view.findViewById(R.id.iv_search).setOnClickListener(v ->
+        ImageView ivSearch = view.findViewById(R.id.iv_search);
+        ivSearch.setOnClickListener(v ->
         {
             tv_notFound.setVisibility(View.GONE);
             String dataToQuery = String.valueOf(editTextInput.getText());
@@ -252,8 +252,14 @@ public class SearchFragment extends Fragment
             }
         });
 
+        if (mParam1_input != null && mParam2_type != null)
+        {
+            editTextInput.setText(mParam1_input);
+            if (mParam2_type == "genres")
+                searchChipGenre.setChecked(true);
+            ivSearch.performClick();
 
-
+        }
         return view;
     }
 

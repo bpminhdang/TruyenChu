@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ import com.example.truyenchu.adapter.Horizontal_1_SmallImageAdapter;
 import com.example.truyenchu.adapter.BlankFragment;
 import com.example.truyenchu.adapter.DataListener;
 import com.example.truyenchu.features.DatabaseHelper;
+import com.example.truyenchu.features.GenresFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -179,6 +181,23 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         rcViewRecent.setAdapter(adapter2);
         rcViewRecent.setLayoutManager(layoutManager3);
 
+        Button[] buttons = new Button[6];
+        int[] buttonIds = {
+                R.id.home_button_genre_1,
+                R.id.home_button_genre_2,
+                R.id.home_button_genre_3,
+                R.id.home_button_genre_4,
+                R.id.home_button_genre_5,
+                R.id.home_button_genre_6
+        };
+
+        for (int i = 0; i < buttons.length; i++)
+        {
+            buttons[i] = view.findViewById(buttonIds[i]);
+            buttons[i].setOnClickListener(v ->
+                    switchToSearch(((Button) v).getText().toString(), "genres")
+            );
+        }
 
         view.findViewById(R.id.home_bt_more_new).setOnClickListener(v ->
                 switchToDiscoveryFromButton(0));
@@ -189,16 +208,25 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         NestedScrollView nestedScrollView = view.findViewById(R.id.home_nested_scroll_view);
         view.findViewById(R.id.home_bt_more_genres).setOnClickListener(v ->
         {
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .add(R.id.home_fragment_container, new BlankFragment()) // Use blank fragment to hide all the content, smoother the animation
+                    .commit();
+
+            GenresFragment genresFragment = new GenresFragment();
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.fade_in_and_slide, R.anim.fade_out)
+                    .add(R.id.home_fragment_container, genresFragment, "YOUR_FRAGMENT_TAG")
+                    .commit();
         });
 
         nestedScrollView.post(() ->
         {
-            nestedScrollView.scrollTo(0, 310);
+            nestedScrollView.scrollTo(0, 620);
             firstScroll = false;
         });
         nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) ->
         {
-            if (scrollY < 310)
+            if (scrollY < 620)
             {
                 if (Math.abs(scrollY - oldScrollY) > 0 && !isScrolling)
                 {
@@ -208,7 +236,7 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
                     new Handler().postDelayed(() ->
                     {
                         // Scroll đến vị trí cụ thể trong NestedScrollView
-                        nestedScrollView.smoothScrollTo(0, 310);
+                        nestedScrollView.smoothScrollTo(0, 620);
                         // Đặt cờ scroll lại false sau khi đã thực hiện smooth scroll
                         isScrolling = false;
                     }, 500); // 500 milliseconds là thời gian chờ trước khi thực hiện smooth scroll
@@ -285,6 +313,21 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
                 .commit();
 
         sendDataToActivity("Click Discovery");
+    }
+
+    private void switchToSearch(String input, String type)
+    {
+        SearchFragment fragment = SearchFragment.newInstance(input, type);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .add(R.id.home_fragment_container, new BlankFragment()) // Use blank fragment to hide all the content, smoother the animation
+                .commit();
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.fade_in_and_slide, R.anim.fade_out)
+                .add(R.id.home_fragment_container, fragment, "YOUR_FRAGMENT_TAG")
+                .commit();
+
+        sendDataToActivity("Click Search");
     }
 
 
