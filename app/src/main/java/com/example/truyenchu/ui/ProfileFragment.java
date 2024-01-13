@@ -17,6 +17,7 @@ import android.webkit.WebView;
 import com.example.truyenchu.HomeActivity;
 import com.example.truyenchu.R;
 import com.example.truyenchu.adapter.BlankFragment;
+import com.example.truyenchu.features.CSBM;
 import com.example.truyenchu.features.ProfilePanelFragment;
 import com.example.truyenchu.features.UpdateStoryActivity;
 import com.example.truyenchu.features.UploadStoryActivity;
@@ -101,9 +102,11 @@ public class ProfileFragment extends Fragment {
         view.findViewById((R.id.csbm)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), CSBM.class);
+                startActivity(intent);
             }
         });
+
 
 
         return view;

@@ -24,5 +24,7 @@ public class CSBM extends AppCompatActivity {
         getWindow().setStatusBarColor(getColor(R.color.accent_1_10));
         // Navigation pill: White
         getWindow().setNavigationBarColor(Color.WHITE);
-    }
+
+        View backko = findViewById(R.id.backne);
+        backko.setOnClickListener(v -> onBackPressed());}
 }
