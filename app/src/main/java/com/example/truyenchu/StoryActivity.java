@@ -99,7 +99,7 @@ public class StoryActivity extends AppCompatActivity implements DataListener
 //                .commit();
 //        return true;
         ImageView bt_tai = findViewById(R.id.btDown);
-        bt_tai.setOnClickListener(v->
+        bt_tai.setOnClickListener(v ->
         {
             String uuid = UserClass.GetUserInfoFromPref(this, "uuid");
             if (uuid != null)
@@ -131,8 +131,7 @@ public class StoryActivity extends AppCompatActivity implements DataListener
                     editor.putString("saved", resultString);
                     DatabaseHelper.GetCurrentUserReference(this).child("saved").setValue(resultString);
                     Toast.makeText(getApplicationContext(), "Đã xóa khỏi danh sách truyện!", Toast.LENGTH_SHORT).show();
-                }
-                else
+                } else
                 {
                     recent = receivedStory.GetIdString() + "_" + recent;
                     String[] numbers = recent.split("_");
@@ -257,6 +256,13 @@ public class StoryActivity extends AppCompatActivity implements DataListener
                                     recentStoryReadRef.child("count").setValue(readCount);
                                     // Gọi incrementReadCount() nếu cần
                                     incrementReadCount(readCountRef);
+                                } else if (dataSnapshot.getChildrenCount() < receivedStory.getNumberOfChapter())
+                                {
+                                    for (int i = (int) dataSnapshot.getChildrenCount(); i <= receivedStory.getNumberOfChapter(); i++)
+                                    {
+                                        recentStoryReadRef.child("fav").child(String.valueOf(i)).setValue(false);
+                                        recentStoryReadRef.child("read").child(String.valueOf(i)).setValue(false);
+                                    }
                                 }
 
                                 recentStoryReadRef.child("read").addListenerForSingleValueEvent(new ValueEventListener()
@@ -329,8 +335,7 @@ public class StoryActivity extends AppCompatActivity implements DataListener
             });
             findViewById(R.id.btMucluc).setOnClickListener(v ->
                     ChapterChooseClick());
-        }
-        else
+        } else
             findViewById(R.id.btMucluc).setOnClickListener(v ->
                     ChapterChooseClickGuest());
 
@@ -379,10 +384,23 @@ public class StoryActivity extends AppCompatActivity implements DataListener
             public android.view.View getView(int position, android.view.View convertView, android.view.ViewGroup parent)
             {
                 TextView textView = (TextView) super.getView(position, convertView, parent);
-                if (readList.get(position))
-                    textView.setTextColor(Color.GRAY);
-                if (favList.get(position))
-                    textView.setText(textView.getText() + " ⭐");
+                boolean noError = false;
+                while (!noError) {
+                    try {
+                        if (readList.get(position))
+                            textView.setTextColor(Color.GRAY);
+                        if (favList.get(position))
+                            textView.setText(textView.getText() + " ⭐");
+                        noError = true;
+                    } catch (Exception e) {
+                        readList.add(false);
+                        favList.add(false);
+                       Log.i("Story Activity set text", "add false");
+                    }
+                }
+
+
+
                 return textView;
             }
         };

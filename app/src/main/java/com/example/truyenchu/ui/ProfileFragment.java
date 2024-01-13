@@ -21,6 +21,8 @@ import com.example.truyenchu.features.UpdateStoryActivity;
 import com.example.truyenchu.features.UploadStoryActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ProfileFragment#newInstance} factory method to
@@ -80,12 +82,12 @@ public class ProfileFragment extends Fragment
         {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(getActivity(), HomeActivity.class);
-            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("users_info", Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("users_info", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("uuid", null);
             editor.apply();
             startActivity(intent);
-            getActivity().finish();
+            requireActivity().finish();
         });
 
         view.findViewById(R.id.pro_upload).setOnClickListener(v ->
@@ -98,6 +100,7 @@ public class ProfileFragment extends Fragment
         {
             Intent intent = new Intent(getActivity(), UpdateStoryActivity.class);
             startActivity(intent);
+            //requireActivity().finish();
         });
         return view;
     }

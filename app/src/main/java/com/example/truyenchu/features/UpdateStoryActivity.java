@@ -28,6 +28,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.truyenchu.HomeActivity;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu._class.NetworkUtil;
@@ -171,7 +172,10 @@ public class UpdateStoryActivity extends AppCompatActivity implements StoryCount
 
         bt_Back.setOnClickListener(v ->
         {
-            onBackPressed();
+//            Intent intent = new Intent(this, HomeActivity.class);
+//            startActivity(intent);
+            //finish();
+ onBackPressed();
         });
         bt_chooseImage.setOnClickListener(v ->
 

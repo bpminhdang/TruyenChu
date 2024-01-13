@@ -158,8 +158,6 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
         viewHolder.getTvAuthor().setText("Tác giả: " + story.getAuthor());
         viewHolder.getTvChapter().setText("Số chương: " + String.valueOf(story.getNumberOfChapter()));
         viewHolder.getTvGenre().setText(story.getGenres(25));
-
-        Log.i("Vertical", story.getUri());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
