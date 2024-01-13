@@ -41,8 +41,8 @@ public class AddDataFirebase_dev extends AppCompatActivity
                     String name = (String) snapshot.child("name").getValue();
                     snapshot.getRef().child("queryName").setValue(StoryClass.NormalizedData(name));
 
-//                    String author = (String) snapshot.child("author").getValue();
-//                    snapshot.getRef().child("queryAuthor").setValue(StoryClass.NormalizedData(author));
+                    String author = (String) snapshot.child("author").getValue();
+                    snapshot.getRef().child("queryAuthor").setValue(StoryClass.NormalizedData(author));
 //
 //                    String genresString = "";
 //                    List<String> genres = (List<String>) snapshot.child("genresList").getValue();

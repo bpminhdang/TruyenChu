@@ -403,6 +403,8 @@ public class StoryClass implements Serializable
 
     public static String NormalizedData(String s)
     {
+        if (s == null)
+            return null;
         String normalized = Normalizer.normalize(s, Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
         String converted = pattern.matcher(normalized).replaceAll("").toLowerCase();

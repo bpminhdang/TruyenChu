@@ -3,6 +3,7 @@ package com.example.truyenchu.ui;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +30,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,6 +52,9 @@ public class SearchFragment extends Fragment
 
     boolean[] checked = {true, false, false};
     ArrayList<StoryClass> storyClasses = new ArrayList<>();
+    private Chip searchChipName;
+    private Chip searchChipAuthor;
+    private Chip searchChipGenre;
 
     public SearchFragment()
     {
@@ -94,21 +99,36 @@ public class SearchFragment extends Fragment
         editTextInput = view.findViewById(R.id.editTextText);
         scrollView3 = view.findViewById(R.id.scrollView3);
         chipGroup = view.findViewById(R.id.chipGroup);
-        Chip searchChipName = view.findViewById(R.id.search_chip_name);
-        Chip searchChipAuthor = view.findViewById(R.id.search_chip_author);
-        Chip searchChipGenre = view.findViewById(R.id.search_chip_genre);
+        searchChipName = view.findViewById(R.id.search_chip_name);
+        searchChipAuthor = view.findViewById(R.id.search_chip_author);
+        searchChipGenre = view.findViewById(R.id.search_chip_genre);
 
         searchRecyclerView = view.findViewById(R.id.search_recyclerview);
 
         searchChipName.setOnCheckedChangeListener((compoundButton, isChecked) ->
-                checked[0] = isChecked);
+        {
+            ClearChipCheck();
+            checked[0] = isChecked;
+            searchChipName.setChecked(isChecked);
+        });
         searchChipAuthor.setOnCheckedChangeListener((compoundButton, isChecked) ->
-                checked[1] = isChecked);
+        {
+            ClearChipCheck();
+            checked[1] = isChecked;
+            searchChipAuthor.setChecked(isChecked);
+
+        });
         searchChipGenre.setOnCheckedChangeListener((compoundButton, isChecked) ->
-                checked[2] = isChecked);
+        {
+            ClearChipCheck();
+            checked[2] = isChecked;
+            searchChipGenre.setChecked(isChecked);
+
+        });
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        VerticalContentAdapter adapter = new VerticalContentAdapter(getActivity(), storyClasses, story->{
+        VerticalContentAdapter adapter = new VerticalContentAdapter(getActivity(), storyClasses, story ->
+        {
             Intent intent = new Intent(getActivity(), StoryActivity.class);
             intent.putExtra("storyData", story);
             startActivity(intent);
@@ -124,35 +144,123 @@ public class SearchFragment extends Fragment
             dataToQuery = StoryClass.NormalizedData(dataToQuery);
             DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
             DatabaseReference storyRef = database.child("stories");
-            Query query = storyRef.orderByChild("queryName")
-                    .startAt(dataToQuery)
-                    .endAt(dataToQuery + "\uf8ff");
-            query.addListenerForSingleValueEvent(new ValueEventListener()
+
+
+            if (searchChipName.isChecked())
             {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot)
+//                Query query = storyRef.orderByChild("queryName")
+//                        .startAt(dataToQuery)
+//                        .endAt(dataToQuery + "\uf8ff");
+                String finalDataToQuery1 = dataToQuery;
+                storyRef.addListenerForSingleValueEvent(new ValueEventListener()
                 {
-                    storyClasses.clear();
-                    for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot)
                     {
-                        // Lấy dữ liệu của truyện từ DataSnapshot
-                        Long id = (Long) storySnapshot.child("id").getValue();
-                            storyClasses.add(StoryClass.loadStoryFromFile(getActivity(), String.valueOf(id)));
+                        storyClasses.clear();
+                        for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
+                        {
+                            // Lấy dữ liệu của truyện từ DataSnapshot
+                            Long id = (Long) storySnapshot.child("id").getValue();
+                            String name = (String) storySnapshot.child("queryName").getValue();
+                            assert name != null;
+                            if (name.contains(finalDataToQuery1))
+                                storyClasses.add(StoryClass.loadStoryFromFile(getActivity(), String.valueOf(id)));
+                        }
+                        if (storyClasses.size() == 0)
+                            tv_notFound.setVisibility(View.VISIBLE);
+
+                        adapter.notifyDataSetChanged();
                     }
-                    if (storyClasses.size() == 0)
-                        tv_notFound.setVisibility(View.VISIBLE);
 
-                    adapter.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError)
+                    @Override
+                    public void onCancelled(DatabaseError databaseError)
+                    {
+                    }
+                });
+            } else if (searchChipAuthor.isChecked())
+            {
+//                Query query = storyRef.orderByChild("queryAuthor")
+//                        .startAt(dataToQuery)
+//                        .endAt(dataToQuery + "\uf8ff");
+                String finalDataToQuery2 = dataToQuery;
+                storyRef.addListenerForSingleValueEvent(new ValueEventListener()
                 {
-                    // Xử lý khi có lỗi xảy ra
-                }
-            });
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot)
+                    {
+                        storyClasses.clear();
+                        for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
+                        {
+                            // Lấy dữ liệu của truyện từ DataSnapshot
+                            Long id = (Long) storySnapshot.child("id").getValue();
+                            String author = (String) storySnapshot.child("queryAuthor").getValue();
+                            assert author != null;
+                            if (author.contains(finalDataToQuery2))
+                                storyClasses.add(StoryClass.loadStoryFromFile(getActivity(), String.valueOf(id)));
+                        }
+                        if (storyClasses.size() == 0)
+                            tv_notFound.setVisibility(View.VISIBLE);
+
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError)
+                    {
+                    }
+                });
+            } else
+            {
+                String finalDataToQuery = dataToQuery;
+                storyRef.addListenerForSingleValueEvent(new ValueEventListener()
+                {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot)
+                    {
+                        storyClasses.clear();
+                        for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
+                        {
+                            Long id = (Long) storySnapshot.child("id").getValue();
+                            List<String> genres = (List<String>) storySnapshot.child("genresList").getValue();
+                            StringBuilder genresString = new StringBuilder();
+                            if (genres != null)
+                            {
+                                //boolean isEqual = false;
+                                for (String genre : genres)
+                                {
+                                    genre = StoryClass.NormalizedData(genre);
+                                    if (genre == null)
+                                        continue;
+                                    genresString.append(genre);
+                                }
+                                if (genresString.toString().contains(finalDataToQuery))
+                                    storyClasses.add(StoryClass.loadStoryFromFile(getActivity(), String.valueOf(id)));
+                            }
+                        }
+                        adapter.notifyDataSetChanged();
+                        if (storyClasses.size() == 0)
+                            tv_notFound.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error)
+                    {
+
+                    }
+                });
+            }
         });
 
+
+
         return view;
+    }
+
+    private void ClearChipCheck()
+    {
+        searchChipName.setChecked(false);
+        searchChipAuthor.setChecked(false);
+        searchChipGenre.setChecked(false);
     }
 }

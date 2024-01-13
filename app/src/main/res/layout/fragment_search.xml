@@ -62,6 +62,7 @@
         android:text="Nhập tên truyện hoặc thể loại để tìm kiếm, cách nhau bởi dấu phẩy và theo đúng thứ tự các ô được chọn ở trên"
         android:textColor="@color/neutral_1_400"
         android:textSize="12sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/editTextText"
         app:layout_constraintStart_toStartOf="@+id/editTextText"
         app:layout_constraintTop_toBottomOf="@+id/editTextText" />
@@ -114,7 +115,7 @@
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
             android:text="Tác giả" />
 
@@ -123,7 +124,6 @@
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:layout_marginEnd="0dp"
             android:layout_weight="1"
             android:text="Thể loại" />
