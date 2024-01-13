@@ -29,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.008"
-        app:srcCompat="@drawable/r_quit" />
+        app:srcCompat="@drawable/closene" />
 
     <ScrollView
         android:layout_width="0dp"
@@ -44,15 +44,97 @@
             android:layout_height="wrap_content">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/test"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mauchu">
+
+                <TextView
+                    android:id="@+id/test_tx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/testtx"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/maunen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:paddingTop="5dp"
+                android:paddingTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView10">
+
+                <LinearLayout
+                    android:id="@+id/color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/cus_maunen"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0">
+
+                    <Button
+                        android:id="@+id/col_night1"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="24dp"
+                        android:layout_height="35dp"
+                        android:backgroundTint="#000000" />
+
+                    <Button
+                        android:id="@+id/col_night2"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="24dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="15dp"
+                        android:backgroundTint="#1C1C1C" />
+
+                    <Button
+                        android:id="@+id/col_night3"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="24dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="15dp"
+                        android:backgroundTint="#333333" />
+
+                    <Button
+                        android:id="@+id/col_night4"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="24dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="15dp"
+                        android:backgroundTint="#0E253A" />
+
+                    <Button
+                        android:id="@+id/col_night5"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="24dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="15dp"
+                        android:backgroundTint="#120037" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tx_maunen"
@@ -69,7 +151,7 @@
                     app:layout_constraintHorizontal_bias="0.003"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cus_maunen"
-                    app:layout_constraintVertical_bias="1.0" />
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
                     android:id="@+id/cus_maunen"
@@ -88,37 +170,27 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
-                    android:id="@+id/color"
+                    android:id="@+id/color2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="15dp"
+                    android:layout_marginEnd="16dp"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:orientation="horizontal"
                     android:paddingTop="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.992"
-                    app:layout_constraintStart_toEndOf="@+id/tx_maunen"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="1.0">
+                    app:layout_constraintTop_toBottomOf="@id/color"
+                    app:layout_constraintVertical_bias="0.0">
 
                     <Button
-                        android:id="@+id/col_white"
+                        android:id="@+id/col_day1"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="24dp"
                         android:layout_height="35dp"
                         android:backgroundTint="#FAFAFA" />
 
                     <Button
-                        android:id="@+id/col_black"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="24dp"
-                        android:layout_height="35dp"
-                        android:layout_marginLeft="15dp"
-                        android:backgroundTint="#000000" />
-
-                    <Button
-                        android:id="@+id/col_lightgrey"
+                        android:id="@+id/col_day2"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="24dp"
                         android:layout_height="35dp"
@@ -126,7 +198,15 @@
                         android:backgroundTint="#E2E2E2" />
 
                     <Button
-                        android:id="@+id/col_warmbeige"
+                        android:id="@+id/col_day3"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="24dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="15dp"
+                        android:backgroundTint="#fff9ef" />
+
+                    <Button
+                        android:id="@+id/col_day4"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="24dp"
                         android:layout_height="35dp"
@@ -134,12 +214,12 @@
                         android:backgroundTint="#f3dcba" />
 
                     <Button
-                        android:id="@+id/col_offwhite"
+                        android:id="@+id/col_day5"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="24dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="15dp"
-                        android:backgroundTint="#fff9ef" />
+                        android:backgroundTint="#FFFACD" />
 
                 </LinearLayout>
 
@@ -152,7 +232,8 @@
                 android:paddingTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mauchu">
+                app:layout_constraintTop_toBottomOf="@id/test"
+                tools:layout_editor_absoluteY="226dp">
 
                 <TextView
                     android:id="@+id/cus_kichthuoc_tx"
@@ -302,9 +383,66 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="40dp"
+                android:paddingBottom="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/maunen">
+
+                <LinearLayout
+                    android:id="@+id/colorchu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/cus_mauchu"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.023">
+
+                    <Button
+                        android:id="@+id/coltx_day1"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="24dp"
+                        android:layout_height="35dp"
+                        android:backgroundTint="#FAFAFA" />
+
+                    <Button
+                        android:id="@+id/coltx_day2"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="24dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="15dp"
+                        android:backgroundTint="#F2F2F2" />
+
+                    <Button
+                        android:id="@+id/coltx_day3"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="24dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="15dp"
+                        android:backgroundTint="#C1CDCD" />
+
+                    <Button
+                        android:id="@+id/coltx_day4"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="24dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="15dp"
+                        android:backgroundTint="#FFFFCC" />
+
+                    <Button
+                        android:id="@+id/coltx_day5"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="24dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="15dp"
+                        android:backgroundTint="#DCF2F1 " />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tx_mauchu"
@@ -321,7 +459,7 @@
                     app:layout_constraintHorizontal_bias="0.003"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cus_mauchu"
-                    app:layout_constraintVertical_bias="1.0" />
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
                     android:id="@+id/cus_mauchu"
@@ -340,58 +478,56 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
-                    android:id="@+id/colorchu"
+                    android:id="@+id/colorchu2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="15dp"
+                    android:layout_marginEnd="16dp"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:orientation="horizontal"
                     android:paddingTop="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.992"
-                    app:layout_constraintStart_toEndOf="@+id/tx_mauchu"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="1.0">
+                    app:layout_constraintTop_toBottomOf="@+id/colorchu"
+                    app:layout_constraintVertical_bias="0.0">
 
                     <Button
-                        android:id="@+id/coltx_white"
+                        android:id="@+id/coltx_night1"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="24dp"
                         android:layout_height="35dp"
-                        android:backgroundTint="#FAFAFA" />
-
-                    <Button
-                        android:id="@+id/coltx_black"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="24dp"
-                        android:layout_height="35dp"
-                        android:layout_marginLeft="15dp"
                         android:backgroundTint="#000000" />
 
                     <Button
-                        android:id="@+id/coltx_lightgrey"
+                        android:id="@+id/coltx_night2"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="24dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="15dp"
-                        android:backgroundTint="#E2E2E2" />
+                        android:backgroundTint="#333333" />
 
                     <Button
-                        android:id="@+id/coltx_warmbeige"
+                        android:id="@+id/coltx_night3"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="24dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="15dp"
-                        android:backgroundTint="#f3dcba" />
+                        android:backgroundTint="#8B4513" />
 
                     <Button
-                        android:id="@+id/coltx_lblue"
+                        android:id="@+id/coltx_night4"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="24dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="15dp"
-                        android:backgroundTint="#DCF2F1 " />
+                        android:backgroundTint="#008000" />
+
+                    <Button
+                        android:id="@+id/coltx_night5"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="24dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="15dp"
+                        android:backgroundTint="#000080" />
 
                 </LinearLayout>
 
