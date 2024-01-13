@@ -372,18 +372,18 @@ public class UploadStoryActivity extends AppCompatActivity implements StoryCount
                     if (dataSnapshot.exists())
                     {
                         recent += "_" + dataSnapshot.getValue(String.class);
-                        int countRecent = 0;
-                        int maxRecentStory = 20;
-                        for (char c : recent.toCharArray())
-                        {
-                            if (c == '_')
-                                countRecent++;
-                        }
-                        if (countRecent > maxRecentStory)
-                        {
-                            String[] parts = recent.split("_");
-                            recent = String.join("_", Arrays.copyOf(parts, maxRecentStory));
-                        }
+//                        int countRecent = 0;
+//                        int maxRecentStory = 20;
+//                        for (char c : recent.toCharArray())
+//                        {
+//                            if (c == '_')
+//                                countRecent++;
+//                        }
+//                        if (countRecent > maxRecentStory)
+//                        {
+//                            String[] parts = recent.split("_");
+//                            recent = String.join("_", Arrays.copyOf(parts, maxRecentStory));
+//                        }
 
                     }
                     uploadStringRef.setValue(recent);

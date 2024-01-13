@@ -34,6 +34,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -133,9 +135,9 @@ public class DiscoveryFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_discovery, container, false);
 
         DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
-        DatabaseReference storiesRef = database.child("stories");
+        DatabaseReference storiesRef = database.child("updateString");
 
-        storiesRef.orderByChild("updateTime").addListenerForSingleValueEvent(new ValueEventListener()
+        storiesRef.addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
@@ -143,45 +145,14 @@ public class DiscoveryFragment extends Fragment
                // storyListStringUpdate.clear();
                 if (dataSnapshot.exists())
                 {
-                    for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
+                    if (dataSnapshot.exists())
                     {
-                        // Lấy dữ liệu của từng story từ dataSnapshot
-                        Map<String, Object> storyData = (Map<String, Object>) storySnapshot.getValue();
-
-                        // Tạo đối tượng StoryClass từ dữ liệu của mỗi story
-                        StoryClass story = new StoryClass((int) (long) storyData.get("id"));
-                        story.setName((String) storyData.get("name"));
-                        story.setTime((String) storyData.get("time"));
-                        story.setUpdateTime((String) storyData.get("updateTime"));
-                        story.setAuthor((String) storyData.get("author"));
-                        story.setStatus((String) storyData.get("status"));
-                        story.setDescription((String) storyData.get("description"));
-                        story.setNumberOfChapter((int) (long) storyData.get("numberOfChapter"));
-                        story.setViews((int) (long) storyData.get("views"));
-                        story.setUri((String) storyData.get("uri"));
-
-                        // Lấy danh sách genres
-                        List<String> genres = (List<String>) storyData.get("genresList");
-                        if (genres != null)
-                        {
-                            story.setGenres(genres);
-                        }
-
-                        // Lấy danh sách các chương
-                        Map<String, Map<String, Object>> chaptersMap = (Map<String, Map<String, Object>>) storyData.get("chapters");
-                        if (chaptersMap != null)
-                        {
-                            for (Map.Entry<String, Map<String, Object>> entry : chaptersMap.entrySet())
-                            {
-                                ChapterClass chapter = new ChapterClass();
-                                Map<String, Object> chapterData = entry.getValue();
-                                chapter.setChapterId((String) chapterData.get("chapterId"));
-                                chapter.setContent((String) chapterData.get("content"));
-                                story.getChapters().add(chapter);
-                            }
-                        }
-                        // Thêm story vào danh sách storyList
-                        storyListStringUpdate.add(String.valueOf(story.getId()));
+                        String recentString = dataSnapshot.getValue(String.class);
+                        String[] recentStringArray = recentString.split("_");
+                        storyListStringUpdate.clear();
+                        storyListStringUpdate.addAll(Arrays.asList(recentStringArray));
+                        Collections.reverse(storyListStringUpdate);
+                        adapter.notifyDataSetChanged();
                     }
                 }
                 if (buttonID != 0 )

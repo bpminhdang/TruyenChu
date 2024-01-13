@@ -402,7 +402,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/montserrat_regular"
-            android:text="Vuốt lên trên để cập nhật"
+            android:text="Vuốt xuống để cập nhật"
             android:textColor="@color/accent_2_400"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"

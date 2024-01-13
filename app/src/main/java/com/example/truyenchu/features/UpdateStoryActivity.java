@@ -175,7 +175,7 @@ public class UpdateStoryActivity extends AppCompatActivity implements StoryCount
 //            Intent intent = new Intent(this, HomeActivity.class);
 //            startActivity(intent);
             //finish();
- onBackPressed();
+            onBackPressed();
         });
         bt_chooseImage.setOnClickListener(v ->
 
@@ -376,18 +376,18 @@ public class UpdateStoryActivity extends AppCompatActivity implements StoryCount
                         String[] resultArray = uniqueNumbersSet.toArray(new String[0]);
                         recent = String.join("_", resultArray);
 
-                        int countRecent = 0;
-                        int maxRecentStory = 20;
-                        for (char c : recent.toCharArray())
-                        {
-                            if (c == '_')
-                                countRecent++;
-                        }
-                        if (countRecent > maxRecentStory)
-                        {
-                            String[] parts = recent.split("_");
-                            recent = String.join("_", Arrays.copyOf(parts, maxRecentStory));
-                        }
+//                        int countRecent = 0;
+//                        int maxRecentStory = 20;
+//                        for (char c : recent.toCharArray())
+//                        {
+//                            if (c == '_')
+//                                countRecent++;
+//                        }
+//                        if (countRecent > maxRecentStory)
+//                        {
+//                            String[] parts = recent.split("_");
+//                            recent = String.join("_", Arrays.copyOf(parts, maxRecentStory));
+//                        }
 
                     }
                     updateStringRef.setValue(recent);

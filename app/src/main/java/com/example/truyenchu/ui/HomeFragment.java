@@ -53,6 +53,7 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
     private String mParam1;
     private String mParam2;
     boolean firstScroll = true;
+    private int maxStoryToLoad = 10;
     /**
      * 0: storyListAll - ID tất cả truyện ____________________________________________________________________
      * 1: storyListNew - ID 13 truyện mới nhất để lấy dữ liệu nhanh và đưa vào HomeFragment ______
@@ -141,10 +142,14 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         for (String storyID : mListStoryList.get(1))
         {
             mListStoryNew.add(StoryClass.loadStoryFromFile(getActivity(), storyID));
+            if (mListStoryNew.size() == maxStoryToLoad)
+                break;
         }
         for (String storyID : mListStoryList.get(2))
         {
             mListStoryUpdate.add(StoryClass.loadStoryFromFile(getActivity(), storyID));
+            if (mListStoryUpdate.size() == maxStoryToLoad)
+                break;
         }
 
         String recentString = UserClass.GetUserInfoFromPref(getActivity(), "recent");
