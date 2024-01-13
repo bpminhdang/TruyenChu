@@ -213,7 +213,7 @@ public class StoryReadingFragment extends Fragment {
         View top = view.findViewById(R.id.top_navigation_custom_avs);
         View bot = view.findViewById(R.id.bottom_navigation_custom_avs);
         ImageButton exit = top.findViewById(R.id.r_exit);
-        ImageButton reload = top.findViewById(R.id.r_reloading);
+        ImageButton mark = top.findViewById(R.id.r_reloading);
         ImageButton pre = bot.findViewById(R.id.previous_chapter);
         ImageButton ne = bot.findViewById(R.id.nextchapter);
         ImageButton set = bot.findViewById(R.id.setting_read);
@@ -274,7 +274,7 @@ public class StoryReadingFragment extends Fragment {
             sendDataToActivity("Exit reading");
         });
 
-        reload.setOnClickListener(v ->
+        mark.setOnClickListener(v ->
         {
             if (isLoggedIn) {
                 DatabaseReference currentUsersRef = DatabaseHelper.GetCurrentUserReference(getActivity());
@@ -283,12 +283,11 @@ public class StoryReadingFragment extends Fragment {
                         .child("fav")
                         .child(String.valueOf(currentChapter)).setValue(true);
                 favList.set(currentChapter, true);
-                // Chuyển dữ liệu sang Activity
-                Log.i("Reading", "gui dl");
-
                 if (dataListener != null) {
-                    Log.i("Reading", "gui dl that");
                     dataListener.onBooleanListReceived(readList, favList);
+
+                    Toast.makeText(getContext(), "Đã đánh dấu chương", Toast.LENGTH_SHORT).show();
+
                 }
             }
 //            @Override

@@ -55,6 +55,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvName_des">
 
+        <ToggleButton
+            android:id="@+id/des_iv_like"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:drawableRight="@drawable/favorite_button_selector_big"
+            android:drawableTint="@color/black"
+            android:textColor="#EC2341"
+            android:textOff=" "
+            android:textOn=" "
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/des_iv_comment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/des_iv_comment" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView2"
             android:layout_width="wrap_content"
@@ -160,21 +176,11 @@
             app:layout_constraintTop_toBottomOf="@+id/des_tv_status" />
 
         <ImageView
-            android:id="@+id/des_iv_like"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/des_tv_liked"
-            app:srcCompat="@drawable/des_heart_w_circle" />
-
-        <ImageView
             android:id="@+id/des_iv_comment"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginStart="12dp"
             android:layout_marginTop="16dp"
+            android:tint="@color/black"
             app:layout_constraintStart_toEndOf="@+id/des_iv_like"
             app:layout_constraintTop_toBottomOf="@+id/des_tv_liked"
             app:srcCompat="@drawable/cmt" />
