@@ -263,6 +263,7 @@ public class DiscoveryFragment extends Fragment
                         StoryClass story = loadStoryFromFile(storyID);
                         if (story.getStatus().equals("Full"))
                             storyListObject.add(story);
+                        //Log.i("DEVTEST", story.getName());
                     }
                     adapter.updateData(storyListObject);
                     recyclerView.scrollToPosition(adapter.getItemCount() - 1);
