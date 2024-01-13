@@ -150,18 +150,6 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/pro_like"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/heart_button_selector"
-                        android:drawableEnd="@drawable/vector_button_selector"
-                        android:drawablePadding="10dp"
-                        android:fontFamily="@font/montserrat_regular"
-                        android:paddingBottom="10dp"
-                        android:text="Truyện đã thích"
-                        android:textSize="16sp" />
-
-                    <TextView
                         android:id="@+id/pro_download"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
