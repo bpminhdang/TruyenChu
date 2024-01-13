@@ -12,12 +12,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.example.truyenchu.R;
 import com.example.truyenchu.StoryActivity;
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu._class.UserClass;
 import com.google.gson.Gson;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,6 +45,7 @@ public class StoryDescriptionFragment extends Fragment
 
     private String mParam1;
     private String mParam2;
+    StoryClass receivedStory;
 
     public StoryDescriptionFragment()
     {
@@ -92,9 +96,9 @@ public class StoryDescriptionFragment extends Fragment
         TextView tvStatus = view.findViewById(R.id.des_tv_status);
         TextView tvNumChapter = view.findViewById(R.id.des_tv_num_chapter);
         TextView tvLiked = view.findViewById(R.id.des_tv_liked);
+        ToggleButton tgbtLike = view.findViewById(R.id.des_iv_like);
         TextView tvView = view.findViewById(R.id.des_tv_view);
         TextView tvWatching = view.findViewById(R.id.des_tv_watching);
-        ImageView ivLike = view.findViewById(R.id.des_iv_like);
         ImageView ivComment = view.findViewById(R.id.des_iv_comment);
         TextView tvDescription = view.findViewById(R.id.des_tv_description);
         TextView tvID = view.findViewById(R.id.des_tv_id);
@@ -104,7 +108,7 @@ public class StoryDescriptionFragment extends Fragment
         if (bundle != null)
         {
             int receivedStoryID = bundle.getInt("receivedStoryID");
-            StoryClass receivedStory = loadStoryFromFile(String.valueOf(receivedStoryID));
+            receivedStory = loadStoryFromFile(String.valueOf(receivedStoryID));
             StoryClass.SetText(tvNameDes, receivedStory.getName());
             StoryClass.SetText(tvAuthor, receivedStory.getAuthor());
             StoryClass.SetText(tvID, "ID: " + receivedStory.getId());
@@ -144,7 +148,21 @@ public class StoryDescriptionFragment extends Fragment
             });
         }
         ivBack.setOnClickListener(v -> requireActivity().onBackPressed());
+        tgbtLike.setOnClickListener(v -> {
+            TextView tv = view.findViewById(R.id.des_tv_liked);
+            int num = Integer.parseInt(tv.getText().toString());
+            if (tgbtLike.isChecked())
+            {
 
+                tv.setText(String.valueOf(num + 1));
+            }
+            else
+                tv.setText(String.valueOf(num - 1));
+
+
+
+
+        });
 
         return view;
     }
