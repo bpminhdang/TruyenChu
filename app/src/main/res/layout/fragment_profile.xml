@@ -254,7 +254,7 @@
 
                     <TextView
                         android:id="@+id/danhgia"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/danhgia_button_selector"
                         android:drawableEnd="@drawable/vector_button_selector"
@@ -267,7 +267,7 @@
 
                     <TextView
                         android:id="@+id/gopy"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/gopy_button_selector"
                         android:drawableEnd="@drawable/vector_button_selector"
@@ -279,7 +279,7 @@
 
                     <TextView
                         android:id="@+id/share"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/share_button_selector"
                         android:drawableEnd="@drawable/vector_button_selector"
@@ -292,7 +292,7 @@
 
                     <TextView
                         android:id="@+id/csbm"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/csbm_button_selector"
                         android:drawableEnd="@drawable/vector_button_selector"
