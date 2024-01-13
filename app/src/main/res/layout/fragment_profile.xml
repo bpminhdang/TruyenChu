@@ -68,7 +68,7 @@
                         android:id="@+id/pro_my_story"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/history_button_selector"
+                        android:drawableStart="@drawable/mine2"
                         android:drawableEnd="@drawable/vector_button_selector"
                         android:drawablePadding="10dp"
                         android:fontFamily="@font/montserrat_regular"
@@ -80,7 +80,7 @@
                         android:id="@+id/pro_upload"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/heart_button_selector"
+                        android:drawableStart="@drawable/uploadtruyen"
                         android:drawableEnd="@drawable/vector_button_selector"
                         android:drawablePadding="10dp"
                         android:fontFamily="@font/montserrat_regular"
@@ -92,7 +92,7 @@
                         android:id="@+id/pro_update"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/dw_button_selector"
+                        android:drawableStart="@drawable/addtruyen"
                         android:drawableEnd="@drawable/vector_button_selector"
                         android:drawablePadding="10dp"
                         android:fontFamily="@font/montserrat_regular"
@@ -262,6 +262,7 @@
                         android:fontFamily="@font/montserrat_regular"
                         android:paddingBottom="10dp"
                         android:text="Đánh giá ứng dụng"
+                        android:textColor="@color/neutral_1_300"
                         android:textSize="16sp" />
 
                     <TextView
@@ -286,6 +287,7 @@
                         android:fontFamily="@font/montserrat_regular"
                         android:paddingBottom="10dp"
                         android:text="Chia sẻ ứng dụng"
+                        android:textColor="@color/neutral_1_300"
                         android:textSize="16sp" />
 
                     <TextView

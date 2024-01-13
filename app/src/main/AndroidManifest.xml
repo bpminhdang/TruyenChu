@@ -19,6 +19,9 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".features.CSBM"
+            android:exported="false" />
+        <activity
             android:name=".features.UploadStoryActivity"
             android:exported="false" />
         <activity
