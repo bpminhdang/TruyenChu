@@ -228,20 +228,35 @@ public class HomeActivity extends AppCompatActivity implements DataListener
                 if (snapshot.exists())
                 {
                     String upload = snapshot.child("uploadString").getValue(String.class);
-                    String[] uploadStringArray = upload.split("_");
-                    storyListNew.clear();
-                    for (String id : uploadStringArray)
+                    try
                     {
-                        storyListNew.add(id);
+                        String[] uploadStringArray = upload.split("_");
+                        storyListNew.clear();
+                        for (String id : uploadStringArray)
+                        {
+                            storyListNew.add(id);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Log.i("App error" ,"Có lỗi gì đó xảy ra trong việc tải truyện gần đây");
                     }
 
+
                     String update = snapshot.child("updateString").getValue(String.class);
-                    String[] savedStringArray = update.split("_");
-                    storyListUpdate.clear();
-                    for (String id : savedStringArray)
+                    try
                     {
-                        storyListUpdate.add(id);
+                        String[] savedStringArray = update.split("_");
+                        storyListUpdate.clear();
+                        for (String id : savedStringArray)
+                        {
+                            storyListUpdate.add(id);
+                        }
                     }
+                    catch (Exception e)
+                        {
+                            Log.i("App error" ,"Có lỗi gì đó xảy ra trong việc tải truyện đã lưu");
+                        }
                 }
                 // Chỉ cập nhật home fragment khi khởi tạo hoặc khi ngưởi dùng muốn reload,
                 // trành việc cập nhật làm mất truyện đang tìm của người dùng

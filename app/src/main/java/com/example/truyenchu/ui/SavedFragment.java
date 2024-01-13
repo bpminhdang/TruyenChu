@@ -8,9 +8,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.truyenchu.R;
 import com.example.truyenchu.StoryActivity;
@@ -51,17 +53,32 @@ public class SavedFragment extends Fragment
 
 
         String recentString = UserClass.GetUserInfoFromPref(getActivity(), "recent");
-        String[] recentStringArray = recentString.split("_");
-        for (String id : recentStringArray)
+        try
         {
-            storyClassesRecent.add(StoryClass.loadStoryFromFile(getActivity(), id));
+            String[] recentStringArray = recentString.split("_");
+            for (String id : recentStringArray)
+            {
+                storyClassesRecent.add(StoryClass.loadStoryFromFile(getActivity(), id));
+            }
+        }
+        catch (Exception e)
+        {
+            Log.i("App error" ,"Có lỗi gì đó xảy ra trong việc tải truyện gần đây");
         }
 
+        try
+        {
         String savedString = UserClass.GetUserInfoFromPref(getActivity(), "saved");
         String[] savedStringArray = savedString.split("_");
         for (String id : savedStringArray)
         {
             storyClassesSaved.add(StoryClass.loadStoryFromFile(getActivity(), id));
+        }
+        }
+        catch (Exception e)
+        {
+            Log.i("App error" ,"Có lỗi gì đó xảy ra trong việc tải truyện đã lưu");
+
         }
 
         RecyclerView recyclerViewRecent = view.findViewById(R.id.download_recycler_view_recent);
