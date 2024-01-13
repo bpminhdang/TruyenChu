@@ -90,14 +90,11 @@
             android:id="@+id/item_vertical_content_tvTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="5dp"
             android:fontFamily="@font/montserrat_regular"
             android:text="16 giờ trước"
             android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/item_vertical_content_tvAuthor"
-            app:layout_constraintStart_toStartOf="@+id/item_vertical_content_tvName"
-            app:layout_constraintTop_toBottomOf="@+id/item_vertical_content_tvName" />
+            app:layout_constraintStart_toStartOf="@+id/item_vertical_content_tvName" />
 
         <TextView
             android:id="@+id/item_vertical_content_tvAuthor"
@@ -113,7 +110,7 @@
             android:id="@+id/item_vertical_content_tvChapter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="8dp"
             android:fontFamily="@font/montserrat_regular"
             android:text="10 chương"
             android:textSize="12sp"

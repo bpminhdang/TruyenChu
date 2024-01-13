@@ -3,6 +3,7 @@ package com.example.truyenchu.ui;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -56,11 +57,13 @@ public class DiscoveryFragment extends Fragment
     ArrayList<Button> btList = new ArrayList<>();
 
 
-
     private String mParam1;
     private String mParam2;
     ArrayList<String> storyListString = new ArrayList<>();
     ArrayList<String> storyListStringUpdate = new ArrayList<>();
+    ArrayList<String> storyListStringFull = new ArrayList<>();
+    ArrayList<String> storyListStringView = new ArrayList<>();
+    ArrayList<String> storyListStringFavorite = new ArrayList<>();
     ArrayList<StoryClass> storyListObject = new ArrayList<>();
     VerticalContentAdapter adapter = new VerticalContentAdapter(getActivity(), storyListObject, story ->
     {
@@ -68,7 +71,6 @@ public class DiscoveryFragment extends Fragment
         intent.putExtra("storyData", story);
         startActivity(intent);
     });
-    ;
 
     public DiscoveryFragment()
     {
@@ -110,7 +112,8 @@ public class DiscoveryFragment extends Fragment
             assert storyListString != null;
             for (String storyID : storyListString)
                 storyListObject.add(loadStoryFromFile(storyID));
-            if (getArguments().containsKey(ARG_BUTTON_ID)) {
+            if (getArguments().containsKey(ARG_BUTTON_ID))
+            {
                 buttonID = getArguments().getInt(ARG_BUTTON_ID);
             }
         }
@@ -118,10 +121,17 @@ public class DiscoveryFragment extends Fragment
 
     public void ResetColorAndSet(ArrayList<Button> btList, int position)
     {
+        int i = 0;
         for (Button button : btList)
         {
+            if( i == 3 || i == 5)
+            {
+                i++;
+                continue;
+            }
             button.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(), R.color.accent_1_10));
             button.setTextColor(getResources().getColor(R.color.accent_1_700));
+            i++;
         }
         btList.get(position).setBackgroundTintList(ContextCompat.getColorStateList(getActivity(), R.color.accent_1_600));
         btList.get(position).setTextColor(getResources().getColor(R.color.accent_1_10));
@@ -135,14 +145,36 @@ public class DiscoveryFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_discovery, container, false);
 
         DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
-        DatabaseReference storiesRef = database.child("updateString");
-
-        storiesRef.addListenerForSingleValueEvent(new ValueEventListener()
+        DatabaseReference storiesRef = database.child("stories");
+        storiesRef.orderByChild("views").limitToLast(20).addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
-               // storyListStringUpdate.clear();
+                if (dataSnapshot.exists())
+                {
+                    for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
+                    {
+                        Long id = (Long) storySnapshot.child("id").getValue();
+                        storyListStringView.add(String.valueOf(id));
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error)
+            {
+
+            }
+        });
+
+        database.child("updateString").addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                // storyListStringUpdate.clear();
                 if (dataSnapshot.exists())
                 {
                     if (dataSnapshot.exists())
@@ -155,7 +187,7 @@ public class DiscoveryFragment extends Fragment
                         adapter.notifyDataSetChanged();
                     }
                 }
-                if (buttonID != 0 )
+                if (buttonID != 0)
                 {
                     Button btToClick = view.findViewById(R.id.dis_bt_update);
                     btToClick.performClick();
@@ -192,9 +224,12 @@ public class DiscoveryFragment extends Fragment
 
         for (int i = 0; i < btList.size(); i++)
         {
+            if (i == 3 || i == 5)
+                continue;
             final int index = i; // Create a final variable to capture the value of i
             btList.get(i).setOnClickListener(v ->
             {
+
                 ResetColorAndSet(btList, index);
 
                 if (index == 0)
@@ -206,22 +241,8 @@ public class DiscoveryFragment extends Fragment
                     }
                     adapter.updateData(storyListObject);
                     recyclerView.scrollToPosition(adapter.getItemCount() - 1);
-
                 }
-                if (index == 2)
-                {
-                    storyListObject.clear();
-                    for (String storyID : storyListString)
-                    {
-                        StoryClass story = loadStoryFromFile(storyID);
-                        if (story.getStatus().equals("Full"))
-                            storyListObject.add(story);
-                    }
-                    adapter.updateData(storyListObject);
-                    recyclerView.scrollToPosition(adapter.getItemCount() - 1);
-
-                }
-
+                else
                 if (index == 1)
                 {
                     storyListObject.clear();
@@ -233,6 +254,32 @@ public class DiscoveryFragment extends Fragment
                     adapter.updateData(storyListObject);
                     recyclerView.scrollToPosition(adapter.getItemCount() - 1);
                 }
+                else
+                if (index == 2)
+                {
+                    storyListObject.clear();
+                    for (String storyID : storyListString)
+                    {
+                        StoryClass story = loadStoryFromFile(storyID);
+                        if (story.getStatus().equals("Full"))
+                            storyListObject.add(story);
+                    }
+                    adapter.updateData(storyListObject);
+                    recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+                }
+                else
+                if (index == 4)
+                {
+                    storyListObject.clear();
+                    for (String storyID : storyListStringView)
+                    {
+                        storyListObject.add(loadStoryFromFile(storyID));
+                    }
+                    adapter.updateData(storyListObject);
+                    recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+                }
+
+
 
             });
         }
@@ -242,7 +289,6 @@ public class DiscoveryFragment extends Fragment
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
-
 
 
         return view;
