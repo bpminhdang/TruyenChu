@@ -49,6 +49,7 @@ public class SavedFragment extends Fragment
     {
         View view = inflater.inflate(R.layout.fragment_download, container, false);
 
+
         String recentString = UserClass.GetUserInfoFromPref(getActivity(), "recent");
         String[] recentStringArray = recentString.split("_");
         for (String id : recentStringArray)

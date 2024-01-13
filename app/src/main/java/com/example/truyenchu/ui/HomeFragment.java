@@ -2,6 +2,7 @@ package com.example.truyenchu.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -255,9 +256,9 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
         String uuid = UserClass.GetUserInfoFromPref(getActivity(), "uuid");
         if (uuid != null)
         {
-            DatabaseReference currentUserRef = DatabaseHelper.GetCurrentUserReference(getActivity())
-                    .child("recentString");
-            currentUserRef.addValueEventListener(new ValueEventListener()
+            DatabaseReference currentUserRef = DatabaseHelper.GetCurrentUserReference(getActivity());
+
+            currentUserRef.child("recentString").addValueEventListener(new ValueEventListener()
             {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot)
@@ -265,6 +266,10 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
                     if (dataSnapshot.exists())
                     {
                         String recentString = dataSnapshot.getValue(String.class);
+                        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("users_info", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("recent", recentString);
+                        editor.apply();
                         String[] recentStringArray = recentString.split("_");
                         mListStoryRecent.clear();
                         for (String id : recentStringArray)
@@ -272,6 +277,28 @@ public class HomeFragment extends Fragment// implements RecyclerViewItemClickLis
                             mListStoryRecent.add(StoryClass.loadStoryFromFile(getActivity(), id));
                         }
                         adapter2.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error)
+                {
+
+                }
+            });
+
+            currentUserRef.child("saved").addValueEventListener(new ValueEventListener()
+            {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot)
+                {
+                    if (dataSnapshot.exists())
+                    {
+                        String recentString = dataSnapshot.getValue(String.class);
+                        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("users_info", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("saved", recentString);
+                        editor.apply();
                     }
                 }
 
