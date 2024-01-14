@@ -155,7 +155,7 @@ public class DiscoveryFragment extends Fragment
             {
                 if (dataSnapshot.exists())
                 {
-                    storyListStringView.clear();
+                    //storyListStringView.clear();
                     for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
                     {
                         Long id = (Long) storySnapshot.child("id").getValue();

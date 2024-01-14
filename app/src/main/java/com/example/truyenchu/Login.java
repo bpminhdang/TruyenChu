@@ -75,6 +75,17 @@ public class Login extends AppCompatActivity
         finish(); // Đóng LoginActivity sau khi chuyển đến HomeActivity
     }
 
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        String uuid = UserClass.GetUserInfoFromPref(getApplicationContext(), "uuid");
+        if (uuid != null)
+        {
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intent);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

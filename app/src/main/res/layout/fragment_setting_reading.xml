@@ -276,12 +276,11 @@
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:orientation="horizontal"
                     android:paddingTop="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/tx_kichthuoc_tx"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.994"
                     app:layout_constraintStart_toEndOf="@+id/tx_kichthuoc_tx"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.545">
+                    app:layout_constraintTop_toTopOf="@+id/tx_kichthuoc_tx">
 
                     <Button
                         android:id="@+id/cus_tang"
@@ -352,12 +351,11 @@
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:orientation="horizontal"
                     android:paddingTop="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/tx_kichthuoc_ln"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.994"
                     app:layout_constraintStart_toEndOf="@+id/tx_kichthuoc_ln"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.545">
+                    app:layout_constraintTop_toTopOf="@+id/tx_kichthuoc_ln">
 
                     <Button
                         android:id="@+id/cus_tangln"

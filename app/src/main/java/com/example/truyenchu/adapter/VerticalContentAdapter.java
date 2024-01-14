@@ -154,7 +154,7 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
             Glide.with(viewHolder.itemView.getContext())
                     .load(story.getUri())
                     .into(viewHolder.getStoryImage());
-            viewHolder.getTvName().setText(story.getName(35));
+            viewHolder.getTvName().setText(story.getName(30));
             viewHolder.getTvTime().setText("Ngày đăng: " + story.getTime() + "\n" + "Cập nhật: " + story.getUpdateTime());
             viewHolder.getTvAuthor().setText("Tác giả: " + story.getAuthor() + "\n" + "Lượt xem: " + story.getViews());
             viewHolder.getTvChapter().setText("Số chương: " + story.getNumberOfChapter() + " - " + story.getStatus());
