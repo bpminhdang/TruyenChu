@@ -24,6 +24,7 @@ import com.example.truyenchu.R;
 import com.example.truyenchu.adapter.BlankFragment;
 import com.example.truyenchu.features.CSBM;
 import com.example.truyenchu.features.ProfilePanelFragment;
+import com.example.truyenchu.features.SettingActivity;
 import com.example.truyenchu.features.SettingReadingFragment;
 import com.example.truyenchu.features.UpdateStoryActivity;
 import com.example.truyenchu.features.UploadStoryActivity;
@@ -84,13 +85,13 @@ public class ProfileFragment extends Fragment {
         view.findViewById(R.id.btSignOut).setOnClickListener(v ->
         {
             FirebaseAuth.getInstance().signOut();
-            Intent intent = new Intent(getActivity(), HomeActivity.class);
-            SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("users_info", Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("users_info", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("uuid", null);
             editor.apply();
+            getActivity().finish();
+            Intent intent = new Intent(getActivity(), HomeActivity.class);
             startActivity(intent);
-            requireActivity().finish();
         });
 
         view.findViewById(R.id.pro_upload).setOnClickListener(v ->
@@ -127,12 +128,8 @@ public class ProfileFragment extends Fragment {
 
         view.findViewById(R.id.giaodien).setOnClickListener(v->
         {
-            SettingReadingFragment settingReadingFragment = new SettingReadingFragment();
-            // Thực hiện chuyển Fragment
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.frameLayout5, settingReadingFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
+            Intent intent = new Intent(getActivity(), SettingActivity.class);
+            startActivity(intent);
         });
 
         view.findViewById(R.id.gopy).setOnClickListener(v ->

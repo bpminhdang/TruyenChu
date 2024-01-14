@@ -90,8 +90,8 @@ public class UploadStoryActivity extends AppCompatActivity implements StoryCount
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         // Status bar: accent 1_0
         getWindow().setStatusBarColor(getColor(R.color.accent_1_10));
-        // Navigation pill: White
-        getWindow().setNavigationBarColor(Color.WHITE);
+        // Navigation pill: accent 1_0
+        getWindow().setNavigationBarColor(getColor(R.color.accent_1_10));
 
         TextInputEditText et_name_upload = findViewById(R.id.name_upload);
         TextInputEditText et_genres_upload = findViewById(R.id.genres_upload);

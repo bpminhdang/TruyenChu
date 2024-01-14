@@ -95,8 +95,8 @@ public class UpdateStoryActivity extends AppCompatActivity implements StoryCount
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         // Status bar: accent 1_0
         getWindow().setStatusBarColor(getColor(R.color.accent_1_10));
-        // Navigation pill: White
-        getWindow().setNavigationBarColor(Color.WHITE);
+        // Navigation pill: accent 1_0
+        getWindow().setNavigationBarColor(getColor(R.color.accent_1_10));
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, usersStoryString);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

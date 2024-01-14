@@ -69,16 +69,22 @@ public class HomeActivity extends AppCompatActivity implements DataListener
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    protected void onPostResume()
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        // Khoảng mã lệnh trong Fragment cha để thêm Fragment con
+        super.onPostResume();
         FragmentManager childFragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = childFragmentManager.beginTransaction();
         ProfilePanelFragment fragment = new ProfilePanelFragment();
         transaction.replace(R.id.home_fragment_container_profile, fragment); // R.id.container là id của viewgroup trong Fragment cha
         transaction.commit();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
+        // Khoảng mã lệnh trong Fragment cha để thêm Fragment con
 
         // region Init
         listOfStoryLists.add(storyListAll);

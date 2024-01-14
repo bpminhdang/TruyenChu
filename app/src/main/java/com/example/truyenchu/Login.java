@@ -145,9 +145,10 @@ public class Login extends AppCompatActivity
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("uuid", mAuth.getCurrentUser().getUid());
                                 editor.apply();
-
                                 Intent intent = new Intent(Login.this, HomeActivity.class);
                                 startActivity(intent);
+                                finish();
+
                             }
                             else
                             {
