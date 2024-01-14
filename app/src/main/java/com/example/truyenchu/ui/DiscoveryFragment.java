@@ -37,9 +37,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -153,6 +155,7 @@ public class DiscoveryFragment extends Fragment
             {
                 if (dataSnapshot.exists())
                 {
+                    storyListStringView.clear();
                     for (DataSnapshot storySnapshot : dataSnapshot.getChildren())
                     {
                         Long id = (Long) storySnapshot.child("id").getValue();
@@ -174,9 +177,6 @@ public class DiscoveryFragment extends Fragment
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
-                // storyListStringUpdate.clear();
-                if (dataSnapshot.exists())
-                {
                     if (dataSnapshot.exists())
                     {
                         String recentString = dataSnapshot.getValue(String.class);
@@ -186,7 +186,7 @@ public class DiscoveryFragment extends Fragment
                         Collections.reverse(storyListStringUpdate);
                         adapter.notifyDataSetChanged();
                     }
-                }
+
                 if (buttonID != 0)
                 {
                     Button btToClick = view.findViewById(R.id.dis_bt_update);
@@ -235,7 +235,9 @@ public class DiscoveryFragment extends Fragment
                 if (index == 0)
                 {
                     storyListObject.clear();
-                    for (String storyID : storyListString)
+                    Set<String> setWithoutDuplicates = new HashSet<>(storyListString);
+                    ArrayList<String> storyListStringNoDup = new ArrayList<>(setWithoutDuplicates);
+                    for (String storyID : storyListStringNoDup)
                     {
                         storyListObject.add(loadStoryFromFile(storyID));
                     }
@@ -246,7 +248,9 @@ public class DiscoveryFragment extends Fragment
                 if (index == 1)
                 {
                     storyListObject.clear();
-                    for (String storyID : storyListStringUpdate)
+                    Set<String> setWithoutDuplicates = new HashSet<>(storyListStringUpdate);
+                    ArrayList<String> storyListStringUpdateNoDup = new ArrayList<>(setWithoutDuplicates);
+                    for (String storyID : storyListStringUpdateNoDup)
                     {
                         storyListObject.add(loadStoryFromFile(storyID));
                     }
@@ -258,7 +262,9 @@ public class DiscoveryFragment extends Fragment
                 if (index == 2)
                 {
                     storyListObject.clear();
-                    for (String storyID : storyListString)
+                    Set<String> setWithoutDuplicates = new HashSet<>(storyListString);
+                    ArrayList<String> storyListStringNoDup = new ArrayList<>(setWithoutDuplicates);
+                    for (String storyID : storyListStringNoDup)
                     {
                         StoryClass story = loadStoryFromFile(storyID);
                         if (story.getStatus().equals("Full"))
@@ -272,7 +278,9 @@ public class DiscoveryFragment extends Fragment
                 if (index == 4)
                 {
                     storyListObject.clear();
-                    for (String storyID : storyListStringView)
+                    Set<String> setWithoutDuplicates = new HashSet<>(storyListStringView);
+                    ArrayList<String> storyListStringViewNoDup = new ArrayList<>(setWithoutDuplicates);
+                    for (String storyID : storyListStringViewNoDup)
                     {
                         storyListObject.add(loadStoryFromFile(storyID));
                     }

@@ -144,11 +144,11 @@ public class Login extends AppCompatActivity
                                 SharedPreferences sharedPreferences = getSharedPreferences("users_info", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("uuid", mAuth.getCurrentUser().getUid());
+                                editor.remove("recent");
+                                editor.remove("saved");
                                 editor.apply();
                                 Intent intent = new Intent(Login.this, HomeActivity.class);
                                 startActivity(intent);
-                                finish();
-
                             }
                             else
                             {

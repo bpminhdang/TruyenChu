@@ -88,6 +88,8 @@ public class ProfileFragment extends Fragment {
             SharedPreferences sharedPreferences = getActivity().getSharedPreferences("users_info", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("uuid", null);
+            editor.remove("recent");
+            editor.remove("saved");
             editor.apply();
             getActivity().finish();
             Intent intent = new Intent(getActivity(), HomeActivity.class);
