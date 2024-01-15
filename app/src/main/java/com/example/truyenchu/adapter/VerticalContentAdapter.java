@@ -17,6 +17,7 @@ import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContentAdapter.ViewHolder>
@@ -156,6 +157,9 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
                     .into(viewHolder.getStoryImage());
             viewHolder.getTvName().setText(story.getName(30));
             viewHolder.getTvTime().setText("Ngày đăng: " + story.getTime() + "\n" + "Cập nhật: " + story.getUpdateTime());
+            if (!Objects.equals(story.GetAvgRating(), "0"))
+                viewHolder.getTvAuthor().setText("Tác giả: " + story.getAuthor() + "\n" + "Lượt xem: " + story.getViews() + " - Đánh giá: " + story.GetAvgRating());
+            else
             viewHolder.getTvAuthor().setText("Tác giả: " + story.getAuthor() + "\n" + "Lượt xem: " + story.getViews());
             viewHolder.getTvChapter().setText("Số chương: " + story.getNumberOfChapter() + " - " + story.getStatus());
             viewHolder.getTvGenre().setText(story.getGenres(25));

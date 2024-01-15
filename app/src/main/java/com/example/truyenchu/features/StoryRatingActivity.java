@@ -1,5 +1,7 @@
 package com.example.truyenchu.features;
 
+import static java.lang.Double.NaN;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,8 +12,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -19,12 +19,8 @@ import android.widget.Toast;
 
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.CommentClass;
-import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu._class.UserClass;
 import com.example.truyenchu.adapter.CommentAdapter;
-import com.example.truyenchu.adapter.Horizontal_1_SmallImageAdapter;
-import com.example.truyenchu.adapter.Horizontal_2_ImageAdapter;
-import com.example.truyenchu.adapter.Horizontal_3_ContentAdapter;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,6 +38,7 @@ public class StoryRatingActivity extends AppCompatActivity
     ArrayList<CommentClass> commentClasses = new ArrayList<>();
     DatabaseReference database = FirebaseDatabase.getInstance("https://truyenchu-89dd1-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
     DatabaseReference storyRef;
+    DatabaseReference commentRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -63,7 +60,8 @@ public class StoryRatingActivity extends AppCompatActivity
         if (intent == null)
             return;
         String receivedStoryID = String.valueOf(intent.getSerializableExtra("storyData"));
-        storyRef = database.child("stories").child("story_" + receivedStoryID).child("comments");
+        storyRef = database.child("stories").child("story_" + receivedStoryID);
+        commentRef = storyRef.child("comments");
 
         ImageView but = findViewById(R.id.xemnhanxet_back);
         but.setOnClickListener(v -> onBackPressed());
@@ -76,7 +74,7 @@ public class StoryRatingActivity extends AppCompatActivity
         TextView tvRating = findViewById(R.id.asr_hint_rating);
         RatingBar ratingBar = findViewById(R.id.asr_ratingBar);
         Button btComment = findViewById(R.id.asr_write_comment);
-        storyRef.addValueEventListener(new ValueEventListener()
+        commentRef.addValueEventListener(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
@@ -89,7 +87,11 @@ public class StoryRatingActivity extends AppCompatActivity
                     commentClasses.add(comment);
                     ratingAVG += comment.getRating();
                 }
-                ratingAVG = ratingAVG/commentClasses.size();
+                if (commentClasses.size() != 0)
+                {
+                    ratingAVG = ratingAVG / commentClasses.size();
+                    storyRef.child("avgRating").setValue(ratingAVG);
+                }
                 ratingBar.setRating(ratingAVG);
 
                 DecimalFormat df = new DecimalFormat("#.#");
@@ -140,7 +142,7 @@ public class StoryRatingActivity extends AppCompatActivity
                 commentClass.setComment(comment);
                 commentClass.setRating(rating);
                 commentClass.setUsername(UserClass.GetUserInfoFromPref(getApplicationContext(), "uuid"));
-                storyRef.child(String.valueOf(commentClasses.size())).setValue(commentClass);
+                commentRef.child(String.valueOf(commentClasses.size())).setValue(commentClass);
                 dialog.dismiss(); // Đóng dialog sau khi xử lý
             }
         });

@@ -40,7 +40,8 @@ public class StoryClass implements Serializable
     private String uri; // Retrive data from Firebase
     private String userUUID;
 
-
+    private String
+            avgRating = "0";
 
     // Constructor
     public StoryClass(int id, String name, String time, String uploadTime, String author, String status, String description, int numberOfChapter, List<String> genres, int views)
@@ -410,5 +411,15 @@ public class StoryClass implements Serializable
         String converted = pattern.matcher(normalized).replaceAll("").toLowerCase();
         converted = converted.replace("đ", "d").replace(" ", "");
         return converted;
+    }
+
+    public String GetAvgRating()
+    {
+        return avgRating;
+    }
+
+    public void SetAvgRating(String avgRating)
+    {
+        this.avgRating = avgRating;
     }
 }

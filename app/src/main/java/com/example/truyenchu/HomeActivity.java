@@ -242,6 +242,7 @@ public class HomeActivity extends AppCompatActivity implements DataListener
                         {
                             storyListNew.add(id);
                         }
+                        listOfStoryLists.set(1, storyListNew);
                     }
                     catch (Exception e)
                     {
@@ -258,6 +259,7 @@ public class HomeActivity extends AppCompatActivity implements DataListener
                         {
                             storyListUpdate.add(id);
                         }
+                        listOfStoryLists.set(2, storyListUpdate);
                     }
                     catch (Exception e)
                         {
