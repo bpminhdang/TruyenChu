@@ -207,6 +207,7 @@ public class StoryReadingFragment extends Fragment {
         alphaAnimator.start();
         view.setVisibility(View.VISIBLE);
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -249,7 +250,8 @@ public class StoryReadingFragment extends Fragment {
                 fadeOutView(top);
                 fadeOutView(bot);
                 isHidden = true;
-                getActivity().getWindow().setNavigationBarColor(backgroundColor);
+
+                getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
                 getActivity().getWindow().setStatusBarColor(backgroundColor);
                 View fragmentView = getView();
                 if (fragmentView != null) {
@@ -257,11 +259,14 @@ public class StoryReadingFragment extends Fragment {
                     if (fragmentContainer!= null)
                         fragmentContainer.setBackgroundColor(backgroundColor);
                 }
+
             } else if (scrollY < oldScrollY && isHidden) {
                 fadeInView(top);
                 fadeInView(bot);
                 isHidden = false;
-                getActivity().getWindow().setNavigationBarColor(Color.WHITE);
+
+                getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                 getActivity().getWindow().setStatusBarColor(Color.WHITE);
                 View fragmentView = getView();
                 if (fragmentView != null) {
@@ -279,9 +284,26 @@ public class StoryReadingFragment extends Fragment {
             if (isHidden) {
                 fadeInView(top);
                 fadeInView(bot);
+                getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                getActivity().getWindow().setStatusBarColor(Color.WHITE);
+                View fragmentView = getView();
+                if (fragmentView != null) {
+                    FragmentContainerView fragmentContainer = fragmentView.findViewById(R.id.fragment_container_avs);
+                    if (fragmentContainer!= null)
+                        fragmentContainer.setBackgroundColor(Color.WHITE);
+                }
             } else {
                 fadeOutView(top);
                 fadeOutView(bot);
+                getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+                getActivity().getWindow().setStatusBarColor(backgroundColor);
+                View fragmentView = getView();
+                if (fragmentView != null) {
+                    FragmentContainerView fragmentContainer = fragmentView.findViewById(R.id.fragment_container_avs);
+                    if (fragmentContainer!= null)
+                        fragmentContainer.setBackgroundColor(backgroundColor);
+                }
             }
 
             // Đảo ngược giá trị của biến flag
