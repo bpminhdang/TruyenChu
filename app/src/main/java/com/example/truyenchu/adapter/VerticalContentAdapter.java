@@ -42,7 +42,7 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
 
         //private LinearLayout storyInfo;
         private ImageView storyImage;
-       // private LinearLayout info;
+        // private LinearLayout info;
         private TextView tvName;
         private TextView tvTime;
         private TextView tvAuthor;
@@ -65,7 +65,6 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
             tvGenre = view.findViewById(R.id.item_vertical_content_tvGenre);
             btFavorite = view.findViewById(R.id.item_vertical_content_toggle_button);
         }
-
 
 
         public ImageView getStoryImage()
@@ -101,7 +100,7 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
 
         public void bind(StoryClass story, RecyclerViewItemClickListener listener)
         {
-            itemView.setOnClickListener(v-> listener.onItemClick(story));
+            itemView.setOnClickListener(v -> listener.onItemClick(story));
             btFavorite.setOnCheckedChangeListener((buttonView, isChecked) ->
             {
                 if (isChecked)
@@ -147,9 +146,8 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-       viewHolder.bind(arr.get(position), listener);
+        viewHolder.bind(arr.get(position), listener);
         StoryClass story = arr.get(position);
-
         try
         {
             Glide.with(viewHolder.itemView.getContext())
@@ -160,15 +158,12 @@ public class VerticalContentAdapter extends RecyclerView.Adapter<VerticalContent
             if (!Objects.equals(story.GetAvgRating(), "0"))
                 viewHolder.getTvAuthor().setText("Tác giả: " + story.getAuthor() + "\n" + "Lượt xem: " + story.getViews() + " - Đánh giá: " + story.GetAvgRating());
             else
-            viewHolder.getTvAuthor().setText("Tác giả: " + story.getAuthor() + "\n" + "Lượt xem: " + story.getViews());
+                viewHolder.getTvAuthor().setText("Tác giả: " + story.getAuthor() + "\n" + "Lượt xem: " + story.getViews());
             viewHolder.getTvChapter().setText("Số chương: " + story.getNumberOfChapter() + " - " + story.getStatus());
             viewHolder.getTvGenre().setText(story.getGenres(25));
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             Toast.makeText(context.getApplicationContext(), "Không thể load một vài hình ảnh truyện!", Toast.LENGTH_SHORT).show();
-
-
         }
 
     }

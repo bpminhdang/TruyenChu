@@ -62,7 +62,8 @@ public class StoryActivity extends AppCompatActivity implements DataListener
         if (intent == null)
             return;
         receivedStory = (StoryClass) intent.getSerializableExtra("storyData");
-        DatabaseHelper.updateCount(receivedStory.getId(), "watching", 1);
+        if (receivedStory != null)
+            DatabaseHelper.updateCount(receivedStory.getId(), "watching", 1);
 
         Log.i("Life cycle story", "OnCre");
 

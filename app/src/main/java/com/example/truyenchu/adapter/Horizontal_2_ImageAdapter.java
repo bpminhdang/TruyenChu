@@ -81,7 +81,7 @@ public class Horizontal_2_ImageAdapter extends RecyclerView.Adapter<Horizontal_2
 
         temp = context.getString(R.string.recent_chapter) + "   " + context.getString(R.string.chapter) + " " + story.getNumberOfChapter();
         viewHolder.getTvChapter2().setText(temp);
-        Log.i("ABC", "onBindViewHolder: " + " " + position);
+        //Log.i("ABC", "onBindViewHolder: " + " " + position);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

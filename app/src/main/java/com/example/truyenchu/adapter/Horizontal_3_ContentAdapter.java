@@ -93,7 +93,7 @@ public class Horizontal_3_ContentAdapter extends RecyclerView.Adapter<Horizontal
         temp = story.getNumberOfChapter() + " " + context.getString(R.string.chapter);
         viewHolder.getTvChapter2().setText(temp);
 
-        Log.i("ABC", "onBindViewHolder: " + " " + position);
+       // Log.i("ABC", "onBindViewHolder: " + " " + position);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

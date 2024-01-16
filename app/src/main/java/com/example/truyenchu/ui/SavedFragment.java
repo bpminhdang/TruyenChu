@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SavedFragment extends Fragment
 {
@@ -53,33 +54,23 @@ public class SavedFragment extends Fragment
 
 
         String recentString = UserClass.GetUserInfoFromPref(getActivity(), "recent");
-        try
+        if (!Objects.equals(recentString, ""))
         {
-            String[] recentStringArray = recentString.split("_");
-            for (String id : recentStringArray)
             {
-                storyClassesRecent.add(StoryClass.loadStoryFromFile(getActivity(), id));
+                String[] recentStringArray = recentString.split("_");
+                for (String id : recentStringArray)
+                    storyClassesRecent.add(StoryClass.loadStoryFromFile(getActivity(), id));
             }
         }
-        catch (Exception e)
-        {
-            Log.i("App error" ,"Có lỗi gì đó xảy ra trong việc tải truyện gần đây");
-        }
 
-        try
-        {
         String savedString = UserClass.GetUserInfoFromPref(getActivity(), "saved");
-        String[] savedStringArray = savedString.split("_");
-        for (String id : savedStringArray)
+        if (!Objects.equals(savedString, ""))
         {
-            storyClassesSaved.add(StoryClass.loadStoryFromFile(getActivity(), id));
+            String[] savedStringArray = savedString.split("_");
+            for (String id : savedStringArray)
+                storyClassesSaved.add(StoryClass.loadStoryFromFile(getActivity(), id));
         }
-        }
-        catch (Exception e)
-        {
-            Log.i("App error" ,"Có lỗi gì đó xảy ra trong việc tải truyện đã lưu");
 
-        }
 
         RecyclerView recyclerViewRecent = view.findViewById(R.id.download_recycler_view_recent);
         RecyclerView recyclerViewSaved = view.findViewById(R.id.download_recycler_view_saved);
@@ -87,14 +78,14 @@ public class SavedFragment extends Fragment
         recyclerViewRecent.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         recyclerViewSaved.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
-        Horizontal_2_ImageAdapter adapter = new Horizontal_2_ImageAdapter(getActivity() , storyClassesRecent, story->
+        Horizontal_2_ImageAdapter adapter = new Horizontal_2_ImageAdapter(getActivity(), storyClassesRecent, story ->
         {
             Intent intent = new Intent(getActivity(), StoryActivity.class);
             intent.putExtra("storyData", story);
             startActivity(intent);
         });
 
-      VerticalContentAdapter adapter1 = new VerticalContentAdapter(getActivity() , storyClassesSaved, story->
+        VerticalContentAdapter adapter1 = new VerticalContentAdapter(getActivity(), storyClassesSaved, story ->
         {
             Intent intent = new Intent(getActivity(), StoryActivity.class);
             intent.putExtra("storyData", story);
@@ -105,7 +96,7 @@ public class SavedFragment extends Fragment
         recyclerViewSaved.setAdapter(adapter1);
 
 
-        String uuid = UserClass.GetUserInfoFromPref(getActivity(),"uuid");
+        String uuid = UserClass.GetUserInfoFromPref(getActivity(), "uuid");
         if (uuid == null)
             return view;
 
@@ -119,11 +110,12 @@ public class SavedFragment extends Fragment
                 if (dataSnapshot.exists())
                 {
                     String recentString = dataSnapshot.getValue(String.class);
-                    String[] recentStringArray = recentString.split("_");
                     storyClassesRecent.clear();
-                    for (String id : recentStringArray)
+                    if (!Objects.equals(recentString, ""))
                     {
-                        storyClassesRecent.add(StoryClass.loadStoryFromFile(getActivity(), id));
+                        String[] recentStringArray = recentString.split("_");
+                        for (String id : recentStringArray)
+                            storyClassesRecent.add(StoryClass.loadStoryFromFile(getActivity(), id));
                     }
                     adapter.notifyDataSetChanged();
                 }
@@ -145,12 +137,14 @@ public class SavedFragment extends Fragment
                 if (dataSnapshot.exists())
                 {
                     String savedString = dataSnapshot.getValue(String.class);
-                    String[] savedStringArray = savedString.split("_");
                     storyClassesSaved.clear();
-                    for (String id : savedStringArray)
+                    if (!Objects.equals(savedString, ""))
                     {
-                        storyClassesSaved.add(StoryClass.loadStoryFromFile(getActivity(), id));
+                        String[] savedStringArray = savedString.split("_");
+                        for (String id : savedStringArray)
+                            storyClassesSaved.add(StoryClass.loadStoryFromFile(getActivity(), id));
                     }
+
                     adapter1.notifyDataSetChanged();
                 }
             }
