@@ -418,7 +418,7 @@ public class StoryClass implements Serializable
     public String GetAvgRating()
     {
         double decimalNumber = Double.parseDouble(avgRating);
-        DecimalFormat df = new DecimalFormat("#.#");
+        DecimalFormat df = new DecimalFormat("#.0");
         df.setRoundingMode(RoundingMode.DOWN);
         return df.format(decimalNumber);
     }
