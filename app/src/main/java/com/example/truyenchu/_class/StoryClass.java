@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -415,7 +417,10 @@ public class StoryClass implements Serializable
 
     public String GetAvgRating()
     {
-        return avgRating;
+        double decimalNumber = Double.parseDouble(avgRating);
+        DecimalFormat df = new DecimalFormat("#.#");
+        df.setRoundingMode(RoundingMode.DOWN);
+        return df.format(decimalNumber);
     }
 
     public void SetAvgRating(String avgRating)
