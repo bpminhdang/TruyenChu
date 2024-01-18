@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 // Lớp Truyen (Truyện)
@@ -417,6 +418,8 @@ public class StoryClass implements Serializable
 
     public String GetAvgRating()
     {
+        if (Objects.equals(avgRating, "0"))
+            return avgRating;
         double decimalNumber = Double.parseDouble(avgRating);
         DecimalFormat df = new DecimalFormat("#.0");
         df.setRoundingMode(RoundingMode.DOWN);
