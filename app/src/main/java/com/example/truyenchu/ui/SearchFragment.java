@@ -15,10 +15,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.truyenchu.R;
-import com.example.truyenchu.StoryActivity;
+import com.example.truyenchu.story.StoryActivity;
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.adapter.VerticalContentAdapter;
 import com.google.android.material.chip.Chip;

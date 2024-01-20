@@ -23,8 +23,7 @@ import com.example.truyenchu._class.CommentClass;
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu._class.UserClass;
 import com.example.truyenchu.adapter.BlankFragment;
-import com.example.truyenchu.adapter.DataListener;
-import com.example.truyenchu.features.DatabaseHelper;
+import com.example.truyenchu._interface.DataListener;
 import com.example.truyenchu.features.ProfilePanelFragment;
 import com.example.truyenchu.ui.HomeFragment;
 import com.example.truyenchu.ui.ProfileFragment;
@@ -486,7 +485,7 @@ public class HomeActivity extends AppCompatActivity implements DataListener
             String uuid = UserClass.GetUserInfoFromPref(getApplicationContext(), "uuid");
             if (uuid == null)
             {
-                Intent intent = new Intent(getApplicationContext(), Login.class);
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
                 finish();
                 return false;

@@ -14,7 +14,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="15dp"
-        tools:context=".Register">
+        tools:context=".RegisterActivity">
 
         <ImageView
             android:id="@+id/imageView2"

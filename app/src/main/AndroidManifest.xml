@@ -22,7 +22,7 @@
             android:name=".features.SettingActivity"
             android:exported="false" />
         <activity
-            android:name=".features.CSBM"
+            android:name=".features.PrivacyPolicyActivity"
             android:exported="false" />
         <activity
             android:name=".features.UploadStoryActivity"
@@ -31,14 +31,14 @@
             android:name=".features.UpdateStoryActivity"
             android:exported="false" />
         <activity
-            android:name=".features.StoryRatingActivity"
+            android:name=".story.StoryRatingActivity"
             android:exported="false"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".dev.AddDataFirebase_dev"
             android:exported="true" />
         <activity
-            android:name=".StoryActivity"
+            android:name=".story.StoryActivity"
             android:exported="false"
             android:theme="@style/AppTheme" />
 
@@ -77,11 +77,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Register"
+            android:name=".RegisterActivity"
             android:exported="true"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Login"
+            android:name=".LoginActivity"
             android:exported="true"
             android:theme="@style/AppTheme" />
         <activity

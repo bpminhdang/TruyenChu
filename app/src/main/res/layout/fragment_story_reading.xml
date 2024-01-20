@@ -5,7 +5,7 @@
     android:id="@+id/reading_hihi"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".features.StoryReadingFragment">
+    tools:context=".story.StoryReadingFragment">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/readingkone"

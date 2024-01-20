@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/accent_1_10"
-        tools:context=".features.StoryDescriptionFragment">
+        tools:context=".story.StoryDescriptionFragment">
 
         <ImageView
             android:id="@+id/des_ivback"
@@ -100,7 +100,7 @@
                 android:drawablePadding="5dp"
                 android:fontFamily="@font/montserrat_regular"
                 android:text="Hanks Chi"
-                app:layout_constraintEnd_toStartOf="@+id/des_iv_picture"
+                app:layout_constraintEnd_toStartOf="@+id/cardView2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -116,7 +116,7 @@
                 android:fallbackLineSpacing="false"
                 android:fontFamily="@font/montserrat_regular"
                 android:text="Full - ngày 16 th 9, 2023"
-                app:layout_constraintEnd_toStartOf="@+id/des_iv_picture"
+                app:layout_constraintEnd_toStartOf="@+id/cardView2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/des_tv_author" />
 
@@ -170,7 +170,7 @@
                 android:drawablePadding="5dp"
                 android:fontFamily="@font/montserrat_regular"
                 android:text="Đang xem: "
-                app:layout_constraintEnd_toStartOf="@+id/des_iv_picture"
+                app:layout_constraintEnd_toStartOf="@+id/cardView2"
                 app:layout_constraintHorizontal_bias="0.02"
                 app:layout_constraintStart_toEndOf="@+id/des_tv_num_chapter"
                 app:layout_constraintTop_toBottomOf="@+id/des_tv_status" />
@@ -180,10 +180,10 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_marginTop="16dp"
-                android:tint="@color/black"
                 app:layout_constraintStart_toEndOf="@+id/des_iv_like"
                 app:layout_constraintTop_toBottomOf="@+id/des_tv_liked"
-                app:srcCompat="@drawable/cmt" />
+                app:srcCompat="@drawable/cmt"
+                app:tint="@color/black" />
 
             <TextView
                 android:id="@+id/des_tv_id"

@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.truyenchu.StoryActivity;
+import com.example.truyenchu.story.StoryActivity;
 import com.example.truyenchu.R;
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu.adapter.VerticalContentAdapter;
