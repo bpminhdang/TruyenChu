@@ -5,12 +5,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.truyenchu.R;
+import com.example.truyenchu.story.SettingReadingFragment;
 
 import java.util.Objects;
 

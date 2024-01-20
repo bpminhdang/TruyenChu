@@ -14,7 +14,7 @@ import android.widget.Button;
 
 import com.example.truyenchu.R;
 import com.example.truyenchu.adapter.BlankFragment;
-import com.example.truyenchu.adapter.DataListener;
+import com.example.truyenchu._interface.DataListener;
 import com.example.truyenchu.ui.SearchFragment;
 
 /**
