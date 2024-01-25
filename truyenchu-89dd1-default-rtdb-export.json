@@ -3,6 +3,7 @@
     "story_1": {
       " userUUID": " O2ZmbOR2RngazUUtfmG9uWxcELw3",
       "author": "Mặc Linh",
+      "avgRating": 5,
       "chapters": {
         "chapter_1_1": {
           "chapterId": "1_1",
@@ -36,7 +37,7 @@
       "time": "2024-01-13",
       "updateTime": "2024-01-13",
       "uri": "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/images%2Fstory_1.jpg?alt=media&token=5b70cc45-34ca-4d4c-8f3c-966edd81db72",
-      "views": 7,
+      "views": 8,
       "watching": 2
     },
     "story_10": {
@@ -74,8 +75,8 @@
       "updateTime": "2024-01-14",
       "uri": "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/images%2Fstory_10.jpg?alt=media&token=d4f6c320-d9c2-4701-92bb-0bf6104dfb2b",
       "userUUID": "jf0z4U8co3fdlNjKsYJDeIhwD7s2",
-      "views": 0,
-      "watching": 0
+      "views": 3,
+      "watching": 2
     },
     "story_11": {
       "author": "Kalys",
@@ -102,10 +103,11 @@
       "uri": "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/images%2Fstory_11.jpg?alt=media&token=22e18710-eb6d-49dd-a981-30e894d8e4a7",
       "userUUID": "jf0z4U8co3fdlNjKsYJDeIhwD7s2",
       "views": 0,
-      "watching": 0
+      "watching": 1
     },
     "story_12": {
       "author": "Kalys",
+      "avgRating": 5,
       "chapters": {
         "chapter_12_1": {
           "chapterId": "12_1",
@@ -135,11 +137,12 @@
       "updateTime": "2024-01-14",
       "uri": "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/images%2Fstory_12.jpg?alt=media&token=ba63e100-1f4d-4c35-a9a8-25cbd8da4886",
       "userUUID": "jf0z4U8co3fdlNjKsYJDeIhwD7s2",
-      "views": 3,
-      "watching": 1
+      "views": 5,
+      "watching": 3
     },
     "story_13": {
       "author": "Kalys",
+      "avgRating": 2.8333332538604736,
       "chapters": {
         "chapter_13_1": {
           "chapterId": "13_1",
@@ -151,6 +154,16 @@
           "comment": "Đúng là truyện teen, trẻ con đọc giải trí thì được.",
           "rating": 1.5,
           "username": "jf0z4U8co3fdlNjKsYJDeIhwD7s2"
+        },
+        {
+          "comment": "Truyện hay mà sao bạn trên chê z",
+          "rating": 4,
+          "username": "o2ZmbOR2RngazUUtfmG9uWxcELw2"
+        },
+        {
+          "comment": "Tạm tạm",
+          "rating": 3,
+          "username": "hP8qxyRkotZByBp9SxgSjmoLnDN2"
         }
       ],
       "description": "Trời lạnh rồi, cho nữ chính của ta xuyên không đi.\n- --\nP/S: 1v1, nam nữ chính song khiết a~!",
@@ -176,11 +189,12 @@
       "updateTime": "2024-01-14",
       "uri": "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/images%2Fstory_13.jpg?alt=media&token=2bb74747-9082-4770-84e2-94d080913bb8",
       "userUUID": "jf0z4U8co3fdlNjKsYJDeIhwD7s2",
-      "views": 1,
+      "views": 2,
       "watching": 0
     },
     "story_14": {
       "author": "Kalys",
+      "avgRating": 2.5,
       "chapters": {
         "chapter_14_1": {
           "chapterId": "14_1",
@@ -211,8 +225,8 @@
       "updateTime": "2024-01-14",
       "uri": "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/images%2Fstory_14.jpg?alt=media&token=b0793f96-556a-4b68-94d2-277d4f3e463f",
       "userUUID": "jf0z4U8co3fdlNjKsYJDeIhwD7s2",
-      "views": 8,
-      "watching": 5
+      "views": 9,
+      "watching": 7
     },
     "story_2": {
       "author": "Đặng Phúc",
@@ -252,10 +266,11 @@
       "uri": "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/images%2Fstory_2.jpg?alt=media&token=d5237405-1c40-4771-8ef2-00ecdf984bd2",
       "userUUID": "o2ZmbOR2RngazUUtfmG9uWxcELw2",
       "views": 2,
-      "watching": 2
+      "watching": 4
     },
     "story_3": {
       "author": "Đặng Phúc",
+      "avgRating": 5,
       "chapters": {
         "chapter_3_1": {
           "chapterId": "3_1",
@@ -264,6 +279,10 @@
         "chapter_3_2": {
           "chapterId": "3_2",
           "content": "chương mới"
+        },
+        "chapter_3_3": {
+          "chapterId": "3_3",
+          "content": "Chương 3"
         }
       },
       "comments": [
@@ -282,16 +301,16 @@
       ],
       "id": 3,
       "name": "\"FAN VỢ\" - BẠN ĐÃ BIẾT CHƯA?",
-      "numberOfChapter": 2,
+      "numberOfChapter": 3,
       "queryAuthor": "dangphuc",
       "queryName": "\"fanvo\"-bandabietchua?",
       "status": "Đang cập nhật",
       "time": "2024-01-13",
-      "updateTime": "2024-01-14",
+      "updateTime": "2024-01-15",
       "uri": "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/images%2Fstory_3.jpg?alt=media&token=0cff5241-ae1a-436a-b813-f50571922300",
       "userUUID": "o2ZmbOR2RngazUUtfmG9uWxcELw2",
-      "views": 10,
-      "watching": 3
+      "views": 25,
+      "watching": 14
     },
     "story_4": {
       "author": "Đặng Phúc",
@@ -320,6 +339,7 @@
     },
     "story_5": {
       "author": "Kalys",
+      "avgRating": 4.5,
       "chapters": {
         "chapter_5_1": {
           "chapterId": "5_1",
@@ -377,6 +397,7 @@
     },
     "story_6": {
       "author": "Kalys",
+      "avgRating": 3.75,
       "chapters": {
         "chapter_6_1": {
           "chapterId": "6_1",
@@ -415,16 +436,34 @@
       "uri": "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/images%2Fstory_6.jpg?alt=media&token=42c21387-733b-419b-bc96-c1f37c4e14d6",
       "userUUID": "jf0z4U8co3fdlNjKsYJDeIhwD7s2",
       "views": 5,
-      "watching": 2
+      "watching": 4
     },
     "story_7": {
       "author": "Kalys",
+      "avgRating": 4.666666507720947,
       "chapters": {
         "chapter_7_1": {
           "chapterId": "7_1",
           "content": "Cảm giác hít thở không thông và thống khổ khiến Lâm Thiển Thu không thở nổi, trước mắt mờ mịt khiến cô không kịp nghĩ nhiều mà lập tức lấy bình nước trong không gian ra uống cạn.\n\nCảm giác nóng rực đã giảm bớt rất nhiều, lúc này Lâm Thiển Thu mới mở to mắt đánh giá xung quanh, đồng thời trong đầu cô như đang có cuộn băng truyền tua lại tất cả những chuyện mà cơ thể này đã từng trải qua.\n\nBây giờ thì cô mới biết mình đã xuyên đến cuốn truyện quân hôn niên đại ngày hôm qua mình tiện tay nhặt được, bởi vì thấy tên người vợ trước trùng với tên mình cho nên cô mới đọc.\n\nTrong sách kể về câu chuyện xưa, người phụ nữ gả cho quân nhân không chịu được cảm giác cô đơn, ỷ vào dung mạo xinh đẹp nên đã ngoại tình với con trai trưởng tôn, sau khi bị nam chính phát hiện thì chịu khổ ly hôn, sau đó hoàn toàn trở nên ph óng đãng, cuối cùng ở độ tuổi trung niên thì phải đi làm bảo mẫu, gặp lại người chồng cũ và người bạn từ nhỏ là nữ chính, lúc này cô ta mới biết rằng sau khi bọn họ ly hôn thì nữ chính đã an ủi nam chính, chăm sóc ba mẹ anh chị em của nam chính, cuối cùng thành công gả cho anh.\n\n\nMà vợ trước thì lại hối hận không chịu nổi, cô ta hy vọng nếu có cơ hội sống lại thì cô nhất định sẽ quý trọng nam chính, làm vợ đảm mẹ hiền, sau đó cô ta trọng sinh…Lâm Thiển Thu xuyên vào cô ta.\n\nLâm Thiển Thu: Wow.\n\nLâm Thiển Thu sống ở thời mạt thế vào ba mươi năm sau, lịch của trái đất đã được sửa lại, thống nhất lấy năm mạt thế là năm đầu tiên, thực vật dị biến, tang thi thành đàn, cô có được dị năng của thực vật và việc ngọc bội không gian do tổ tiên truyền lại, ai ngờ trong cuộc chiến với tang thi cấp cao, sau khi nó bị nổ thì đã gây ra sự biến động không gian.\n\nNgọc bội không gian đã bảo vệ chủ nhân bằng cách giúp cô xuyên việt; Ai ngờ cô lại xuyên vào thế giới trong sách.\n\nNghĩ đến đây, Lâm Thiển Thu sờ sờ cổ, cô muốn tìm ngọc bội, ai biết sờ s0ạng một hồi thì vẫn không thấy gì, chỉ có một chiếc bớt hình đóa hoa đỏ sậm ở hõm vai giống hệt mặt dây chuyền ngọc.\n\n\nLâm Thiển Thu cũng đoán ra được tình huống lúc này, cô xuyên đến một ngày trước khi nam chính đi tố cáo vợ mình, hôm nay nguyên chủ mua quần áo mới định bí mật đi gặp con trai trưởng thôn lần đầu tiên, ai biết sau khi say rượu thì ăn nhầm thuốc trừ sâu do chủ nhà để ở nhà mà hoàn toàn hương tiêu ngọc vẫn, đúng lúc Lâm Thiển Thu bắt gặp.\n\nLâm Thiển Thu vừa uống xong nước trong không gian thì tất cả độc tố trên người cũng bị bài tiết ra, độc không ngừng bài xuất ra khỏi làn da, cô thật sự không chịu được dáng vẻ bẩn thối của mình, cô tìm phòng tắm để tắm rửa sạch sẽ và thay quần áo dự bị trong không gian.\n\nCô cầm khăn mặt lau khô mái tóc dài của mình, lúc nhìn thấy dáng vẻ hiện tại của mình ở trong gương, không biết có phải là do chuyện linh hồn xuyên đến đây không mà nguyên chủ lại giống cô đến bảy tám phần, kiều diễm như đào, mắt sáng tỏ, rực rỡ như đóa hoa mùa xuân, như trăng mùa thu, đúng là một tuyệt đại giai nhân.\n\nThảo nào nguyên chủ sinh sống từ nhỏ ở trong thôn mà vẫn xinh đẹp, sau đó còn xem thường nam chính đang là quân nhân, muốn trèo lên cành cao.\n\n."
         }
       },
+      "comments": [
+        {
+          "comment": "Thật tuyệt vời",
+          "rating": 4,
+          "username": "o2ZmbOR2RngazUUtfmG9uWxcELw2"
+        },
+        {
+          "comment": "Hay",
+          "rating": 5,
+          "username": "o2ZmbOR2RngazUUtfmG9uWxcELw2"
+        },
+        {
+          "comment": "Hay",
+          "rating": 5,
+          "username": "o2ZmbOR2RngazUUtfmG9uWxcELw2"
+        }
+      ],
       "description": "Tác giả: Nhất Đóa\n\nThể loại: Đô thị, Ngôn Tình, Xuyên Không, Hệ thống, Dị Năng, Truyện Sủng, Nữ Cường, Điền Văn, Nữ Phụ, Hiện Đại\n\nDịch giả: Vườn Táo Trên Mây\n\nGiới thiệu:\n\nLâm Thiển Thu xuyên vào một quyển niên đại văn, trở thành pháo hôi trong nguyên tác là vợ trước phản bội nam chính\n\nSau đó nguyên chủ ly hôn thê thảm.\n\nNữ chính là y tá dịu dàng nhân cơ hội thượng vị, cuối cùng hạnh phúc cả đời.\n\nCòn cô lại xuyên thành người vợ cũ đó.",
       "genresList": [
         "Ngôn Tình",
@@ -447,7 +486,7 @@
       "uri": "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/images%2Fstory_7.jpg?alt=media&token=ee8a190c-8cc9-4f56-9965-dd9995ad1050",
       "userUUID": "jf0z4U8co3fdlNjKsYJDeIhwD7s2",
       "views": 1,
-      "watching": 1
+      "watching": 2
     },
     "story_8": {
       "author": "Kalys",
@@ -511,9 +550,7 @@
   "users": {
     "Ei3x7CO1FTcvSdnnGeYSuzDzil32": {
       "email": "bluegeographical@jcnorris.com",
-      "fontSize": 0,
       "name": "Tường Vy",
-      "password": "12345678",
       "profile": "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/usersImage%2FEi3x7CO1FTcvSdnnGeYSuzDzil32.jpg?alt=media&token=1e446c58-3672-4cbc-891c-89952d228ed9",
       "readCount": 3,
       "recentStoryRead": {
@@ -565,7 +602,6 @@
       "email": "dangnguyenhoangphuc1@gmail.com",
       "fontSize": 0,
       "name": "Vialattea",
-      "password": "123123",
       "profile": "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/usersImage%2FZzeT2WJnideqzGDvywRKJ6SWPGo2.jpg?alt=media&token=6bf85580-24f7-41b5-9463-266f53555d05",
       "readCount": 1,
       "recentStoryRead": {
@@ -590,10 +626,22 @@
       "email": "15integrated@jcnorris.com",
       "fontSize": 0,
       "name": "Vialattea",
-      "password": "123123",
       "profile": "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/usersImage%2FhP8qxyRkotZByBp9SxgSjmoLnDN2.jpg?alt=media&token=a9cf0495-1928-4800-abb6-4b0cab82f9ad",
-      "readCount": 3,
+      "readCount": 6,
       "recentStoryRead": {
+        "3": {
+          "count": 5,
+          "fav": [
+            null,
+            false,
+            false
+          ],
+          "read": [
+            null,
+            true,
+            false
+          ]
+        },
         "5": {
           "count": 1,
           "fav": [
@@ -620,6 +668,23 @@
             true
           ]
         },
+        "10": {
+          "count": 4,
+          "fav": [
+            null,
+            false,
+            false,
+            false,
+            false
+          ],
+          "read": [
+            null,
+            true,
+            false,
+            false,
+            false
+          ]
+        },
         "12": {
           "count": 2,
           "fav": [
@@ -630,16 +695,26 @@
             null,
             false
           ]
+        },
+        "13": {
+          "count": 3,
+          "fav": [
+            null,
+            false
+          ],
+          "read": [
+            null,
+            false
+          ]
         }
       },
+      "recentString": "3_10",
       "saved": "12_5",
       "uuid": "hP8qxyRkotZByBp9SxgSjmoLnDN2"
     },
     "jOyB4h0eAbgullG5EYlfHfVRwoR2": {
       "email": "maihanlvc@gmail.com",
-      "fontSize": 0,
       "name": "ThiBo",
-      "password": "helloem",
       "profile": "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/usersImage%2FjOyB4h0eAbgullG5EYlfHfVRwoR2.jpg?alt=media&token=adf5cca7-301d-4c48-a927-330bcb90cd42",
       "readCount": 2,
       "recentStoryRead": {
@@ -675,7 +750,6 @@
       "email": "shielatf@gmail.com",
       "fontSize": 0,
       "name": "Kalys",
-      "password": "maihanmothai",
       "profile": "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/usersImage%2Fjf0z4U8co3fdlNjKsYJDeIhwD7s2.jpg?alt=media&token=943941e1-2bed-4b45-9afb-f6a81300473c",
       "readCount": 11,
       "recentStoryRead": [
@@ -826,9 +900,8 @@
       "email": "21522470@gm.uit.edu.vn",
       "fontSize": 0,
       "name": "Đặng Phúc",
-      "password": "123123",
       "profile": "https://firebasestorage.googleapis.com/v0/b/truyenchu-89dd1.appspot.com/o/usersImage%2Fo2ZmbOR2RngazUUtfmG9uWxcELw2.jpg?alt=media&token=2d358191-6c3c-4969-80cc-f22699c9503b",
-      "readCount": 11,
+      "readCount": 13,
       "recentStoryRead": [
         null,
         {
@@ -931,8 +1004,34 @@
             false
           ]
         },
-        null,
-        null,
+        {
+          "count": 11,
+          "fav": [
+            null,
+            true,
+            false,
+            false,
+            false
+          ],
+          "read": [
+            null,
+            true,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "count": 12,
+          "fav": [
+            null,
+            false
+          ],
+          "read": [
+            null,
+            false
+          ]
+        },
         {
           "count": 7,
           "fav": [
@@ -967,8 +1066,8 @@
           ]
         }
       ],
-      "recentString": "5_13_1_14_3_7_6_12_4_2",
-      "saved": "12_14_2_3_4",
+      "recentString": "14_12_1_13_10_5_3_7_6_4_2",
+      "saved": "12_10_5",
       "uuid": "o2ZmbOR2RngazUUtfmG9uWxcELw2"
     }
   }
