@@ -89,11 +89,6 @@ public class StoryActivity extends AppCompatActivity implements DataListener
                     .commit();
         }
 
-//        getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.fragment_container, selectedFragment)
-//                .addToBackStack(null) // Để thêm Fragment vào Backstack
-//                .commit();
-//        return true;
         ImageView bt_tai = findViewById(R.id.btDown);
         bt_tai.setOnClickListener(v ->
         {
@@ -231,7 +226,7 @@ public class StoryActivity extends AppCompatActivity implements DataListener
                         DatabaseReference recentStoryReadRef = currentUsersRef.child(recentStoryReadPath);
 
 
-                        // Kiểm tra xem nút tồn tại hay không
+                        // Kiểm tra xem node tồn tại hay không
                         recentStoryReadRef.addListenerForSingleValueEvent(new ValueEventListener()
                         {
                             @Override
@@ -380,20 +375,22 @@ public class StoryActivity extends AppCompatActivity implements DataListener
             {
                 TextView textView = (TextView) super.getView(position, convertView, parent);
                 boolean noError = false;
-                while (!noError) {
-                    try {
+                while (!noError)
+                {
+                    try
+                    {
                         if (readList.get(position))
                             textView.setTextColor(Color.GRAY);
                         if (favList.get(position))
                             textView.setText(textView.getText() + " ⭐");
                         noError = true;
-                    } catch (Exception e) {
+                    } catch (Exception e)
+                    {
                         readList.add(false);
                         favList.add(false);
-                       Log.i("Story Activity set text", "add false");
+                        Log.i("Story Activity set text", "add false");
                     }
                 }
-
 
 
                 return textView;
