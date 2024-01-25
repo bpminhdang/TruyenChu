@@ -19,6 +19,8 @@ import com.example.truyenchu._class.UserClass;
 import com.example.truyenchu.adapter.Horizontal_2_ImageAdapter;
 import com.example.truyenchu.adapter.VerticalContentAdapter;
 import com.example.truyenchu._interface.DatabaseHelper;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,20 +51,22 @@ public class SavedFragment extends Fragment
                              Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_download, container, false);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = mAuth.getCurrentUser();
+        if (mUser == null)
+            return view;
 
 
         String recentString = UserClass.GetUserInfoFromPref(getActivity(), "recent");
-        if (!Objects.equals(recentString, ""))
+        if (!Objects.equals(recentString, "") && recentString!= null)
         {
-            {
                 String[] recentStringArray = recentString.split("_");
                 for (String id : recentStringArray)
                     storyClassesRecent.add(StoryClass.loadStoryFromFile(getActivity(), id));
-            }
         }
 
         String savedString = UserClass.GetUserInfoFromPref(getActivity(), "saved");
-        if (!Objects.equals(savedString, ""))
+        if (!Objects.equals(savedString, "") && savedString != null)
         {
             String[] savedStringArray = savedString.split("_");
             for (String id : savedStringArray)

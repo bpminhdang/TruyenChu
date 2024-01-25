@@ -157,7 +157,6 @@ public class RegisterActivity extends AppCompatActivity {
                                             userClass.setUuid(mAuth.getCurrentUser().getUid());
                                             userClass.setName(name);
                                             userClass.setEmail(email);
-                                            userClass.setPassword(password);
 
                                             uploadUserToFirebase(userClass);
                                             editTextName.setText("");
