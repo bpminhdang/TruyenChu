@@ -115,12 +115,12 @@ public class LoginActivity extends AppCompatActivity
 
             //Check Empty
             if (TextUtils.isEmpty(email)) {
-                Toast.makeText(LoginActivity.this, "Enter email", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Nhập email", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (TextUtils.isEmpty(password)) {
-                Toast.makeText(LoginActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Nhập mật khẩu", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity
                         if (task.isSuccessful()) {
                             if (mAuth.getCurrentUser().isEmailVerified())
                             {
-                                Toast.makeText(getApplicationContext(), "LoginActivity successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                                 SharedPreferences sharedPreferences = getSharedPreferences("users_info", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("uuid", mAuth.getCurrentUser().getUid());
@@ -143,11 +143,11 @@ public class LoginActivity extends AppCompatActivity
                             }
                             else
                             {
-                                Toast.makeText(LoginActivity.this, "Please verify your email", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Vui lòng kiểm tra email của bạn!", Toast.LENGTH_SHORT).show();
                             }
 
                         } else {
-                            Toast.makeText(LoginActivity.this, "Wrong password/Wrong email",
+                            Toast.makeText(LoginActivity.this, "Sai email hoặc mật khẩu",
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
