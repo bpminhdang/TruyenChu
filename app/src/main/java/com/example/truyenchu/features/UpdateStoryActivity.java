@@ -30,6 +30,7 @@ import com.example.truyenchu._class.ChapterClass;
 import com.example.truyenchu._class.NetworkUtil;
 import com.example.truyenchu._class.StoryClass;
 import com.example.truyenchu._interface.ImageUploadCallback;
+import com.example.truyenchu._interface.Notification;
 import com.example.truyenchu._interface.StoryCountListener;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
@@ -85,6 +86,8 @@ public class UpdateStoryActivity extends AppCompatActivity implements StoryCount
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_story);
+        Notification.showNotification(this, "Notification Title", "This is the notification message.");
+
         // Hide action bar
         Objects.requireNonNull(getSupportActionBar()).hide();
         // Status bar icon: Black
@@ -387,6 +390,8 @@ public class UpdateStoryActivity extends AppCompatActivity implements StoryCount
 
                     }
                     updateStringRef.setValue(recent);
+
+
                 }
 
                 @Override
@@ -457,3 +462,4 @@ public class UpdateStoryActivity extends AppCompatActivity implements StoryCount
         }
     }
 }
+

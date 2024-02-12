@@ -1,11 +1,14 @@
 package com.example.truyenchu;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -50,6 +53,8 @@ import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity implements DataListener
 {
+    private static final String CHANNEL_ID = "your_channel_id";
+    private static final CharSequence CHANNEL_NAME = "Your Channel Name";  
     FirebaseAuth mAuth;
     ArrayList<String> storyListAll = new ArrayList<>();  // listOfStoryLists 0
     ArrayList<String> storyListNew = new ArrayList<>(); // listOfStoryLists 1
@@ -83,8 +88,7 @@ public class HomeActivity extends AppCompatActivity implements DataListener
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        // Khoảng mã lệnh trong Fragment cha để thêm Fragment con
-
+        requestNotificationPermission();
         // region Init
         listOfStoryLists.add(storyListAll);
         listOfStoryLists.add(storyListNew);
@@ -465,6 +469,24 @@ public class HomeActivity extends AppCompatActivity implements DataListener
         // endregion Load Fragment
 
 
+    }
+
+    private void requestNotificationPermission() {
+        // Create a notification channel for Android Oreo and higher
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+
+            NotificationChannel channel = new NotificationChannel(
+                    CHANNEL_ID,
+                    CHANNEL_NAME,
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+
+            // You can customize the channel settings here if needed
+            // channel.setDescription("Your Channel Description");
+
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     public boolean SetOnItemClick(MenuItem item)
